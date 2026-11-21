@@ -40,7 +40,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Scholarship cautions against treating sharecroppers as people who lacked initiative. Families negotiated contracts, sought better terms, moved when possible and organised community life. There were differences among sharecroppers, tenants who rented land for cash, and farmers who owned their holdings. Even within sharecropping, access to animals, supplies and credit varied. A family that changed landlords had not necessarily escaped the broader credit economy. A family that stayed was not necessarily satisfied with its treatment.",
     "Official records often foreground contracts, debts and agricultural output. The National Archives holds Freedmen's Bureau material on supervised labour agreements and complaints, but these sources were shaped by the agency's administrative purposes.",
     "Some political responses to racial and economic subordination became well organised, and many Black Americans later moved away from the rural South. The focus is the ordinary harvest after which the accounts were settled and the family discovered that another year's labour had not produced the independence they had hoped for. Legal freedom existed; the means to use that freedom remained unequally distributed.",
-    "Money was advanced in spring; a share of the crop was calculated in autumn; debt could carry over into another season. When independence requires the resources controlled by someone else, what must a person obtain before the legal right to refuse becomes a choice they can actually make?"
+    "Sharecropping and tenant farming expanded across the post-emancipation South under unequal patterns of landownership. Families obtained land and supplies through agreements with owners or merchants, with credit often secured against future harvests. Rental documents, crop-lien accounts and Freedmen's Bureau records preserve the contractual arrangements and the conditions of the rural credit economy."
   ],
   "zh": [
     "美国废除奴隶制之后，曾经被奴役的人获得了法律上的自由，但自由并没有同时给他们土地、农具和足够维持一年的积蓄。许多黑人家庭仍然在别人拥有的土地上耕种，等到收获时再按约定分得一部分作物。农场主或商人提供种子、工具和生活用品，费用却往往记成债务，等到卖出收成再扣除。法律改变了他们的身份，却没有立即改变谁拥有土地、谁掌握资金的问题。",
@@ -54,7 +54,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "佃农之间也有区别。有的人以现金租地，有的人按照收成分配，有的人能够自备生产资料。不同家庭拥有的牲畜、储蓄、亲属支持和劳动能力并不相同。有人尝试协商合同，有人改换地主，也有人设法离开农业。",
     "自由民局留下了大量有关劳动合同、生活救助与申诉的档案。这些记录有助于了解农民在制度上面临什么问题，但未必能够还原一个家庭在签下下一年合同之前的全部考虑。",
     "美国南部黑人后来确实组织过政治与经济上的抗争，也有许多人离开农村前往其他地区。法律已经称他们为自由的人，他们却仍然需要依赖别人的土地与信用，才能开始新的生活。",
-    "春天借来的东西，秋天可能仍然偿还不完；一年的劳动结束，新的一年又带着旧债开始。一个人有权拒绝某项安排，并不意味着他已经拥有拒绝所需的生活条件。"
+    "美国南部的分成耕种与佃农制度，在废除奴隶制后的数十年持续发展。部分家庭依靠地主的土地，向商人赊购种子和生活用品，在收获后结算债务。土地所有权、信贷条件与种族不平等，使合同双方拥有不同的经济地位。自由民局档案和租佃账目记录了这类安排的运作方式。"
   ],
   "mechanisms": [
     "crop-lien and credit dependence",
