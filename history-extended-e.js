@@ -1,4 +1,4 @@
-/* History expansion V: extended narrative and source-backed analysis. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "artemisia-gentileschi": {
     "title": "What the Trial Could Not Contain",
@@ -67,7 +67,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "National Gallery, London",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Testimony",
+      "Gender",
+      "Credibility"
+    ],
+    "moment": {
+      "addressed": "A court and later patrons and viewers",
+      "intended": "To give testimony and build an artistic career.",
+      "withheld": "She testified despite coercive court procedures; later portrayals sometimes narrowed her life to the trial.",
+      "why": "Legal standards and gender norms constrained how her testimony was treated.",
+      "certainty": "Documented testimony, not personal refusal to speak."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.nationalgallery.org.uk/artists/artemisia-gentileschi",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "elizabeth-keckley": {
     "title": "Behind the White House Door",
@@ -136,7 +154,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Smithsonian American Women's History Museum",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Authorship",
+      "Privacy",
+      "Race"
+    ],
+    "moment": {
+      "addressed": "Readers of her 1868 memoir",
+      "intended": "To describe slavery and her work in the Lincoln White House.",
+      "withheld": "She published rather than withholding; critics disputed her right to reveal private details.",
+      "why": "Expectations of domestic discretion and racial hierarchy shaped responses to her authorship.",
+      "certainty": "Documented publication; this is contested narrative authority, not an unsent manuscript."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.loc.gov/exhibits/civil-war-in-america/biographies/elizabeth-keckley.html",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "harriet-tubman": {
     "title": "The Routes That Could Not Be Named",
@@ -209,7 +245,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "US National Park Service historical collection",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Survival",
+      "Secrecy",
+      "Freedom"
+    ],
+    "moment": {
+      "addressed": "Escapees, trusted helpers, and hostile pursuers",
+      "intended": "To guide others away from enslavement.",
+      "withheld": "Routes and contacts were deliberately kept secret.",
+      "why": "Capture and legal seizure under slavery made disclosure life-threatening.",
+      "certainty": "Protective secrecy documented; not a reluctance to state political conviction."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.nps.gov/people/harriet-tubman.htm",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "mary-berg": {
     "title": "A Diary Escapes the Ghetto",
@@ -278,6 +332,24 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Warsaw Ghetto Museum",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Testimony",
+      "Archival survival",
+      "Persecution"
+    ],
+    "moment": {
+      "addressed": "Her diary and later wartime readers",
+      "intended": "To record everyday life in the Warsaw ghetto.",
+      "withheld": "Her writings circulated; many contemporaries lacked any comparable path for testimony to survive or leave.",
+      "why": "Occupation, confinement and the material conditions of publication shaped survival of documents.",
+      "certainty": "Documented testimony and publication; the central silence lies in missing archives."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://1943.pl/en/artykul/mary-berg/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 });
