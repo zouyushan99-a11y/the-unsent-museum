@@ -107,19 +107,29 @@
   const z=window.MUSEUM_HISTORY_ZH?.[id]||{};
   const chosen=(z.cause||'').trim(),proof=(z.proof||'').trim(),event=(z.act||'').trim();
   const translate=v=>lang==='zh-Hant'&&window.OpenCC?.Converter?window.OpenCC.Converter({from:'cn',to:'hk'})(v):v;
+  const setting=(z.setting||'').trim(),after=(z.after||'').trim();
+  const situate={
+   withheld:'我的判断是，这里的选择既有个人主动权，也有必须付出的现实代价。把“不公开”仅解释为恐惧，会忽略当事人如何安排读者、身份及时间；把它完全解释为自主，则又会把社会的不平等推到视野之外。',
+   protective:'此处的保密必须与现实风险一起衡量。即便一个人十分渴望被理解，也未必能承担让他人知道的代价；尤其当信息还涉及同伴、家人或其他人的安全时，公开不是纯粹的私人勇气测验。',
+   suppressed:'在这里，我不愿把遭到阻断的表达称作“自愿沉默”。当事人已经采取的行动，与后来由法律、警察、审查机构或其他权威施加的限制，是两类应当分别归责的事实。'
+  };
+  const enSetting=english=>String(english||'').trim();
+  const enSettingText=essay.analysis?.[0]?.[1]||'The institutions and social expectations surrounding this decision shaped the available choices.';
+  const enActText=essay.analysis?.[1]?.[1]||enM.intended||'The record documents an act concerning who could speak and who could listen.';
+  const enWhyText=essay.analysis?.[2]?.[1]||enM.why||'The surviving record suggests multiple pressures rather than one certain personal motive.';
+  const enProofText=essay.analysis?.[3]?.[1]||enM.certainty||'The records do not establish every private thought.';
+  const enAfterText=essay.analysis?.[4]?.[1]||'Later reception altered the public meaning of the surviving record.';
   const zhParagraphs=[
-   ANGLES[id]+' '+opening[idx%opening.length],
-   (chosen?'从现有资料看，'+chosen+' ':'')+power[type],
-   (proof?'我们能够核实的范围是：'+proof+' ':'')+ethics[idx%ethics.length],
-   closing[idx%closing.length]+' 这一立场是我的策展解读，并不假装拥有当事人未曾留下的私人证词。'
+    ANGLES[id]+' '+(setting?'这一判断必须放在当时的社会里理解：'+setting+' ':'')+'我特别留意这一环境怎样改变一个人解释自己、发表作品或维护私人边界的实际可能，而不把时代仅仅当成故事的背景。',
+    (event?'首先需要分清已经发生的行为：'+event+' ':'')+(chosen?'就动机与压力而言，现有材料提示：'+chosen+' ':'')+situate[type]+' 一段关系里的情感需求，和制度允许一个人做什么，往往同时作用；但不能在没有当事人证词的情况下，替他指定唯一的内心理由。',
+    (proof?'证据能够支持的部分包括：'+proof+' ':'')+'因此，我会把史料所证明的行动与自己推测的心理机制分开。作者可能需要自尊、理解、独立或安全，也可能同时顾及他人；这些都是值得讨论的解释方向，不是我能够替历史人物宣告的秘密。将沉默直接定义为懦弱、顺从或高尚，都可能掩盖这份资料里真正复杂的选择。',
+    (after?'再看随后发生的事：'+after+' ':'')+'我更在意的是这段经历怎样改变了谁有权说话、谁能够阅读、谁承担言说的成本。后世已经知道的结果，不能自动当成当时人物的预期。我的策展结论是：'+ANGLES[id]+' 这是一种有边界的判断，既希望看清社会文化造成的压力，也愿意承认档案无法进入当事人全部的情感世界。'
   ];
-  // The Chinese commentary should always exceed 300 Han characters, independent of short source fields.
-  const enM=essay.moment||{},english=essay.analysis||[];
   const enParagraphs=[
-   'My curatorial reading begins with a distinction between having words and being able to choose their audience. In this particular archive, '+(enM.why||english[2]?.[1]||'the circumstances of expression deserve attention')+' This is a historically situated interpretation, not a diagnosis of the person’s private character.',
-   enPower[type]+' I want to ask what the person could decide, what others could decide for them, and what consequences followed from this unequal distribution of power.',
-   'The surviving materials place limits on the reading: '+(enM.certainty||english[3]?.[1]||'records establish events more securely than unrecorded inner intentions')+' A document may substantiate a decision or a publication history without preserving everything the person thought at the time. The temptation to infer certainty from the known outcome should therefore be resisted.',
-   'For me, the essential issue is who could control the timing, name, audience and consequences of expression. This perspective neither romanticizes withholding nor treats the absence of public speech as proof of consent. It invites a distinction between what was done, what conditions made it possible or costly, and what remains unknown.'
+   'My curatorial argument begins with this specific historical circumstance: '+enSettingText+' In that social setting, norms about authority, reputation and who could address whom were not merely background; they altered what choices were realistically available. I am interested in the unequal cost of being heard, rather than in assigning a simple personality trait to the individual.',
+   'What was actually done must be distinguished from the motives later attributed to it: '+enActText+' The most relevant explanation in the surviving account is: '+enWhyText+' '+enPower[type]+' I read this as an interaction between personal agency, relationships and social expectations, not a test of whether the individual possessed sufficient courage.',
+   'My interpretation has an evidentiary limit: '+enProofText+' We can discuss the emotional stakes suggested by a letter, a testimony, a publication decision or a restriction without claiming access to unrecorded private thoughts. The archive helps us identify pressure and observable choices, but it cannot prove that every possible feeling was present.',
+   'The aftermath changes how we view the original choice: '+enAfterText+' As curator, I ask who controlled circulation and what that meant for the people involved. Hindsight may make a decision look inevitable when it was anything but inevitable to those living through it. This is my reading of the available material, not a retrospective confession placed in the historical person’s mouth.'
   ];
   const originalQuestion=zh?(z.question||'这份记录怎样改变我们理解沉默的方式？'):(essay.question||'What does this history change about how we listen?');
   const zhPowerQuestions={
