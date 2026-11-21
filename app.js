@@ -549,7 +549,7 @@ const rect=canvas.getBoundingClientRect();
 const x=clientX-rect.left,y=clientY-rect.top;
 let nearest=null,dist=Infinity;
 for(const st of canvas._starTargets||[]){const d=Math.hypot(st.x-x,st.y-y);if(d<dist){dist=d;nearest=st}}
-return dist<=(touch?22:13)?nearest:null
+return dist<=(touch?(canvas.id==='story-sky-canvas'?30:22):13)?nearest:null
 }
 function hideStarTooltip(){document.querySelectorAll('.star-info-tooltip').forEach(t=>t.remove())}
 function showStarTooltip(st,x,y){
