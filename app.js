@@ -61,9 +61,12 @@ function museumTranslateInterfaceValue(value,dict){
  if(!key)return original;
  let translation=dict[key];
  if(!translation){
+  const numerals={I:'一',II:'二',III:'三',IV:'四',V:'五',VI:'六',VII:'七',VIII:'八',IX:'九',X:'十'};
+  const gallery=n=>'第'+(numerals[n]||n)+'展厅';
   const dynamic=[
-   [/^GALLERY\\s+([IVX0-9]+)/i,(_,n)=>'第'+n+'展厅'],
-   [/^Gallery\\s+([IVX0-9]+)/i,(_,n)=>'第'+n+'展厅'],
+   [/^RESEARCH\\s*·\\s*GALLERY\\s+([IVX0-9]+)/i,(_,n)=>'研究资料 · '+gallery(n)],
+   [/^GALLERY\\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
+   [/^Gallery\\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
    [/^([0-9]+)\\s+responses?\\s*·\\s*Multiple choice.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
    [/^([0-9]+)\\s+reason stars?\\s*·\\s*([0-9]+)\\s+answers?/i,(_,n,m)=>n+' 颗理由星辰 · '+m+' 份回答'],
    [/^([0-9]+)\\s+local responses?/i,(_,n)=>n+' 份本地回答'],
