@@ -389,17 +389,19 @@ function storyViewSwitch(id,sky){
  return `<div class="story-view-switch" role="group" aria-label="Story browsing mode"><a class="${sky?'':'selected'}" href="#/archive${suffix}" ${!sky?'aria-current="page"':''}>☰ Story Collection</a><a class="${sky?'selected':''}" href="#/story-sky${suffix}" ${sky?'aria-current="page"':''}>✧ Story Sky</a></div>`
 }
 // A distinct, consistent hue for every published-story collection.
+// Van Gogh-inspired star colours, consistent with the original choice/reason skies.
+// The original paintStar, makeStarSprite, flowStarPoint and twinkling animation are shared.
 const STORY_STAR_CATEGORIES=[
- {id:'friendship',label:'Between Friends · 友谊',color:'#F0C66C',meaning:'Warm amber'},
- {id:'classroom',label:'In the Classroom · 课堂',color:'#75BDF1',meaning:'Clear blue'},
- {id:'family',label:'At Home · 家庭',color:'#CF9AF0',meaning:'Soft violet'},
- {id:'before-sending',label:'Before Sending · 发送之前',color:'#62D6BA',meaning:'Sea glass'},
- {id:'others',label:'Others · 其他',color:'#F395A6',meaning:'Coral pink'}
+ {id:'friendship',label:'Between Friends · 友谊',color:'#E5C46A',meaning:'Starry ochre gold'},
+ {id:'classroom',label:'In the Classroom · 课堂',color:'#5681B1',meaning:'Cobalt night blue'},
+ {id:'family',label:'At Home · 家庭',color:'#7B79B3',meaning:'Dusk violet blue'},
+ {id:'before-sending',label:'Before Sending · 发送之前',color:'#579487',meaning:'Cypress teal'},
+ {id:'others',label:'Others · 其他',color:'#C47749',meaning:'Burnt sienna'}
 ];
 const STORY_STAR_COLORS=Object.fromEntries(STORY_STAR_CATEGORIES.map(x=>[x.id,x.color]));
 function storySkyLegend(id){
  const categories=id?STORY_STAR_CATEGORIES.filter(x=>x.id===id):STORY_STAR_CATEGORIES;
- return `<div class="story-star-legend" aria-label="Story constellation color key">${categories.map(x=>`<div class="story-legend-item"><span class="story-legend-star" style="--story-star-color:${x.color}" aria-hidden="true">✦</span><span>${esc(x.label)}</span></div>`).join('')}</div>`
+ return `<div class="story-star-legend" aria-label="Story constellation color key">${categories.map(x=>`<div class="story-legend-item"><span class="story-legend-star" style="--story-star-color:${x.color}" aria-hidden="true"></span><span>${esc(x.label)}</span></div>`).join('')}</div>`
 }
 function storySkyPage(id){
  if(id&&id!=='others'&&!scenario(id))return storySkyPage();
