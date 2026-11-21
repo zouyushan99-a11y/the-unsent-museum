@@ -1,0 +1,13 @@
+/* Chinese-language museum typography only. The English edition is untouched.
+   Prefer locally installed literary Ming/Song typefaces; never require font downloads. */
+:root{--museum-zh-serif:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","Source Han Serif CN","Noto Serif SC","SimSun",serif;--museum-zh-sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+html:lang(zh-Hant){--museum-zh-serif:"Songti TC","Noto Serif CJK TC","Source Han Serif TC","PMingLiU","Songti SC",serif;--museum-zh-sans:"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif}
+html:lang(zh) body{font-family:var(--museum-zh-serif);font-size:15.5px;line-height:1.85;letter-spacing:.012em}
+html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4,html:lang(zh) .serif,html:lang(zh) .brand,html:lang(zh) .hero-intro,html:lang(zh) .collective-card h2,html:lang(zh) .collective-article>header h2,html:lang(zh) .collective-factor h3,html:lang(zh) .collective-prose>p,html:lang(zh) .history-prose p,html:lang(zh) .history-longform-header h2{font-family:var(--museum-zh-serif);font-weight:400;letter-spacing:.025em}
+html:lang(zh) .nav,html:lang(zh) .eyebrow,html:lang(zh) .btn,html:lang(zh) .badge,html:lang(zh) .collective-eyebrow,html:lang(zh) .history-reason-tag,html:lang(zh) button,html:lang(zh) input,html:lang(zh) select,html:lang(zh) textarea,html:lang(zh) .museum-language-switch{font-family:var(--museum-zh-sans);letter-spacing:.025em}
+html:lang(zh) .history-longform .history-prose,html:lang(zh) .collective-prose{line-height:2.18}
+html:lang(zh) .history-prose p,html:lang(zh) .collective-prose>p{font-size:clamp(1.04rem,1.6vw,1.15rem);line-height:2.18;letter-spacing:.035em;word-break:normal;overflow-wrap:anywhere}
+html:lang(zh) .collective-section-heading h2,html:lang(zh) .history-section-title h2{letter-spacing:.05em;line-height:1.45}
+html:lang(zh) .eyebrow{letter-spacing:.13em}
+html:lang(zh) .history-archive-directory,html:lang(zh) .collective-motives-grid p,html:lang(zh) .collective-factor p{line-height:1.92}
+@media(max-width:700px){html:lang(zh) body{font-size:15px}html:lang(zh) .collective-prose>p,html:lang(zh) .history-prose p{font-size:1.02rem;letter-spacing:.02em;line-height:2.05}}
