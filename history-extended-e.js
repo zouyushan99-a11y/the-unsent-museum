@@ -1,4 +1,4 @@
-/* History expansion V: narrative and source-backed analysis. */
+/* Source-based museum archive and documented imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "artemisia-gentileschi": {
     "title": "What the Trial Could Not Contain",
@@ -55,7 +55,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.nationalgallery.org.uk/paintings/artemisia-gentileschi-self-portrait-as-saint-catherine-of-alexandria"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Artemisia_Gentileschi_-_Self-Portrait_as_Saint_Catherine_of_Alexandria_-_Google_Art_Project.jpg?width=900",
+        "page": "https://www.nationalgallery.org.uk/paintings/artemisia-gentileschi-self-portrait-as-saint-catherine-of-alexandria",
+        "kind": "Historical painting",
+        "caption": "Artemisia Gentileschi, Self Portrait as Saint Catherine of Alexandria (about 1615–17). Historical painting, not a documentary photograph of the trial.",
+        "credit": "National Gallery, London",
+        "at": 0
+      }
+    ]
   },
   "elizabeth-keckley": {
     "title": "Behind the White House Door",
@@ -112,7 +121,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.whitehousehistory.org/from-slavery-to-the-white-house-the-extraordinary-life-of-elizabeth-keckly"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Elizabeth_Keckley.jpg?width=900",
+        "page": "https://womenshistory.si.edu/blog/elizabeth-keckly-remembered-dressmaker-excluded-author",
+        "kind": "Historical author portrait",
+        "caption": "Portrait associated with the first edition of Elizabeth Keckley's memoir, 1868.",
+        "credit": "Smithsonian American Women's History Museum",
+        "at": 0
+      }
+    ]
   },
   "harriet-tubman": {
     "title": "The Routes That Could Not Be Named",
@@ -173,7 +191,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.archives.gov/research/african-americans/individuals/harriet-tubman"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Harriet_Tubman_c1868-69.jpg?width=900",
+        "page": "https://www.nps.gov/hatu/learn/historyculture/htubman.htm",
+        "kind": "Historical portrait photograph",
+        "caption": "Historical portrait of Harriet Tubman, taken after her Underground Railroad rescues.",
+        "credit": "US National Park Service historical collection",
+        "at": 0
+      }
+    ]
   },
   "mary-berg": {
     "title": "A Diary Escapes the Ghetto",
@@ -230,6 +257,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://encyclopedia.ushmm.org/content/en/article/childrens-diaries-during-the-holocaust?series=197"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mary_Berg.jpg?width=900",
+        "page": "https://1943.pl/en/artykul/mary-berg/",
+        "kind": "Archival image (museum reference)",
+        "caption": "Mary Berg's biography and original diary history are preserved by the Warsaw Ghetto Museum; image availability depends on the external archive.",
+        "credit": "Warsaw Ghetto Museum",
+        "at": 0
+      }
+    ]
   }
 });
