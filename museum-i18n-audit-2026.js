@@ -10,5 +10,19 @@
   "Four Behind the Silence research panels now introduce published research on friendship, classroom participation, family communication, and online self-censorship. Read original sources through each panel. Interpretations are labeled separately from direct research results.": "“沉默背后”设有四个研究单元，分别介绍朋友关系、课堂参与、家庭沟通和网络自我审查方面已发表的研究。读者可以通过各单元查阅原始来源；本馆的解释会与研究本身的结论区分呈现。",
   "Story drafts are saved in this browser while you type. Signed-in visitors can also sync drafts to their private account storage once the Supabase story database has been set up. Until cloud backup is confirmed, drafts may remain on this device only. Anyone with access to this browser profile might be able to see its locally saved drafts.": "写作时，故事草稿会保存到当前浏览器。故事数据库配置完成后，登录访客也可以将草稿同步至自己的私人账户空间。在云端备份得到确认以前，草稿可能仅保存在本设备；能够访问同一浏览器个人资料的人，也可能看到本地保存的草稿。",
   "Do not include private identifying information about others. The current prototype does not provide comprehensive pre-publication human moderation or guarantee removal of copies kept elsewhere. Broader public launch requires stronger moderation and reporting mechanisms.": "请不要填写能够识别他人身份的私人信息。当前原型尚未提供全面的发表前人工审核，也不能保证删除已被他人复制保存的内容。若面向更广泛公众开放，还需要加强内容审核和举报处理机制。",
-  "Find a gallery's sky.": "寻找一个展厅的星空。"
+  "Find a gallery's sky.": "寻找一个展厅的星空。",
+  "Story moderation": "故事管理",
+  "CURATOR · PRIVATE INBOX": "策展人 · 私人收件箱",
+  "CURATOR · PUBLIC STORIES": "策展人 · 公开故事",
+  "Story Moderation": "故事管理",
+  "PRIVATE CREATER AREA": "私人策展区域",
+  "Choose which part of the museum you want to manage. Only an authorized curator can access these tools.": "请选择需要管理的博物馆功能。只有经过授权的策展人能够进入这些页面。",
+  "Manage public stories, hide them or restore visibility.": "管理公开故事、暂时隐藏展品或恢复展示。",
+  "Open moderation ↗": "进入故事管理 ↗",
+  "Visitor Feedback": "访客反馈",
+  "Read submitted suggestions and mark feedback as reviewed.": "阅读访客提交的建议，并将处理过的反馈标记为已处理。",
+  "Open feedback ↗": "查看反馈 ↗",
+  "What happens between wanting to express something and deciding not to deliver it? Begin with real letters, hidden identities and private manuscripts. Other wings examine protective secrecy and the voices of people forced to stop speaking after resisting.": "当一个人想要表达，却最终没有把话送出去，中间发生了什么？从真实的书信、隐去的身份和私人手稿出发，走进这座历史藏馆。其他展厅也将呈现为了自保而沉默的人，以及因反抗而被迫停止发声的人。",
+  "Your choice and reasons are already saved in the shared sky. Your decision to write a story does not affect your stars. Your optional story remains a private draft unless you deliberately publish it. Free-text “other reasons” stay on this device. Avoid identifying or sensitive details.": "你的选择及理由已经保存在共享星空中。是否继续写下故事，不会改变那些星星。你可以选择写故事，但只有在主动发布后，私人草稿才会公开。你在“其他理由”中自由填写的文字只保存在当前设备上。请避免填写能够识别个人身份的信息或敏感细节。",
+  "Nothing is published automatically. Publishing requires a completed title, story and reason, choosing Anonymous or a public display name, checking a clear consent box, and confirming publication. After publishing, ANY visitor to the website—including someone who has not logged in—may read your story. Copies may remain outside our control even after withdrawal.": "故事不会自动公开。发布前，你需要填写标题、故事和理由，选择匿名或使用公开显示的名字，勾选明确的同意选项，并再次确认发布。发布后，任何访问网站的人——包括尚未登录的人——都可能阅读你的故事。即使之后撤回，其他人先前保存的副本也可能无法由本馆删除。"
 });})();
