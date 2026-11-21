@@ -709,8 +709,104 @@ function storyShelf(id,limit=0){
  return shown.length?`<div class="archive">${shown.map(st=>`<article class="archive-item"><div class="eyebrow">${esc(scenario(st.scenario)?.title||'Others')} · by ${esc(st.author_name||'Anonymous')}</div><h3 class="serif"><a href="#/story/${encodeURIComponent(st.id)}">${esc(st.title||'An Unsent Story')}</a></h3><p class="archive-prose">${esc(st.story)}</p><div class="divider"></div><strong>Why they chose this</strong><p class="archive-prose">${esc(st.why)}</p><a class="link-arrow" href="#/story/${encodeURIComponent(st.id)}">Read this story ↗</a></article>`).join('')}</div>`:`<div class="empty-state"><div class="symbol">✉</div><h3>No published stories yet.</h3><p>Only stories deliberately made public by their authors appear here. Private drafts are never displayed.</p></div>`
 }
 const SILENCE_RESEARCH={"friendship":{"title":"Why do we keep secrets from our friends?","study":"Afifi & Guerrero (1998)","sourceTitle":"Some Things Are Better Left Unsaid II: Topic Avoidance in Friendships","url":"https://doi.org/10.1080/01463379809370099","question":"Why do people avoid certain topics even with close friends?","finding":"In a study of 177 university students, researchers identified four categories of motives for avoiding topics in friendships. These motives help explain why closeness does not always make difficult conversations easy.","reasons":[["We want to protect ourselves.","Sharing something personal can make us vulnerable. We may worry that a friend will judge us, misunderstand our feelings, or see us differently. Keeping quiet may feel safer than risking a painful response."],["We want to protect the friendship.","An honest conversation might lead to conflict, hurt feelings, or a change in a relationship we value. Some people avoid a topic not because the friendship means little, but because it means a great deal."],["We do not expect a helpful response.","We might believe our friend will not listen carefully, take our concerns seriously, or know how to respond. When we expect little understanding, beginning a difficult conversation may feel pointless."],["Some topics feel inappropriate to discuss.","A subject may seem too private, embarrassing, or unsuitable for this particular friendship. Expectations about social boundaries can make us hesitate, even when we would like to talk."]],"reflection":"Perhaps the difficult part of friendship is not deciding whether we trust someone, but deciding how much of ourselves we are willing to reveal.","scope":"The four motives are research categories. The examples above are illustrations, not quotations from participants."},"classroom":{"title":"Why do students stay silent even when they have something to say?","study":"Scientific Reports (2025)","sourceTitle":"Configuration Analysis of Negative Silence in College Classroom Based on FSQCA Method","url":"https://pubmed.ncbi.nlm.nih.gov/40634503/","question":"What combinations of conditions are associated with negative silence in university classrooms?","finding":"This study examined 222 university students. Instead of finding one universal cause, it identified several combinations involving confidence, fear of negative evaluation, interest in learning, and teachers' interactions. No single condition explained every instance of silence.","reasons":[["We doubt our own abilities.","A student may have an idea but question whether it is correct or worth sharing. Low confidence in one's ability to contribute can make speaking feel riskier than staying quiet."],["We fear being judged.","Answering aloud exposes our thoughts to classmates and teachers. The possibility of giving a wrong answer, feeling embarrassed, or receiving criticism can discourage participation."],["The classroom does not feel inviting.","How teachers communicate matters. Encouragement, eye contact, and other interactions can affect whether students feel able to join a discussion. Silence should not be understood only as a personal weakness."],["We lose interest or connection to the lesson.","When a topic feels difficult, distant, or uninteresting, students may disengage. The study considered learning interest alongside other factors rather than as a stand-alone explanation."]],"reflection":"Sometimes, the silence of a classroom tells us as much about its atmosphere as it does about its students.","scope":"The study concerned negative classroom silence and associations among factors. It does not mean every quiet student is anxious, disengaged, or unwilling to learn."},"family":{"title":"Why can speaking honestly feel difficult at home?","study":"Koerner & Fitzpatrick (2002)","sourceTitle":"Understanding Family Communication Patterns and Family Functioning","url":"https://doi.org/10.1080/23808985.2002.11679010","question":"How do families differ in their expectations about open discussion and agreement?","finding":"Family communication research distinguishes between conversation orientation (how much open discussion is encouraged) and conformity orientation (how strongly shared beliefs and agreement are valued). Different combinations shape how family members communicate.","reasons":[["How much room is there for open conversation?","In some families, people regularly share feelings, experiences, and different opinions. In others, those conversations happen less often. Having fewer opportunities to discuss disagreement may make difficult subjects harder to begin."],["How strongly is agreement expected?","Some families place particular value on shared beliefs, harmony, or respect for authority. A family member may hesitate to disagree because they worry that doing so will appear disrespectful or create conflict."],["What happens when both expectations exist together?","A family may encourage conversation while still expecting members to agree. Another may offer little space for open discussion. Whether speaking feels comfortable depends on the combination—not simply on whether a family is 'strict' or 'open'."]],"reflection":"Perhaps some things remain unspoken at home not because they are unimportant, but because we have learned that certain conversations are difficult to begin.","scope":"This research describes family communication patterns; the examples of hesitation are the museum's application of that framework, not direct evidence that a particular family pattern causes silence."},"before-sending":{"title":"Why do we write something, then decide not to send it?","study":"Das & Kramer (2013)","sourceTitle":"Self-Censorship on Facebook","url":"https://ojs.aaai.org/index.php/ICWSM/article/view/14412","question":"How often do people begin creating online content but decide not to publish it, and what factors are associated with that choice?","finding":"Across about 3.9 million Facebook users observed over 17 days, 71% showed at least one instance of last-minute self-censorship. The study found patterns related to audiences and to different kinds of posts. It did not directly establish each person's private motive.","highlight":"71%","highlightText":"of users in this study showed some last-minute self-censorship during the 17-day observation period.","reasons":[["We think about who might read it.","A message or post can reach friends, relatives, classmates, and colleagues at once. Different people may interpret the same words differently. The study found links between users' perceived audience and self-censorship."],["Different audiences bring different expectations.","Something that feels natural to tell a close friend may feel uncomfortable when a teacher, parent, or acquaintance can also see it. This is one way to understand the difficulty of choosing what to share in mixed online spaces."],["The type of message matters.","The study observed more self-censorship of posts than comments, with patterns varying by posting context. Writing to a broad audience may create different concerns from responding inside an existing conversation."]],"reflection":"The words have been written. The cursor is waiting. But somewhere between writing and sending, we begin imagining the people on the other side of the screen.","scope":"The 71% figure describes observed Facebook behavior in this sample and time period—not all internet users, and not proof that everyone who abandoned a post did so out of fear."}};
+const SILENCE_RESEARCH_ZH={
+  "friendship": {
+    "title": "为什么我们会向朋友保守秘密？",
+    "question": "为什么即使面对亲密的朋友，人们仍会避开某些话题？",
+    "finding": "研究者调查了177名大学生，并将朋友之间回避话题的动机归纳为四类。这些动机帮助我们理解：关系亲近，并不意味着每一次艰难的谈话都会变得容易。",
+    "reasons": [
+      [
+        "我们想保护自己。",
+        "向别人透露私密的事情，意味着允许对方看见自己脆弱的一面。我们可能担心朋友评判自己、误解自己的感受，或者从此以不同的眼光看待自己。与其冒着听到伤人回应的风险，保持沉默有时似乎更安全。"
+      ],
+      [
+        "我们想保护这段友谊。",
+        "一次坦诚的谈话可能引发冲突、伤害彼此的感情，甚至改变一段我们珍视的关系。有些人回避某个话题，不是因为这段友谊无足轻重，恰恰可能是因为它对自己太重要了。"
+      ],
+      [
+        "我们不认为自己会得到有帮助的回应。",
+        "我们可能觉得朋友不会认真倾听、不会重视自己的困扰，或者根本不知道该如何回应。当一个人预期自己难以获得理解时，主动开始一场艰难的对话也就显得没有意义。"
+      ],
+      [
+        "有些话题似乎不适合讨论。",
+        "某个话题可能过于私密、令人尴尬，或者不适合在这段特定的友谊里提起。人与人之间关于边界的期待，有时会让我们犹豫不决，即使内心其实很想说出来。"
+      ]
+    ],
+    "reflection": "也许友谊中最困难的事情，并不是决定要不要相信一个人，而是决定自己愿意让对方看见多少真实的自我。",
+    "scope": "上述四种动机是研究者归纳出的类别。本馆所举的具体情境用于帮助理解，并非研究参与者的原话。"
+  },
+  "classroom": {
+    "title": "为什么学生明明有话想说，却仍在课堂上沉默？",
+    "question": "哪些条件的组合与大学课堂中的消极沉默有关？",
+    "finding": "这项研究考察了222名大学生。研究并没有找到一种适用于所有人的单一原因，而是发现自信程度、对负面评价的恐惧、学习兴趣以及教师互动等因素会以不同方式共同出现。没有任何一个条件能够解释课堂上的每一次沉默。",
+    "reasons": [
+      [
+        "我们怀疑自己的能力。",
+        "学生可能已经有了想法，却仍然怀疑答案是否正确、是否值得分享。缺乏表达和参与课堂讨论的信心，会让开口发言看起来比安静坐着更有风险。"
+      ],
+      [
+        "我们害怕受到评价。",
+        "当众回答问题，意味着把自己的想法交给老师和同学评判。答错、感到难堪或受到批评的可能性，都可能让学生不愿参与。"
+      ],
+      [
+        "课堂气氛不够鼓励表达。",
+        "教师如何与学生交流，同样重要。鼓励、目光接触和其他互动方式，都可能影响学生是否觉得自己能够加入讨论。因此，不能把沉默完全理解为学生个人的弱点。"
+      ],
+      [
+        "我们对课程失去兴趣或参与感。",
+        "当一个话题太难、距离自己的生活太远，或者令人提不起兴趣时，学生可能逐渐不再参与。研究将学习兴趣与其他因素放在一起考察，而不是把它当作独立且万能的解释。"
+      ]
+    ],
+    "reflection": "有时，一间教室里的沉默，反映的不仅是学生本身，也同样反映了这间教室的气氛。",
+    "scope": "这项研究关注的是课堂中的消极沉默及多个因素之间的关联，并不意味着每个安静的学生都感到焦虑、缺乏兴趣，或者不愿学习。"
+  },
+  "family": {
+    "title": "为什么在家里，坦诚说话也会如此困难？",
+    "question": "不同家庭对于公开讨论和意见一致的期待，有哪些差别？",
+    "finding": "家庭沟通研究区分两个维度：谈话取向，即家庭在多大程度上鼓励开放讨论；一致性取向，即家庭有多重视共同的信念以及成员之间的意见一致。这两个维度以不同方式结合，塑造家庭成员彼此交流的习惯。",
+    "reasons": [
+      [
+        "家庭为开放交谈留下了多少空间？",
+        "在一些家庭，人们经常分享感受、经历和不同意见；另一些家庭则较少进行这类对话。如果平时很少有机会讨论分歧，那么某些困难的话题就更难找到开始的时机。"
+      ],
+      [
+        "家庭有多期待成员保持一致？",
+        "有些家庭格外重视共同的观念、和睦相处或对权威的尊重。家庭成员可能担心自己的不同意见被看作不尊重长辈，或者引发冲突，于是选择不说。"
+      ],
+      [
+        "当这两种期待同时存在，会发生什么？",
+        "一个家庭可能鼓励大家畅所欲言，同时又期待每个人最终表示赞同；另一个家庭可能从一开始就很少提供公开讨论的空间。说话是否自在，取决于这些期待怎样组合，而不能只用“严格”或“开放”两个标签来判断。"
+      ]
+    ],
+    "reflection": "也许家里有些重要的话始终没有被说出来，并不是因为它们不重要，而是因为我们早已学会：有些对话很难开始。",
+    "scope": "这项研究描述的是家庭沟通模式。这里关于犹豫和沉默的具体例子，是本馆对理论框架的应用，并不是某种家庭模式必然导致沉默的直接证据。"
+  },
+  "before-sending": {
+    "title": "为什么我们写好了某些话，却最终没有发出去？",
+    "question": "人们有多常在开始撰写网络内容后决定不发布？哪些因素与这种选择有关？",
+    "finding": "研究者在17天内观察了约390万名 Facebook 用户，发现其中71%的人至少出现过一次临时放弃发布内容的行为。研究还发现，这种自我审查与受众以及发布内容的类型等因素有关。不过，研究并不能直接证明每个人放弃发布时心里真正的原因。",
+    "highlightText": "在为期17天的观察中，这项研究里71%的用户至少出现过一次临时放弃发布的行为。",
+    "reasons": [
+      [
+        "我们会想象谁可能读到这些话。",
+        "一条信息或帖子可能同时被朋友、家人、同学和同事看到。不同的人可能对同一句话作出完全不同的理解。研究发现，用户对潜在受众的认知，与他们是否进行自我审查存在关联。"
+      ],
+      [
+        "不同的读者意味着不同的期待。",
+        "某些话对亲密朋友说出来很自然，但当老师、父母或普通熟人也可能看到时，我们就会感到不自在。这有助于解释：在受众混杂的网络空间里，决定分享什么为什么如此困难。"
+      ],
+      [
+        "内容的类型也会影响决定。",
+        "研究观察到，相比评论，用户更常在撰写帖子时放弃发布，而且这种行为会随发表情境而变化。面向广泛受众主动发帖，与在现有对话中回复他人，可能带来不同的顾虑。"
+      ]
+    ],
+    "reflection": "文字已经写下。光标仍在等待。然而，在写下与发送之间的某个瞬间，我们开始想象屏幕另一边会出现哪些人。",
+    "scope": "71%这一数字仅描述该研究样本在特定17天内的 Facebook 行为，不代表所有互联网用户，也不能证明每个放弃发帖的人都是出于恐惧。"
+  }
+};
 function behindSilence(id){
- const item=SILENCE_RESEARCH[id];if(!item)return '';
+ const original=SILENCE_RESEARCH[id];if(!original)return '';
+ const item=museumLang==='en'?original:{...original,...SILENCE_RESEARCH_ZH[id]};
  return `<section class="behind-silence" id="behind-the-silence" aria-labelledby="behind-title">
   <div class="behind-heading"><span class="eyebrow">BEHIND THE SILENCE</span><h2 id="behind-title">${esc(item.title)}</h2>
     <p class="muted">A closer look at the reasons people sometimes choose silence, through published research.</p></div>
