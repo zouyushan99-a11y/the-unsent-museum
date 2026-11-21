@@ -388,10 +388,23 @@ function storyViewSwitch(id,sky){
  const suffix=id?'/'+encodeURIComponent(id):'';
  return `<div class="story-view-switch" role="group" aria-label="Story browsing mode"><a class="${sky?'':'selected'}" href="#/archive${suffix}" ${!sky?'aria-current="page"':''}>☰ Story Collection</a><a class="${sky?'selected':''}" href="#/story-sky${suffix}" ${sky?'aria-current="page"':''}>✧ Story Sky</a></div>`
 }
+// A distinct, consistent hue for every published-story collection.
+const STORY_STAR_CATEGORIES=[
+ {id:'friendship',label:'Between Friends · 友谊',color:'#F0C66C',meaning:'Warm amber'},
+ {id:'classroom',label:'In the Classroom · 课堂',color:'#75BDF1',meaning:'Clear blue'},
+ {id:'family',label:'At Home · 家庭',color:'#CF9AF0',meaning:'Soft violet'},
+ {id:'before-sending',label:'Before Sending · 发送之前',color:'#62D6BA',meaning:'Sea glass'},
+ {id:'others',label:'Others · 其他',color:'#F395A6',meaning:'Coral pink'}
+];
+const STORY_STAR_COLORS=Object.fromEntries(STORY_STAR_CATEGORIES.map(x=>[x.id,x.color]));
+function storySkyLegend(id){
+ const categories=id?STORY_STAR_CATEGORIES.filter(x=>x.id===id):STORY_STAR_CATEGORIES;
+ return `<div class="story-star-legend" aria-label="Story constellation color key">${categories.map(x=>`<div class="story-legend-item"><span class="story-legend-star" style="--story-star-color:${x.color}" aria-hidden="true">✦</span><span>${esc(x.label)}</span></div>`).join('')}</div>`
+}
 function storySkyPage(id){
  if(id&&id!=='others'&&!scenario(id))return storySkyPage();
  const items=visibleStories(id);
- return `<main class="container story-sky-page"><section class="page-hero"><div class="eyebrow">THE STORY ARCHIVE · ${id?esc(scenario(id)?.title||'Others'):'ALL GALLERIES'}</div><h1>A Sky of Stories.</h1><p class="muted">Each light is a story someone chose to share. Hover to discover its title and author, then select the star to read the whole story. On touchscreens, tap a star to preview it and use Read story.</p>${storyViewSwitch(id,true)}<div class="category-nav"><a class="pill ${!id?'active':''}" href="#/story-sky">All stories</a>${SCENARIOS.map(x=>`<a class="pill ${id===x.id?'active':''}" href="#/story-sky/${x.id}">${esc(x.title)}</a>`).join('')}<a class="pill ${id==='others'?'active':''}" href="#/story-sky/others">Others</a></div></section><section class="section-compact" style="padding-top:5px"><div class="story-sky-meta"><span class="eyebrow">${items.length} published ${items.length===1?'story':'stories'}</span><span class="small muted">Only publicly visible stories become stars</span></div>${storyCloudStatus==='error'?`<div class="auth-feedback" role="alert">Could not load stories: ${esc(storyCloudError)}</div>`:''}<div class="story-sky-frame"><canvas id="story-sky-canvas" role="img" aria-label="Interactive constellation of published stories"></canvas>${items.length===0?`<div class="story-sky-empty"><div class="symbol">✧</div><h3>${storyCloudStatus==='loading'?'Gathering the stories…':'No stories in this sky yet.'}</h3><p class="small muted">Stories appear here when their authors publish them.</p></div>`:''}</div><div id="story-sky-preview" class="story-sky-preview" hidden aria-live="polite"></div><p class="small muted">Only published stories are shown. Withdrawing, deleting, or curator-blocking a story removes its star from the public sky after the next refresh.</p><div class="actions"><a href="#/contribute/others" class="btn btn-outline">Write your own story ↗</a><a href="#/archive${id?'/'+encodeURIComponent(id):''}" class="btn btn-outline">Read stories as text</a></div></section></main>`
+ return `<main class="container story-sky-page"><section class="page-hero"><div class="eyebrow">THE STORY ARCHIVE · ${id?esc(scenario(id)?.title||'Others'):'ALL GALLERIES'}</div><h1>A Sky of Stories.</h1><p class="muted">Each light is a story someone chose to share. Hover to discover its title and author, then select the star to read the whole story. On touchscreens, tap a star to preview it and use Read story.</p>${storyViewSwitch(id,true)}<div class="category-nav"><a class="pill ${!id?'active':''}" href="#/story-sky">All stories</a>${SCENARIOS.map(x=>`<a class="pill ${id===x.id?'active':''}" href="#/story-sky/${x.id}">${esc(x.title)}</a>`).join('')}<a class="pill ${id==='others'?'active':''}" href="#/story-sky/others">Others</a></div></section><section class="section-compact" style="padding-top:5px"><div class="story-sky-meta"><span class="eyebrow">${items.length} published ${items.length===1?'story':'stories'}</span><span class="small muted">Only publicly visible stories become stars</span></div>${storyCloudStatus==='error'?`<div class="auth-feedback" role="alert">Could not load stories: ${esc(storyCloudError)}</div>`:''}${storySkyLegend(id)}<div class="story-sky-frame"><canvas id="story-sky-canvas" role="img" aria-label="Interactive constellation of published stories"></canvas>${items.length===0?`<div class="story-sky-empty"><div class="symbol">✧</div><h3>${storyCloudStatus==='loading'?'Gathering the stories…':'No stories in this sky yet.'}</h3><p class="small muted">Stories appear here when their authors publish them.</p></div>`:''}</div><div id="story-sky-preview" class="story-sky-preview" hidden aria-live="polite"></div><p class="small muted">Only published stories are shown. Withdrawing, deleting, or curator-blocking a story removes its star from the public sky after the next refresh.</p><div class="actions"><a href="#/contribute/others" class="btn btn-outline">Write your own story ↗</a><a href="#/archive${id?'/'+encodeURIComponent(id):''}" class="btn btn-outline">Read stories as text</a></div></section></main>`
 }
 function storyShelf(id,limit=0){
  const items=visibleStories(id),shown=limit?items.slice(0,limit):items;
@@ -623,8 +636,7 @@ function makeSkyCanvasScene(canvas,arr,kind){
     const reason=kind==='reason',id=answer.id;
     const flowTrack=makeStarFlowTrack(id,reason?'reason':kind==='story'?'story':'choice-'+answer.decision);
     const pos=flowStarPoint(flowTrack,w,h,performance.now()/1000,skyReduceMotion.matches);
-    const storyPalette={friendship:'#E4BE78',classroom:'#9AC6E9',family:'#CF9BD5','before-sending':'#91D9C9',others:'#F0AEAA'};
-    const colour=kind==='story'?(storyPalette[answer.scenario]||'#EEC65B'):reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
+    const colour=kind==='story'?(STORY_STAR_COLORS[answer.scenario]||'#F0C66C'):reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
     const hash=starHash(id),random=seededRand(hash);
     targets.push({...pos,r:flowTrack.r,flowTrack,kind:kind==='story'?'story':reason?'reason':'choice',storyId:kind==='story'?String(answer.id):null,storyTitle:kind==='story'?answer.title:null,storyAuthor:kind==='story'?answer.author_name:null,scenario:answer.scenario,
       decision:answer.decision,authorName:answer.authorName||null,...(reason?{label:answer.label}:{}),
@@ -698,7 +710,7 @@ function storyStarAt(canvas,x,y,touch){
 function showStorySkyPreview(st,x,y,showReadLink=false){
  hideStarTooltip();
  if(!st)return;
- const title=esc(st.storyTitle||'An Unsent Story'),author=esc(st.storyAuthor||'无名');
+ const title=esc(st.storyTitle||'An Unsent Story'),author=esc(st.storyAuthor==='Anonymous'?'无名':st.storyAuthor||'无名');
  const tooltip=document.createElement('div');tooltip.className='star-info-tooltip story-star-tooltip';tooltip.setAttribute('role','status');
  tooltip.innerHTML='<small>AN UNSENT STORY</small><strong>'+title+'</strong><span class="sky-star-author">✧ '+author+'</span>'+
  (showReadLink?'<a href="#/story/'+encodeURIComponent(st.storyId)+'" class="story-tooltip-link">Read story ↗</a>':'');
