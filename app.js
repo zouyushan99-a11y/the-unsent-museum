@@ -31,6 +31,7 @@ function museumHistoryLocalized(essay,id){
  const x=window.MUSEUM_HISTORY_ZH?.[id];
  if(!x)return essay;
  const tr=value=>museumConvert(value);
+ const label=window.MUSEUM_HISTORY_LABELS?.[id]||{};
  const story=x.story.map(tr);
  const analysis=[
   [tr('历史背景与社会环境'),tr(x.setting)],
@@ -40,8 +41,10 @@ function museumHistoryLocalized(essay,id){
   [tr('沉默之后发生了什么？'),tr(x.after)]
  ];
  const old=essay.moment||{};
- return {...essay,title:tr(x.title),subtitle:tr(x.subtitle),readingTime:tr('中文阅读版'),story,analysis,question:tr(x.question),
-  object:{...(essay.object||{}),evidence:tr(x.proof)},
+ return {...essay,title:tr(x.title),subtitle:tr(x.subtitle),period:tr(label.period||essay.period),readingTime:tr('完整中文故事'),story,analysis,question:tr(x.question),
+  images:(essay.images||[]).map(pic=>({...pic,caption:tr(label.image||'与此人物或事件有关的真实历史图像，请通过来源链接核查。'),kind:tr('馆藏图像'),credit:tr(label.source||'历史馆藏资料')})),
+  sources:(essay.sources||[]).map((s,i)=>[tr((label.source||'原始资料机构')+' · 文献 '+(i+1)),s[1]]),
+  object:{...(essay.object||{}),name:tr(label.object||x.title),kind:tr(label.kind||'历史文献'),evidence:tr(x.proof)},
   moment:{...old,addressed:tr('请结合上方历史故事与原始资料判断。'),intended:tr(x.act),withheld:tr(x.act),why:tr(x.cause),certainty:tr(x.proof)},
   note:tr('本展品中文版依据同一批历史资料重新组织叙述，并非逐字翻译，篇幅与英文稿可能不同。历史事件与主观动机分别呈现；如需核查，请使用下方的原始资料链接。'),
   tags:(essay.tags||[]).map(v=>tr(window.MUSEUM_I18N?.zh?.[v]||v))};
@@ -469,7 +472,7 @@ function historyPage(id){
    '<p id="history-class-description" class="history-class-description">'+historyTabs[0].desc+'</p><p class="history-timeline-guide">Arranged by the year of the relevant event, earliest first — not by birth date.</p>'+
    '<div class="history-library-search"><label for="history-search">Find a historical account</label><input id="history-search" type="search" placeholder="Search names, places, themes…" autocomplete="off" /><span id="history-search-status" aria-live="polite"></span></div>'+
    '<div class="history-grid history-chronology-grid" aria-label="Historical stories, ordered chronologically">'+[...HISTORICAL_SILENCES].sort((a,b)=>({withheld:0,protective:1,suppressed:2}[a.silenceClass]-{withheld:0,protective:1,suppressed:2}[b.silenceClass])||(a.sortYear-b.sortYear)||a.name.localeCompare(b.name)).map(x=>{
-      const d=details[x.id];
+      const d=museumHistoryLocalized(details[x.id],x.id);
       return '<a class="history-card '+(selected?.id===x.id?'is-current':'')+'" data-archive-year="'+x.sortYear+'" data-silence-class="'+esc(x.silenceClass)+'" data-history-search="'+esc((x.name+' '+(window.MUSEUM_I18N?.zh?.[x.name]||'')+' '+x.tag+' '+x.kind+' '+x.year+' '+(d?.title||'')).toLowerCase())+'" href="#/history/'+encodeURIComponent(x.id)+'"><span class="history-date">'+esc(d?.period||x.year)+'</span><span class="history-symbol" aria-hidden="true">✧</span><h2>'+esc(d?.title||x.name)+'</h2><p>'+esc(x.name)+'</p><span class="history-open">Read the story ↗</span></a>';
    }).join('')+'</div></section>';
  let content='';
@@ -497,7 +500,7 @@ function historyPage(id){
     '<div><h3>Why did it happen?</h3><p>'+esc(moment.why||'The evidence does not determine a single cause.')+'</p></div>'+
     '<div class="history-moment-certainty"><h3>What do the records actually establish?</h3><p>'+esc(moment.certainty||'The interpretation is qualified in the research notes.')+'</p></div>'+
   '</div><div class="history-reason-tags">'+tags+'</div></div>';
-  content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">HISTORICAL NONFICTION · '+esc(selected.kind)+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(selected.name)+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Sources & Reflection</button></nav></header>'+
+  content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">HISTORICAL NONFICTION · '+esc(museumLang==='en'?selected.kind:(window.MUSEUM_HISTORY_LABELS?.[selected.id]?.kind||'历史展品'))+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(museumZh(selected.name))+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Sources & Reflection</button></nav></header>'+
    '<section id="history-story" class="history-story-section"><div class="history-section-title"><span>PART I · HISTORICAL NONFICTION</span><h2>The Story</h2></div><div class="history-prose">'+openingImages+chapters+'</div></section>'+
    '<section id="history-anatomy" class="history-analysis-section"><div class="history-section-title"><span>PART II · INTERPRETATION</span><h2>An Anatomy of Silence</h2><p>Why it happened · What form it took · What the evidence allows us to say</p></div>'+momentMarkup+anatomy+'<blockquote class="history-final-question">'+esc(essay.question)+'</blockquote></section>'+
    '<section id="history-evidence" class="history-evidence-section"><div class="history-section-title"><span>PART III · METHOD & REFERENCES</span><h2>Author’s Note & Sources</h2></div><p>'+esc(essay.note)+'</p><ol>'+sources+'</ol><p class="history-evidence-warning">The narrative uses historical evidence; the analysis is a curatorial interpretation. Sources are provided for readers to check the record independently.</p></section></article>';
@@ -1064,7 +1067,7 @@ function render(scroll=true){hideStarTooltip();const r=route(),body=r.type==='ho
  const update=()=>{
  const q=(search?.value||'').trim().toLowerCase();let count=0;
  document.querySelectorAll('.history-card').forEach(card=>{const show=card.getAttribute('data-silence-class')===active&&(card.getAttribute('data-history-search')||'').includes(q);card.hidden=!show;if(show)count++;});
- const status=document.getElementById('history-search-status');if(status)status.textContent=count+' '+(count===1?'account':'accounts')+' in this wing';
+ const status=document.getElementById('history-search-status');if(status)status.textContent=museumLang==='en'?(count+' '+(count===1?'account':'accounts')+' in this wing'):museumConvert('本展厅共有 '+count+' 份符合条件的档案');
  const desc=document.getElementById('history-class-description');if(desc)desc.textContent=descriptions[active];
  tabs.forEach(tab=>{const on=tab.dataset.silenceTab===active;tab.classList.toggle('is-active',on);tab.setAttribute('aria-pressed',String(on));});
  };
