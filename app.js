@@ -254,7 +254,7 @@ function curatorFeedbackSection(){
 }
 function curatorPage(){
  if(!authUser||!curatorAccess)return '<main class="container"><section class="page-hero"><h1>'+museumZh('Curator access required.')+'</h1><p class="muted">'+museumZh('Only the museum curator can moderate public stories. Accounts must be authorized through the Supabase database.')+'</p><a href="#/galleries" class="btn btn-outline">'+museumZh('Return to the galleries')+'</a></section></main>';
- return '<main class="container"><section class="page-hero"><div class="eyebrow">CURATOR · PUBLIC STORIES</div><h1>Story Moderation.</h1><p class="muted">Stories publish immediately without prior review. You can hide a published story from every visitor and restore it later. Hidden stories remain in the database, but are excluded from the public archive.</p><button class="btn btn-outline" id="refresh-curator">Refresh public stories ↗</button></section><section class="section-compact">'+
+ return '<main class="container"><section class="page-hero"><div class="eyebrow">CURATOR · PUBLIC STORIES</div><h1>Story Moderation.</h1><p class="muted">Stories publish immediately without prior review. You can hide a published story from every visitor and restore it later. Hidden stories remain in the database, but are excluded from the public archive.</p><nav class="collective-category-nav" aria-label="Curator sections"><a href="#curator-stories" data-curator-jump="curator-stories">Story moderation</a><a href="#curator-feedback" data-curator-jump="curator-feedback">Visitor feedback</a></nav><button class="btn btn-outline" id="refresh-curator">Refresh public stories ↗</button></section><section class="section-compact" id="curator-stories">'+
  (curatorError?'<p class="auth-feedback" role="alert">'+esc(curatorError)+'</p>':'')+
  (curatorStories.length?'<div class="archive">'+curatorStories.map(st=>'<article class="archive-item"><div class="eyebrow">'+esc(st.scenario)+' · '+esc(st.author_name||'Anonymous')+' · '+(st.blocked?'HIDDEN':'PUBLIC')+'</div><h3>'+esc(st.title)+'</h3><p class="archive-prose">'+esc(st.story)+'</p><p class="small muted">'+esc(st.why)+'</p><button class="btn btn-outline curate-story" data-id="'+esc(st.id)+'" data-blocked="'+String(!!st.blocked)+'">'+(st.blocked?'Restore public visibility':'Hide from public archive')+'</button></article>').join('')+'</div>':'<p class="muted">No published stories are available for moderation.</p>')+'</section>'+curatorFeedbackSection()+'</main>';
 }
@@ -262,6 +262,7 @@ function bindCurator(){
  const reload=$('#refresh-curator');
  if(reload)reload.onclick=async()=>{await loadCuratorStories();render(false)};
  document.querySelectorAll('.curate-story').forEach(btn=>btn.onclick=()=>changeStoryBlock(btn.dataset.id,btn.dataset.blocked!=='true'));
+ document.querySelectorAll('[data-curator-jump]').forEach(link=>link.onclick=e=>{e.preventDefault();document.getElementById(link.dataset.curatorJump)?.scrollIntoView({behavior:'smooth',block:'start'})});
  const feedbackReload=$('#refresh-curator-feedback');
  if(feedbackReload)feedbackReload.onclick=async()=>{await loadCuratorFeedback();render(false)};
  document.querySelectorAll('.curator-feedback-toggle').forEach(btn=>{
