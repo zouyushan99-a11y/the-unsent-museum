@@ -264,6 +264,32 @@ function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SC
 const VORTICES=[{x:.22,y:.68,sx:.31,sy:.36,turn:1},{x:.74,y:.31,sx:.30,sy:.34,turn:-1},{x:.52,y:.55,sx:.27,sy:.25,turn:1}];
 function starHash(key){let h=2166136261;for(const c of String(key)){h=Math.imul(h^c.charCodeAt(0),16777619)}return h>>>0}
 function swirlPoint(w,h,key,group='choice'){const hsh=starHash(key),rand=seededRand(hsh),paletteKey=group==='reason'?String(key).split(':').slice(-2).join(':'):group;const preference=starHash(paletteKey)%VORTICES.length;const pick=rand()<.64?preference:Math.floor(rand()*VORTICES.length);const v=VORTICES[pick];const t=.14+.83*rand();const angle=(2.7*Math.PI*t+rand()*.9+pick*1.23)*v.turn;const radius=.1+.87*t;const jitterX=(rand()-.5)*.055*w,jitterY=(rand()-.5)*.055*h;const x=(v.x+Math.cos(angle)*radius*v.sx)*w+jitterX;const y=(v.y+Math.sin(angle)*radius*v.sy)*h+jitterY;return {x:Math.max(12,Math.min(w-12,x)),y:Math.max(12,Math.min(h-12,y)),r:1.5+rand()*2.1}}
+// Stable per-star path on one of the original three painted spiral arms.
+// A complete drift takes several minutes; stars fade at the edge before re-entering.
+function makeStarFlowTrack(key,group){
+ const rand=seededRand(starHash(key));
+ const paletteKey=group==='reason'?String(key).split(':').slice(-2).join(':'):group;
+ const preferred=starHash(paletteKey)%VORTICES.length;
+ const vortex=rand()<.64?preferred:Math.floor(rand()*VORTICES.length);
+ const t0=.14+.83*rand();
+ const phase=rand()*.9;
+ const jitterX=(rand()-.5)*.055,jitterY=(rand()-.5)*.055;
+ const radius=1.5+rand()*2.1;
+ const pace=seededRand(starHash('flow:'+key));
+ return {vortex,t0,phase,jitterX,jitterY,r:radius,flowSpeed:.00115+.0011*pace()};
+}
+function flowStarPoint(track,w,h,seconds,still=false){
+ const v=VORTICES[track.vortex];
+ const start=.14,span=.83;
+ const t=still?track.t0:start+((track.t0-start+seconds*track.flowSpeed)%span);
+ const a=(2.7*Math.PI*t+track.phase+track.vortex*1.23)*v.turn;
+ const radius=.1+.87*t;
+ const x=(v.x+Math.cos(a)*radius*v.sx+track.jitterX)*w;
+ const y=(v.y+Math.sin(a)*radius*v.sy+track.jitterY)*h;
+ // Smoothly enter and leave the spiral: no visible jumps when a path loops.
+ const edge=still?1:Math.max(0,Math.min(1,(t-start)/.045,(start+span-t)/.045));
+ return {x:Math.max(12,Math.min(w-12,x)),y:Math.max(12,Math.min(h-12,y)),edge};
+}
 function paintSwirlBrushstrokes(ctx,w,h){ctx.save();ctx.lineCap='round';const compact=w<500;const passes=compact?13:22;for(let j=0;j<VORTICES.length;j++){const v=VORTICES[j];for(let k=0;k<passes;k++){const random=seededRand(starHash('brush-'+j+'-'+k));const t0=.15+.68*random(),length=.06+.12*random(),phase=.3+random()*.3;ctx.beginPath();for(let p=0;p<=16;p++){const t=t0+length*p/16;const a=(2.7*Math.PI*t+phase+j*1.23)*v.turn;const radius=.1+.87*t;const x=(v.x+Math.cos(a)*radius*v.sx)*w,y=(v.y+Math.sin(a)*radius*v.sy)*h;if(p===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)}ctx.strokeStyle=k%5===0?'rgba(194,171,106,.075)':'rgba(70,113,174,.13)';ctx.lineWidth=.6+random()*1.3;ctx.stroke()}}ctx.restore()}
 function paintStar(ctx,x,y,r,colour){const glow=ctx.createRadialGradient(x,y,0,x,y,r*9);glow.addColorStop(0,colour+'88');glow.addColorStop(.26,colour+'35');glow.addColorStop(1,colour+'00');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(x,y,r*9,0,Math.PI*2);ctx.fill();ctx.fillStyle=colour;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(255,242,199,.68)';ctx.beginPath();ctx.arc(x,y,Math.max(.5,r*.25),0,Math.PI*2);ctx.fill()}
 
@@ -346,13 +372,14 @@ function makeSkyCanvasScene(canvas,arr,kind){
   const stars=kind==='reason'?reasonStars(arr).slice(-1400):arr.slice(-1200);
   const targets=[];
   for(const answer of stars){
-    const reason=kind==='reason',id=reason?answer.id:answer.id;
-    const pos=swirlPoint(w,h,id,reason?'reason':'choice-'+answer.decision);
+    const reason=kind==='reason',id=answer.id;
+    const flowTrack=makeStarFlowTrack(id,reason?'reason':'choice-'+answer.decision);
+    const pos=flowStarPoint(flowTrack,w,h,performance.now()/1000,skyReduceMotion.matches);
     const colour=reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
     const hash=starHash(id),random=seededRand(hash);
-    targets.push({...pos,kind:reason?'reason':'choice',scenario:answer.scenario,
+    targets.push({...pos,r:flowTrack.r,flowTrack,kind:reason?'reason':'choice',scenario:answer.scenario,
       decision:answer.decision,...(reason?{label:answer.label}:{}),
-      sprite:makeStarSprite(colour,pos.r),phase:random()*Math.PI*2,
+      sprite:makeStarSprite(colour,flowTrack.r),phase:random()*Math.PI*2,
       speed:.48+random()*1.35,secondPhase:random()*Math.PI*2,
       // Each star has its own brightness and rhythm; no synchronized flashing.
       base:.68+random()*.13,amplitude:.14+random()*.14});
@@ -372,10 +399,13 @@ function renderSkyFrame(canvas,time){
  ctx.drawImage(scene.backdrop,0,0);
  ctx.setTransform(scene.dpr,0,0,scene.dpr,0,0);
  for(const st of scene.targets){
+   const point=flowStarPoint(st.flowTrack,scene.w,scene.h,time,skyReduceMotion.matches);
+   // Hit testing follows the moving stars rather than their initial positions.
+   st.x=point.x;st.y=point.y;
    const breathing=Math.sin(time*st.speed+st.phase);
    const glimmer=Math.sin(time*(st.speed*1.93)+st.secondPhase);
-   const opacity=skyReduceMotion.matches?1:Math.max(.42,Math.min(1,st.base+st.amplitude*breathing+.065*glimmer));
-   ctx.globalAlpha=opacity;
+   const shimmer=skyReduceMotion.matches?1:Math.max(.42,Math.min(1,st.base+st.amplitude*breathing+.065*glimmer));
+   ctx.globalAlpha=shimmer*point.edge;
    ctx.drawImage(st.sprite.canvas,st.x-st.sprite.glow,st.y-st.sprite.glow);
  }
  ctx.globalAlpha=1;
