@@ -27,6 +27,72 @@ let sharedRefreshPromise=null;
 let importBusy=false;
 let importMessage='';
 let publicStarVerified=false;
+let cloudStories=[];
+let publicStories=[];
+let storyCloudStatus='loading';
+let storyCloudError='';
+let storySyncTimer=0;
+let storySyncInProgress=false;
+let compositionDraftId=null;
+const cloudStoryTable='museum_stories';
+const uuid=()=>globalThis.crypto?.randomUUID?.()||('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)}));
+function findLocalStory(id){return db.stories.find(st=>String(st.id)===String(id))}
+function cloudStoryPayload(st){return {id:st.id,user_id:authUser.id,scenario:st.scenario,title:(st.title||'').slice(0,120),story:(st.story||'').slice(0,4000),why:(st.why||'').slice(0,2000),status:st.status==='published'?'published':'draft'}}
+function addLocalStory(st){const i=db.stories.findIndex(a=>String(a.id)===String(st.id));if(i<0)db.stories.push(st);else db.stories[i]={...db.stories[i],...st};save()}
+async function syncCloudStory(st){
+ if(!authClient||!authUser)throw Error('Sign in to keep a backup in the cloud.');
+ if(st.ownerId&&st.ownerId!==authUser.id)throw Error('This draft belongs to a different account.');
+ const row=cloudStoryPayload(st);
+ const {error}=await authClient.from(cloudStoryTable).upsert(row,{onConflict:'id'});
+ if(error)throw error;
+ st.ownerId=authUser.id;st.synced=true;st.updatedAt=Date.now();addLocalStory(st);
+ return st;
+}
+async function loadCloudStories(){
+ if(!authClient)return;
+ if(!authUser){cloudStories=[];return}
+ const {data,error}=await authClient.from(cloudStoryTable).select('id,scenario,title,story,why,status,updated_at').order('updated_at',{ascending:false}).limit(250);
+ if(error){storyCloudStatus='error';storyCloudError=error.message;return}
+ cloudStories=data||[];
+ for(const row of cloudStories){
+   const local=findLocalStory(row.id);
+   // Retain unsynced local edits; otherwise load the authoritative cloud version.
+   if(local&&!local.synced)continue;
+   addLocalStory({id:row.id,scenario:row.scenario,title:row.title,story:row.story,why:row.why,status:row.status,
+     ownerId:authUser.id,synced:true,time:Date.parse(row.updated_at)||Date.now()});
+ }
+}
+async function loadPublicStories(){
+ if(!authClient){storyCloudStatus='error';storyCloudError='The story service could not load.';return}
+ const {data,error}=await authClient.rpc('get_public_museum_stories');
+ if(error){storyCloudStatus='error';storyCloudError=error.message;return}
+ publicStories=Array.isArray(data)?data.filter(st=>st&&validStoryCategory(st.scenario)):[];
+ storyCloudStatus='ready';storyCloudError='';
+ const r=route();if(r.type==='archive'||r.type==='my-stories')render(false);
+}
+async function refreshStoryCloud(){
+ await Promise.all([loadPublicStories(),loadCloudStories()]);
+ const r=route();if(r.type==='archive'||r.type==='my-stories')render(false);
+}
+function queueStorySync(st){
+ if(st.ownerId&&!authUser?.id)return;
+ if(!authUser||!authClient)return;
+ clearTimeout(st._syncTimer);
+ st._syncTimer=setTimeout(async()=>{try{await syncCloudStory(st);setDraftStatus('Saved privately to your account cloud.')}catch(e){st.synced=false;setDraftStatus('Saved on this device; cloud backup unavailable: '+e.message)}},1100);
+}
+function setDraftStatus(message){document.querySelectorAll('.draft-save-status').forEach(el=>el.textContent=message)}
+function autosaveDraft(st){
+ st.updatedAt=Date.now();st.synced=false;addLocalStory(st);
+ setDraftStatus('Saved on this device · Syncing to your account…');
+ queueStorySync(st);
+}
+function compositionDraft(){
+ if(!compositionDraftId)compositionDraftId=uuid();
+ let st=findLocalStory(compositionDraftId);
+ if(!st){st={id:compositionDraftId,scenario:'others',title:'',story:'',why:'',status:'private-draft',time:Date.now(),synced:false};addLocalStory(st)}
+ return st;
+}
+
 
 
 
@@ -219,11 +285,12 @@ if(!authClient){authLoading=false;return}
 authClient.auth.onAuthStateChange((event,session)=>{
 const next=session?.user||null;
 if(event==='PASSWORD_RECOVERY'){authRecovery=true;authMessage='Recovery link confirmed. Set your new password below.';if(location.hash!=='#/account')location.hash='#/account';}
-if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;if($('#app'))render(false)}
+if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;refreshStoryCloud();if($('#app'))render(false)}
 });
 try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}
 catch(e){authMessage='Could not restore login: '+String(e.message||e)}
 authLoading=false;
+refreshStoryCloud();
 if(authRecovery&&authUser&&location.hash!=='#/account')location.hash='#/account';
 if($('#app'))render(false);
 }
@@ -493,7 +560,7 @@ const originalRender=render;
 render=function(scroll=true){originalRender(scroll);observeCanvasBoxes()};
 observeCanvasBoxes();
 }
-render(true);initAuth();refreshSharedAnswers();
+render(true);initAuth();refreshSharedAnswers();loadPublicStories();
 // Keep every visitor's sky in sync without exposing account or story records.
 window.setInterval(()=>{if(!document.hidden)refreshSharedAnswers()},30000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastSharedSync>12000)refreshSharedAnswers()});
