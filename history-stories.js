@@ -1,4 +1,4 @@
-/* Historical nonfiction and source-labelled documentary images. */
+/* Historical nonfiction with documentary photo sources and reliable linked fallbacks. */
 window.MUSEUM_HISTORY_LONGFORM = {
   "anne-frank": {
     "title": "Before the Bookcase: How a City Learned to Exclude a Girl",
@@ -78,13 +78,15 @@ window.MUSEUM_HISTORY_LONGFORM = {
     ],
     "images": [
       {
-        "at": 2,
-        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Anne%20Frank%20passport%20photo%2C%20May%201942.jpg?width=1100",
+        "at": 0,
+        "src": "https://www.joodsmonument.nl/image/2024/4/3/anne_frank_passport_photo_may_1942.jpg%28mediaclass-schema-org-1x1.ed084110b3b08047ee5ba7ef71b0d2e0ed3b1acb%29.jpg",
         "page": "https://commons.wikimedia.org/wiki/File:Anne%20Frank%20passport%20photo%2C%20May%201942.jpg",
         "caption": "Anne Frank, May 1942. An authentic passport photograph taken shortly before the family went into hiding.",
         "credit": "Wikimedia Commons · Anne Frank photo collection",
         "license": "Historical photograph; check the source page for jurisdiction-specific rights.",
-        "kind": "Historical photograph"
+        "kind": "Historical photograph",
+        "directCredit": "Historical image displayed by the linked institution or publication; original archival information is linked below.",
+        "backup": "https://commons.wikimedia.org/wiki/File:Anne%20Frank%20passport%20photo%2C%20May%201942.jpg"
       },
       {
         "at": 10,
@@ -93,7 +95,8 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "caption": "The original movable bookcase that concealed the entrance to the Secret Annex, photographed decades after the events. This is a modern photograph of a surviving historical object, not a 1942 scene.",
         "credit": "Wikimedia Commons · Original Secret Annex bookcase",
         "license": "Modern documentary photograph; see the source page for attribution and reuse terms.",
-        "kind": "Museum / surviving object photograph"
+        "kind": "Museum / surviving object photograph",
+        "backup": "https://commons.wikimedia.org/wiki/File:Netherlands-4474%20-%201942%20Moveable%20Bookcase%20(12083797916).jpg"
       }
     ]
   },
@@ -175,13 +178,15 @@ window.MUSEUM_HISTORY_LONGFORM = {
     ],
     "images": [
       {
-        "at": 2,
-        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Gestapo%20photos%20of%20Sophie%20Scholl%20taken%20after%20her%20capture%20on%20February%2018%2C%201943.jpg?width=1100",
+        "at": 0,
+        "src": "https://image.geo.de/33086302/t/Xg/v3/w1440/r1.3333/-/aufmacher.jpg",
         "page": "https://commons.wikimedia.org/wiki/File:Gestapo%20photos%20of%20Sophie%20Scholl%20taken%20after%20her%20capture%20on%20February%2018%2C%201943.jpg",
         "caption": "Gestapo identification photographs of Sophie Scholl after her arrest in February 1943; the archive dates the photographs to 20 February.",
         "credit": "Wikimedia Commons · Munich City Archives source",
         "license": "Historical archival photograph; see source page for rights notes.",
-        "kind": "Historical archival photograph"
+        "kind": "Historical archival photograph",
+        "directCredit": "Historical image displayed by the linked institution or publication; original archival information is linked below.",
+        "backup": "https://commons.wikimedia.org/wiki/File:Gestapo%20photos%20of%20Sophie%20Scholl%20taken%20after%20her%20capture%20on%20February%2018%2C%201943.jpg"
       },
       {
         "at": 12,
@@ -190,7 +195,8 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "caption": "The sixth White Rose leaflet, distributed at the University of Munich in February 1943. This is a scan of an original resistance document.",
         "credit": "Wikimedia Commons · White Rose leaflet",
         "license": "Public-domain archival leaflet as indicated by the source record.",
-        "kind": "Original document scan"
+        "kind": "Original document scan",
+        "backup": "https://commons.wikimedia.org/wiki/File:6.%20Flugblatt%20der%20Wei%C3%9Fen%20Rose.webp"
       }
     ]
   },
@@ -272,13 +278,15 @@ window.MUSEUM_HISTORY_LONGFORM = {
     ],
     "images": [
       {
-        "at": 2,
-        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott.jpg?width=1100",
+        "at": 0,
+        "src": "https://media.spokesman.com/photos/2025/12/12/cropped-Woman-fingerprinted.-Mrs.-Rosa-Parks-Negro-seamstress-whose-refusal-to-move-to-the-back-of-a-bus-touched-off-the-bus-boycott-in-Montgomery-Ala.-e1581007081906.jpg",
         "page": "https://commons.wikimedia.org/wiki/File:Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott.jpg",
         "caption": "Rosa Parks being fingerprinted in February 1956 during the Montgomery bus boycott. This photograph is not from her initial arrest on 1 December 1955.",
         "credit": "Wikimedia Commons · 1956 archival photograph",
         "license": "Historical photograph; see the source record for reuse conditions.",
-        "kind": "Historical photograph"
+        "kind": "Historical photograph",
+        "directCredit": "Historical image displayed by the linked institution or publication; original archival information is linked below.",
+        "backup": "https://commons.wikimedia.org/wiki/File:Rosa%20Parks%20being%20fingerprinted%20by%20Deputy%20Sheriff%20D.H.%20Lackey%20after%20being%20arrested%20on%20February%2022%2C%201956%2C%20during%20the%20Montgomery%20bus%20boycott.jpg"
       },
       {
         "at": 12,
@@ -287,7 +295,8 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "caption": "Rosa Parks seated toward the front of a Montgomery bus on 21 December 1956, when the boycott ended. This photograph records the later outcome, not the original refusal.",
         "credit": "Wikimedia Commons · Library of Congress photographic record",
         "license": "Historical press photograph; check the source page and rights notes before reuse.",
-        "kind": "Historical photograph"
+        "kind": "Historical photograph",
+        "backup": "https://commons.wikimedia.org/wiki/File:Rosa%20Parks%20on%20bus%20on%20December%2021%2C%201956.jpg"
       }
     ]
   }
