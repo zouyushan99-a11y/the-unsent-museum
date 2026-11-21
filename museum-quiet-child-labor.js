@@ -36,10 +36,10 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Photographer and investigator Lewis Hine documented child labour from 1908 onward, frequently recording names, ages, work schedules and the conditions he observed. His photographs survive in archives and make visible the small bodies within large industrial settings. They are not photographs of every child, however, and their survival reflects the work of a reform organisation seeking to change public opinion. The images can establish the existence of particular children and conditions.",
     "Children often lacked legal and practical authority over household income, residence and employment. Adults chose work arrangements and expected children to contribute. If a child's pay helped the family eat, refusing a shift could seem like letting down people they loved. It could arise at the dinner table long before any public debate about legislation.",
     "Respect for parents and employers supplied another form of pressure. Children were taught to obey adult instructions, often in homes and schools as well as factories. A young worker might recognise that a shift was exhausting without believing they had standing to challenge the supervisor. Cultural expectations surrounding childhood were changing, and the growing idea that children belonged in school competed with the established importance of family work. Neither expectation had the same force in every community.",
-    "But children without formal education were not incapable of making judgements. They could understand unfair wages, danger and exhaustion. The problem was more immediate: which adult or public office would listen to a child's objection, and would the family be able to live without the job?",
+    "But children without formal education were not incapable of making judgements. They could understand unfair wages, danger and exhaustion.",
     "Religious and moral beliefs did not all point toward compulsory work. Some communities praised industry and the contribution of children to household survival, while religious and civic reformers argued that childhood required protection and education. Those positions could share a concern for family welfare while disagreeing over what best served it.",
     "State legislation began to limit some forms of child labour, and national reform organisations gathered evidence. The National Child Labor Committee was established in 1904. Later federal measures, including the 1916 Keating-Owen Act, were part of a contested legal process. A child labourer's life was not suspended until Congress passed a law. Families still faced wages, illness, rent and school attendance in the meantime.",
-    "Census totals cannot disclose each family's reasons for sending children to work. Reform photography and interviews preserve particularly visible abuses but may not represent the full range of experiences. It is therefore misleading to call every working child 'someone who wanted to rebel but lacked courage'. Some may have opposed their circumstances; others could have valued contributing to household income or regarded work as ordinary. Those positions were shaped by unequal options and cannot be settled by a photograph."
+    "Around 1900, American children worked in manufacturing, mining, home production and other occupations. School attendance requirements, employment ages and enforcement varied among states. Census records document the scale of children's work, while Lewis Hine's photographs from 1908 onward preserve particular workplaces and working conditions. Employers' demand for inexpensive labour and household needs were part of this industrial economy."
   ],
   "zh": [
     "十九世纪末到二十世纪初的美国，有些孩子还没有长大，就已经每天去工厂上工。他们在纺织厂、矿场、工厂和街道上劳动，也有人在家里帮忙完成计件工作。1900年前后，美国从事劳动的儿童大约有两百万人。对一些家庭来说，孩子挣回来的钱可以用来买食物、支付房租；对雇主来说，年幼工人的工资通常比成年人低。",
@@ -49,11 +49,11 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "摄影师刘易斯·海因从1908年开始记录美国童工的生活。有人可能想离开，有人可能为自己能够帮助家里而感到骄傲，也有人把劳动看成习以为常的生活。",
     "首先，他们往往不能独立决定家庭收入和居住安排。大人找来工作，孩子被期待为家里出一份力。如果他的工资能帮助弟弟妹妹吃饭，那么拒绝工作可能意味着让自己亲近的人承担损失。一个年幼的人不需要理解国家劳动制度，也能够感受到这种压力。对他而言，问题可能只是今天不去上工，家里还够不够钱买食物。",
     "服从成年人的观念，也可能使反对更加困难。孩子在家庭、学校和工作场所都被要求听从指示。他即使觉得劳动过于辛苦，也未必相信自己有资格反对工厂主管。这两种观念并不是在所有地区同时发生变化。",
-    "受教育机会不足，会进一步限制一个孩子能做些什么。他可能不知道相关法律，也不懂得怎样向政府部门投诉。但这不意味着他没有判断能力。孩子同样知道身体疲劳，知道工资是否足够，也能意识到某些安排不公平。更关键的是，哪一个成年人愿意认真听他提出要求？如果有人愿意帮助，家里又能否承担失去工资的后果？",
+    "受教育机会不足，会进一步限制一个孩子能做些什么。他可能不知道相关法律，也不懂得怎样向政府部门投诉。但这不意味着他没有判断能力。孩子同样知道身体疲劳，知道工资是否足够，也能意识到某些安排不公平。",
     "宗教和道德也不只有一个方向。有些人赞扬辛勤劳动，认为孩子早早工作能够培养责任；另一些宗教团体和社会改革者则认为，保护孩子与提供教育同样是重要的责任。",
     "后来，美国成立了推动限制童工的组织，也逐步出现更多劳动法律。1904年成立的全国童工委员会通过调查、摄影和宣传，试图改变公众的认识。法律讨论还在继续的时候，那些孩子依然需要处理第二天的工作、家里的账单和能不能上学的问题。历史中的生活不会因为某项改革尚未完成而停止。",
     "档案保存了人口普查数字、工厂调查和照片，却未必记录每个孩子当时的愿望。有些孩子可能不愿工作，有些人可能真诚地重视自己的收入，另一些人则没有认真想过还有不同的生活方式。这些差异没有改变一个事实：年幼的他们通常缺少决定自己劳动条件的权力。",
-    "孩子们要依照安排进入车间，有些人还要考虑今天挣的钱能为家里做些什么。如果他想说自己不愿再做，又需要哪些条件，才能让这句话真正产生作用？"
+    "十九世纪末至二十世纪初，美国部分儿童在纺织厂、矿场、家庭计件劳动与其他行业就业。各州对最低工作年龄、劳动时间和义务教育的规定并不相同，执行情况也存在差异。1900年前后的普查材料记录了儿童劳动的规模，刘易斯·海因从1908年开始拍摄的照片则保存了具体工作场所和儿童的影像。"
   ],
   "mechanisms": [
     "family dependence on child income",
