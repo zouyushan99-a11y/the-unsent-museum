@@ -40,7 +40,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "The passage from bound to unbound feet was not a single national moment. Women living during the decline experienced different possibilities depending on when and where they were born. Some had their feet bound as children and then encountered new ideals of physical mobility as adults; others lived in villages where stopping binding became acceptable before neighbouring places changed. The body retained consequences of decisions made years earlier.",
     "Historical evidence is also uneven. Men wrote much of the older commentary, while researchers have used later interviews and local surveys to recover women's accounts of labour, marriage and binding. These sources are invaluable, but memories produced after the custom came under criticism may be shaped by new expectations. Researchers must distinguish what a woman recalls, what the wider sample suggests and what cannot be known about her feelings at the moment her feet were first bound. Respecting that uncertainty is part of attending seriously to her experience.",
     "More revealing is the intersection of marriage expectations, production inside the household, childhood dependence and the possibility of social exclusion. None of these mechanisms alone explains every household, and none turns a child's lack of public refusal into genuine consent.",
-    "Here the surviving objects are interviews, county-level evidence and histories of household work. If the people shaping a child's body believed that they were securing her place in society, how could she refuse a future that adults said they were arranging for her own good?"
+    "Footbinding declined unevenly in rural China during the late Qing and Republican periods. Marriage practices, domestic textile work and parental authority differed across places and communities. Some villages maintained binding while others had abandoned it. Regional surveys and oral-history research document the variation in women's experiences and the timing of change."
   ],
   "zh": [
     "在中国部分农村地区，女孩的脚从很小的时候就开始受到约束。她要承担身体上的疼痛，决定却往往由成年人作出。但在当时的一些家庭里，长辈未必把它理解成单纯的伤害；有人相信，这是为女儿将来的婚姻和生活作准备。",
@@ -54,7 +54,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "缠足的减少不是在某一年同时发生于所有地方。有人小时候仍被要求缠足，长大后却发现身边的人已经开始赞同放足；有些村庄比邻近地区改变得更早。社会的评价能够改变，身体留下的影响却不一定能随之消失。不能因为一个女人后来没有公开责怪家人，就认为童年时发生的一切都出自她本人的愿望。",
     "现存材料也需要仔细辨认。许多较早的缠足记述来自男性，后来的研究则通过女性访谈和农村调查补充了婚姻、劳动与身体经验。",
     "许多约束不是来自单独的一道命令，而是来自这些看似普通的关系。",
-    "缠足曾被一些人当作女儿未来生活的准备，疼痛却由女孩自己的身体承担。当成年人相信自己是在保护孩子时，孩子又该怎样说明，她并不愿意接受这种保护？"
+    "清末民初的缠足习俗在中国各地有不同的分布与变化速度。婚姻评价、家庭纺织劳动以及成年人对儿童身体的决定权，是研究这一习俗的重要背景。部分村庄仍普遍缠足时，其他地区已逐渐放弃。口述访谈、地方调查和家庭劳动研究记录了这种地区差异。"
   ],
   "mechanisms": [
     "childhood authority and dependence",
