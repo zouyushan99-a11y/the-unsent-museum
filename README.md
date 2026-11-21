@@ -83,3 +83,14 @@ All **68 other** indexed personal exhibit records have had their central cause/i
 All **36** original personal history records now have an image descriptor for an authentic archive image, photo, autograph or original portrait, including individually sourced images for Kafka, Lincoln, Anne Lister, Sophie Germain, Fanny Mendelssohn, Eileen Chang, Elizabeth I and Thomas Hardy. The **33** later personal records and **13** collective records use a dynamic Wikimedia image lookup with original-file attribution on exhibit detail pages: this is a *best-effort conditional lookup*, not proof that every request renders on every network/browser. Context images must not be presented as photos of a specifically described event. Live image loads, content appropriateness, licensing and device layout still require manual browser/source verification.
 
 Seven potential new groups are *only research candidates* pending user review; they have not been added to the public collective catalogue (which remains at 13).
+
+## Visitor feedback (configuration required)
+- The trilingual `#/feedback` visitor-book page collects a category, optional page reference, and feedback text.
+- **Before submissions work:** the project administrator must execute `supabase-feedback-setup.sql` in the existing Supabase project's SQL Editor. The GitHub Pages frontend cannot create database tables or policies by itself.
+- On successful insertion, feedback is stored privately in the `public.museum_feedback` table. Check records in the Supabase Table Editor using project-owner access. No email notifications are configured; checking the table is required.
+- Public clients are granted INSERT only, not SELECT, UPDATE, or DELETE. For heavy public traffic add server-enforced CAPTCHA/rate limiting. Never place a service-role key in the website.
+- A GitHub issue link is provided when submission fails, but requires the visitor to sign into GitHub and repository issue notifications depend on account settings.
+
+## Collective archive ordering
+- The 13 existing collective dossiers are now grouped into four themed rooms and ordered by historical beginning within each room. Seven additional agreed dossiers have not yet been imported or verified; do not relabel the index as 20 until all seven are present with their research and full translations.
+- The Chinese collective texts are stored in Simplified Chinese; Traditional Chinese is generated at display time using OpenCC, so quality and locale-specific usage still require native review.
