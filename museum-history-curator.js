@@ -122,16 +122,34 @@
    'For me, the essential issue is who could control the timing, name, audience and consequences of expression. This perspective neither romanticizes withholding nor treats the absence of public speech as proof of consent. It invites a distinction between what was done, what conditions made it possible or costly, and what remains unknown.'
   ];
   const originalQuestion=zh?(z.question||'这份记录怎样改变我们理解沉默的方式？'):(essay.question||'What does this history change about how we listen?');
-  const zhQ=[
-   originalQuestion,
-   (type==='suppressed'?'在这段经历里，究竟是谁掌握着决定一个声音能否继续被听见的权力？':type==='protective'?'如果表达会危及自身或他人的安全，我们该如何理解保留信息的权利？':'如果发表的代价由当事人承担，旁观者有资格要求他立刻说出来吗？'),
-   '当档案无法告诉我们全部私人动机时，读者应该把自己的想象停在哪里？'
+  const zhPowerQuestions={
+   withheld:['如果发表的代价由当事人承担，旁观者有资格要求他立刻说出来吗？','当一份文字可能改变作者的生活，发表时间应该由谁决定？','选择化名或不公开姓名，是否会改变作品本身的价值？','个人对文字的控制权，在公共利益面前应该如何被理解？'],
+   protective:['如果表达会危及自身或他人的安全，我们该如何理解保留信息的权利？','当一份记录可能成为迫害他人的证据时，保存与公开之间该如何权衡？','为了保护一个人的声音，是否有时必须先保护他的沉默？','谁能够决定保密何时结束，以及由谁承担后果？'],
+   suppressed:['在这段经历里，究竟是谁掌握着决定一个声音能否继续被听见的权力？','如果一个人的表达被惩罚，责任应该落在发声者还是惩罚者身上？','一种观点已经被说出却没能传播，这样的失语应如何被记录？','当公众只记得结果，我们是否忽略了让表达中断的制度？']
+  };
+  const zhEvidenceQuestions=[
+   '当档案无法告诉我们全部私人动机时，读者应该把自己的想象停在哪里？',
+   '一份留下来的文献，能够证明行动，却能否证明行动者全部的感受？',
+   '如果后人知道事情的结局，怎样避免把事后的理解强加给当时的人？',
+   '保存者、编辑者与当事人对同一份文字的理解，可能有怎样的差别？',
+   '当一段历史有重要空白时，我们能不能尊重它，而不急着替当事人补写？',
+   '我们如何区分文献写下的事实和策展人提出的解释？'
   ];
-  const enQ=[
-   originalQuestion,
-   type==='suppressed'?'Who had the power to stop this voice from reaching its audience?':type==='protective'?'When speaking can endanger others, who has the right to demand disclosure?':'Who should decide when a private text becomes public?',
-   'Where should a reader stop interpreting when the surviving evidence cannot reveal a person’s private motives?'
+  const enPowerQuestions={
+   withheld:['Who should decide when a private text becomes public?','What changes when publication carries a cost for its author?','Can anonymity alter how a reader judges a piece of writing?','Does a public interest in reading override an author’s control over publication?'],
+   protective:['When speaking can endanger others, who has the right to demand disclosure?','When might preserving a voice require preserving secrecy first?','Who bears the consequences when private information is exposed?','When, and by whom, should a dangerous secret become public?'],
+   suppressed:['Who had the power to stop this voice from reaching its audience?','Who bears responsibility when public expression is punished?','How should archives record a voice that was expressed but forcibly interrupted?','What systems disappear from view if we remember only the famous individual?']
+  };
+  const enEvidenceQuestions=[
+   'Where should a reader stop interpreting when the surviving evidence cannot reveal private motives?',
+   'What can a document prove about an action, and what feelings must remain uncertain?',
+   'How can we avoid mistaking our knowledge of the outcome for the person’s knowledge at the time?',
+   'How might an author, editor and later reader disagree about a document’s meaning?',
+   'Can an important historical silence remain unanswered without being treated as a flaw?',
+   'How do we separate what the archive records from what the curator proposes?'
   ];
+  const zhQ=[originalQuestion,zhPowerQuestions[type][idx%4],zhEvidenceQuestions[idx%6]];
+  const enQ=[originalQuestion,enPowerQuestions[type][idx%4],enEvidenceQuestions[idx%6]];
   const paragraphs=zh?zhParagraphs.map(translate):enParagraphs;
   const questions=zh?zhQ.map(translate):enQ;
   return {paragraphs,questions,hanCount:(zhParagraphs.join('').match(/[\u3400-\u9fff]/g)||[]).length};
