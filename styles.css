@@ -323,3 +323,9 @@ line-height:1.42;overflow-wrap:anywhere;
 .system-check-line p{font-size:.85rem;color:#afbdd1;margin:5px 0 0;overflow-wrap:anywhere}
 .check-ok{color:#b3d8b8}
 .check-fail{color:#f2b3a2}
+
+/* Public authorship appears on deliberate interaction, not as floating text in the sky. */
+.star-info-tooltip .sky-star-author{display:block;border-top:1px solid rgba(231,205,142,.25);padding-top:7px;margin-top:7px;color:#f0d48e;font-size:.82rem;overflow-wrap:anywhere}
+.curate-story{margin-top:14px}
+.archive-item .curate-story{white-space:normal}
+@media (pointer:coarse){.immersive-sky-page,.sky-expand-link{user-select:none;-webkit-user-select:none}}
