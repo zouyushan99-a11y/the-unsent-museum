@@ -19,6 +19,7 @@ function museumConvert(text){
  catch(e){return String(text??'')}
 }
 function museumZh(text){return museumLang==='en'?String(text??''):museumConvert(window.MUSEUM_I18N?.zh?.[String(text??'')]??String(text??''))}
+function museumConfirm(message){return window.confirm(museumZh(message));}
 window.museumLangPublic=()=>museumLang;
 function museumLangControl(){
  const isZh=museumLang!=='en';
@@ -96,7 +97,7 @@ function museumLocalizeText(root){
   if(translated!==raw)changed.push([node,translated]);
  }
  changed.forEach(([node,value])=>{node.nodeValue=value});
- for(const attr of ['placeholder','aria-label','title']){
+ for(const attr of ['placeholder','aria-label','title','alt']){
   root.querySelectorAll('['+attr+']').forEach(el=>{
    if(el.closest('[data-visitor-story],[data-original-language]'))return;
    const old=el.getAttribute(attr);
@@ -178,7 +179,7 @@ async function loadCuratorStories(){
 }
 async function changeStoryBlock(id,blocked){
  if(!curatorAccess||!authClient)return;
- if(!confirm(blocked?'Hide this story from the public museum?':'Restore this story to the public museum?'))return;
+ if(!museumConfirm(blocked?'Hide this story from the public museum?':'Restore this story to the public museum?'))return;
  const {data,error}=await authClient.rpc('museum_set_story_blocked',{p_story_id:id,p_blocked:blocked});
  if(error||data!==true){curatorError=String(error?.message||'Action was not confirmed');render(false);return}
  await Promise.all([loadCuratorStories(),loadPublicStories()]);
@@ -327,7 +328,7 @@ async function importLegacyAnswers(){
  if(!authUser||!authClient){importMessage='Please sign in before importing your earlier answers.';render(false);return}
  const candidates=db.answers.filter(a=>a&&scenario(a.scenario)&&['silent','speak'].includes(a.decision)&&Array.isArray(a.reasons)&&a.reasons.length);
  if(!candidates.length){importMessage='There are no earlier browser answers to import.';render(false);return}
- if(!confirm('Add your earlier choices and selected reasons to the shared museum sky? Your private stories and free-text reasons will stay on this device. Existing newer cloud answers will NOT be overwritten.'))return;
+ if(!museumConfirm('Add your earlier choices and selected reasons to the shared museum sky? Your private stories and free-text reasons will stay on this device. Existing newer cloud answers will NOT be overwritten.'))return;
  importBusy=true;importMessage='Checking your earlier answers…';render(false);
  try{
   const {data:own,error:ownError}=await authClient.from('museum_answers').select('scenario').eq('user_id',authUser.id);
@@ -357,7 +358,7 @@ async function submitSharedAnswer(){
  if(!sc||!['silent','speak'].includes(flow.decision)||!flow.reasons.length){submitError='Please complete your choice and reasons first.';render(false);return}
  const allowed=flow.reasons.every(n=>Number.isInteger(n)&&((n>=0&&n<sc[flow.decision].length)||n===99));
  if(!allowed){submitError='One of your selected reasons is invalid.';render(false);return}
- submitBusy=true;submitError='';const next=$('#next');if(next){next.disabled=true;next.textContent='Saving your star…'}
+ submitBusy=true;submitError='';const next=$('#next');if(next){next.disabled=true;next.textContent=museumZh('Saving your star…')}
  try{
    const payload={user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],
       star_visibility:flow.starMode,star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):''};
@@ -430,7 +431,7 @@ ${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div
 function bindAuth(){
 const google=$('#google-signin');if(google)google.onclick=async()=>{
 if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
-google.disabled=true;google.textContent='Opening Google…';
+google.disabled=true;google.textContent=museumZh('Opening Google…');
 try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}
 catch(e){authMessage=String(e.message||e);render(false)}
 };
@@ -464,7 +465,7 @@ if(form)form.onsubmit=async ev=>{
 ev.preventDefault();if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
 const email=$('#account-email')?.value.trim(),password=$('#account-password')?.value;
 if(!email||!password||password.length<8)return;
-const submit=$('#email-auth-submit');if(submit){submit.disabled=true;submit.textContent='Please wait…'}
+const submit=$('#email-auth-submit');if(submit){submit.disabled=true;submit.textContent=museumZh('Please wait…')}
 try{
 if(emailAuthMode==='signup'){
 const {data,error}=await authClient.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}});
@@ -1044,7 +1045,7 @@ function bindStoryEditor(){
   if(!validStoryCategory(st.scenario)||!st.title||!st.story||!st.why){feedback('Complete the title, story and reason before publishing.');return}
   if(st.publicationMode==='named'&&!st.displayName.trim()){feedback('Enter the name you want everyone to see.');return}
   if(!$('#publication-consent').checked){feedback('Check the consent box before publishing.');return}
-  if(!confirm('Publish your story so anyone visiting this website can read it?'))return;
+  if(!museumConfirm('Publish your story so anyone visiting this website can read it?'))return;
   st.displayName=st.publicationMode==='named'?st.displayName.trim():'';
   st.publicConsent=true;st.status='published';
   const button=$('#publish-story');button.disabled=true;
@@ -1053,7 +1054,7 @@ function bindStoryEditor(){
  };
  const withdraw=$('#unpublish-story');
  if(withdraw)withdraw.onclick=async()=>{
-  if(!confirm('Withdraw this story from the public archive?'))return;
+  if(!museumConfirm('Withdraw this story from the public archive?'))return;
   const st=read();st.status='private-draft';st.publicConsent=false;
   const done=await saveNow(st);if(!done){addLocalStory({...original,status:'published'});feedback('Withdrawal did not reach the cloud. Your published story is still visible.');return}await loadPublicStories();if(storyCloudStatus!=='ready'||publicStories.some(row=>String(row.id)===String(st.id))){feedback('Cloud save completed, but the public archive has not confirmed withdrawal yet. Please retry or contact the curator.');return}
   location.hash='#/my-stories';render(true);
@@ -1061,12 +1062,12 @@ function bindStoryEditor(){
 }
 async function deleteStoryFromLibrary(id){
  const st=findLocalStory(id);if(!st)return;
- if(!confirm('Delete this story? If published, it will also be withdrawn from the public archive.'))return;
+ if(!museumConfirm('Delete this story? If published, it will also be withdrawn from the public archive.'))return;
  if(authUser&&(!st.ownerId||st.ownerId===authUser.id)){
    const {error}=await authClient.from(cloudStoryTable).delete().eq('id',id);
-   if(error&&st.status==='published'){alert('Cloud deletion failed; the story may still be public. '+String(error.message||error));return}
+   if(error&&st.status==='published'){console.warn('Cloud deletion failed',error);alert(museumZh('Cloud deletion failed; the story may still be public. '));return}
  }else if(st.status==='published'){
-   alert('Sign in and connect to the cloud before deleting a public story.');return
+   alert(museumZh('Sign in and connect to the cloud before deleting a public story.'));return
  }
  cancelPendingStorySync(id);
  db.stories=db.stories.filter(x=>String(x.id)!==String(id));save();
@@ -1084,7 +1085,7 @@ function diagnosticsPage(){
 }
 async function runMuseumDiagnostics(){
  const container=$('#system-check-results');if(!container)return;
- container.textContent='Checking live database permissions and public data…';
+ container.textContent=museumZh('Checking live database permissions and public data…');
  const rows=[];
  const check=async(label,fn)=>{
   try{const n=await fn();rows.push({label,ok:true,info:n})}
