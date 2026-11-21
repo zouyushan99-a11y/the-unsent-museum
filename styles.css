@@ -234,3 +234,18 @@ h1,h2,h3,.story-text,.archive-prose,.muted{overflow-wrap:break-word}
 .immersive-sky-caption{left:17px;right:17px;bottom:max(18px,env(safe-area-inset-bottom));display:block}
 .immersive-count{display:block;margin-top:5px;font-size:.75rem}
 }
+
+/* Individual answer hovering: gentle museum label, not a conventional chart tooltip. */
+.star-info-tooltip{
+position:fixed;z-index:9999;pointer-events:none;width:max-content;max-width:min(300px,calc(100vw - 24px));
+padding:13px 17px 14px;color:#f9ecd3;
+background:rgba(10,20,36,.94);border:1px solid rgba(234,194,104,.62);
+border-radius:12px;box-shadow:0 18px 48px rgba(0,0,0,.46),0 0 23px rgba(82,123,199,.16);
+backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px);
+line-height:1.42;overflow-wrap:anywhere;
+}
+.star-info-tooltip small{display:block;font:600 .66rem 'DM Sans',system-ui,sans-serif;color:#b2c5e4;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.star-info-tooltip strong{display:block;font:400 1.02rem 'Playfair Display',Georgia,serif;color:#f0d58d;margin-bottom:4px}
+.star-info-tooltip span{display:block;font-size:.84rem;color:#e7e9ef}
+.immersive-sky-page{cursor:default}
+@media(max-width:700px){.star-info-tooltip{padding:11px 13px 12px}.star-info-tooltip strong{font-size:.96rem}}
