@@ -315,7 +315,98 @@ else hideStarTooltip()
 }
 }
 
-function drawReasonSky(canvas,arr){if(!canvas)return;const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(rect.width*dpr));canvas.height=Math.max(1,Math.floor(rect.height*dpr));const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.fillStyle='#020510';ctx.fillRect(0,0,w,h);paintSwirlBrushstrokes(ctx,w,h);const stars=reasonStars(arr),limit=1400;canvas._starTargets=[];for(const st of stars.slice(-limit)){const pos=swirlPoint(w,h,st.id, 'reason');canvas._starTargets.push({...pos,kind:'reason',scenario:st.scenario,decision:st.decision,label:st.label});paintStar(ctx,pos.x,pos.y,pos.r,st.colour)}if(stars.length>limit){ctx.fillStyle='#b8bfd2';ctx.font='12px sans-serif';ctx.fillText('Showing '+limit+' of '+stars.length+' reason stars',18,h-15)}}
+// Every recorded answer stays in the same place. Only its light changes.
+// Cache painted glows instead of rebuilding hundreds of gradients each frame.
+const skyAnimationCanvases=new Set();
+const starSpriteCache=new Map();
+const skyReduceMotion=window.matchMedia?.('(prefers-reduced-motion: reduce)')||{matches:false};
+let skyAnimationFrame=0;
+let skyLastFrame=0;
+function makeStarSprite(colour,radius){
+  const radiusStep=Math.round(radius*2)/2;
+  const key=colour+':'+radiusStep;
+  if(starSpriteCache.has(key))return starSpriteCache.get(key);
+  const glow=Math.ceil(radiusStep*9+3),size=glow*2;
+  const c=document.createElement('canvas');c.width=size;c.height=size;
+  const p=c.getContext('2d');paintStar(p,glow,glow,radiusStep,colour);
+  const sprite={canvas:c,glow,size};
+  starSpriteCache.set(key,sprite);return sprite;
+}
+function makeSkyCanvasScene(canvas,arr,kind){
+  if(!canvas)return;
+  const rect=canvas.getBoundingClientRect();
+  const w=Math.max(1,rect.width),h=Math.max(1,rect.height);
+  // Resolution is capped on large phones to keep animation and memory responsive.
+  const pixels=w*h,dpr=Math.min(window.devicePixelRatio||1,pixels>750000?1.45:1.8);
+  canvas.width=Math.max(1,Math.round(w*dpr));canvas.height=Math.max(1,Math.round(h*dpr));
+  const backdrop=document.createElement('canvas');backdrop.width=canvas.width;backdrop.height=canvas.height;
+  const bg=backdrop.getContext('2d');bg.setTransform(dpr,0,0,dpr,0,0);
+  bg.fillStyle='#020510';bg.fillRect(0,0,w,h);
+  paintSwirlBrushstrokes(bg,w,h);
+  const stars=kind==='reason'?reasonStars(arr).slice(-1400):arr.slice(-1200);
+  const targets=[];
+  for(const answer of stars){
+    const reason=kind==='reason',id=reason?answer.id:answer.id;
+    const pos=swirlPoint(w,h,id,reason?'reason':'choice-'+answer.decision);
+    const colour=reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
+    const hash=starHash(id),random=seededRand(hash);
+    targets.push({...pos,kind:reason?'reason':'choice',scenario:answer.scenario,
+      decision:answer.decision,...(reason?{label:answer.label}:{}),
+      sprite:makeStarSprite(colour,pos.r),phase:random()*Math.PI*2,
+      speed:.48+random()*1.35,secondPhase:random()*Math.PI*2,
+      // Each star has its own brightness and rhythm; no synchronized flashing.
+      base:.68+random()*.13,amplitude:.14+random()*.14});
+  }
+  canvas._starTargets=targets;
+  canvas._skyScene={backdrop,dpr,w,h,targets,kind};
+  // Render immediately, even when reduced motion is enabled.
+  renderSkyFrame(canvas,performance.now()/1000);
+  if(targets.length&&!skyReduceMotion.matches){
+    skyAnimationCanvases.add(canvas);startSkyAnimation();
+  }else skyAnimationCanvases.delete(canvas);
+}
+function renderSkyFrame(canvas,time){
+ const scene=canvas._skyScene;if(!scene||!canvas.isConnected)return;
+ const ctx=canvas.getContext('2d');if(!ctx)return;
+ ctx.setTransform(1,0,0,1,0,0);ctx.globalAlpha=1;
+ ctx.drawImage(scene.backdrop,0,0);
+ ctx.setTransform(scene.dpr,0,0,scene.dpr,0,0);
+ for(const st of scene.targets){
+   const breathing=Math.sin(time*st.speed+st.phase);
+   const glimmer=Math.sin(time*(st.speed*1.93)+st.secondPhase);
+   const opacity=skyReduceMotion.matches?1:Math.max(.42,Math.min(1,st.base+st.amplitude*breathing+.065*glimmer));
+   ctx.globalAlpha=opacity;
+   ctx.drawImage(st.sprite.canvas,st.x-st.sprite.glow,st.y-st.sprite.glow);
+ }
+ ctx.globalAlpha=1;
+}
+function animateSkyFrames(timestamp){
+ skyAnimationFrame=0;
+ if(document.hidden||skyReduceMotion.matches)return;
+ // Around 24 fps is enough for slow twinkling and is gentler on mobile batteries.
+ if(timestamp-skyLastFrame<40){startSkyAnimation();return}
+ skyLastFrame=timestamp;
+ for(const canvas of skyAnimationCanvases){
+   if(!canvas.isConnected){skyAnimationCanvases.delete(canvas);continue}
+   const bounds=canvas.getBoundingClientRect();
+   if(bounds.bottom<0||bounds.top>innerHeight||bounds.width===0||bounds.height===0)continue;
+   renderSkyFrame(canvas,timestamp/1000);
+ }
+ if(skyAnimationCanvases.size)startSkyAnimation();
+}
+function startSkyAnimation(){
+ if(!skyAnimationFrame&&!document.hidden&&!skyReduceMotion.matches&&skyAnimationCanvases.size)
+   skyAnimationFrame=requestAnimationFrame(animateSkyFrames);
+}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)startSkyAnimation()});
+skyReduceMotion.addEventListener?.('change',()=>{
+ if(skyReduceMotion.matches){
+   if(skyAnimationFrame)cancelAnimationFrame(skyAnimationFrame);
+   skyAnimationFrame=0;
+   for(const canvas of skyAnimationCanvases)renderSkyFrame(canvas,performance.now()/1000);
+ }else startSkyAnimation();
+});
+function drawReasonSky(canvas,arr){makeSkyCanvasScene(canvas,arr,'reason')}
 function legacyStarImportPanel(){if(!db.answers.length)return '';return '<section class="legacy-star-import"><div><strong>Earlier answers on this device</strong><p class="small muted">You have '+db.answers.length+' answer(s) from the older browser-only version. They were not automatically uploaded when the museum switched to shared stars. You can add missing answers without replacing newer cloud entries. Private stories stay here.</p></div>'+(authUser?'<button type="button" class="btn btn-outline" id="import-old-stars" '+(importBusy?'disabled':'')+'>Import earlier stars ↗</button>':'<a class="btn btn-outline" href="#/account">Sign in to import ↗</a>')+(importMessage?'<p class="auth-feedback" role="status">'+esc(importMessage)+'</p>':'')+'</section>'}
 function lookout(id){const s=id?scenario(id):null;if(id&&!s)return home();const arr=results(id),sil=arr.filter(a=>a.decision==='silent').length,sp=arr.length-sil,reasonEntries=reasonStars(arr);let pct=(n)=>arr.length?Math.round(n/arr.length*100)+'%':'—';return `<main class="sky-page"><div class="container"><div class="sky-heading"><div class="eyebrow">${s?`Gallery ${s.num} · The Lookout`:'The Observatory / 瞭望区'}</div><h1>${s?esc(s.title):'A Sky Made of Choices'}.</h1><p class="muted">${s?'A constellation for this one moment.':'Every gallery has its own sky. This one brings them together.'}</p><p class="small muted">${sharedStatus==='ready'?'Shared museum database · '+arr.length+' anonymous response(s)':sharedStatus==='loading'?'Loading the shared museum sky…':'Shared sky temporarily unavailable'}</p>${sharedStatus==='error'?`<div class="note" role="alert">Could not load public star data: ${esc(sharedError)}. <button type="button" class="btn btn-outline" id="retry-stars">Retry</button></div>`:''}</div>${legacyStarImportPanel()}<div class="observatory-section"><h2 class="observatory-title">I. The Choice Sky</h2><p class="small muted">One blue or golden star for each answer about remaining silent or speaking up.</p><div class="sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/choice/${id||'all'}" aria-label="Open choice sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="main-sky" role="img" aria-label="Starfield of locally recorded silent and speaking choices"></canvas>${arr.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>An empty sky, for now.</h3><p>Every response will become a blue or golden star. Nothing has been invented.</p></div>`:''}</div><div class="legend"><span><i class="dot blue"></i>Silence · 沉默</span><span><i class="dot gold"></i>Speak up · 表达</span></div><div class="stats"><div class="stat"><strong>${arr.length}</strong><span>Total scenario responses</span></div><div class="stat"><strong>${pct(sil)}</strong><span>Blue · Silence (${sil})</span></div><div class="stat"><strong>${pct(sp)}</strong><span>Gold · Speak up (${sp})</span></div></div></div><section class="observatory-section reason-observatory"><div class="eyebrow">WHAT LIES BEHIND EACH CHOICE</div><h2 class="observatory-title">II. The Reasons Sky</h2><p class="muted narrow">One star for every reason selected. A visitor who chooses three reasons leaves <strong>three differently coloured stars</strong>. Each reason has its own colour within its gallery.</p><div class="sky-frame reason-sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/reasons/${id||'all'}" aria-label="Open reasons sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="reason-sky" role="img" aria-label="Multi-colour starfield. One star represents one selected reason."></canvas>${reasonEntries.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>Every reason has a colour.</h3><p>When visitors select reasons, their stars will appear here.</p></div>`:''}</div><p class="reason-sky-count"><strong>${reasonEntries.length}</strong> reason star(s) · ${arr.length} answer(s). Multiple selections create multiple stars.</p>${reasonEntries.length?`<details class="reason-colour-legend" ${s?'open':''}><summary>Explore the colours and their meanings</summary><div class="reason-colour-content">${reasonLegend(arr,id)}</div></details>`:''}</section><p class="privacy-caption">The star data is shared anonymously across visitors. Each signed-in account may leave one current answer per gallery. Choice sky: one star per answer. Reasons sky: one star per selected reason. This is a voluntary sample, not a representative survey. Private story drafts stay in your browser.</p>${s?`<div class="reason-panels">${reasonPanel(arr,'silent',id)}${reasonPanel(arr,'speak',id)}</div><div class="actions"><a class="btn btn-outline" href="#/gallery/${id}">Read the story ↗</a><a class="btn btn-outline" href="#/lookout">See the entire sky ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this room's stories ↗</a></div>`:`<section class="section-compact"><div class="eyebrow">The constellations</div><h2>Find a gallery's sky.</h2><div class="constellations">${SCENARIOS.map(x=>`<a href="#/lookout/${x.id}" class="constellation"><canvas data-mini="${x.id}" aria-hidden="true"></canvas><b>${esc(x.title)}</b><span>${results(x.id).length} local response(s) · View the gallery →</span></a>`).join('')}</div></section>`}<div class="divider"></div><div class="actions"><a class="btn btn-outline" href="#/galleries">Explore the galleries ↗</a><a class="btn btn-outline" href="#/archive">Read all stories ↗</a><a class="btn btn-soft" href="#/my-stories">Your private story drafts ↗</a></div></div></main>`}
 function fullSky(kind,id){const s=id&&id!=='all'?scenario(id):null;if(id!=='all'&&!s)return lookout();const reasons=kind==='reasons';const arr=results(id==='all'?undefined:id);return `<main class="immersive-sky-page"><canvas id="immersive-sky-canvas" role="img" aria-label="${reasons?'Reasons starfield':'Choice starfield'}"></canvas><a class="immersive-sky-back" href="#/lookout${s?'/'+s.id:''}" aria-label="返回瞭望区">← 返回 <span>Back to the Lookout</span></a><div class="immersive-sky-caption" aria-hidden="true"><span class="eyebrow">${reasons?'The Reasons Sky':'The Choice Sky'}</span><span class="immersive-count">${reasons?reasonStars(arr).length:arr.length} ${reasons?'reason stars':'choice stars'} · ${s?esc(s.title):'All galleries'}</span></div>${sharedStatus==='loading'?'<div class="immersive-empty"><div>✧</div><p>Gathering stars from the museum…</p></div>':sharedStatus==='error'?'<div class="immersive-empty"><div>✧</div><p>The shared sky is temporarily unavailable.</p></div>':arr.length===0?'<div class="immersive-empty"><div>✧</div><p>An empty sky, for now.</p></div>':''}</main>`}
@@ -325,7 +416,7 @@ function privacy(){return `<main class="container"><section class="page-hero"><d
 function route(){let path=decodeURI(location.hash.slice(1)||'/');if(path.startsWith('/archive/'))return{type:'archive',id:path.split('/')[2],path};if(path.startsWith('/contribute/'))return{type:'contribute',id:path.split('/')[2],path};if(path.startsWith('/experience/'))return{type:'experience',id:path.split('/')[2],path};if(path.startsWith('/gallery/'))return{type:'gallery',id:path.split('/')[2],path};if(path.startsWith('/sky/')){const bits=path.split('/');return {type:'sky',kind:bits[2],id:bits[3]||'all',path}}if(path.startsWith('/lookout/'))return{type:'lookout',id:path.split('/')[2],path};return {type:path.slice(1)||'home',path}}
 function render(scroll=true){hideStarTooltip();const r=route(),body=r.type==='home'?home():r.type==='galleries'?galleries():r.type==='gallery'?gallery(r.id):r.type==='experience'?experience(r.id):r.type==='archive'?archive(r.id):r.type==='contribute'?contributeOthers():r.type==='lookout'?lookout(r.id):r.type==='sky'?fullSky(r.kind,r.id):r.type==='about'?about():r.type==='privacy'?privacy():r.type==='my-stories'?privateStories():r.type==='account'?authPage():home();$('#app').innerHTML=r.type==='sky'?body:header(r.path)+body+footer();document.title=(r.type==='gallery'?scenario(r.id)?.title+' · ':r.type==='lookout'?'The Lookout · ':'')+'The Unsent Museum';if(scroll)window.scrollTo(0,0);if(r.type==='experience')bindExperience(r.id);if(r.type==='account')bindAuth();if(r.type==='contribute')bindOtherForm();if(r.type==='sky'){const el=$('#immersive-sky-canvas');if(r.kind==='reasons')drawReasonSky(el,results(r.id==='all'?undefined:r.id));else drawSky(el,results(r.id==='all'?undefined:r.id))}if(r.type==='lookout'){drawAllSkies();const retry=$('#retry-stars');if(retry)retry.onclick=()=>{sharedStatus='loading';refreshSharedAnswers()};const importer=$('#import-old-stars');if(importer)importer.onclick=importLegacyAnswers}if(r.type==='sky'||r.type==='lookout')bindStarInteractions();if(r.type==='home')drawSky($('#home-sky'),sharedAnswers);if(r.type==='my-stories')document.querySelectorAll('.delete-story').forEach(b=>b.onclick=()=>{if(confirm('Delete this locally saved draft?')){db.stories=db.stories.filter(s=>s.id!==b.dataset.id);save();render(false)}});if(r.type==='my-stories')document.querySelectorAll('.toggle-story').forEach(b=>b.onclick=()=>{let st=db.stories.find(x=>x.id===b.dataset.id);if(st){st.status=st.status==='local-exhibit'?'private-draft':'local-exhibit';save();render(false)}})}
 function seededRand(seed){let t=seed+0x6D2B79F5;return()=>{t+=0x6D2B79F5;let x=t;x=Math.imul(x^(x>>>15),x|1);x^=x+Math.imul(x^(x>>>7),x|61);return ((x^(x>>>14))>>>0)/4294967296}}
-function drawSky(canvas,arr){if(!canvas)return;const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(rect.width*dpr));canvas.height=Math.max(1,Math.floor(rect.height*dpr));const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.fillStyle='#020510';ctx.fillRect(0,0,w,h);paintSwirlBrushstrokes(ctx,w,h);const limit=1200;canvas._starTargets=[];for(const a of arr.slice(-limit)){const p=swirlPoint(w,h,a.id,'choice-'+a.decision);canvas._starTargets.push({...p,kind:'choice',scenario:a.scenario,decision:a.decision});paintStar(ctx,p.x,p.y,p.r,a.decision==='silent'?'#4F75B5':'#EEC65B')}if(arr.length>limit){ctx.fillStyle='#b8bfd2';ctx.font='12px sans-serif';ctx.fillText('Showing '+limit+' of '+arr.length+' responses',18,h-15)}}
+function drawSky(canvas,arr){makeSkyCanvasScene(canvas,arr,'choice')}
 function drawAllSkies(){const r=route();drawSky($('#main-sky'),results(r.id));drawReasonSky($('#reason-sky'),results(r.id));document.querySelectorAll('[data-mini]').forEach(c=>drawSky(c,results(c.dataset.mini)))}
 // Redraw canvases at their actual displayed size after phone rotation, iPad split view, and layout changes.
 let skyResizeFrame=0;
