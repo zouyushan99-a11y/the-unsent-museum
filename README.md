@@ -84,12 +84,14 @@ All **36** original personal history records now have an image descriptor for an
 
 Seven potential new groups are *only research candidates* pending user review; they have not been added to the public collective catalogue (which remains at 13).
 
-## Visitor feedback (configuration required)
-- The trilingual `#/feedback` visitor-book page collects a category, optional page reference, and feedback text.
-- **Before submissions work:** the project administrator must execute `supabase-feedback-setup.sql` in the existing Supabase project's SQL Editor. The GitHub Pages frontend cannot create database tables or policies by itself.
-- On successful insertion, feedback is stored privately in the `public.museum_feedback` table. Check records in the Supabase Table Editor using project-owner access. No email notifications are configured; checking the table is required.
-- Public clients are granted INSERT only, not SELECT, UPDATE, or DELETE. For heavy public traffic add server-enforced CAPTCHA/rate limiting. Never place a service-role key in the website.
-- A GitHub issue link is provided when submission fails, but requires the visitor to sign into GitHub and repository issue notifications depend on account settings.
+## Visitor feedback (private curator inbox)
+- Visitors use the trilingual `#/feedback` form without signing in. Feedback is saved to `public.museum_feedback` in Supabase and is not publicly displayed.
+- **One-time activation required:** run `supabase-feedback-setup.sql` in the existing Supabase project's SQL Editor. The curator authorization tables/functions from `supabase-story-setup.sql` must already be installed, and the owner's existing account must have been added to `museum_curators`.
+- Then sign into the museum website with that curator account and open `#/curator`. The existing story-moderation panel now includes a separate private **Visitor Feedback** inbox with newest submissions, topic, page, submitted time, and reviewed/unreviewed controls.
+- Feedback reading and marking reviewed use `museum_curator_feedback` and `museum_set_feedback_reviewed` security-definer RPCs, both guarded by `museum_is_curator()` inside the database. The feedback table is not granted client SELECT/UPDATE/DELETE. Ordinary visitors have column-restricted INSERT only.
+- Do not use a secret Supabase key, the owner's user ID, or an email address in public JS. Public GitHub Pages source is visible to everyone; security must be enforced by database authorization, never by hiding a link.
+- The website code is deployed but the database migration cannot be applied automatically from GitHub. Until it runs, the curator inbox shows an error and visitor submissions will not be stored. Test with a curator login AND an ordinary visitor session; unauthorized users must be unable to invoke the read and update RPCs.
+- Before larger public launches, add server-enforced CAPTCHA/rate limiting for anonymous submissions.
 
 ## Collective archive ordering
 - The collective index contains 20 dossiers: 13 existing and 7 source-linked additions (medieval English villeins, Congo rubber villagers, Soviet special settler families, Japanese American wartime incarceration, Chinese contract labourers in Peru, Bengal indigo farmers, Ottoman coerced galley rowers). Themed rooms order exhibits by historical onset. The seven new English narratives exceed 1,000 words and the seven Simplified Chinese narratives exceed 1,000 Han characters; Traditional Chinese uses OpenCC display conversion. Final source-image curation and a manual three-language browser QA pass remain outstanding.
