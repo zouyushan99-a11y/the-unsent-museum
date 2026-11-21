@@ -45,5 +45,6 @@
 "Could not delete this story. No local copy was removed. ":"删除失败，本地故事尚未移除。原因：",
 "Cloud backup confirmed":"云端备份已确认",
 "Saved on this device · cloud backup not confirmed":"已保存在此设备 · 云端备份尚未确认",
-"Sign in to sync drafts across devices.":"登录后可在不同设备间同步草稿。"
+"Sign in to sync drafts across devices.":"登录后可在不同设备间同步草稿。",
+  "Delete my published story": "删除我发布的故事"
 });})();
