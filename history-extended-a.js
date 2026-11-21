@@ -1,4 +1,4 @@
-/* The Unsent Museum — research-grounded longform biographies and documentary images. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "anna-akhmatova": {
     "title": "A Poem That Could Not Stay on Paper",
@@ -72,7 +72,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "ABC Listen · archival photograph",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Survival",
+      "Censorship",
+      "Writing"
+    ],
+    "moment": {
+      "addressed": "Trusted friends and future readers",
+      "intended": "To preserve poetry about Stalin-era imprisonment and loss.",
+      "withheld": "Written drafts of Requiem could not safely be kept or publicly printed; trusted friends memorized verses.",
+      "why": "Political terror and searches made visible documents potentially dangerous.",
+      "certainty": "Historical witness accounts support memorization and concealment; this was protective secrecy under coercion."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.poetryfoundation.org/poets/anna-akhmatova",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "nicolaus-copernicus": {
     "title": "The Universe Before the Book Was Printed",
@@ -142,7 +160,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Wikimedia Commons · Regional Museum in Toruń",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Social judgment",
+      "Delayed publication",
+      "Science"
+    ],
+    "moment": {
+      "addressed": "A wider scholarly readership",
+      "intended": "To present a new astronomical system in a complete printed treatise.",
+      "withheld": "The major work remained unprinted for decades, although an earlier outline circulated among specialists.",
+      "why": "Copernicus discussed hesitation and reception; the balance between criticism, technical readiness and other concerns remains debated.",
+      "certainty": "Delayed printing documented; no single proven motive. He was not wholly silent."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://plato.stanford.edu/entries/copernicus/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "harriet-jacobs": {
     "title": "Seven Years Above the Room",
@@ -218,6 +254,24 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Our State · Gilbert Studios albumen photograph",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Survival",
+      "Slavery",
+      "Family"
+    ],
+    "moment": {
+      "addressed": "Her children, family, and the world outside hiding",
+      "intended": "To remain connected with and protect her children while escaping an enslaver.",
+      "withheld": "She concealed her location for nearly seven years; later published a memoir describing coercion.",
+      "why": "Slavery's legal power and the threat of seizure made exposure dangerous.",
+      "certainty": "Documented concealment and memoir; not freely chosen silence."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.dncr.nc.gov/blog/2023/12/04/harriet-jacobs-c-1813-1897-72",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 });
