@@ -59,7 +59,7 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
       "Hermann Kafka never read the letter. The attempt to put a sustained explanation before him therefore did not become the conversation its author had constructed on paper. Franz retained the document, and it eventually reached a public audience after his death through preservation and publication. Publication changed the identity of its readers but not the historical outcome of the 1919 family communication. The case illustrates a concrete gap between the ability to formulate an argument and the social conditions necessary for that argument to reach its intended addressee."
     ]
   ],
-  "question": "If a letter was written, entrusted to an intermediary and returned undelivered, where did the attempt to speak stop—and whose decision shaped its outcome?",
+  "question": "The father never read the letter, but later generations did. What does the change of audience leave unresolved about the conversation that never took place?",
   "note": "The manuscript and its later publication are documented by the National Library of Israel. Interpretations of Kafka's family relationship are drawn primarily from the letter as Kafka wrote it, not from invented responses by Hermann or unsupported certainty about the decision not to deliver it.",
   "sources": [
     [
