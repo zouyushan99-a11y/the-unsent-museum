@@ -1,20 +1,33 @@
 # The Unsent Museum
 
-An interactive literary museum about choosing silence or speaking up.
+An interactive literary museum about the words people choose not to say.
 
-## Publication status
-The site frontend is in `index.html` on the `main` branch. GitHub Pages must be enabled by the repository owner under **Settings → Pages → Build and deployment → Deploy from a branch → main / (root) → Save**.
+## Live site
+https://zouyushan99-a11y.github.io/the-unsent-museum/
 
-## IMPORTANT: Preview safeguards
-This published preview is **local-only**: visitors can explore four illustrative scenarios, answer branching multiple-choice questions, draft stories, and see blue/gold stars generated from entries **in their own browsers**. It is NOT connected to Supabase, does NOT receive live submissions, and does NOT display shared visitor data. This is intentional until the project's previously exposed Supabase secret key has been revoked, the planned SQL setup is applied, moderation is configured, and abuse prevention has been tested.
+## Current implementation (v27 visual release)
+- The homepage retains a painted museum foyer with individually linked visual assets, including a high-resolution foyer image and separate ornamental, room, and paper textures.
+- The interface source is English-only.
+- Visitors can explore galleries, make decisions, view choice/reason starfields, and browse story collections.
+- The frontend contains Supabase integration for shared star data, public story reads, optional email sign-in and author-owned story workflows.
+- There is a read-only diagnostic screen at `#/diagnostics` that checks public RPC responses. A code-level review does not guarantee that the database is configured or accessible to every visitor.
 
-Do not claim that local answers represent multiple visitors.
+## Main files
+- `index.html`: homepage document and script/style entry points
+- `app.js`: routes, interactions, Supabase calls and visualizations
+- `styles.css`: layout and page styling
+- `assets/museum-v27-hero-hq.webp`: homepage foyer image
+- `assets/museum-v26-overall.webp`: overall room texture
+- `assets/museum-v26-ornament.webp`: decorative portal surface
+- `assets/museum-v26-paper.webp`: story-reading paper
+- `supabase-story-setup.sql` and `supabase-star-identity.sql`: database setup scripts; inspect and apply through an authorized Supabase administrator only
 
-## Next steps
-1. Revoke/rotate the previously exposed `sb_secret_` key in Supabase.
-2. Run and verify the separately prepared `database_setup.sql` (held in the downloadable V1.2 package) before enabling database calls.
-3. Review permissions/RLS, public RPC functions, rate limiting and moderation.
-4. Replace illustrative story text with verified first-person nonfiction accounts and add citations, reflective statement and bibliography.
-5. Once verified, integrate the fuller Supabase-connected V1.2 site carefully, retaining the database protection.
+## Operational and privacy notes
+- The publishable Supabase key is intended for client-side use. Do not commit Supabase secret or service-role keys.
+- Database security relies on configured Row Level Security (RLS), authorized functions, and server-side policies; frontend code alone is not proof of security.
+- Test anonymous access, logged-in access, publishing/moderation, account ownership, and withdrawal from another browser/device before treating the site as production-ready.
+- Review public-facing privacy disclosures against the real deployed database configuration and storage behavior.
+- Publishing, moderation and database-dependent features may be unavailable until the corresponding SQL and access controls are correctly configured.
 
-No high-privilege credentials are committed to this repository.
+## Content work remaining
+Replace illustrative accounts with verified or ethically gathered stories, check permission and anonymity, and complete course-related source citations, bibliography, and curator's reflective statement.
