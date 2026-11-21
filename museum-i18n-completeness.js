@@ -174,3 +174,19 @@ for(const [id,name] of Object.entries(names))if(labels[id])labels[id].object=nam
   "Could not restore login": "登录状态未能恢复",
   "Could not restore your session": "登录会话未能恢复"
 });})();
+
+/* Chinese-only display language in the museum-owned translation catalogue. */
+(function(){
+ const z=window.MUSEUM_I18N?.zh;if(!z)return;
+ z["I. The Choice Sky"]="第一卷 · 选择的星空";
+ z["II. The Reasons Sky"]="第二卷 · 理由的星空";
+ for(const [key,value] of Object.entries(z)){
+  if(typeof value!=="string")continue;
+  z[key]=value
+   .replaceAll("Google","谷歌")
+   .replaceAll("Supabase","云端服务")
+   .replaceAll("APA或MLA","课程要求的")
+   .replaceAll("APA or MLA","指定的")
+   .replaceAll("ID","识别编号");
+ }
+})();
