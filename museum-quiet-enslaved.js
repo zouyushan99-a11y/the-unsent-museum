@@ -41,10 +41,10 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Decades after emancipation, the Federal Writers' Project gathered more than two thousand interviews with formerly enslaved people in 1936–1938. These recollections offer precious testimony about ordinary life, but the Library of Congress emphasises their limitations. The interviewees were elderly, many had experienced slavery as children, and interviewers' race, expectations and editorial practices could shape responses. An apparently mild memory of an enslaver does not necessarily mean the speaker approved of slavery. Nor may a dramatic testimony be projected onto everyone who shared the same legal status.",
     "The very setting of the interviews is another example of pressure on speech. A Black interviewee speaking to a white interviewer in the segregated South of the 1930s did not occupy a neutral room outside history. What a person chose to recall, how an interviewer framed a question, and what a transcriber considered suitable could affect the final document. Even after legal emancipation, the act of telling the past could involve new constraints.",
     "Of course enslaved people resisted in many forms; the historical record contains escapes, revolts, refusals and acts of mutual assistance. The focus is endurance within oppression, not an assumption of willing submission.",
-    "For countless days, the political institution remained intact while individual people continued to care for their families and find ways to live."
+    "Antebellum slavery linked forced labour, movement and family life to the legal powers of enslavers. Plantation records document labour control and transactions that could separate relatives. Formerly enslaved people later gave testimony about ordinary life in interviews collected decades after emancipation, under social and racial conditions that influenced the resulting records."
   ],
   "zh": [
-    "它们只是日复一日地过去。有人下地劳动，有人在屋内工作，有人学习某种手艺，也有人在照顾家人的同时完成被安排的事务。",
+    "十九世纪上半叶，美国南部的奴隶制度覆盖种植园、家务劳动和其他行业。被奴役的黑人男性、女性与儿童，在农场、家庭及作坊中承担由奴隶主安排的工作，劳动和行动受到限制，亲属也可能在交易中被迫分离。",
     "奴隶制并不只是有人看不起黑人。它是一套让人能够占有、买卖和控制他人的法律与经济制度。被奴役者的劳动时间与行动受到监督，违抗可能招致暴力惩罚。在这样的条件下，一个人没有拒绝某项工作，不能与自由劳动者没有辞职相提并论。",
     "家庭使反抗的代价更加难以计算。人们有伴侣、父母和孩子，也需要保护彼此。但奴隶制度允许把家庭成员当作财产转移，亲人可能被迫分离。",
     "那些看起来顺从的生活，也并不意味着人失去了判断和创造的能力。被奴役者维系亲属关系、传递知识、保存音乐和信仰，也在极其有限的条件下寻找自己的生活空间。历史学家早已反对把他们描绘成天生顺从、感激主人恩赐的群体。前者没有被记录，并不能否定后者的存在。",
@@ -55,7 +55,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "到了二十世纪三十年代，美国的联邦作家计划采访了两千多位曾经经历奴隶制的人。那些迟来的回忆十分珍贵，却也有自己的限制。受访者大多已年老，不少人在奴隶制时期还是孩子；采访者的身份、提问方式与文字整理，都可能影响最后留下的内容。尤其在当时依然存在种族隔离的美国南部，一位黑人老人面对一位白人采访者，也不一定拥有完全自由的表达环境。",
     "因此，一段看上去温和的回忆，不能自动说明受访者赞同奴隶制度；一段令人震惊的经历，也不能未经核查便代表所有人。",
     "当然，历史上确实发生过逃亡、起义和各种形式的抵抗。但这里不准备把那些行动作为结尾。",
-    "有人第二天还要去工作，有人还要照顾孩子，有人还要面对决定自己命运的主人。"
+    "十九世纪美国南部的奴隶制度将被奴役者纳入财产和强制劳动体系。种植园及其他雇主通过法律、监工、买卖与惩罚限制劳动者的行动，家庭也可能因交易而被迫分离。幸存者在多年后的访谈中留下普通生活的记忆，但采访者身份和当时的种族关系也影响了这些资料的形成。"
   ],
   "mechanisms": [
     "coercive property and labour law",
