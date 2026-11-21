@@ -169,4 +169,37 @@
    }
  }
  for(const [k,v] of Object.entries(zh))if(typeof v==="string")zh[k]=fix(v);
+
+ const missingHistorical={
+  "rosa-parks":["罗莎·帕克斯","蒙哥马利 · 1955年","公共巴士逮捕记录与民权运动资料","逮捕记录与司法档案","美国国家档案馆"],
+  "claudette-colvin":["克劳黛特·科尔文","蒙哥马利 · 1955年","拒绝让座的逮捕记录与联邦诉讼材料","逮捕记录与司法档案","美国国家档案馆"],
+  "janusz-korczak":["雅努什·科尔恰克","华沙 · 1942年","孤儿院资料与华沙隔离区历史文献","教育记录与战争档案","美国大屠杀纪念馆"],
+  "etty-hillesum":["埃蒂·希勒瑟姆","阿姆斯特丹与韦斯特博克 · 1941—1943年","保存下来的日记与营地书信","手稿、日记与书信","希勒瑟姆纪念馆"],
+  "ida-b-wells":["艾达·威尔斯","孟菲斯 · 1892年","反私刑报道、出版物与报馆遭袭记录","新闻报道与社会档案","芝加哥大学图书馆"],
+  "rosalind-franklin":["罗莎琳德·富兰克林","伦敦 · 1952—1953年","第五十一号衍射照片与原始科研论文","实验图像与学术论文","伦敦国王学院"],
+  "artemisia-gentileschi":["阿尔泰米西娅·真蒂莱斯基","罗马与佛罗伦萨 · 1612年及其后","庭审笔录与存世绘画","法庭材料与艺术作品","伦敦国家美术馆"],
+  "elizabeth-keckley":["伊丽莎白·凯克利","华盛顿 · 1868年及其后","回忆录《幕后》与同时代出版记录","回忆录与社会评论","美国国会图书馆"],
+  "mary-berg":["玛丽·伯格","华沙与纽约 · 1939—1945年","华沙隔离区日记及战后出版记录","日记与出版史料","波兰犹太人历史博物馆"]
+ };
+ const enNames={
+ "rosa-parks":"Rosa Parks","claudette-colvin":"Claudette Colvin","janusz-korczak":"Janusz Korczak",
+ "etty-hillesum":"Etty Hillesum","ida-b-wells":"Ida B. Wells","rosalind-franklin":"Rosalind Franklin",
+ "artemisia-gentileschi":"Artemisia Gentileschi","elizabeth-keckley":"Elizabeth Keckley","mary-berg":"Mary Berg"
+ };
+ for(const [id,fields] of Object.entries(missingHistorical)){
+   const [name,period,object,kind,source]=fields;
+   zh[enNames[id]]=name;
+   const label=window.MUSEUM_HISTORY_LABELS[id]||{};
+   Object.assign(label,{period,object,kind,source,image:"与人物或事件相关的历史图像；请打开馆藏来源核查"});
+   window.MUSEUM_HISTORY_LABELS[id]=label;
+ }
+ const well=window.MUSEUM_HISTORY_ZH?.["ida-b-wells"];
+ if(well)for(const [k,v] of Object.entries(well)){
+   if(typeof v==="string")well[k]=v.replaceAll("艾达·B·威尔斯","艾达·威尔斯");
+   else if(Array.isArray(v))well[k]=v.map(x=>typeof x==="string"?x.replaceAll("艾达·B·威尔斯","艾达·威尔斯"):x);
+ }
+ zh["Scientific contributions and recognition"]="科学贡献与被忽略的署名";
+ zh["Coerced courtroom testimony"]="受权力制约的法庭证词";
+ zh["Preserved wartime testimony"]="保存下来的战时见证";
+
 })();
