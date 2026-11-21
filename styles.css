@@ -41,3 +41,16 @@
 .auth-email{color:#e8cc84;font-size:1.05rem;overflow-wrap:anywhere}
 .auth-feedback{margin-top:24px;border-left:3px solid #d5b660;padding:13px 17px;background:rgba(234,204,118,.10);color:#f1dfb8;line-height:1.6}
 @media(max-width:600px){.nav .account-link{max-width:180px}.auth-panel{padding:23px}}
+
+/* Two independent account entrances: Google and email/password. */
+.auth-separator{display:flex;align-items:center;gap:16px;color:#b5bed0;font-size:.84rem;margin:30px 0 24px}
+.auth-separator:before,.auth-separator:after{content:'';height:1px;background:rgba(206,196,166,.25);flex:1}
+.auth-tab-buttons{display:flex;gap:5px;border-bottom:1px solid rgba(210,221,243,.22);margin-bottom:23px}
+.auth-tab{appearance:none;background:transparent;border:0;border-bottom:2px solid transparent;color:#b2baca;padding:11px 20px;cursor:pointer;font:inherit}
+.auth-tab.is-active{color:#f4d18a;border-bottom-color:#e6c368}
+.auth-tab:hover{color:#f4d18a}
+.email-auth-form{display:flex;flex-direction:column;align-items:stretch;gap:12px;max-width:550px}
+.email-auth-form label{font-size:.88rem;color:#e3d6b9}
+.email-auth-form input{box-sizing:border-box;width:100%;min-height:46px}
+.email-auth-form .btn{margin-top:10px;align-self:flex-start}
+.google-signin{display:inline-flex;align-items:center;justify-content:center;min-height:45px}
