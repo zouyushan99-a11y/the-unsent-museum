@@ -701,3 +701,205 @@ h2{letter-spacing:-.026em}
 @media(prefers-reduced-motion:reduce){
  .hero-night-art,.night-star,.night-spiral{animation:none!important;transition:none!important}
 }
+
+
+/* =========================================================
+   THE STARRY NIGHT / 02 — QUIETER, DEEPER, MORE TEXTURAL
+   Low-chroma tone-on-tone engraving, not bright wallpaper.
+   ========================================================= */
+:root{
+ --bg:#050d1d;
+ --night-deep:#050b18;
+ --night-blue:#10213c;
+ --night-cobalt:#1c3757;
+ --night-lapis:#284568;
+ --night-teal:#244c57;
+ --night-cypress:#213d3d;
+ --surface:#0d1c33;
+ --line:rgba(160,185,214,.19);
+ --muted:#b4bed0;
+ --ink:#f4edda;
+ --night-frame:rgba(224,191,128,.25);
+}
+html{background:#050b18}
+body{
+ background:
+ radial-gradient(ellipse 58% 28% at 87% 4%,rgba(27,64,99,.25),transparent 80%),
+ radial-gradient(ellipse 65% 40% at 0% 51%,rgba(29,58,84,.14),transparent 80%),
+ radial-gradient(ellipse 55% 24% at 99% 85%,rgba(25,63,74,.13),transparent 82%),
+ linear-gradient(180deg,#050b18 0%,#09162a 32%,#071225 72%,#050b18 100%);
+ background-attachment:fixed;
+}
+/* Engraved sky: discreet curves and pointillist dots across every page. */
+body::before{
+ content:"";
+ position:fixed;inset:0;z-index:0;pointer-events:none;
+ background-image:
+   repeating-radial-gradient(ellipse 580px 350px at 110% 11%,
+     transparent 0 37px,rgba(109,151,183,.032) 39px 40px,transparent 43px 62px),
+   repeating-radial-gradient(ellipse 470px 290px at -16% 71%,
+     transparent 0 31px,rgba(99,141,173,.026) 33px 34px,transparent 36px 58px),
+   radial-gradient(circle at 12% 15%,rgba(191,214,230,.12) .5px,transparent 1.1px),
+   radial-gradient(circle at 71% 45%,rgba(132,176,206,.09) .5px,transparent 1.1px);
+ background-size:auto,auto,67px 61px,101px 97px;
+ opacity:.85;
+}
+body>*{position:relative;z-index:1}
+#app{isolation:isolate}
+.notice,.site-header{background-color:rgba(6,16,32,.69)}
+.notice{
+ background:linear-gradient(90deg,#08172a,#10243d 52%,#08172a);
+ color:#d9c69f;border-color:rgba(219,193,142,.16);
+}
+.site-header{
+ background:linear-gradient(90deg,rgba(7,16,31,.68),rgba(13,33,54,.38));
+ border-color:rgba(208,182,132,.19);
+}
+.nav .account-link{background:rgba(15,37,58,.76)}
+.footer{background:linear-gradient(180deg,#081526,#050c1c)}
+/* The decorative sky is darker so the typography remains the focal point. */
+.hero{
+ background:
+ radial-gradient(ellipse 54% 61% at 81% 45%,rgba(35,79,105,.26),transparent 79%),
+ linear-gradient(116deg,#061125 0%,#0b1d34 51%,#10263f 100%);
+ border-color:rgba(224,194,126,.19);
+ min-height:705px;
+}
+.hero:before{
+ background:
+ repeating-radial-gradient(ellipse at 73% 46%,transparent 0 28px,rgba(106,152,177,.061) 31px 32px,transparent 34px 53px),
+ radial-gradient(ellipse 57% 66% at 74% 47%,rgba(38,89,126,.17),transparent 79%);
+ opacity:.62;
+}
+.hero-night-art{opacity:.72;filter:saturate(.83) brightness(.77)}
+.night-spiral{border-color:rgba(79,129,158,.14);box-shadow:0 0 0 16px rgba(117,159,176,.045),0 0 0 33px rgba(69,120,153,.075),inset 0 0 0 13px rgba(216,202,129,.04)}
+.night-star{box-shadow:0 0 0 5px rgba(241,202,115,.16),0 0 15px 7px rgba(241,204,99,.29),0 0 38px 16px rgba(243,193,75,.08)}
+.hero-content{max-width:685px}
+.hero .eyebrow{display:flex;align-items:center;gap:12px}
+.hero .eyebrow:before{
+ content:"";width:36px;height:1px;background:rgba(231,194,116,.8);
+}
+.hero h1{letter-spacing:-.055em}
+.hero h1 em{color:#edca76;text-shadow:0 0 20px rgba(233,191,105,.12)}
+.hero-intro{max-width:580px}
+.hero .actions{padding-top:4px}
+.hero .actions .btn:first-child{padding-inline:27px}
+/* Elegant museum dividers and editorial section rhythm */
+.section-heading{position:relative;padding-bottom:20px}
+.section-heading:after{
+ content:"";position:absolute;bottom:0;left:0;right:0;height:1px;
+ background:linear-gradient(90deg,rgba(230,200,134,.58),rgba(146,179,203,.17) 49%,transparent);
+}
+.page-hero{isolation:isolate}
+.page-hero:before{
+ width:205px;height:205px;right:3%;top:24px;
+ border:1px solid rgba(113,153,188,.10);
+ background:repeating-radial-gradient(circle,transparent 0 18px,rgba(102,146,177,.045) 20px 21px,transparent 23px 32px);
+ box-shadow:0 0 0 22px rgba(76,118,152,.019),0 0 0 48px rgba(76,118,152,.013);
+}
+.page-hero .eyebrow{letter-spacing:.23em}
+.page-hero h1{max-width:1000px}
+.page-hero>.muted{max-width:760px;line-height:1.8}
+.section-compact{position:relative}
+/* Cards resemble curated objects: understated relief and engraved curves */
+.card,.gateway-card{
+ background:linear-gradient(150deg,#122840 0%,#0d2038 51%,#09172b 100%);
+ border:1px solid rgba(150,179,203,.25);
+ box-shadow:0 20px 48px rgba(2,8,19,.20),inset 0 1px rgba(255,255,255,.022);
+ overflow:hidden;
+}
+.card:nth-child(2),.gateway-card:nth-child(2){background:linear-gradient(150deg,#152c3c,#0e2638 57%,#091a2e)}
+.card:nth-child(3){background:linear-gradient(145deg,#171f36,#11233a 60%,#0a182b)}
+.card:nth-child(4){background:linear-gradient(147deg,#112e3b,#0e2638 58%,#091a2e)}
+.card.others{background:linear-gradient(145deg,#202537,#142336 55%,#0b192b)}
+.card:before,.gateway-card:before{
+ content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+ background:
+   repeating-radial-gradient(ellipse 170px 115px at 95% 10%,transparent 0 15px,rgba(126,162,186,.080) 17px 18px,transparent 20px 30px),
+   radial-gradient(circle at 93% 12%,rgba(221,194,129,.13),transparent 37%);
+ opacity:.76;
+}
+.card:after{color:rgba(226,195,125,.065)}
+.card,.gateway-card,.archive-item{transition:border-color .22s,transform .22s,box-shadow .22s}
+.card:hover,.gateway-card:hover{
+ transform:translateY(-3px);
+ border-color:rgba(226,194,123,.57);
+ box-shadow:0 24px 55px rgba(2,9,23,.36);
+}
+.card-num{position:relative;z-index:1;letter-spacing:.25em}
+.card h3,.gateway-card h2{letter-spacing:-.025em}
+.gateway-card .gateway-icon{opacity:.94}
+.gateway-card h2,.gateway-card p,.gateway-card .link-arrow{position:relative;z-index:1}
+.gateway-card .link-arrow{margin-top:10px}
+.archive-item,.stat,.reason-panel,.constellation{
+ background:linear-gradient(151deg,#122943,#0d1f36 61%,#09172c);
+ border-color:rgba(150,178,206,.22);
+ box-shadow:0 14px 42px rgba(3,10,23,.19);
+}
+.archive-item{position:relative;overflow:hidden}
+.archive-item:before{
+ content:"";position:absolute;right:-66px;top:-90px;width:210px;height:210px;border-radius:50%;pointer-events:none;
+ background:repeating-radial-gradient(circle,transparent 0 14px,rgba(107,148,181,.046) 16px 17px,transparent 18px 27px);
+}
+.archive-item>*{position:relative}
+.archive-item h3{line-height:1.35}
+.archive-item .archive-prose{color:#cfd7e2}
+.choice-panel,.auth-panel,.story-editor-panel{
+ background:
+ radial-gradient(ellipse 85% 32% at 96% -5%,rgba(42,91,119,.12),transparent 77%),
+ linear-gradient(155deg,#11263f,#0c1c32 65%,#09172a);
+ border:1px solid rgba(220,193,136,.25);
+ box-shadow:0 25px 66px rgba(2,9,24,.26);
+}
+.choice-panel{position:relative}
+.choice-panel:before{
+ content:"";position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+ background:repeating-radial-gradient(ellipse 330px 200px at 106% -10%,transparent 0 28px,rgba(91,141,172,.032) 30px 31px,transparent 32px 50px);
+}
+.choice-panel>*{position:relative}
+.choice-option{background:rgba(17,38,61,.71);border-color:rgba(150,181,209,.23)}
+.choice-option:hover,.choice-option:has(input:checked){border-color:rgba(235,199,126,.66);background:rgba(211,176,104,.093)}
+.field,#story-category,#other-category,.saved-story-category{background:#07182d;border-color:rgba(152,177,204,.36)}
+.field:focus{box-shadow:0 0 0 3px rgba(231,202,133,.11)}
+.progress span{background:#233a55}
+.progress .done{background:#dfbd70}
+.story-sky-frame,.sky-frame,.reason-sky-frame,.preview-sky{
+ border-color:rgba(136,165,193,.32);
+ box-shadow:0 20px 55px rgba(1,8,18,.38),0 0 20px rgba(26,67,110,.10);
+}
+.story-star-legend,.reason-colour-legend{background:rgba(12,29,49,.94);border-color:rgba(184,178,142,.27)}
+.story-sky-preview,.publication-section,.story-category-editor{
+ background:linear-gradient(145deg,#122e46,#0c2036);
+ border-color:rgba(213,186,128,.30);
+}
+.behind-silence,.research-page .behind-silence{
+ background:
+ repeating-radial-gradient(ellipse 480px 220px at 110% -12%,transparent 0 30px,rgba(108,146,174,.035) 32px 33px,transparent 35px 54px),
+ linear-gradient(165deg,#11283e,#0b2035 55%,#091a2e);
+ border-color:rgba(221,195,140,.27);
+ box-shadow:0 26px 75px rgba(1,8,21,.26);
+}
+.behind-first p,.behind-reason p{color:#cbd8e5}
+.story-reader{box-shadow:0 27px 78px rgba(1,8,18,.38)}
+.empty-state,.archive-preview{background:linear-gradient(135deg,#122b42,#0b1d32)}
+.note,.auth-feedback{background:rgba(173,145,86,.082)}
+.diagnostic-results{background:#0b1c34}
+.btn{box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.btn-outline{background:rgba(15,37,59,.55)}
+.pill{background:rgba(10,28,47,.77)}
+.pill.active{background:rgba(208,172,98,.13)}
+.story-view-switch{background:#0b1d34}
+/* An art direction change should not compromise small screens. */
+@media(max-width:700px){
+ body{background-attachment:scroll}
+ body::before{opacity:.55;background-size:auto,auto,84px 77px,121px 117px}
+ .hero{background:linear-gradient(125deg,#071428,#0c1e34)}
+ .hero-night-art{opacity:.40}
+ .hero .eyebrow{gap:9px}
+ .hero .eyebrow:before{width:22px}
+ .page-hero:before{width:112px;height:112px;right:0;top:35px;opacity:.55}
+ .card,.gateway-card{box-shadow:0 11px 33px rgba(2,9,23,.23)}
+}
+@media(prefers-reduced-motion:reduce){
+ .card,.gateway-card,.archive-item{transition:none!important}
+}
