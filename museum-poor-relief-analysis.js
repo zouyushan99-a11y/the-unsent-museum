@@ -1,4 +1,6 @@
 /* Ten historically and ethically qualified explanations for workhouse complainants and noncomplainants. */
+window.MUSEUM_RESISTANCE_ANALYSIS=window.MUSEUM_RESISTANCE_ANALYSIS||{};
+window.MUSEUM_RESISTANCE_DEPTH_AUDIT=window.MUSEUM_RESISTANCE_DEPTH_AUDIT||{};
 window.MUSEUM_RESISTANCE_ANALYSIS["victorian-poor-relief"]={
   "enIntro": "The 1834 Poor Law did not abolish poor relief, nor did everyone enter a workhouse. It changed the conditions under which people could seek help. The question is why a person who resented an official decision might refrain from attaching their name to a complaint.",
   "zhIntro": "1834年的新济贫法并未取消所有救济，也不是每一位贫困者都被送进济贫院。真正值得探究的是：当一个人已经感到遭遇不公，他为什么可能不敢把自己的名字写在投诉信上？",
