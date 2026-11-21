@@ -26,13 +26,42 @@ function figure(imgUrl,fileName,subject,group,language){
  return element;
 }
 function language(){const html=document.documentElement.lang;return html.startsWith("zh")?html:"en"}
+const commonsTerms={
+"Domestic worker":"Victorian servant 1890 maid photograph",
+"Widow remarriage":"India widow 19th century photograph",
+"Burakumin":"Edo period Japanese leather workers woodblock",
+"Slavery in the United States":"enslaved African Americans historical photograph",
+"Women in Joseon":"Joseon dynasty women historical photograph",
+"Foot binding":"Chinese foot binding old photograph",
+"Cultivation System":"Cultivation system Dutch East Indies Java historical engraving",
+"Sharecropping":"sharecroppers 1930 historic photograph",
+"Child labor in the United States":"Lewis Hine child labor photograph",
+"Impressment":"British press gang 1800 historical engraving",
+"Mining industry of South Africa":"South African gold mine workers 1900 historical",
+"Devshirme":"devshirme Ottoman miniatures levying boys",
+"Workhouse":"Victorian workhouse historical illustration"
+};
 async function lookup(subject){
  const url="https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&redirects=1&prop=pageimages&piprop=thumbnail%7Cname&pithumbsize=1000&titles="+encodeURIComponent(subject)+"&origin=*";
- const reply=await fetch(url,{mode:"cors",credentials:"omit"});if(!reply.ok)throw Error("Wikipedia image lookup status "+reply.status);
- const body=await reply.json();const page=(body.query?.pages||[]).find(p=>!p.missing&&p.thumbnail?.source&&p.pageimage);
- if(!page)return null;
- return {url:page.thumbnail.source,file:page.pageimage,subject:page.title};
+ try{
+  const reply=await fetch(url,{mode:"cors",credentials:"omit"});
+  if(reply.ok){const body=await reply.json();const page=(body.query?.pages||[]).find(p=>!p.missing&&p.thumbnail?.source&&p.pageimage);
+   if(page)return {url:page.thumbnail.source,file:page.pageimage,subject:page.title};
+  }
+ }catch(error){}
+ /* Secondary search is restricted to archival-image files and meaningful title matches. */
+ const term=commonsTerms[subject]||subject+" historical portrait";
+ const commons="https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch="+encodeURIComponent(term)+"&prop=imageinfo&iiprop=url%7Cextmetadata&iiurlwidth=1000&origin=*";
+ const reply=await fetch(commons,{mode:"cors",credentials:"omit"});
+ if(!reply.ok)return null;
+ const data=await reply.json();
+ const tokens=subject.toLowerCase().split(/\s+/).filter(x=>x.length>3);
+ const files=(data.query?.pages||[]).filter(p=>p.imageinfo?.[0]?.thumburl&&/\.(jpe?g|png|webp)$/i.test(p.title)&&p.imageinfo?.[0]?.mime?.startsWith("image/"));
+ const matching=files.find(p=>tokens.some(t=>p.title.toLowerCase().includes(t)))||null;
+ if(!matching)return null;
+ return {url:matching.imageinfo[0].thumburl,file:matching.title.replace(/^File:/,""),subject:subject};
 }
+
 async function hydrate(){
  const r=routeInfo();if(!r)return;
  const article=document.querySelector(r.group?".collective-article":".history-longform");
