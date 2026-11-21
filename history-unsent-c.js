@@ -1,4 +1,4 @@
-/* Primary-focused new Unsent records I */
+/* Research-grounded historical entries, with provenance-labelled archival imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "eileen-chang": {
     "title": "The Novel She Asked to Destroy",
@@ -145,7 +145,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.cambridge.org/core/books/cambridge-companion-to-victorian-womens-writing/victorian-women-writers-careers/38E8D853C4DCD946C779429B1589C72B"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/0/07/The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "kind": "Historical painting",
+        "caption": "The Brontë sisters (Anne, Emily and Charlotte), painted by their brother Branwell around 1834. An original historical portrait, not a photograph.",
+        "credit": "Patrick Branwell Brontë · National Portrait Gallery / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "emily-bronte": {
     "title": "The Name Behind Wuthering Heights",
@@ -214,7 +223,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.gutenberg.org/files/9182/9182-h/9182-h.htm"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/0/07/The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "kind": "Historical painting",
+        "caption": "The Brontë sisters (Anne, Emily and Charlotte), painted by Branwell Brontë around 1834. This is a historical painting, not a photograph.",
+        "credit": "Patrick Branwell Brontë · National Portrait Gallery / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "anne-bronte": {
     "title": "The Author Called Acton Bell",
@@ -283,6 +301,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.gutenberg.org/files/9182/9182-h/9182-h.htm"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/0/07/The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:The_Bront%C3%AB_Sisters_by_Patrick_Branwell_Bront%C3%AB.jpg",
+        "kind": "Historical painting",
+        "caption": "Anne, Emily and Charlotte Brontë in a portrait by their brother Branwell, around 1834. Historical painting, not a photographic record.",
+        "credit": "Patrick Branwell Brontë · National Portrait Gallery / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   }
 });
