@@ -1,4 +1,4 @@
-/* Historical nonfiction with documentary photo sources and reliable linked fallbacks. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM = {
   "anne-frank": {
     "title": "Before the Bookcase: How a City Learned to Exclude a Girl",
@@ -98,7 +98,25 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "kind": "Museum / surviving object photograph",
         "backup": "https://commons.wikimedia.org/wiki/File:Netherlands-4474%20-%201942%20Moveable%20Bookcase%20(12083797916).jpg"
       }
-    ]
+    ],
+    "tags": [
+      "Survival",
+      "Political persecution",
+      "Private writing"
+    ],
+    "moment": {
+      "addressed": "A future readership, though she could not safely appear in public",
+      "intended": "To record daily life and later develop a book about hiding.",
+      "withheld": "The family concealed their presence under threat of Nazi arrest; Anne's public writing project could not be launched while she lived in hiding.",
+      "why": "Nazi anti-Jewish persecution and the risk of deportation made disclosure dangerous. This is coerced concealment, not an ordinary choice to hold back a message.",
+      "certainty": "Historical restrictions and plans to publish documented; not voluntary silence in the central Unsent sense."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://research.annefrank.org/en/onderwerpen/15419b29-aadf-4c4d-af00-a6973b460f9a/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "white-rose": {
     "title": "When Agreement Was Enforced: The Leaflets of the White Rose",
@@ -198,7 +216,25 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "kind": "Original document scan",
         "backup": "https://commons.wikimedia.org/wiki/File:6.%20Flugblatt%20der%20Wei%C3%9Fen%20Rose.webp"
       }
-    ]
+    ],
+    "tags": [
+      "Resistance",
+      "Political censorship",
+      "Open dissent"
+    ],
+    "moment": {
+      "addressed": "Students and German readers",
+      "intended": "To circulate anti-Nazi arguments despite censorship.",
+      "withheld": "The group concealed authorship to protect distribution, but did not withdraw the message.",
+      "why": "Secret organization responded to the real risk of arrest and execution under dictatorship.",
+      "certainty": "Documented resistance, not a voluntarily unsent public argument."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://encyclopedia.ushmm.org/content/en/article/white-rose",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "rosa-parks": {
     "title": "The Rule Behind the Seat",
@@ -298,6 +334,24 @@ window.MUSEUM_HISTORY_LONGFORM = {
         "kind": "Historical photograph",
         "backup": "https://commons.wikimedia.org/wiki/File:Rosa%20Parks%20on%20bus%20on%20December%2021%2C%201956.jpg"
       }
-    ]
+    ],
+    "tags": [
+      "Resistance",
+      "Civil rights",
+      "Refusal"
+    ],
+    "moment": {
+      "addressed": "The bus driver, segregation authorities, and later the public",
+      "intended": "To refuse an unequal demand enforced by bus segregation.",
+      "withheld": "Her compliance was withheld, not a prepared message. The boycott was a collective public protest.",
+      "why": "Montgomery's Jim Crow rules demanded racial subordination; the act rejected that demand.",
+      "certainty": "Well-documented refusal; not an instance of deciding not to speak."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.archives.gov/education/lessons/rosa-parks",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 };
