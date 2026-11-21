@@ -291,3 +291,11 @@ line-height:1.42;overflow-wrap:anywhere;
 .behind-source-link{flex:0 0 auto;font-size:.81rem;color:#f0d38f;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:680px){.behind-silence{margin:18px auto 60px;padding:24px 20px;border-radius:17px}.behind-first p{font-size:.95rem}.behind-reason{grid-template-columns:31px minmax(0,1fr)}.behind-reason h3{font-size:1.14rem}.behind-source{display:block}.behind-source-link{display:inline-block;margin-top:12px}.behind-highlight{align-items:flex-start;flex-direction:column;gap:6px}.research-page{padding-bottom:25px}}
 @media(prefers-reduced-motion:reduce){.behind-plus{transition:none}}
+
+/* Story gallery assignment: obvious before writing, editable after saving. */
+#story-category,#other-category,.saved-story-category{width:100%;min-height:48px;appearance:auto;background:#172137;color:#f7f0df;border:1px solid rgba(235,205,145,.42);border-radius:10px;padding:10px 13px}
+#story-category option,#other-category option,.saved-story-category option{background:#172137;color:#f7f0df}
+.story-category-editor{margin:18px 0 12px;padding:15px 17px;border:1px solid rgba(235,205,145,.24);border-radius:12px;background:rgba(235,205,145,.055)}
+.story-category-editor label{display:block;margin-bottom:7px;font-size:.84rem;color:#efd9a2}
+.story-category-editor p{margin:8px 0 0}
+.story-category-editor .field{max-width:520px}
