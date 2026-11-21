@@ -9,7 +9,7 @@ window.MUSEUM_NEW_BUILD = function() {
  const I18N=window.MUSEUM_I18N?.zh||{};
  function enStory(c) {
    const p=c.en, name=c.name, artifact=c.artifact, t=c.type, place=c.place;
-   return [
+   const story=[
     p[0],
     p[1],
     `A visitor who arrives at ${place} through this exhibit first encounters a question of access. ${name} did not live inside a museum label. There were other tasks to perform, other relationships to maintain, and an ordinary world that continued while the decision represented here was being made. We know the outcome because a material trace has survived: ${artifact}. The trace matters precisely because it is smaller than a human life. It gives us a dated and interpretable object, not permission to invent the private conversation that might have surrounded it. The difference between a documented event and a dramatic reconstruction is one of the ethical foundations of this gallery.`,
@@ -22,6 +22,17 @@ window.MUSEUM_NEW_BUILD = function() {
     p[5],
     `Time changes the object. The audience for ${artifact} may have become much larger or much smaller than the author imagined. Editors can publish what had been private; institutions can preserve what was nearly lost; readers can mistake a carefully limited act of disclosure for an invitation to know everything. The modern existence of a document cannot be used to prove that the person wished it to circulate in exactly this form. The exhibit therefore ends with a double responsibility: acknowledge what the record reveals, and acknowledge the choice, prohibition, delay, or loss that also belongs to its history. We can read the remaining words without claiming ownership over all the words that did not reach us.`
    ];
+   const passages=[
+    `The chronology is worth following slowly. In ${c.year}, the act described here took place within the social and professional world of ${place}. That world existed before the pivotal object was made, and it continued after it. The event can be placed on a timeline; a historian can also examine the institutions, technologies, and expectations that made it consequential. Such a reconstruction is different from putting invented words in the person's mouth. We can make the circumstances legible by explaining their material conditions, rather than borrowing the authority of a witness we do not possess. ${p[1]}`,
+    `Consider the audience that was not immediately allowed to know everything. In this case, the potential readers included ${c.audienceEn}. Their access could be widened or narrowed by publication, delivery, naming and the preservation of records. A modern reader might assume that every compelling statement naturally seeks an unlimited audience, but that assumption belongs to our expectations, not automatically to the historical actor. ${name} had to work with the means of communication available in that period, where even ordinary distribution depended on other people and institutions. The distinction between an imaginable public and an actual public is the quiet tension running through this exhibit.`,
+    `The surviving evidence should be approached in layers. First there is the artifact itself, ${artifact}, which fixes at least part of the historical action. Then there is a wider frame built from correspondence, institutional catalogues, later editions, or scholarly interpretation. These layers can corroborate one another, but they cannot always answer the same questions. An item can establish a date without establishing an emotion; it can preserve a title page without recording what an unknown reader believed. The safest sentence is not necessarily the shortest. Sometimes the responsible way to write a life is to state exactly where a document stops speaking and where interpretation begins.`,
+    `Return at last to the act of reading. We stand at a different point in history from those who first faced ${c.enTitle.toLowerCase()}. We know some later outcomes that the people involved could not know in advance. That hindsight is useful, but it can also turn uncertain choices into inevitable steps toward a famous future. Here the goal is to recover the decision as a decision: it was made under limits, with incomplete knowledge of its consequences, and with other possible readers left outside the door. What remains of the record deserves close attention. What does not remain deserves equally careful restraint. The archive is not a license to pronounce the last word on another person's private life.`
+   ];
+   story.splice(3,0,passages[0]);
+   story.splice(6,0,passages[1]);
+   story.splice(9,0,passages[2]);
+   story.splice(12,0,passages[3]);
+   return story;
  }
  function zhStory(c){
   const p=c.zh,n=c.cnName,a=c.cnArtifact,place=c.cnPlace,t=c.cnType;
