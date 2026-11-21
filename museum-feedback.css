@@ -1,0 +1,17 @@
+/* Themed collective reading rooms and visitor book */
+.collective-category{padding:34px 0 56px;border-top:1px solid rgba(238,198,91,.22);scroll-margin-top:22px}
+.collective-category .collective-section-heading h2{font-size:clamp(1.7rem,3.2vw,2.5rem)}
+.collective-category .collective-section-heading p{max-width:670px;color:var(--muted)}
+.collective-category-nav{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 34px}
+.collective-category-nav a{display:inline-flex;border:1px solid rgba(238,198,91,.35);border-radius:999px;padding:8px 14px;font-size:.82rem;color:#eddcba;background:rgba(255,255,255,.035)}
+.collective-category-nav a:hover,.collective-category-nav a:focus-visible{background:rgba(238,198,91,.13);color:#fff}
+.collective-category .collective-card h3{font-size:1.45rem;line-height:1.25;margin:.45rem 0}
+.museum-feedback-form{display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid rgba(238,198,91,.3);border-radius:16px;background:rgba(12,20,36,.7)}
+.museum-feedback-form label{font-weight:600;margin-top:9px}
+.museum-feedback-form input,.museum-feedback-form select,.museum-feedback-form textarea{width:100%;border:1px solid rgba(217,226,245,.3);border-radius:9px;padding:12px;color:var(--ink);background:#182339}
+.museum-feedback-form select option{background:#182339;color:#fff}
+.museum-feedback-form textarea{resize:vertical}
+.museum-feedback-form button{align-self:flex-start}
+.museum-feedback-form [role=status]{min-height:1.4em}
+.feedback-trap{position:absolute;left:-10000px;visibility:hidden}
+@media(max-width:640px){.museum-feedback-form{padding:17px}.collective-category-nav{gap:8px}.collective-category-nav a{font-size:.75rem}}
