@@ -160,7 +160,8 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
       "Colvin was among those plaintiffs, along with Aurelia Browder, Susie McDonald, and Mary Louise Smith. Jeanetta Reese was initially named but withdrew. Their cases provided testimony about the operation of the segregation laws. Colvin's role matters because it changes the chronology from a forgotten teenager waiting for recognition to a young participant whose earlier refusal became part of the litigation that helped dismantle the rule.",
       "In 1956 a federal district court ruled against bus segregation, and the Supreme Court affirmed the judgment. The boycott ended in December after the ruling took effect. The outcome was created by a sustained movement of local people, lawyers, organizations, car-pool drivers, and riders who made an unequal transit system economically and legally contestable.",
       "Public memory, however, has a different economy from a court record. A classroom textbook may tell the story through a single bus seat and a single photograph. A lawsuit requires evidence from several people. These forms of memory do not preserve the same cast of characters. Colvin's experience asks what happens to a historical actor when a more convenient or better-known narrative becomes the standard version of the event.",
-      "Colvin did speak through refusal and later through participation in legal proceedings. The silence in this story is not a claim that she was too timid to resist. It lies partly in what later audiences did not hear, or were not taught to remember. To restore her role is not to diminish Rosa Parks. It is to make the history large enough to contain more than one person who challenged the same injustice."
+      "Colvin did speak through refusal and later through participation in legal proceedings. The silence in this story is not a claim that she was too timid to resist. It lies partly in what later audiences did not hear, or were not taught to remember. To restore her role is not to diminish Rosa Parks. It is to make the history large enough to contain more than one person who challenged the same injustice.",
+      "The longer life of this story continued after the boycott. Colvin worked for many years outside the center of public civil-rights commemoration; researchers, writers, and later interviews helped recover her part in the movement. In 2021 an Alabama court expunged the juvenile records associated with the 1955 arrest. Colvin died on 13 January 2026, aged eighty-six. Those dates belong to the same history as the bus ride. A teenage decision remained a subject of public memory and legal recognition across the rest of her life."
     ],
     "analysis": [
       [
@@ -206,6 +207,14 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
       [
         "Supreme Court Historical Society — Browder v. Gayle",
         "https://civics.supremecourthistory.org/article/browder-v-gayle/"
+      ],
+      [
+        "NAACP Legal Defense Fund — Remembering Claudette Colvin (2026)",
+        "https://www.naacpldf.org/press-release/ldf-celebrates-the-life-and-legacy-of-claudette-colvin-trailblazing-civil-rights-pioneer/"
+      ],
+      [
+        "Associated Press — Claudette Colvin dies at 86 (2026)",
+        "https://apnews.com/article/a447e8e70f0decf2463565241179d11f"
       ]
     ],
     "images": [
