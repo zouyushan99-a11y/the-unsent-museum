@@ -51,7 +51,7 @@ async function lookup(subject){
  }catch(error){}
  /* Secondary search is restricted to archival-image files and meaningful title matches. */
  const term=commonsTerms[subject]||subject+" historical portrait";
- const commons="https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch="+encodeURIComponent(term)+"&prop=imageinfo&iiprop=url%7Cextmetadata&iiurlwidth=1000&origin=*";
+ const commons="https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch="+encodeURIComponent(term)+"&prop=imageinfo&iiprop=url%7Cmime%7Cextmetadata&iiurlwidth=1000&origin=*";
  const reply=await fetch(commons,{mode:"cors",credentials:"omit"});
  if(!reply.ok)return null;
  const data=await reply.json();
@@ -71,7 +71,7 @@ async function hydrate(){
  const story=article.querySelector(r.group?".collective-prose":".history-prose");
  if(!story)return;
  const imgs=story.querySelectorAll("figure.history-archive-figure img");
- if(imgs.length){imgs.forEach(img=>img.addEventListener("error",()=>{img.closest("figure")?.remove();existing.delete(id);hydrate()},{once:true}));return}
+ if(imgs.length){imgs.forEach(img=>{const recover=()=>{img.closest("figure")?.remove();existing.delete(id);hydrate()};if(img.complete&&img.naturalWidth===0)recover();else img.addEventListener("error",recover,{once:true})});return}
  if(existing.get(id)==="loading")return;
  const subject=r.group?groupTitles[id]:(glossary[id]||id.replaceAll("-"," "));
  if(!subject)return;
