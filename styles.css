@@ -28,3 +28,16 @@
 .reason-colour-dot{border:1px solid rgba(255,235,184,.24)}
 .reason-sky-frame{background:#030710;border-color:#334762}
 .reason-colour-legend{background:#0d1523;border-color:#374a63}
+
+/* Passwordless account area, visually integrated with the original paper-and-night theme. */
+.nav .account-link{border:1px solid rgba(236,206,135,.52);color:#ead5a0;border-radius:999px;padding:7px 14px;max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav .account-link:hover,.nav .account-link:focus{background:rgba(238,198,91,.13);color:#f6dfb0}
+.auth-area{padding-top:12px;padding-bottom:86px}
+.auth-panel{border:1px solid rgba(202,179,125,.28);border-radius:18px;padding:clamp(24px,4vw,46px);background:linear-gradient(145deg,#131d2e,#0c101a);box-shadow:0 18px 60px rgba(0,0,0,.18)}
+.auth-panel h2{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400;color:#e9d7a9}
+.auth-panel form{display:flex;flex-direction:column;align-items:flex-start;gap:15px;margin-top:25px}
+.auth-label{color:#e9d7a9;font-size:.95rem}
+.auth-panel .field{width:100%;max-width:550px;min-height:48px;font-size:1rem;border-radius:8px}
+.auth-email{color:#e8cc84;font-size:1.05rem;overflow-wrap:anywhere}
+.auth-feedback{margin-top:24px;border-left:3px solid #d5b660;padding:13px 17px;background:rgba(234,204,118,.10);color:#f1dfb8;line-height:1.6}
+@media(max-width:600px){.nav .account-link{max-width:180px}.auth-panel{padding:23px}}
