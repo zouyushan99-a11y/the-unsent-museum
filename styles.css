@@ -54,3 +54,11 @@
 .email-auth-form input{box-sizing:border-box;width:100%;min-height:46px}
 .email-auth-form .btn{margin-top:10px;align-self:flex-start}
 .google-signin{display:inline-flex;align-items:center;justify-content:center;min-height:45px}
+
+/* Account password management and recovery, matching the museum's original theme. */
+.auth-panel #update-password-form{margin-top:24px}
+.auth-panel #update-password-form .btn{margin-top:16px}
+.auth-text-button{display:inline-block;background:transparent;border:0;border-bottom:1px solid rgba(235,209,144,.6);border-radius:0;color:#e7cf94;font-size:.87rem;cursor:pointer;padding:3px 0;margin-top:21px}
+.auth-text-button:hover,.auth-text-button:focus-visible{color:#fff0c9;border-bottom-color:#fff0c9}
+.auth-panel .auth-email{margin:12px 0 16px}
+.auth-panel #auth-signout{margin-top:24px}
