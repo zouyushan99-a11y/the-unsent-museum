@@ -389,7 +389,14 @@ function historyPage(id){
  let content='';
  const essay=selected&&details[selected.id];
  if(essay){
-  const chapters=essay.story.map((p,i)=>'<p class="history-prose-paragraph">'+esc(p)+'</p>').join('');
+  const chapters=essay.story.map((p,i)=>{
+   const paragraph='<p class="history-prose-paragraph">'+esc(p)+'</p>';
+   const figures=(essay.images||[]).filter(pic=>pic.at===i+1).map(pic=>
+    '<figure class="history-archive-figure"><a class="history-photo-link" href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer" title="Open the original archive record"><img loading="lazy" decoding="async" src="'+esc(pic.src)+'" alt="'+esc(pic.caption)+'" referrerpolicy="no-referrer"></a>'+
+    '<figcaption><strong>'+esc(pic.kind)+'</strong> · '+esc(pic.caption)+'<span class="history-photo-credit"><a href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer">View original source & rights ↗</a> · '+esc(pic.credit)+'</span></figcaption></figure>'
+   ).join('');
+   return paragraph+figures;
+  }).join('');
   const anatomy=essay.analysis.map((pair,i)=>'<section class="history-analysis-point"><div class="history-analysis-index">'+String(i+1).padStart(2,'0')+'</div><div><h3>'+esc(pair[0])+'</h3><p>'+esc(pair[1])+'</p></div></section>').join('');
   const sources=essay.sources.map((pair,i)=>'<li><a href="'+esc(pair[1])+'" target="_blank" rel="noopener noreferrer">'+esc(pair[0])+' ↗</a></li>').join('');
   content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">HISTORICAL NONFICTION · '+esc(selected.kind)+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(selected.name)+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Author’s Note & Sources</button></nav></header>'+
