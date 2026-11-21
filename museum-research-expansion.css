@@ -1,0 +1,29 @@
+/* Research library only: document-like study cards below the original evidence. */
+.research-expansion{margin:12px auto 80px;max-width:1180px;padding-top:55px;border-top:1px solid rgba(221,187,116,.28)}
+.research-expansion-header{max-width:800px;margin:0 0 36px}
+.research-expansion-header .eyebrow{color:#d5b67a;letter-spacing:.15em}
+.research-expansion-header h2{font:normal clamp(1.9rem,3.4vw,3.2rem)/1.15 Georgia,'Times New Roman',serif;color:#f1d8a6;margin:15px 0}
+.research-expansion-header p{font-size:1.02rem;line-height:1.85;color:#d9d4c8}
+.research-dossier-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.research-dossier{border:1px solid rgba(219,177,104,.34);background:linear-gradient(158deg,rgba(30,43,59,.91),rgba(10,24,43,.94));border-radius:14px;padding:26px 22px 20px;min-width:0;display:flex;flex-direction:column;position:relative;box-shadow:0 13px 34px rgba(1,8,20,.15)}
+.research-dossier:before{content:"";position:absolute;left:18px;right:18px;top:9px;border-top:1px solid rgba(227,190,129,.22);pointer-events:none}
+.research-dossier-overline{display:flex;align-items:center;gap:9px;flex-wrap:wrap;color:#d9b979;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase}
+.research-dossier-overline span:first-child{font:italic 1.35rem Georgia,serif;margin-right:auto;color:#edc990}
+.research-dossier h3{font:normal clamp(1.35rem,1.8vw,1.9rem)/1.24 Georgia,'Times New Roman',serif;color:#f3d5a1;margin:19px 0 11px}
+.research-dossier-author{color:#d4c7ac;font-size:.78rem;line-height:1.6;margin:0 0 18px}
+.research-dossier-finding{border-top:1px solid rgba(228,202,146,.23);padding-top:19px}
+.research-dossier-finding strong,.research-dossier-interpretation strong{display:block;color:#d8b97e;letter-spacing:.12em;font-size:.65rem;text-transform:uppercase;margin-bottom:9px}
+.research-dossier-finding p,.research-dossier-interpretation p,.research-dossier-evidence p{line-height:1.82;font-size:.9rem;color:#e3dfd7;margin:0 0 16px}
+.research-dossier-interpretation{border-left:2px solid rgba(219,183,117,.68);padding-left:16px;margin-top:3px}
+.research-dossier-evidence{margin-top:auto;padding-top:19px;border-top:1px solid rgba(228,202,146,.22)}
+.research-dossier-evidence summary{cursor:pointer;color:#f0d7a9;font-size:.82rem;line-height:1.5;padding:2px 0;list-style-position:inside}
+.research-dossier-evidence[open] summary{margin-bottom:13px}
+.research-dossier-evidence .research-dossier-paper{color:#d2c6ac;font:italic .83rem/1.65 Georgia,serif;overflow-wrap:anywhere}
+.research-dossier-evidence a{display:inline-block;color:#f1ce8b;border-bottom:1px solid rgba(240,206,139,.5);padding:3px 0;text-decoration:none;font-size:.85rem}
+.research-dossier-evidence a:hover,.research-dossier-evidence a:focus-visible{color:#ffe7b7;border-color:#ffe7b7}
+.research-expansion-close{margin:42px 0 28px;text-align:center;border-top:1px solid rgba(226,194,138,.26);border-bottom:1px solid rgba(226,194,138,.26);padding:27px 25px}
+.research-expansion-close .eyebrow{color:#d7b981;letter-spacing:.16em}
+.research-expansion-close blockquote{margin:16px auto 0;max-width:780px;color:#f1dfbe;font:italic clamp(1.12rem,2.2vw,1.55rem)/1.55 Georgia,serif}
+.research-expansion-method{max-width:830px;margin:0 auto;color:#c5c4bf;line-height:1.75;font-size:.82rem;text-align:center}
+@media(max-width:980px){.research-dossier-grid{grid-template-columns:1fr 1fr}.research-dossier:last-child{grid-column:1/-1}}
+@media(max-width:680px){.research-expansion{padding-top:34px;margin-bottom:45px}.research-dossier-grid{grid-template-columns:1fr;gap:14px}.research-dossier:last-child{grid-column:auto}.research-dossier{padding:23px 19px}.research-expansion-close{padding:22px 10px}}
