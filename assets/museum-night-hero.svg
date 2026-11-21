@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A quiet blue museum of unsent letters under a night sky">
+<defs>
+<linearGradient id="night" x2=".92" y2=".9"><stop stop-color="#061020"/><stop offset=".46" stop-color="#10283f"/><stop offset="1" stop-color="#183b53"/></linearGradient>
+<radialGradient id="upper" cx=".76" cy=".17" r=".64"><stop stop-color="#426782" stop-opacity=".64"/><stop offset=".42" stop-color="#244b68" stop-opacity=".25"/><stop offset="1" stop-color="#031021" stop-opacity="0"/></radialGradient>
+<radialGradient id="lamp"><stop stop-color="#fff5c9"/><stop offset=".23" stop-color="#f3cc79" stop-opacity=".95"/><stop offset=".60" stop-color="#c98f3f" stop-opacity=".19"/><stop offset="1" stop-color="#dba35e" stop-opacity="0"/></radialGradient>
+<linearGradient id="stone"><stop stop-color="#2b4b5c"/><stop offset=".3" stop-color="#132d43"/><stop offset=".7" stop-color="#0b2034"/><stop offset="1" stop-color="#273f4a"/></linearGradient>
+<linearGradient id="folio" x2=".65" y2=".9"><stop stop-color="#b59668"/><stop offset=".47" stop-color="#e0c99e"/><stop offset="1" stop-color="#775c43"/></linearGradient>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".27" numOctaves="3" seed="7" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".11"/></feComponentTransfer></filter>
+<filter id="wash"><feTurbulence type="fractalNoise" baseFrequency=".009" numOctaves="3" seed="22"/><feColorMatrix type="matrix" values=".05 0 0 0 .01 0 .12 0 0 .03 0 0 .19 0 .07 0 0 0 .24 0"/></filter>
+<filter id="glow"><feGaussianBlur stdDeviation="12"/></filter>
+<pattern id="dots" width="137" height="113" patternUnits="userSpaceOnUse"><circle cx="19" cy="27" r="1.2" fill="#d2d4bf" opacity=".32"/><circle cx="95" cy="78" r=".75" fill="#8baabc" opacity=".37"/><circle cx="127" cy="12" r=".8" fill="#d6be86" opacity=".25"/></pattern>
+</defs>
+<rect width="1800" height="1000" fill="url(#night)"/><rect width="1800" height="1000" fill="url(#upper)"/><rect width="1800" height="1000" fill="url(#dots)"/>
+<rect width="1800" height="1000" filter="url(#wash)" opacity=".7"/>
+<!-- Architectural arcade, resting at far left so editorial text remains legible -->
+<g opacity=".83">
+<path d="M0 0H395V1000H0Z" fill="#0a1c31"/><path d="M0 0H305Q423 10 450 154V1000H0Z" fill="url(#stone)"/>
+<path d="M0 0H275Q390 17 405 160V1000H0V0Z" fill="#091a2b"/>
+<path d="M0 1000V195Q30 55 167 49Q301 59 334 198V1000Z" fill="#122e44" stroke="#70817a" stroke-opacity=".49" stroke-width="6"/>
+<path d="M0 1000V230Q25 100 165 94Q291 101 301 230V1000Z" fill="#091a2d" stroke="#997e54" stroke-opacity=".53" stroke-width="3"/>
+<path d="M33 1000V267Q52 166 166 161Q261 162 270 268V1000Z" fill="#0a1b2f"/>
+<path d="M48 1000V300Q63 196 163 195Q243 199 253 300V1000Z" fill="#061220"/>
+<path d="M303 0H354V1000H303Z" fill="url(#stone)"/>
+<path d="M299 0H307V1000H299ZM345 0H349V1000H345Z" stroke="#a69b7f" stroke-opacity=".45" stroke-width="3"/>
+<path d="M0 730H365V756H0M0 902H365V930H0" fill="#24394b" stroke="#ad9162" stroke-opacity=".45" stroke-width="2"/>
+</g>
+<!-- Lantern and its illumination -->
+<ellipse cx="176" cy="293" rx="153" ry="157" fill="url(#lamp)" opacity=".45"/>
+<path d="M176 0V177" stroke="#bfab78" stroke-width="4"/><path d="M150 192L176 174L201 192L199 256L176 283L151 255Z" fill="#0e2030" stroke="#cbb484" stroke-width="3"/>
+<path d="M158 197H194V250L176 268L158 249Z" fill="#e6bc77" opacity=".8"/><circle cx="176" cy="225" r="38" fill="url(#lamp)"/><path d="M176 192V267M150 226H201" stroke="#6d5a40" stroke-width="2"/>
+<!-- One luminous constellation near right upper corner, not a Vincent van Gogh spiral -->
+<g fill="none" stroke="#c4a46f" stroke-opacity=".56" stroke-width="1.5">
+<path d="M1080 100Q1331 10 1707 167Q1874 252 1750 401"/>
+<path d="M1130 139Q1415 68 1621 236Q1717 321 1590 453" stroke-dasharray="5 10"/>
+<path d="M1228 296L1320 178L1503 229L1580 129"/>
+<circle cx="1320" cy="178" r="34"/><circle cx="1503" cy="229" r="13"/><circle cx="1580" cy="129" r="6"/>
+<circle cx="1410" cy="295" r="120" stroke-opacity=".13"/><circle cx="1410" cy="295" r="155" stroke-opacity=".09"/>
+</g>
+<g fill="#dfc48b"><circle cx="1320" cy="178" r="5"/><circle cx="1503" cy="229" r="4"/><circle cx="1580" cy="129" r="5"/><circle cx="1228" cy="296" r="3"/><circle cx="1707" cy="167" r="4"/></g>
+<g stroke="#edce88" stroke-opacity=".52"><path d="M1320 161V195M1303 178H1337M1580 118V140M1569 129H1591M1503 216V242M1490 229H1516"/></g>
+<!-- Subtle celestial strata and moonlit painterly waves -->
+<path d="M405 647Q621 569 823 634Q1033 693 1254 564T1800 548" fill="none" stroke="#57809a" opacity=".18" stroke-width="40"/>
+<path d="M430 670Q728 581 964 658Q1210 733 1494 585T1900 553" fill="none" stroke="#b5b18c" opacity=".22" stroke-width="2"/>
+<path d="M436 728Q802 676 1020 774Q1340 834 1830 688" fill="none" stroke="#5c8392" opacity=".11" stroke-width="55"/>
+<!-- Archival objects and an unopened letter in far-right lower corner -->
+<g transform="translate(1280 688)" opacity=".93">
+<path d="M0 235Q190 173 522 227V312H0Z" fill="#0a1522"/>
+<g transform="translate(254 104) rotate(-6)"><rect x="0" y="0" width="216" height="118" rx="3" fill="#baa075" stroke="#7b6046" stroke-width="5"/><path d="M2 1L108 70L214 1" fill="none" stroke="#75664e" stroke-width="4"/><circle cx="110" cy="72" r="15" fill="#7a493a" stroke="#b27e51" stroke-width="3"/></g>
+<path d="M45 148Q122 65 194 166Q157 227 52 213Z" fill="#213b4b" stroke="#a2885e" stroke-width="5"/>
+<rect x="24" y="144" width="170" height="28" rx="5" fill="#6c503a" stroke="#bc9567" stroke-width="3"/>
+<rect x="36" y="166" width="180" height="24" rx="4" fill="#a1835a" stroke="#72563e" stroke-width="3"/>
+<rect x="44" y="187" width="177" height="22" rx="3" fill="#294354" stroke="#a78f6b" stroke-width="3"/>
+<path d="M51 173H200M57 196H206" stroke="#e3bf84" stroke-opacity=".65" stroke-width="2"/>
+<path d="M104 100Q116 51 133 15" fill="none" stroke="#d8bc7d" stroke-width="2"/><path d="M132 18Q148 26 156 13M131 23Q112 12 111 1" fill="none" stroke="#d7c797" stroke-width="2"/>
+</g>
+<!-- The ground painted as layered, soft dimensional pigment -->
+<path d="M0 970Q388 865 625 936Q936 1024 1228 906Q1469 839 1800 911V1000H0Z" fill="#081727" opacity=".86"/>
+<path d="M380 980Q693 919 966 957Q1231 994 1512 910T1810 925" fill="none" stroke="#be945a" stroke-opacity=".26" stroke-width="3"/>
+<rect width="1800" height="1000" filter="url(#grain)" opacity=".67"/>
+</svg>
