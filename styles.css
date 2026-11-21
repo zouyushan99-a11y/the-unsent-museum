@@ -903,3 +903,107 @@ body>*{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){
  .card,.gateway-card,.archive-item{transition:none!important}
 }
+
+
+/* VISUAL REFRESH 22 — visibly distinct nocturne, editorial art direction.
+   More apparent tonal engraving and gallery rhythm, still subdued cobalt-on-ink. */
+body{
+ background:
+ radial-gradient(ellipse 70% 34% at 88% 7%,rgba(35,79,111,.32),transparent 80%),
+ radial-gradient(ellipse 60% 37% at -9% 60%,rgba(27,61,93,.24),transparent 80%),
+ linear-gradient(180deg,#040917,#09162b 38%,#060e1e 100%);
+}
+body::before{
+ opacity:1;
+ background-image:
+  repeating-radial-gradient(ellipse 510px 280px at 100% 15%,
+    transparent 0 27px,rgba(103,154,191,.095) 29px 30px,transparent 33px 46px),
+  repeating-radial-gradient(ellipse 390px 250px at -13% 69%,
+    transparent 0 28px,rgba(85,134,180,.075) 30px 31px,transparent 34px 49px),
+  radial-gradient(circle at 22% 29%,rgba(155,194,219,.19) .7px,transparent 1.3px),
+  radial-gradient(circle at 71% 45%,rgba(133,179,207,.12) .65px,transparent 1.1px);
+ background-size:auto,auto,64px 67px,99px 101px;
+}
+.hero{
+ min-height:735px;
+ background:
+ radial-gradient(ellipse 55% 62% at 80% 46%,rgba(35,87,124,.36),transparent 82%),
+ linear-gradient(108deg,#040e21 0%,#07172d 43%,#132b46 100%);
+}
+.hero:before{opacity:.92}
+.hero-night-art{opacity:.91;filter:saturate(.88) brightness(.91)}
+.night-spiral{border-color:rgba(84,145,177,.27);
+ box-shadow:0 0 0 16px rgba(115,168,193,.08),0 0 0 33px rgba(59,124,167,.13),inset 0 0 0 13px rgba(216,202,129,.055)}
+.hero-content:before{
+ content:"THE UNSENT MUSEUM  /  A LIVING ARCHIVE";
+ display:block;max-width:max-content;padding:0 0 8px;
+ border-bottom:1px solid rgba(228,200,139,.5);
+ font-size:.58rem;letter-spacing:.24em;font-weight:700;color:#a8bfd0;
+ margin:0 0 24px;
+}
+.hero h1{line-height:1.04;margin:22px 0 30px}
+.hero h1 em{color:#f0ce7c}
+.hero-intro{font-size:clamp(1.3rem,2.5vw,1.7rem)}
+.hero-desc{max-width:485px}
+.section-heading{padding-bottom:28px;margin-bottom:38px}
+.section-heading .eyebrow{color:#f1cb78}
+.section-heading h2{margin:11px 0 0}
+.page-hero{padding-bottom:45px}
+.page-hero h1{margin:12px 0 20px}
+.page-hero:before{opacity:1}
+.cards{gap:25px}
+.card,.gateway-card{
+ border:1px solid rgba(128,169,203,.36);
+ background:linear-gradient(151deg,#152d47,#0a1e35 58%,#061327);
+ min-height:290px;
+}
+.card:nth-child(2),.gateway-card:nth-child(2){background:linear-gradient(151deg,#123347,#0b2538 54%,#061626)}
+.card:nth-child(3){background:linear-gradient(151deg,#1a2c49,#0f213c 59%,#071526)}
+.card:nth-child(4){background:linear-gradient(150deg,#13313c,#0c2638 55%,#071727)}
+.card:before,.gateway-card:before{
+ opacity:1;
+ background:
+ repeating-radial-gradient(ellipse 220px 160px at 108% 4%,
+   transparent 0 18px,rgba(105,163,199,.15) 20px 21px,transparent 24px 36px),
+ radial-gradient(ellipse at 92% 10%,rgba(220,190,126,.10),transparent 59%);
+}
+.card:after{font-size:10rem;color:rgba(228,201,133,.115);bottom:-88px}
+.card h3{font-size:clamp(1.8rem,2.5vw,2.25rem);letter-spacing:-.03em}
+.card .link-arrow{display:inline-block;margin-top:7px;border-bottom:1px solid rgba(234,196,121,.4);padding-bottom:4px}
+.card-num{font-size:.68rem}
+.gateway-card{min-height:320px}
+.gateway-card h2{font-size:clamp(2rem,3vw,2.65rem)}
+.archive-item{border-color:rgba(136,167,201,.31)}
+.archive-item:before{
+ right:-24px;top:-75px;opacity:1;
+ background:repeating-radial-gradient(circle,transparent 0 14px,rgba(108,154,190,.095) 16px 17px,transparent 20px 29px);
+}
+.choice-panel{
+ border-color:rgba(215,189,126,.40);
+ box-shadow:0 25px 65px rgba(1,7,18,.38);
+}
+.choice-panel:before{
+ background:repeating-radial-gradient(ellipse 300px 190px at 110% -12%,transparent 0 25px,rgba(99,156,190,.080) 27px 28px,transparent 31px 45px);
+}
+.behind-silence,.research-page .behind-silence{
+ background:
+ repeating-radial-gradient(ellipse 440px 280px at 107% -10%,transparent 0 29px,rgba(100,155,189,.075) 31px 32px,transparent 35px 52px),
+ linear-gradient(160deg,#10293f,#091b30 60%,#061527);
+}
+.story-sky-frame,.sky-frame,.reason-sky-frame{
+ border-color:rgba(166,190,216,.39);
+}
+@media(max-width:700px){
+ .hero{min-height:600px}
+ .hero-night-art{opacity:.55}
+ .hero-content:before{font-size:.52rem;max-width:90%}
+ .hero h1{font-size:clamp(3.2rem,12vw,5.5rem)}
+ .card,.gateway-card{min-height:240px}
+ .gateway-card{min-height:255px}
+ .page-hero{padding-bottom:24px}
+ .section-heading{margin-bottom:25px}
+ body::before{opacity:.78}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-night-art,.card,.gateway-card{animation:none!important}
+}
