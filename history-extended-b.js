@@ -1,4 +1,4 @@
-/* The Unsent Museum: sourced historical dossiers, volume two. */
+/* The Unsent Museum — research-grounded longform biographies and documentary images. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "emily-dickinson": {
     "title": "The Poems That Did Not Go to Press",
@@ -61,7 +61,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.themorgan.org/exhibitions/online/emily-dickinson"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://hyperallergic.com/content/images/hyperallergic-newspack-s3-amazonaws-com/uploads/2017/04/1a--the-only-authenticated-image-of-emily-dickinson.jpg",
+        "page": "https://www.emilydickinsonmuseum.org/emily-dickinson/learn-more-2/faqs/",
+        "kind": "Authenticated daguerreotype",
+        "caption": "Authenticated daguerreotype of Emily Dickinson as a teenager, circa 1847. This is an archival image, not an illustration.",
+        "credit": "Emily Dickinson Museum · daguerreotype (image reproduced by Hyperallergic)",
+        "at": 0
+      }
+    ]
   },
   "alan-turing": {
     "title": "A State Secret and a Private Life",
@@ -123,7 +132,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.gov.uk/government/news/royal-pardon-for-ww2-code-breaker-dr-alan-turing"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://artblart.com/wp-content/uploads/2012/10/alan_turing-web.jpg",
+        "page": "https://artblart.com/tag/alan-turing/",
+        "kind": "Historical portrait photograph",
+        "caption": "Portrait of Alan Turing, 1951, by Elliott & Fry. Photographed before his 1952 conviction.",
+        "credit": "Elliott & Fry portrait · reproduced by Art Blart",
+        "at": 0
+      }
+    ]
   },
   "claudette-colvin": {
     "title": "Nine Months Before the Famous Photograph",
@@ -190,6 +208,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://civics.supremecourthistory.org/article/browder-v-gayle/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Claudette_Colvin.jpg?width=900",
+        "page": "https://commons.wikimedia.org/wiki/File:Claudette_Colvin.jpg",
+        "kind": "Historical portrait photograph",
+        "caption": "Claudette Colvin photographed as a teenager in 1953, before her March 1955 arrest. This is not a photograph of the arrest.",
+        "credit": "Wikimedia Commons · identified as 1953 portrait",
+        "at": 0
+      }
+    ]
   }
 });
