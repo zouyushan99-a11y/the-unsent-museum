@@ -154,3 +154,23 @@ for(const [id,name] of Object.entries(names))if(labels[id])labels[id].object=nam
   "Log in": "登录",
   "Error": "出现错误"
 });})();
+
+(function(){const z=window.MUSEUM_I18N?.zh;if(z)Object.assign(z,{
+  "Authentication service failed to load.": "登录服务暂时无法加载。",
+  "If this email has a museum account, you will receive a password reset link. Check your inbox and spam folder.": "如果这个邮箱已注册本馆账户，你将收到密码重设链接。请检查收件箱和垃圾邮件。",
+  "Please use at least 10 characters.": "请使用至少十个字符设置密码。",
+  "The passwords do not match.": "两次输入的密码不一致。",
+  "Your museum password has been saved. You can now sign in using your email and this password, or continue with Google.": "本馆登录密码已更新。你现在可以使用邮箱和新密码登录，也可以继续使用谷歌登录。",
+  "Account created. You are signed in.": "账户创建成功，欢迎回来。",
+  "Registration received. Please check your inbox if email verification is required by the museum’s Supabase settings.": "注册申请已收到。如果需要邮件验证，请前往邮箱完成确认。",
+  "Signed in successfully.": "登录成功，欢迎回来。",
+  "You have signed out.": "你已安全退出登录。",
+  "Recovery link confirmed. Set your new password below.": "密码重设链接已验证，请在下方设置新密码。",
+  "There are no earlier browser answers to import.": "本设备没有可导入的早期选择记录。",
+  "Email address or password is incorrect.": "邮箱地址或密码有误。",
+  "Your story was saved.": "你的故事已经妥善保存。",
+  "Could not send reset link": "密码重设邮件暂时未能发送",
+  "Cloud backup failed": "云端备份失败",
+  "Could not restore login": "登录状态未能恢复",
+  "Could not restore your session": "登录会话未能恢复"
+});})();
