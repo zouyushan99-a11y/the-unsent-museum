@@ -58,3 +58,12 @@
 .collective-factor p{font-size:.94rem;line-height:1.85;color:var(--muted,#c5c0b8);margin:0}
 .collective-evidence-boundary{max-width:830px;margin:2rem 0 0;padding:1.2rem 1.4rem;border-left:2px solid rgba(186,159,113,.7);line-height:1.85;font-size:.92rem}
 @media(max-width:740px){.collective-factors{grid-template-columns:1fr}}
+
+.collective-motives-overview{padding:2.5rem 0 5rem}
+.collective-motives-overview .collective-section-heading>p{max-width:770px;line-height:1.85;color:var(--muted,#bcb8b0)}
+.collective-motives-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.collective-motives-grid article{background:rgba(185,154,106,.065);border:1px solid rgba(200,175,123,.25);border-radius:7px;padding:1.3rem 1.4rem}
+.collective-motives-grid h3{font:400 1.3rem/1.4 Georgia,"Songti SC",serif;margin:0 0 .7rem}
+.collective-motives-grid p{font-size:.92rem;line-height:1.9;color:var(--muted,#c8c0b3)}
+@media(max-width:900px){.collective-motives-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){.collective-motives-grid{grid-template-columns:1fr}}
