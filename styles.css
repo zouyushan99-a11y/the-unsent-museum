@@ -1020,8 +1020,8 @@ body::before{
  --museum-gold:#c6a465;
  --museum-paper:#f2e5c8;
  --museum-writing:#332d27;
- --museum-night-art:url("assets/museum-night-hero.jpg");
- --museum-paper-art:url("assets/archival-paper.jpg");
+ --museum-night-art:url("assets/museum-night-hero.svg");
+ --museum-paper-art:url("assets/archival-paper.svg");
 }
 body{
  background-color:var(--museum-ink);
@@ -1111,7 +1111,7 @@ body::before{
  linear-gradient(180deg,rgba(255,251,238,.15),rgba(221,199,162,.13)),
  var(--museum-paper-art);
  background-repeat:repeat,repeat;
- background-size:auto,256px 256px;
+ background-size:auto,360px 405px;
  border:1px solid #c3a97c;
  border-radius:4px;
  box-shadow:
@@ -1200,4 +1200,23 @@ body::before{
 }
 @media(prefers-reduced-motion:reduce){
  .cards .card,.gallery-gateways .gateway-card{transition:none}
+}
+
+/* Crisp SVG artwork v24: scalable, not a tiny JPEG stretched to desktop size. */
+.hero{
+ background-repeat:no-repeat;
+ background-size:cover;
+ background-position: center 49%;
+}
+.cards .card,.gallery-gateways .gateway-card{
+ background-repeat:no-repeat;
+ background-size:cover;
+}
+.story-reader{
+ background-size:auto,360px 405px;
+ background-repeat:no-repeat,repeat;
+}
+@media(max-width:700px){
+ .hero{background-size:cover;background-position:63% center}
+ .story-reader{background-size:auto,280px 315px}
 }
