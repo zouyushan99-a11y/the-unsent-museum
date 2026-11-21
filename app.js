@@ -30,28 +30,81 @@ let authLoading=Boolean(authClient);
 let authMessage='';
 let authBusy=false;
 
+
 let emailAuthMode='login';
+let authRecovery=location.hash.includes('type=recovery');
+let authPasswordBusy=false;
+function passwordFields(){return `<form id="update-password-form" class="email-auth-form">
+<label for="new-password">New museum password</label>
+<input class="field" id="new-password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required placeholder="At least 10 characters" />
+<label for="confirm-password">Confirm new password</label>
+<input class="field" id="confirm-password" type="password" autocomplete="new-password" minlength="10" maxlength="128" required placeholder="Repeat your password" />
+<button class="btn" type="submit" ${authPasswordBusy?'disabled':''}>${authRecovery?'Reset my password ↗':'Save new password ↗'}</button>
+</form>`}
 function authPage(){
-if(authUser)return `<main class="container"><section class="page-hero"><div class="eyebrow">YOUR ACCOUNT</div><h1>Your place in the museum.</h1></section><section class="section-compact narrow auth-area"><div class="auth-panel"><div class="eyebrow">SIGNED IN</div><h2>Welcome back.</h2><p class="auth-email">${esc(authUser.email||'Authenticated visitor')}</p><p class="muted">Answers and story drafts still stay in this browser. They are not yet synced to your account.</p><button type="button" class="btn btn-outline" id="auth-signout">Sign out ↗</button></div></section></main>`;
-return `<main class="container"><section class="page-hero"><div class="eyebrow">THE MUSEUM / ACCOUNT</div><h1>Enter the museum.</h1><p class="muted narrow" style="margin-left:0">Choose Google sign-in, or create your own account with an email address and password.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel">
+if(authUser)return `<main class="container"><section class="page-hero"><div class="eyebrow">YOUR ACCOUNT</div><h1>${authRecovery?'Choose a new password.':'Your place in the museum.'}</h1></section><section class="section-compact narrow auth-area">
+<div class="auth-panel">
+<div class="eyebrow">${authRecovery?'PASSWORD RECOVERY':'SIGNED IN'}</div>
+<h2>${authRecovery?'Create a new museum password.':'Welcome back.'}</h2>
+<p class="auth-email">${esc(authUser.email||'Authenticated visitor')}</p>
+<p class="muted">${authRecovery?'Your recovery link has been accepted. Choose a new password to finish.':'Set or change your museum password here. If you originally joined using Google, setting a password will let you sign in with either method using the same account.'}</p>
+${passwordFields()}
+${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}
+<p class="small muted">For security, use a new password you do not use for Google. Your current museum password is never displayed.</p>
+${!authRecovery?'<button class="btn btn-outline" type="button" id="auth-signout">Sign out ↗</button>':''}
+</div><p class="privacy-caption">Answers and story drafts still stay only in this browser, not synced to your account.</p></section></main>`;
+if(emailAuthMode==='forgot')return `<main class="container"><section class="page-hero"><div class="eyebrow">ACCOUNT RECOVERY</div><h1>Find your way back.</h1><p class="muted narrow" style="margin-left:0">Forgot your museum password? We can send a one-time reset link to your email.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel">
+<h2>Reset your password</h2><form class="email-auth-form" id="forgot-password-form"><label for="recovery-email">Account email</label><input class="field" id="recovery-email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"/><button class="btn" type="submit">Send reset link ↗</button></form>
+${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}<button class="auth-text-button" type="button" id="back-to-login">← Back to sign in</button></div></section></main>`;
+return `<main class="container"><section class="page-hero"><div class="eyebrow">THE MUSEUM / ACCOUNT</div><h1>Enter the museum.</h1><p class="muted narrow" style="margin-left:0">Continue with Google, or use your email and museum password.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel">
 <div class="eyebrow">A FAMILIAR ENTRANCE</div><h2>Continue with Google</h2><button type="button" class="btn google-signin" id="google-signin">Continue with Google ↗</button>
 <div class="auth-separator"><span>or use your own email</span></div>
 <div class="auth-tab-buttons"><button class="auth-tab ${emailAuthMode==='login'?'is-active':''}" type="button" data-auth-mode="login">Sign in</button><button class="auth-tab ${emailAuthMode==='signup'?'is-active':''}" type="button" data-auth-mode="signup">Create account</button></div>
 <form id="email-auth-form" class="email-auth-form">
-<label for="account-email">Email address</label><input class="field" type="email" id="account-email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" required>
-<label for="account-password">Password</label><input class="field" type="password" id="account-password" autocomplete="${emailAuthMode==='signup'?'new-password':'current-password'}" minlength="8" maxlength="128" placeholder="At least 8 characters" required>
-${emailAuthMode==='signup'?'<p class="small muted">Use a strong, unique password. Supabase may send a one-time email verification during registration, depending on project settings.</p>':''}
+<label for="account-email">Email address</label><input class="field" type="email" id="account-email" autocomplete="email" maxlength="254" placeholder="you@example.com" required/>
+<label for="account-password">Museum password</label><input class="field" type="password" id="account-password" autocomplete="${emailAuthMode==='signup'?'new-password':'current-password'}" minlength="8" maxlength="128" required placeholder="Enter your museum password"/>
+${emailAuthMode==='signup'?'<p class="small muted">Use a strong password. Depending on the museum’s Supabase settings, new accounts may need to verify their email once.</p>':''}
 <button class="btn" type="submit" id="email-auth-submit">${emailAuthMode==='signup'?'Create account ↗':'Sign in with email ↗'}</button>
 </form>
+${emailAuthMode==='login'?'<button class="auth-text-button" type="button" id="forgot-password">Forgot password?</button>':''}
 ${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}
-</div><p class="privacy-caption">Authentication is provided by Supabase. Signing in does not publish or synchronize your stories, answers or stars. Those remain in this browser until shared storage is enabled.</p></section></main>`;
+</div><p class="privacy-caption">Authentication is handled by Supabase. Signing in does not publish or synchronize your stories, answers or stars. These remain in this browser until shared storage is enabled.</p></section></main>`;
 }
 function bindAuth(){
-const google=$('#google-signin');
-if(google)google.onclick=async()=>{if(!authClient){authMessage='Authentication service failed to load.';render(false);return}google.disabled=true;google.textContent='Opening Google…';try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}catch(e){authMessage=String(e.message||e);render(false)}};
+const google=$('#google-signin');if(google)google.onclick=async()=>{
+if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
+google.disabled=true;google.textContent='Opening Google…';
+try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}
+catch(e){authMessage=String(e.message||e);render(false)}
+};
 document.querySelectorAll('[data-auth-mode]').forEach(btn=>btn.onclick=()=>{emailAuthMode=btn.dataset.authMode;authMessage='';render(false)});
+const forgot=$('#forgot-password');if(forgot)forgot.onclick=()=>{emailAuthMode='forgot';authMessage='';render(false)};
+const back=$('#back-to-login');if(back)back.onclick=()=>{emailAuthMode='login';authMessage='';render(false)};
+const resetRequest=$('#forgot-password-form');
+if(resetRequest)resetRequest.onsubmit=async ev=>{
+ev.preventDefault();const email=$('#recovery-email')?.value.trim();if(!email||!authClient)return;
+const submit=resetRequest.querySelector('button[type=submit]');if(submit)submit.disabled=true;
+try{const {error}=await authClient.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT});
+authMessage=error?'Could not send reset link: '+error.message:'If this email has a museum account, you will receive a password reset link. Check your inbox and spam folder.'}
+catch(e){authMessage='Could not send reset link: '+String(e.message||e)}
+render(false);
+};
+const update=$('#update-password-form');
+if(update)update.onsubmit=async ev=>{
+ev.preventDefault();if(!authClient||authPasswordBusy)return;
+const password=$('#new-password')?.value||'',confirmPassword=$('#confirm-password')?.value||'';
+if(password.length<10){authMessage='Please use at least 10 characters.';render(false);return}
+if(password!==confirmPassword){authMessage='The passwords do not match.';render(false);return}
+authPasswordBusy=true;const submit=update.querySelector('button[type=submit]');if(submit)submit.disabled=true;
+try{const {error}=await authClient.auth.updateUser({password});
+if(error){authMessage='Password could not be updated: '+error.message}
+else{authRecovery=false;authMessage='Your museum password has been saved. You can now sign in using your email and this password, or continue with Google.'}}
+catch(e){authMessage='Password could not be updated: '+String(e.message||e)}
+finally{authPasswordBusy=false;render(false)}
+};
 const form=$('#email-auth-form');
-if(form)form.onsubmit=async ev=>{ev.preventDefault();if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
+if(form)form.onsubmit=async ev=>{
+ev.preventDefault();if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
 const email=$('#account-email')?.value.trim(),password=$('#account-password')?.value;
 if(!email||!password||password.length<8)return;
 const submit=$('#email-auth-submit');if(submit){submit.disabled=true;submit.textContent='Please wait…'}
@@ -60,19 +113,30 @@ if(emailAuthMode==='signup'){
 const {data,error}=await authClient.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}});
 if(error)authMessage=error.message;
 else if(data?.session){authMessage='Account created. You are signed in.';authUser=data.user||null}
-else authMessage='Registration received. Please check your inbox for the one-time verification email if required by the museum’s Supabase settings.';
+else authMessage='Registration received. Please check your inbox if email verification is required by the museum’s Supabase settings.';
 }else{
 const {data,error}=await authClient.auth.signInWithPassword({email,password});
 if(error)authMessage=error.message;
 else {authMessage='Signed in successfully.';authUser=data?.user||null}
 }
 }catch(e){authMessage=String(e.message||e)}
-render(false);
+render(false)
 };
 const signout=$('#auth-signout');if(signout)signout.onclick=async()=>{if(!authClient)return;const {error}=await authClient.auth.signOut();authMessage=error?error.message:'You have signed out.';if(!error)authUser=null;render(false)};
 }
-async function initAuth(){if(!authClient){authLoading=false;return}authClient.auth.onAuthStateChange((event,session)=>{const next=session?.user||null;if(authUser?.id!==next?.id){authUser=next;if($('#app'))render(false)}});try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}catch(e){authMessage='Could not restore login: '+String(e.message||e)}authLoading=false;if($('#app'))render(false)}
-
+async function initAuth(){
+if(!authClient){authLoading=false;return}
+authClient.auth.onAuthStateChange((event,session)=>{
+const next=session?.user||null;
+if(event==='PASSWORD_RECOVERY'){authRecovery=true;authMessage='Recovery link confirmed. Set your new password below.';if(location.hash!=='#/account')location.hash='#/account';}
+if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;if($('#app'))render(false)}
+});
+try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}
+catch(e){authMessage='Could not restore login: '+String(e.message||e)}
+authLoading=false;
+if(authRecovery&&authUser&&location.hash!=='#/account')location.hash='#/account';
+if($('#app'))render(false);
+}
 function header(route){return `<div class="notice">PROTOTYPE · Replies are saved only in this browser. No cross-visitor statistics or public story publishing.</div><header class="site-header container"><a class="brand" href="#/"><span class="brand-mark">✧</span>The Unsent Museum</a><nav class="nav"><a class="${route==='/'?'active':''}" href="#/">Home</a><a class="${route.startsWith('/galleries')||route.startsWith('/gallery/')||route.startsWith('/archive')||route.startsWith('/contribute')?'active':''}" href="#/galleries">Galleries</a><a class="${route.startsWith('/lookout')?'active':''}" href="#/lookout">The Lookout</a><a class="${route.startsWith('/archive')?'active':''}" href="#/archive">Story Archive</a><a class="${route==='/about'?'active':''}" href="#/about">About</a><a class="account-link" href="#/account">${authUser?'✧ '+esc(authUser.email?.split('@')[0]||'Account'):'Sign in'}</a></nav></header>`}
 function footer(){return `<footer class="footer"><div class="container footer-inner"><span>© The Unsent Museum · ENGL 4106 student project prototype</span><div class="footer-links"><a href="#/about">Method & Reflection</a><a href="#/privacy">Privacy</a><a href="#/galleries">Galleries</a><a href="#/archive">All Stories</a></div></div></footer>`}
 function card(s){return `<a class="card" href="#/gallery/${s.id}"><span class="card-num">GALLERY ${s.num}</span><div><h3>${esc(s.title)}</h3><p>${esc(s.subtitle)}</p><span class="link-arrow">Enter gallery ↗</span></div></a>`}
