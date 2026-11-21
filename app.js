@@ -185,4 +185,18 @@ function render(scroll=true){const r=route(),body=r.type==='home'?home():r.type=
 function seededRand(seed){let t=seed+0x6D2B79F5;return()=>{t+=0x6D2B79F5;let x=t;x=Math.imul(x^(x>>>15),x|1);x^=x+Math.imul(x^(x>>>7),x|61);return ((x^(x>>>14))>>>0)/4294967296}}
 function drawSky(canvas,arr){if(!canvas)return;const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);canvas.width=Math.max(1,Math.floor(rect.width*dpr));canvas.height=Math.max(1,Math.floor(rect.height*dpr));const ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);const w=rect.width,h=rect.height;ctx.fillStyle='#020510';ctx.fillRect(0,0,w,h);paintSwirlBrushstrokes(ctx,w,h);const limit=1200;for(const a of arr.slice(-limit)){const p=swirlPoint(w,h,a.id,'choice-'+a.decision);paintStar(ctx,p.x,p.y,p.r,a.decision==='silent'?'#4F75B5':'#EEC65B')}if(arr.length>limit){ctx.fillStyle='#b8bfd2';ctx.font='12px sans-serif';ctx.fillText('Showing '+limit+' of '+arr.length+' responses',18,h-15)}}
 function drawAllSkies(){const r=route();drawSky($('#main-sky'),results(r.id));drawReasonSky($('#reason-sky'),results(r.id));document.querySelectorAll('[data-mini]').forEach(c=>drawSky(c,results(c.dataset.mini)))}
-window.addEventListener('hashchange',()=>render(true));window.addEventListener('resize',()=>{if($('#main-sky'))drawAllSkies();if($('#home-sky'))drawSky($('#home-sky'),db.answers)});render(true);initAuth();
+// Redraw canvases at their actual displayed size after phone rotation, iPad split view, and layout changes.
+let skyResizeFrame=0;
+function redrawVisibleSkies(){if(skyResizeFrame)return;skyResizeFrame=requestAnimationFrame(()=>{skyResizeFrame=0;if($('#main-sky'))drawAllSkies();if($('#home-sky'))drawSky($('#home-sky'),db.answers)})}
+window.addEventListener('hashchange',()=>render(true));
+window.addEventListener('resize',redrawVisibleSkies,{passive:true});
+window.addEventListener('orientationchange',redrawVisibleSkies,{passive:true});
+if(window.visualViewport)window.visualViewport.addEventListener('resize',redrawVisibleSkies,{passive:true});
+if(typeof ResizeObserver!=='undefined'){
+const skyLayoutObserver=new ResizeObserver(()=>redrawVisibleSkies());
+const observeCanvasBoxes=()=>{document.querySelectorAll('.sky-frame,.preview-sky,.constellation canvas').forEach(el=>{if(!el.dataset.skyObserved){skyLayoutObserver.observe(el);el.dataset.skyObserved='true'}})};
+const originalRender=render;
+render=function(scroll=true){originalRender(scroll);observeCanvasBoxes()};
+observeCanvasBoxes();
+}
+render(true);initAuth();
