@@ -642,7 +642,15 @@ function historyPage(id){
    return paragraph+figures;
   }).join('');
   const openingImages=(essay.images||[]).filter(pic=>pic.at===0).map(documentaryFigure).join('');
-  const anatomy=essay.analysis.map((pair,i)=>'<section class="history-analysis-point"><div class="history-analysis-index">'+String(i+1).padStart(2,'0')+'</div><div><h3>'+esc(pair[0])+'</h3><p>'+esc(pair[1])+'</p></div></section>').join('');
+  const curated=window.museumHistoryCuratorial?.(selected.id,essay,museumLang,selected.silenceClass);
+  const curatorLabel=museumLang==='en'?'Curator’s Analysis':museumConvert('策展人分析');
+  const questionLabel=museumLang==='en'?'Three Questions for the Reader':museumConvert('留给读者的三个问题');
+  const curatorIntro=museumLang==='en'?'An evidence-conscious interpretation of why this happened, offered by the curator rather than assigned to the historical person.':museumConvert('以下是策展人基于史料提出的个人理解，并非当事人亲口证实的内心独白。');
+  const anatomy=curated?
+   '<div class="history-curator-analysis"><div class="history-curator-label">'+curatorLabel+'</div><p class="history-curator-intro">'+curatorIntro+'</p>'+
+   curated.paragraphs.map(p=>'<p class="history-curator-paragraph">'+esc(p)+'</p>').join('')+'</div>'+
+   '<div class="history-curator-questions"><h3>'+questionLabel+'</h3><ol>'+curated.questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ol></div>':
+   '<p class="history-curator-intro">'+(museumLang==='en'?'This interpretation is being verified against the archive.':museumConvert('本档案的策展分析正在核对史料。'))+'</p>';
   const sources=essay.sources.map((pair,i)=>'<li><a href="'+esc(pair[1])+'" target="_blank" rel="noopener noreferrer">'+esc(pair[0])+' ↗</a></li>').join('');
   const moment=essay.moment||{};
   const item=essay.object||{};
@@ -659,7 +667,7 @@ function historyPage(id){
   '</div><div class="history-reason-tags">'+tags+'</div></div>';
   content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">HISTORICAL NONFICTION · '+esc(museumLang==='en'?selected.kind:(window.MUSEUM_HISTORY_LABELS?.[selected.id]?.kind||'历史展品'))+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(museumZh(selected.name))+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Sources & Reflection</button></nav></header>'+
    '<section id="history-story" class="history-story-section"><div class="history-section-title"><span>PART I · HISTORICAL NONFICTION</span><h2>The Story</h2></div><div class="history-prose">'+openingImages+chapters+'</div></section>'+
-   '<section id="history-anatomy" class="history-analysis-section"><div class="history-section-title"><span>PART II · INTERPRETATION</span><h2>An Anatomy of Silence</h2><p>Why it happened · What form it took · What the evidence allows us to say</p></div>'+momentMarkup+anatomy+'<div class="history-reflection-kicker">'+(museumLang==='en'?'QUESTION FOR REFLECTION':museumConvert('留给读者的问题'))+'</div><blockquote class="history-final-question">'+esc(essay.question)+'</blockquote></section>'+
+   '<section id="history-anatomy" class="history-analysis-section"><div class="history-section-title"><span>PART II · INTERPRETATION</span><h2>An Anatomy of Silence</h2><p>Why this happened · A curator’s reading · Three questions to consider</p></div>'+anatomy+'</section>'+
    '<section id="history-evidence" class="history-evidence-section"><div class="history-section-title"><span>PART III · METHOD & REFERENCES</span><h2>Author’s Note & Sources</h2></div><p>'+esc(essay.note)+'</p><ol>'+sources+'</ol><p class="history-evidence-warning">The narrative uses historical evidence; the analysis is a curatorial interpretation. Sources are provided for readers to check the record independently.</p></section></article>';
  }else if(selected){
   content='<div class="history-invitation"><h2>The full account could not load.</h2><p>Refresh the page to load the historical narrative.</p></div>';
