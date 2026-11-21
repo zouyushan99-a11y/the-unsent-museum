@@ -35,19 +35,19 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "The 1477 debate recorded in the Seongjong sillok offers an unusual window onto official thinking. State councillors discussed the value of lifelong chastity and the problem of women marrying after widowhood. The record is a document of political and moral argument, not a transcript of what women themselves said at home.",
     "Changes in law, interpretations of kinship and later arguments about women's status form part of the wider history, but they do not answer what a widow did when a relative mentioned the future of her children. A widow's continuing singleness could reflect religious commitment, duty, financial conditions, lack of suitable proposals, personal preference, or pressures imposed by family and state.",
     "The examination bar reached beyond the remarried woman herself and made descendants' prospects dependent upon her choices. In a kinship system that valued family advancement, relatives had direct reasons to monitor and influence a widow's conduct. They did not need to use physical force in every case for their expectations to carry power. Anticipated loss and the need to remain a respected family member could make an alternative life difficult to attempt or even to describe publicly.",
-    "She may never have described her situation in those terms. It asks what freedom means when a woman's marriage is treated as a condition of her children's public prospects. The surviving codes and debates record a framework in which lives were lived. It is a measure of how far the consequences of a private decision could extend."
+    "Joseon restrictions on remarriage developed alongside Neo-Confucian family ideals and changes to patrilineal kinship. The revised code of 1485 limited examination eligibility for descendants of remarried women, with particular consequences for families seeking official careers. Legal debates survive in state records, while practices differed by social status and period."
   ],
   "zh": [
     "朝鲜王朝的一位寡妇，如果决定再次成婚，受到影响的可能不只是她自己。1485年修订的《经国大典》规定，再嫁妇女的儿孙不得参加某些国家科举考试。这意味着，一个女人在丈夫去世之后如何安排余生，可能影响子孙进入官场的机会。对重视科举功名的家庭来说，这并不是一句空泛的道德劝告，而是一项会落到后代身上的实际代价。",
     "在更早的历史时期，女性拥有较多继承财产和再嫁的空间，家族关系也未必完全按照父系组织。到了朝鲜王朝，随着理学伦理与国家制度逐渐结合，妇女守节和家族秩序受到更多强调。后来被当作理所当然的习俗，有些正是在这一过程中被法律和社会评价反复固定下来的。",
-    "科举不仅关系到一个人的读书成绩，也关系到家庭的社会地位。培养子孙求取功名，需要多年教育和经济投入。当母亲的再嫁会使孩子失去参加考试的资格，亲属便有理由介入她的婚姻决定。一个寡妇即使愿意重新组织家庭，也可能需要先想清楚：孩子未来的道路怎么办？族人会怎样看待她？这样的压力甚至不必每天都有人说出口，它已经写在每个人都知道的制度里。",
+    "科举不仅关系到一个人的读书成绩，也关系到家庭的社会地位。培养子孙求取功名，需要多年教育和经济投入。当母亲的再嫁会使孩子失去参加考试的资格，亲属便有理由介入她的婚姻决定。这样的压力甚至不必每天都有人说出口，它已经写在每个人都知道的制度里。",
     "但这种处境不能用『受了儒家思想的影响』一句话解释完。伦理中的忠贞、孝道和家庭责任，也可能是一些女性真诚重视的价值。她们可能并不觉得所有约束都没有意义，同时也可能在某些具体选择上感到为难。",
     "阶层差异同样重要。对于准备让儿孙参加科举的士族家庭，考试资格是一项重大的现实利益；其他家庭未必受到同样程度的影响。地方习俗、经济状况、财产安排与亲族支持，也会改变女性可以作出的选择。把朝鲜王朝所有寡妇混成一个只会忍耐的群体，既无法解释她们的实际处境，也忽略了法律如何通过身份差异发挥作用。",
     "社会对于『贞节』的赞扬，又给制度加上另一层力量。当一位妇女守寡终身被称为美德，她可能受到家族认可；而重新成婚则可能被认为损害了亲属的名誉。这样一来，反对并不只是面对某个人的命令，还意味着质疑大家共同使用的一套评价标准。一个人即使没有受到直接威胁，也可能因为担忧孩子、家族关系和社会议论而放弃某个选择。",
     "教育在这里呈现出一种矛盾。读书原本被视作改善家庭前途的方式，可是越重视子孙教育，家庭也可能越在意一位母亲的婚姻行为。她知道的越多，越清楚再嫁会影响什么，却未必因此拥有更大的决定权。知识可以让人理解制度，不能自动让制度听从她的愿望。真正决定选择空间的，还有法律地位、财产、家庭支持，以及别人是否承认她可以自行作主。",
     "《成宗实录》保存了十五世纪官员对于妇女再嫁的讨论。但是这终究是官员之间的讨论，而不是寡妇们在家中说过的话。不能因为史书详细记载了统治者的意见，就把这些意见当作整个社会真实而一致的心声。",
     "对许多没有留下名字的妇女来说，生活可能只是继续向前。有人照顾孩子，有人与亲属共同管理家庭，也有人终身没有再婚。",
-    "她没有再次成婚，也许因为真心珍视原来的婚姻，也许因为经济条件，也许没有遇到合适的人，或者不愿让孩子失去机会。"
+    "朝鲜王朝的再嫁限制与理学伦理、父系家族制度及科举资格相联系。1485年修订的法典对再嫁妇女子孙的考试资格作出限制，对重视入仕的家庭影响尤其明显。国家文书保存了相关法律与官员争论，地方婚姻习俗则因社会阶层和年代而有所差异。"
   ],
   "mechanisms": [
     "examination ban affecting descendants",
