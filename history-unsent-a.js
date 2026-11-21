@@ -1,78 +1,91 @@
 /* The Unsent Museum core historical objects: records of an actual decision not to deliver. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "franz-kafka": {
-    "title": "The Letter That Did Not Reach His Father",
-    "subtitle": "A son writes a reckoning that remains on paper",
-    "period": "Prague · November 1919",
-    "readingTime": "12–14 minute read",
-    "object": {
-      "name": "Letter to His Father (Brief an den Vater), 1919",
-      "kind": "Unsent letter manuscript",
-      "url": "https://www.nli.org.il/en/visit/exhibitions-and-displays/past-exhibitions/kafka-100-years",
-      "evidence": "Documented manuscript; its non-delivery is established, but private motives require careful interpretation."
-    },
-    "tags": [
-      "Family",
-      "Fear of confrontation",
-      "Relationships"
-    ],
-    "moment": {
-      "addressed": "His father, Hermann Kafka",
-      "intended": "A long account of the fear, resentment, and misunderstandings that shaped their relationship.",
-      "withheld": "The letter was not delivered to its intended recipient.",
-      "why": "Kafka’s own text links the relationship to fear and difficulties of communication; claims about his final decision to withhold the letter are interpretive, not a recorded single confession.",
-      "certainty": "Documented action; qualified interpretation of motive."
-    },
-    "story": [
-      "In November 1919, Franz Kafka sat down to address his father, Hermann. The result was an extraordinary document: a long letter in which an adult son attempted to describe a relationship that had shaped his confidence, judgments, and understanding of himself. Its intended reader was a man he had known all his life. The reader never received it. That failure of delivery is the central object of this exhibition.",
-      "Kafka was a German-language Jewish writer living in Prague, then a city shaped by the collapse of the Habsburg Empire and the emergence of Czechoslovakia. His family occupied a world of commerce, domestic expectations, and complex cultural identities. Hermann Kafka had built a business and valued determination and practical achievement. Franz, who worked in insurance and wrote fiction, approached life through a different temperament and set of interests. These contrasts do not explain every quarrel, but they help reveal why father and son understood authority and independence differently.",
-      "The letter was not a spontaneous note scribbled after a single disagreement. It revisited childhood scenes and family interactions as Kafka remembered them. He described feeling physically and emotionally overpowered by his father's presence, and recalled the kind of criticism that could make a child experience ordinary mistakes as judgments on his whole person. The historian does not have to accept every interpretation in the letter as an impartial account of Hermann's character. It remains a son's carefully constructed testimony about how the relationship felt to him.",
-      "Family life in Kafka's era placed significant importance on paternal authority, financial responsibility, marriage, and the continuation of a household. An adult son could have professional training and a respectable position yet still feel judged according to the expectations of a father who had built his standing through work. Kafka's struggles over marriage and independence sharpened the differences. He wrote in a culture in which filial duty and adult autonomy could come into conflict without any obvious public forum for resolving the disagreement.",
-      "In the letter, Kafka did something more complicated than accuse his father. He also considered the conditions of Hermann's own upbringing and the differences between their natures. He attempted to explain not only what his father had done, but how each man understood the other's behavior. The text contains painful examples and sweeping judgments, yet also moments of qualification. Its structure resembles an argument made to someone whose response the author is trying to imagine in advance.",
-      "Writing created a peculiar kind of control. Kafka could decide where to begin, which memory to revisit, and how to arrange replies to objections his father might raise. In conversation, an impatient interruption could end an argument before it had been made. On paper, the son could finish his explanation without being cut off. This is a feature of the medium, not proof that Kafka believed every word would persuade Hermann.",
-      "The letter's long form matters. It was not a sentence held back at a dinner table, but a sustained work of self-examination. The intended recipient was at once the subject, audience, and imagined opponent of the writing. The document offers a remarkable opportunity to study an unsent act because the words themselves survive. We do not have to guess what Franz might have wanted to say; we can read the attempt to say it.",
-      "The circumstances of transmission are often described through Kafka's mother, Julie. Accounts differ on details of how the document was handled, but the essential outcome is secure: Hermann did not read it. Kafka retained or recovered the text, and the letter later entered his literary archive. It was eventually published after his death. What had been composed for one person came to be read by strangers around the world.",
-      "That change of audience does not necessarily make the letter a failure. Kafka may have accomplished something important in the process of writing, even without delivery. He could clarify the memories, arguments, and fears he had struggled to express in person. But the record does not provide a final, simple explanation for the decision not to give it to his father. Any assertion that he withheld it solely because he was afraid would shrink a complex act into a convenient psychological diagnosis.",
-      "There is also the problem of fairness. Hermann's answer to the finished letter is absent, because the exchange never happened. Readers are invited into an argument in which one participant has written an extraordinarily detailed account while the other has not been given the opportunity to respond to that document. The resulting silence is both the subject of the letter and one of the conditions through which we encounter it.",
-      "Today the surviving manuscript can be studied as literature, personal history, and evidence of a family relationship. In this museum it is something still more precise: an expression that reached the page but not the intended listener. Kafka's words crossed a century and reached people far beyond the household in Prague. What they could not cross was the distance between an adult son and his father at the time they were written.",
-      "The difficulty is familiar even without Kafka's talent or his father's temperament. A person can produce a perfectly articulate explanation in private and then hesitate before placing it in another person's hands. The written words are real; the relationship they might change is real too. The letter makes that interval visible: the moment after expression has become possible, but before the speaker is willing or able to let another person hear it."
-    ],
-    "analysis": [
-      [
-        "A relationship before a decision",
-        "The letter's account of paternal authority, family expectations and repeated misunderstandings gives context to Kafka's difficulty addressing his father directly."
-      ],
-      [
-        "Writing is not delivery",
-        "Kafka expressed himself in detail on paper but withheld the text from its specific addressee. The distinction between private articulation and interpersonal communication is the object of this exhibit."
-      ],
-      [
-        "Fear, evidence, and interpretation",
-        "Kafka describes fear within the relationship. The surviving record cannot reduce the final non-delivery to one fully documented motive."
-      ],
-      [
-        "The missing response",
-        "Because Hermann did not read the letter, its argument never became the exchange it imagines. Readers have the son's written testimony but not the father's answer to that document."
-      ],
-      [
-        "The change of audience",
-        "Posthumous publication turned a personal address into public literature. This does not retrospectively make the letter delivered to the person it was written for."
-      ]
-    ],
-    "question": "When you explain yourself perfectly on paper but cannot give it to the person concerned, have you spoken—or only rehearsed speaking?",
-    "note": "The manuscript and its later publication are documented by the National Library of Israel. Interpretations of Kafka's family relationship are drawn primarily from the letter as Kafka wrote it, not from invented responses by Hermann or unsupported certainty about the decision not to deliver it.",
-    "sources": [
-      [
-        "National Library of Israel — Kafka: Metamorphosis of an Author (Letter to His Father)",
-        "https://www.nli.org.il/en/visit/exhibitions-and-displays/past-exhibitions/kafka-100-years"
-      ],
-      [
-        "The Kafka Project — Letter to His Father",
-        "https://kafka.org/archive/essays/unpublished/father/"
-      ]
-    ],
-    "images": []
+  "title": "The Letter That Did Not Reach His Father",
+  "subtitle": "A son writes a reckoning that remains on paper",
+  "period": "Prague · November 1919",
+  "readingTime": "12–14 minute read",
+  "object": {
+    "name": "Letter to His Father (Brief an den Vater), 1919",
+    "kind": "Unsent letter manuscript",
+    "url": "https://www.nli.org.il/en/visit/exhibitions-and-displays/past-exhibitions/kafka-100-years",
+    "evidence": "Documented manuscript; its non-delivery is established, but private motives require careful interpretation."
   },
+  "tags": [
+    "Family",
+    "Fear of confrontation",
+    "Relationships"
+  ],
+  "moment": {
+    "addressed": "His father, Hermann Kafka",
+    "intended": "A long account of the fear, resentment, and misunderstandings that shaped their relationship.",
+    "withheld": "Hermann Kafka did not receive the letter; Max Brod reported that Julie Kafka returned it after an attempted handover.",
+    "why": "Kafka described fear and conversational inhibition in his own letter. Max Brod later reported that Kafka gave the letter to his mother Julie for delivery; she returned it without handing it to Hermann. The reported handover is evidence that the non-delivery cannot be assigned to Kafka's choice alone. Julie's private reasoning remains uncertain.",
+    "certainty": "The letter and non-delivery are documented; the route through Julie rests on Max Brod's biographical account; the inner motives of the handover remain interpretive."
+  },
+  "story": [
+    "In November 1919, Franz Kafka sat down to address his father, Hermann. The result was an extraordinary document: a long letter in which an adult son attempted to describe a relationship that had shaped his confidence, judgments, and understanding of himself. Its intended reader was a man he had known all his life. The reader never received it. That failure of delivery is the central object of this exhibition.",
+    "Kafka was a German-language Jewish writer living in Prague, then a city shaped by the collapse of the Habsburg Empire and the emergence of Czechoslovakia. His family occupied a world of commerce, domestic expectations, and complex cultural identities. Hermann Kafka had built a business and valued determination and practical achievement. Franz, who worked in insurance and wrote fiction, approached life through a different temperament and set of interests. These contrasts do not explain every quarrel, but they help reveal why father and son understood authority and independence differently.",
+    "The letter was not a spontaneous note scribbled after a single disagreement. It revisited childhood scenes and family interactions as Kafka remembered them. He described feeling physically and emotionally overpowered by his father's presence, and recalled the kind of criticism that could make a child experience ordinary mistakes as judgments on his whole person. The historian does not have to accept every interpretation in the letter as an impartial account of Hermann's character. It remains a son's carefully constructed testimony about how the relationship felt to him.",
+    "Family life in Kafka's era placed significant importance on paternal authority, financial responsibility, marriage, and the continuation of a household. An adult son could have professional training and a respectable position yet still feel judged according to the expectations of a father who had built his standing through work. Kafka's struggles over marriage and independence sharpened the differences. He wrote in a culture in which filial duty and adult autonomy could come into conflict without any obvious public forum for resolving the disagreement.",
+    "In the letter, Kafka did something more complicated than accuse his father. He also considered the conditions of Hermann's own upbringing and the differences between their natures. He attempted to explain not only what his father had done, but how each man understood the other's behavior. The text contains painful examples and sweeping judgments, yet also moments of qualification. Its structure resembles an argument made to someone whose response the author is trying to imagine in advance.",
+    "Writing created a peculiar kind of control. Kafka could decide where to begin, which memory to revisit, and how to arrange replies to objections his father might raise. In conversation, an impatient interruption could end an argument before it had been made. On paper, the son could finish his explanation without being cut off. This is a feature of the medium, not proof that Kafka believed every word would persuade Hermann.",
+    "The letter's long form matters. It was not a sentence held back at a dinner table, but a sustained work of self-examination. The intended recipient was at once the subject, audience, and imagined opponent of the writing. The document offers a remarkable opportunity to study an unsent act because the words themselves survive. We do not have to guess what Franz might have wanted to say; we can read the attempt to say it.",
+    "The circumstances of transmission are often described through Kafka's mother, Julie. Accounts differ on details of how the document was handled, but the essential outcome is secure: Hermann did not read it. Kafka retained or recovered the text, and the letter later entered his literary archive. It was eventually published after his death. What had been composed for one person came to be read by strangers around the world.",
+    "That change of audience does not necessarily make the letter a failure. Kafka may have accomplished something important in the process of writing, even without delivery. He could clarify the memories, arguments, and fears he had struggled to express in person. But the record does not provide a final, simple explanation for the decision not to give it to his father. Any assertion that he withheld it solely because he was afraid would shrink a complex act into a convenient psychological diagnosis.",
+    "There is also the problem of fairness. Hermann's answer to the finished letter is absent, because the exchange never happened. Readers are invited into an argument in which one participant has written an extraordinarily detailed account while the other has not been given the opportunity to respond to that document. The resulting silence is both the subject of the letter and one of the conditions through which we encounter it.",
+    "Today the surviving manuscript can be studied as literature, personal history, and evidence of a family relationship. In this museum it is something still more precise: an expression that reached the page but not the intended listener. Kafka's words crossed a century and reached people far beyond the household in Prague. What they could not cross was the distance between an adult son and his father at the time they were written.",
+    "The difficulty is familiar even without Kafka's talent or his father's temperament. A person can produce a perfectly articulate explanation in private and then hesitate before placing it in another person's hands. The written words are real; the relationship they might change is real too. The letter makes that interval visible: the moment after expression has become possible, but before the speaker is willing or able to let another person hear it."
+  ],
+  "analysis": [
+    [
+      "Documented sequence: writing and attempted delivery",
+      "Kafka composed the letter in November 1919 after prolonged conflict with his father, Hermann, including disagreement over Kafka’s intended marriage. The intended recipient was unmistakable: the letter addressed Hermann directly and explained why speaking with him had become difficult. According to Kafka’s friend Max Brod, Kafka entrusted the letter to his mother Julie to pass on. She did not give it to Hermann and returned it to Franz. This reported route matters: it is misleading to say that Kafka simply wrote the letter and freely chose never to send it. An attempted indirect delivery is part of the surviving biographical account."
+    ],
+    [
+      "Why an intermediary mattered",
+      "Kafka’s text describes a lasting asymmetry of confidence within the family. He repeatedly presents his father's manner, judgments and physical presence as sources of fear and self-doubt. A face-to-face conversation offered little space for a sustained account of childhood memories, the conflicting expectations of father and son, and their differing descriptions of the same events. Writing permitted Kafka to arrange his explanation at length and answer anticipated objections without interruption. Entrusting the finished letter to his mother, as Brod reported, also placed someone familiar with both men between writer and recipient. This is a documented communication strategy, although the exact private calculation that led Kafka to use it is not recorded."
+    ],
+    [
+      "The barrier at the final handover",
+      "On Brod’s account, non-delivery occurred because Julie did not pass the letter to Hermann and returned it to Kafka. Her reasons are not preserved as a detailed first-person account; later writers sometimes infer that she feared a further family conflict or regarded delivery as futile, but these remain interpretations. The strongest conclusion is therefore narrower and more specific than 'Kafka lacked courage': the letter moved into an attempted family handover and did not cross that final boundary. The father's authority and the family’s established communication pattern provide context for the failed exchange without proving a single motive for every participant."
+    ],
+    [
+      "What the letter can and cannot demonstrate",
+      "The manuscript is direct evidence of Kafka's own description of fear, humiliation, paternal expectations and the difficulty of responding orally to Hermann. It is a deliberately composed, lengthy argument, not an independent record of every event in the household. The father's reply to this complete letter does not exist because he did not receive it. Brod’s later biographical testimony supports the account involving Julie, but it is not a recording of her decision. These different evidentiary levels must remain distinct: Kafka's written account, the biographical report of the handover, and any explanation assigned to Julie's reasoning."
+    ],
+    [
+      "The consequences of remaining undelivered",
+      "Hermann Kafka never read the letter. The attempt to put a sustained explanation before him therefore did not become the conversation its author had constructed on paper. Franz retained the document, and it eventually reached a public audience after his death through preservation and publication. Publication changed the identity of its readers but not the historical outcome of the 1919 family communication. The case illustrates a concrete gap between the ability to formulate an argument and the social conditions necessary for that argument to reach its intended addressee."
+    ]
+  ],
+  "question": "If a letter was written, entrusted to an intermediary and returned undelivered, where did the attempt to speak stop—and whose decision shaped its outcome?",
+  "note": "The manuscript and its later publication are documented by the National Library of Israel. Interpretations of Kafka's family relationship are drawn primarily from the letter as Kafka wrote it, not from invented responses by Hermann or unsupported certainty about the decision not to deliver it.",
+  "sources": [
+    [
+      "National Library of Israel — Kafka: Metamorphosis of an Author (Letter to His Father)",
+      "https://www.nli.org.il/en/visit/exhibitions-and-displays/past-exhibitions/kafka-100-years"
+    ],
+    [
+      "The Kafka Project — Letter to His Father",
+      "https://kafka.org/archive/essays/unpublished/father/"
+    ],
+    [
+      "Penguin Random House — Editor's historical introduction and Brod's account",
+      "https://www.penguinrandomhouse.com/books/89224/letter-to-the-fatherbrief-an-den-vater-by-franz-kafka/9780805212662/"
+    ]
+  ],
+  "images": [
+    {
+      "at": 1,
+      "src": "https://upload.wikimedia.org/wikipedia/commons/6/69/De_Kafka_Brief_an_den_Vater_001.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:De_Kafka_Brief_an_den_Vater_001.jpg",
+      "caption": "First page of Franz Kafka's 1919 letter to his father, shown as a facsimile.",
+      "kind": "Historical manuscript facsimile",
+      "credit": "Wikimedia Commons · Kafka facsimile; see source page for rights"
+    }
+  ]
+},
   "abraham-lincoln": {
     "title": "The Anger Lincoln Did Not Send",
     "subtitle": "A president's accusation, a military victory, and the unfinished act of blame",
