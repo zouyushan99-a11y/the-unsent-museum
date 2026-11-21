@@ -10,7 +10,7 @@
 </head>
 <body>
   <div id="app"></div>
-  <script>if (!location.hash.startsWith("#/lookout")) location.hash="#/lookout";</script>
+  <script>if (!location.hash.startsWith("#/lookout") && !location.hash.startsWith("#/sky/")) location.hash="#/lookout";</script>
   <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script defer src="app.js?v=star-visibility5"></script>
 </body>
