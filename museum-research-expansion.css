@@ -27,3 +27,64 @@
 .research-expansion-method{max-width:830px;margin:0 auto;color:#c5c4bf;line-height:1.75;font-size:.82rem;text-align:center}
 @media(max-width:980px){.research-dossier-grid{grid-template-columns:1fr 1fr}.research-dossier:last-child{grid-column:1/-1}}
 @media(max-width:680px){.research-expansion{padding-top:34px;margin-bottom:45px}.research-dossier-grid{grid-template-columns:1fr;gap:14px}.research-dossier:last-child{grid-column:auto}.research-dossier{padding:23px 19px}.research-expansion-close{padding:22px 10px}}
+
+/* Research-only responsive reading adjustments: phone, iPad portrait and landscape. */
+.research-library-index,.research-page{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.research-library-index .cards{min-width:0}
+.research-library-index .card,.research-page .behind-silence,.research-page .behind-source>div,.research-page .behind-reason>div{min-width:0}
+.research-library-index .card h3,.research-library-index .card p{overflow-wrap:anywhere}
+.research-page .page-hero{min-width:0}
+.research-page .category-nav{display:flex;flex-wrap:wrap;gap:10px}
+.research-page .category-nav .pill{max-width:100%;min-width:0;white-space:normal;text-align:center;line-height:1.45}
+.research-page .behind-silence{width:100%;box-sizing:border-box}
+.research-page .behind-source{min-width:0;flex-wrap:wrap;align-items:flex-start}
+.research-page .behind-source p,.research-page .behind-source em,.research-dossier-paper{overflow-wrap:anywhere;word-break:normal}
+.research-page .behind-source-link{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.research-dossier-overline span{overflow-wrap:anywhere}
+.research-dossier h3,.research-dossier-author,.research-dossier p,.research-dossier-evidence summary{overflow-wrap:anywhere}
+.research-dossier-evidence summary:focus-visible,.research-dossier-evidence a:focus-visible{outline:2px solid #f2d391;outline-offset:4px}
+.research-expansion{box-sizing:border-box;max-width:100%;min-width:0}
+.research-dossier-grid{min-width:0}
+@media(min-width:1101px){
+ .research-dossier-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(min-width:681px) and (max-width:1100px){
+ .research-library-index .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+ .research-page .behind-silence{max-width:860px;margin:24px auto 45px;padding:clamp(24px,4vw,42px)}
+ .research-page .research-expansion{padding-top:38px;margin-bottom:60px}
+ .research-dossier-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+ .research-dossier:last-child{grid-column:auto}
+ .research-dossier{padding:26px clamp(23px,4vw,42px)}
+ .research-dossier h3{font-size:clamp(1.55rem,2.8vw,2rem)}
+ .research-dossier-author{margin-bottom:14px}
+}
+@media(max-width:680px){
+ .research-library-index .cards{grid-template-columns:minmax(0,1fr);gap:13px}
+ .research-library-index .card{min-height:0;padding:22px 19px}
+ .research-page .page-hero{padding-bottom:18px}
+ .research-page .page-hero h1{overflow-wrap:anywhere}
+ .research-page .category-nav{gap:9px;margin-bottom:18px}
+ .research-page .category-nav .pill{display:flex;align-items:center;justify-content:center;flex:1 1 100%;min-height:44px;padding:10px 12px}
+ .research-page .behind-silence{max-width:100%;margin:12px auto 33px;padding:23px 17px;border-radius:15px}
+ .research-page .behind-first{padding:19px 0 8px}
+ .research-page .behind-reason{grid-template-columns:29px minmax(0,1fr);gap:9px}
+ .research-page .behind-reflection{margin:25px 0;padding-left:15px}
+ .research-page .behind-source{display:block}
+ .research-page .behind-source-link{display:inline-block;margin-top:12px}
+ .research-expansion{margin:0 auto 38px;padding-top:29px}
+ .research-expansion-header{margin-bottom:24px}
+ .research-expansion-header h2{font-size:clamp(1.75rem,8vw,2.35rem)}
+ .research-expansion-header p{font-size:.96rem;line-height:1.8}
+ .research-dossier-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+ .research-dossier:last-child{grid-column:auto}
+ .research-dossier{padding:24px 18px 21px}
+ .research-dossier h3{font-size:clamp(1.45rem,6vw,1.85rem);line-height:1.35}
+ .research-dossier-finding p,.research-dossier-interpretation p,.research-dossier-evidence p{font-size:.94rem;line-height:1.8}
+ .research-dossier-evidence summary{min-height:44px;display:flex;align-items:center}
+ .research-expansion-close{margin:31px 0 22px}
+}
+html:lang(zh) .research-page .behind-first p,
+html:lang(zh) .research-page .behind-reason p,
+html:lang(zh) .research-dossier p,
+html:lang(zh) .research-expansion-header p{line-height:1.95;letter-spacing:.015em;word-break:normal}
+html:lang(zh) .research-dossier h3{line-height:1.5;letter-spacing:.025em}
