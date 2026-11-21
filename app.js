@@ -462,7 +462,7 @@ function historyPage(id){
    '<div class="history-library-search"><label for="history-search">Find a historical account</label><input id="history-search" type="search" placeholder="Search names, places, themes…" autocomplete="off" /><span id="history-search-status" aria-live="polite"></span></div>'+
    '<div class="history-grid" aria-label="Historical stories">'+HISTORICAL_SILENCES.map(x=>{
       const d=details[x.id];
-      return '<a class="history-card '+(selected?.id===x.id?'is-current':'')+'" data-silence-class="'+esc(x.silenceClass)+'" data-history-search="'+esc((x.name+' '+x.tag+' '+x.kind+' '+x.year+' '+(d?.title||'')).toLowerCase())+'" href="#/history/'+encodeURIComponent(x.id)+'"><span class="history-date">'+esc(d?.period||x.year)+'</span><span class="history-symbol" aria-hidden="true">✧</span><h2>'+esc(d?.title||x.name)+'</h2><p>'+esc(x.name)+'</p><span class="history-open">Read the story ↗</span></a>';
+      return '<a class="history-card '+(selected?.id===x.id?'is-current':'')+'" data-silence-class="'+esc(x.silenceClass)+'" data-history-search="'+esc((x.name+' '+(window.MUSEUM_I18N?.zh?.[x.name]||'')+' '+x.tag+' '+x.kind+' '+x.year+' '+(d?.title||'')).toLowerCase())+'" href="#/history/'+encodeURIComponent(x.id)+'"><span class="history-date">'+esc(d?.period||x.year)+'</span><span class="history-symbol" aria-hidden="true">✧</span><h2>'+esc(d?.title||x.name)+'</h2><p>'+esc(x.name)+'</p><span class="history-open">Read the story ↗</span></a>';
    }).join('')+'</div></section>';
  let content='';
  const essay=selected&&museumHistoryLocalized(details[selected.id],selected.id);
