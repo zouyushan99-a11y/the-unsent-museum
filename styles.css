@@ -1747,3 +1747,5 @@ body::before{display:none!important}
 .history-photo-credit{display:block;margin-top:6px;color:#66553f;font-size:.79rem;overflow-wrap:anywhere}
 .history-photo-credit a{color:#5b4226;text-decoration:underline;text-underline-offset:3px}
 @media(max-width:650px){.history-archive-figure{padding:8px;margin:30px auto}.history-archive-figure figcaption{margin:12px 8px}.history-photo-link img{max-height:410px}}
+
+.history-photo-fallback{padding:22px;text-align:center;background:#f4e9d3;border:1px solid #aa9270;color:#463a2e}.history-photo-fallback a{color:#624727;text-decoration:underline}.history-photo-fallback[hidden]{display:none}
