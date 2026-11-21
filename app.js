@@ -910,7 +910,7 @@ window.addEventListener('orientationchange',redrawVisibleSkies,{passive:true});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',redrawVisibleSkies,{passive:true});
 if(typeof ResizeObserver!=='undefined'){
 const skyLayoutObserver=new ResizeObserver(()=>redrawVisibleSkies());
-const observeCanvasBoxes=()=>{document.querySelectorAll('.sky-frame,.preview-sky,.constellation canvas,.immersive-sky-page').forEach(el=>{if(!el.dataset.skyObserved){skyLayoutObserver.observe(el);el.dataset.skyObserved='true'}})};
+const observeCanvasBoxes=()=>{document.querySelectorAll('.sky-frame,.preview-sky,.constellation canvas,.immersive-sky-page,.story-sky-frame').forEach(el=>{if(!el.dataset.skyObserved){skyLayoutObserver.observe(el);el.dataset.skyObserved='true'}})};
 const originalRender=render;
 render=function(scroll=true){originalRender(scroll);observeCanvasBoxes()};
 observeCanvasBoxes();
@@ -918,6 +918,6 @@ observeCanvasBoxes();
 render(true);initAuth();refreshSharedAnswers();loadPublicStories();
 // Keep every visitor's sky in sync without exposing account or story records.
 window.setInterval(()=>{if(!document.hidden)refreshSharedAnswers()},30000);
-window.setInterval(()=>{if(!document.hidden&&route().type==='archive')loadPublicStories()},45000);
+window.setInterval(()=>{if(!document.hidden&&['archive','story-sky','story-detail'].includes(route().type))loadPublicStories()},45000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-lastSharedSync>12000)refreshSharedAnswers()});
 window.addEventListener('focus',()=>{if(Date.now()-lastSharedSync>12000)refreshSharedAnswers()},{passive:true});
