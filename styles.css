@@ -1908,3 +1908,42 @@ body::before{display:none!important}
 /* Interpretation is evidence-led prose; the reflective question is a separate reading pause. */
 .history-reflection-kicker{max-width:790px;margin:58px auto 0;color:#dfbe83;font:600 .71rem/1.5 system-ui,-apple-system,sans-serif;letter-spacing:.19em;text-transform:uppercase;padding-top:26px;border-top:1px solid rgba(227,195,139,.26)}
 .history-reflection-kicker+.history-final-question{margin-top:18px}
+
+
+/* Header sizing only: match the foyer's theme navigation on every other page.
+   Preserve existing page-specific colors, backgrounds, content and interactions. */
+#app:not(:has(.museum-home))>.site-header{
+ width:min(1570px,calc(100% - 44px));
+ max-width:none;
+ height:81px;
+ padding:0 10px;
+ box-sizing:border-box;
+}
+#app:not(:has(.museum-home))>.site-header .brand{
+ font-size:clamp(1.1rem,1.55vw,1.58rem);
+ white-space:nowrap;
+}
+#app:not(:has(.museum-home))>.site-header .nav{
+ gap:clamp(9px,1.8vw,25px);
+ justify-content:flex-end;
+}
+#app:not(:has(.museum-home))>.site-header .nav a{
+ font-size:clamp(.75rem,1vw,.99rem);
+ white-space:nowrap;
+}
+@media(max-width:900px){
+ #app:not(:has(.museum-home))>.site-header{
+  height:auto;
+  min-height:72px;
+  padding:12px 22px;
+  width:100%;
+ }
+ #app:not(:has(.museum-home))>.site-header .nav{
+  flex-wrap:wrap;
+  justify-content:center;
+ }
+}
+@media(max-width:700px){
+ #app:not(:has(.museum-home))>.site-header{padding:10px 16px}
+ #app:not(:has(.museum-home))>.site-header .brand{font-size:1.15rem}
+}
