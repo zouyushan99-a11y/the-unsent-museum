@@ -1,4 +1,4 @@
-/* History expansion IV: extended narrative and source-backed analysis. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "liu-xiaobo": {
     "title": "The Chair Reserved for an Absent Writer",
@@ -71,7 +71,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Human Rights Watch",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Resistance",
+      "Imprisonment",
+      "Public speech"
+    ],
+    "moment": {
+      "addressed": "Readers and participants in political reform debates",
+      "intended": "To publish and support proposals for political rights and reform.",
+      "withheld": "He did not withhold his views; imprisonment prevented attendance at the Nobel ceremony.",
+      "why": "State punishment for political expression restricted his liberty.",
+      "certainty": "Documented public writing and imprisonment, not voluntary silence."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.nobelpeaceprize.org/laureates/2010",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "galileo-galilei": {
     "title": "The Book That Brought a Telescope to Trial",
@@ -136,7 +154,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Historical portrait; see scholarly biography",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Science",
+      "Censorship",
+      "Authority"
+    ],
+    "moment": {
+      "addressed": "Readers of his astronomy and authorities judging its acceptability",
+      "intended": "To argue publicly for a model involving Earth's motion.",
+      "withheld": "After the 1633 trial he was required to abjure claims and faced restrictions, though he continued other scholarly work.",
+      "why": "Ecclesiastical censorship and legal proceedings constrained the public defense of particular propositions.",
+      "certainty": "Institutional restriction documented; not a simple uncoerced withdrawal."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://plato.stanford.edu/entries/galileo/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "rosalind-franklin": {
     "title": "The Photograph and the Story Told Later",
@@ -209,6 +245,24 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Elliott & Fry / National Portrait Gallery reproduction",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Science",
+      "Recognition",
+      "Memory"
+    ],
+    "moment": {
+      "addressed": "Scientific colleagues and journal readers",
+      "intended": "To publish and interpret X-ray crystallography evidence.",
+      "withheld": "Her research was published; some later discovery narratives gave her contribution less prominence.",
+      "why": "Scientific attribution and storytelling shaped later recognition, with historians debating details.",
+      "certainty": "Published scientific work; not an instance of deciding not to share evidence."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.kcl.ac.uk/the-story-behind-photograph-51",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 });
