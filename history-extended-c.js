@@ -1,4 +1,4 @@
-/* History expansion III: narrative and source-backed analysis. */
+/* Source-based museum archive and documented imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "oscar-wilde": {
     "title": "The Calling Card and the Prison Cell",
@@ -51,7 +51,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.bl.uk/shakespeare/articles/oscar-wilde-and-his-plays"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Oscar_Wilde_1882.jpg?width=900",
+        "page": "https://commons.wikimedia.org/wiki/File:Oscar_Wilde_1882.jpg",
+        "kind": "Historical photograph",
+        "caption": "Oscar Wilde photographed by Napoleon Sarony around 1882, years before the 1895 trials.",
+        "credit": "Wikimedia Commons · Napoleon Sarony",
+        "at": 0
+      }
+    ]
   },
   "janusz-korczak": {
     "title": "The Children Who Were Supposed to Be Heard",
@@ -112,7 +121,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://encyclopedia.yivo.org/article.aspx/Korczak_Janusz"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://audiovis.nac.gov.pl/i/PIC/PIC_1-K-1560a.jpg",
+        "page": "https://audiovis.nac.gov.pl/obraz/26864/",
+        "kind": "Historical portrait photograph",
+        "caption": "Janusz Korczak, pictured before his deportation; from the Polish National Digital Archives.",
+        "credit": "Poland National Digital Archives",
+        "at": 0
+      }
+    ]
   },
   "etty-hillesum": {
     "title": "Pages from a World That Was Closing",
@@ -173,7 +191,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.amsterdammuseum.nl/en/stories-and-collections/themes/women-of-amsterdam/contribution/129071-rolmodel-en-mystica"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Etty_Hillesum.jpg?width=900",
+        "page": "https://www.amsterdammuseum.nl/en/stories-and-collections/themes/women-of-amsterdam/contribution/129071-rolmodel-en-mystica",
+        "kind": "Historical portrait (source image link)",
+        "caption": "Archival photographs of Etty Hillesum from the Jewish Museum collection. The source article identifies an image dated 1939; the live preview may be unavailable.",
+        "credit": "Amsterdam Museum / Jewish Museum",
+        "at": 0
+      }
+    ]
   },
   "ida-b-wells": {
     "title": "The Newspaper They Tried to Destroy",
@@ -226,6 +253,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.womenshistory.org/education-resources/biographies/ida-b-wells-barnett"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Ida_B._Wells-Barnett.jpg?width=900",
+        "page": "https://www.lib.uchicago.edu/collex/exhibits/voice-for-justice-life-and-legacy-ida-b-wells/",
+        "kind": "Historical portrait (archive reference)",
+        "caption": "Ida B. Wells, historic portrait; original papers and anti-lynching materials are held in the University of Chicago collection.",
+        "credit": "University of Chicago Library",
+        "at": 0
+      }
+    ]
   }
 });
