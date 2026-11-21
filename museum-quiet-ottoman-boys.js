@@ -36,7 +36,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Recruits often received training that created skills and opportunities; the programme could also demand severance from family customs and religious origins. The capacity to learn did not imply the freedom to choose the terms of learning. A boy might become more educated and acquire greater status while still having had almost no control over the moment that changed his life. Historical judgments become less accurate when they assume that later opportunity cancels the power exercised over childhood.",
     "Some served in different branches of imperial households and forces, some rose in position, and others experienced more limited careers. The composition of recruitment also shifted, and not all men in the Janissary corps were drawn from the same system in every period. To label all Ottoman soldiers 'forcibly recruited Christian boys' would be historically wrong.",
     "It cannot reliably reconstruct what every boy thought before leaving home or the small conversations that followed in families who had no practical means of appeal. Later accounts of career achievement have their own selective emphasis. Neither official documentation nor celebrated biographies can substitute for the missing voices of most children selected.",
-    "It ends with an administrative decision made over a boy's future, followed by years in which that decision shaped where he lived, what he learned and how he described himself. The historical record cannot decide whether every recruit experienced that new life as misfortune or opportunity. It can establish that an imperial institution claimed the power to determine it. When a government offers advancement through a system a child cannot refuse, whose opportunity is it, and who made the choice?"
+    "The Ottoman devshirme selected boys from certain Christian communities for imperial service during the fifteenth through early seventeenth centuries. Recruitment criteria and local practice changed over time. Selected boys underwent conversion, training and assignment to institutions linked to the palace and military. Surviving records of a 1603–1604 levy document procedures for selection, transport and education."
   ],
   "zh": [
     "在奥斯曼帝国的一些地区，一个男孩的未来未必由他和家人共同决定。帝国曾通过一种征集制度，从部分基督教社群中挑选男童，将他们纳入苏丹的宫廷与军事服务体系。孩子可能需要离开原来的家庭，接受改宗与训练，学习新的语言和生活方式。对于年幼的他们来说，这不只是换一份工作，而是由国家重新安排自己往后要过的生活。",
@@ -49,7 +49,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "进入训练体系之后，男孩的生活可能发生深刻改变。他学习新的语言、宗教知识与军事技能，也在长期的集体生活中形成新的关系。有些人后来可能认同自己的身份，甚至珍视获得的机会；另一些人也许保留了不同的感受。",
     "教育在这里具有双重意义。训练可能带来普通家庭难以获得的知识和职业机会，同时也让国家能够影响孩子的语言、信仰与忠诚。",
     "这些男孩的经历并不完全相同。有人进入军事单位，有人留在宫廷系统，具体发展还取决于年代与机构。奥斯曼军队也并不是所有士兵都来自这种征集制度。",
-    "保存下来的材料往往是征集规定、登记与行政安排。它们详细说明官员需要什么样的孩子，以及孩子随后会被送往哪里，却很少写下某个男孩离家前的心情。历史文献能证明选择权受到限制，却不能用一张名单代替一个人的全部人生。"
+    "十五世纪至十七世纪初，奥斯曼帝国通过征童制度从部分基督教社群中选取男孩进入宫廷或军事服务体系。选拔范围、年龄条件及训练方式因时期而变化。男童进入相关机构后接受语言、宗教及职业训练，之后可能被分配到不同岗位。1603年至1604年的征集记录保存了官员选择、运输与安排受训儿童的具体程序。"
   ],
   "mechanisms": [
     "imperial recruitment authority",
