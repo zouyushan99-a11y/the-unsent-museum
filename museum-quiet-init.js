@@ -1,4 +1,4 @@
-/* Replace victory-centred group selection with historically sourced archives of ordinary endurance. */
+/* Curated collection: ordinary life under unequal institutions, no archived protest-led dataset required. */
 (function(){
  const old=(window.MUSEUM_COLLECTIVES||[]).find(x=>x.id==='victorian-poor-relief');
  const chosen=(window.MUSEUM_QUIET_EXHIBITS||[]).slice();
