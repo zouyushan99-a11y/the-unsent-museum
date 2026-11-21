@@ -1773,3 +1773,22 @@ body::before{display:none!important}
 .history-class-description{padding:14px 19px;border-left:2px solid #d8b16a;background:rgba(6,27,47,.7);color:#e0d9cb;line-height:1.7;font-size:.9rem}
 @media(max-width:850px){.history-class-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:470px){.history-class-tabs{grid-template-columns:1fr 1fr;gap:7px}.history-class-tabs button{min-height:76px;font-size:.85rem;padding:9px}}
+
+/* The Unsent Moment: evidence-led presentation shared across all historical exhibits. */
+.history-moment-section{padding:clamp(38px,6vw,82px) clamp(20px,7vw,95px);background:linear-gradient(165deg,#e5d7bd,#f4e9d4);color:#322a20}
+.history-moment-section .history-section-title{max-width:760px;margin-bottom:34px}
+.history-moment-section .history-section-title p{color:#5e5242;font-size:1.02rem}
+.history-source-object{max-width:760px;margin:0 auto 28px;padding:24px 28px;background:rgba(255,253,247,.72);border:1px solid #b9a783;border-left:4px solid #9e7a47;box-shadow:0 9px 30px rgba(55,37,18,.08)}
+.history-object-label{font-size:.71rem;letter-spacing:.14em;color:#7e613b;font-weight:700}
+.history-source-object h3{font:normal clamp(1.3rem,2.4vw,1.7rem)/1.4 Georgia,serif;color:#3d2c1e;margin:12px 0}
+.history-source-object p{line-height:1.75;color:#514636}
+.history-source-object a{display:inline-block;color:#68451c;text-decoration:underline;text-underline-offset:3px;margin:8px 0}
+.history-source-object .history-object-evidence{font-size:.89rem;color:#665b49;margin-top:12px}
+.history-moment-rows{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.history-moment-rows>div{padding:20px;background:rgba(255,255,255,.35);border:1px solid rgba(139,112,75,.2)}
+.history-moment-rows h3{font:normal 1.12rem/1.4 Georgia,serif;color:#59401d;margin:0 0 10px}
+.history-moment-rows p{font-size:.96rem;line-height:1.8;color:#45382c;margin:0}
+.history-moment-rows .history-moment-certainty{grid-column:1/-1;background:rgba(198,174,126,.18)}
+.history-reason-tags{max-width:760px;display:flex;flex-wrap:wrap;gap:8px;margin:24px auto 0}
+.history-reason-tag{display:inline-block;border-radius:100px;padding:7px 12px;border:1px solid #a98a58;color:#624a2d;font-size:.81rem;background:rgba(255,255,255,.35)}
+@media(max-width:680px){.history-moment-rows{grid-template-columns:1fr}.history-source-object{padding:20px}.history-moment-rows>div{padding:16px}}
