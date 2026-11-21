@@ -1737,3 +1737,13 @@ body::before{display:none!important}
 .history-evidence-warning{font-size:.88rem;border-top:1px solid #baa785;padding-top:16px;opacity:.83}
 @media(max-width:650px){.history-grid{gap:12px}.history-longform-header{padding:40px 20px}.history-toc{display:grid;grid-template-columns:1fr}.history-story-section{padding:35px 22px 55px}.history-prose{line-height:1.85}.history-analysis-section{padding:40px 22px}.history-analysis-point{grid-template-columns:30px minmax(0,1fr);gap:9px}.history-final-question{padding:20px}.history-evidence-section{padding:40px 23px}}
 @media(prefers-reduced-motion:reduce){.history-toc button{transition:none}}
+
+/* Verified documentary photographs in historical stories. */
+.history-archive-figure{margin:42px auto 48px;max-width:700px;padding:17px;background:rgba(255,252,242,.72);border:1px solid rgba(123,93,55,.23);box-shadow:0 14px 38px rgba(62,45,22,.11);text-indent:0}
+.history-photo-link{display:block;width:100%;overflow:hidden;background:#d9d0bb;text-align:center}
+.history-photo-link img{display:block;max-width:100%;height:auto;max-height:600px;object-fit:contain;margin:0 auto}
+.history-archive-figure figcaption{margin:15px 8px 3px;font:normal .84rem/1.7 system-ui,-apple-system,sans-serif;color:#554938}
+.history-archive-figure figcaption strong{color:#674925}
+.history-photo-credit{display:block;margin-top:6px;color:#66553f;font-size:.79rem;overflow-wrap:anywhere}
+.history-photo-credit a{color:#5b4226;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:650px){.history-archive-figure{padding:8px;margin:30px auto}.history-archive-figure figcaption{margin:12px 8px}.history-photo-link img{max-height:410px}}
