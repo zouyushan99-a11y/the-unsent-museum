@@ -15,3 +15,16 @@
 .museum-feedback-form [role=status]{min-height:1.4em}
 .feedback-trap{position:absolute;left:-10000px;visibility:hidden}
 @media(max-width:640px){.museum-feedback-form{padding:17px}.collective-category-nav{gap:8px}.collective-category-nav a{font-size:.75rem}}
+
+
+/* Private visitor feedback inbox, within the curator moderation room */
+.museum-feedback-inbox{border-top:1px solid rgba(238,198,91,.26);padding-top:40px;padding-bottom:65px}
+.museum-feedback-inbox .collective-section-heading p{max-width:700px;color:var(--muted)}
+.museum-feedback-inbox-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:26px 0}
+.museum-feedback-inbox-list{display:grid;gap:15px}
+.museum-feedback-inbox-item{border:1px solid rgba(238,198,91,.25);background:rgba(20,30,48,.85);padding:23px;border-radius:15px}
+.museum-feedback-inbox-item.is-reviewed{opacity:.77;border-color:rgba(210,221,243,.15)}
+.museum-feedback-inbox-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.museum-feedback-inbox-message{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8}
+.museum-feedback-inbox-item .btn{font-size:.8rem;margin-top:8px}
+@media(max-width:600px){.museum-feedback-inbox-item{padding:16px}.museum-feedback-inbox-toolbar .btn{width:100%}}
