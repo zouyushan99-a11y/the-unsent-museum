@@ -1,4 +1,4 @@
-/* Authored translation dictionary. Visitors' writings remain unchanged by localization. */
+/* Museum authored multilingual interface dictionary and historical names. */
 window.MUSEUM_I18N={zh:{
   "Home": "首页",
   "Galleries": "展厅",
@@ -448,7 +448,34 @@ window.MUSEUM_I18N={zh:{
   "Criminalized privacy and secrecy": "被法律限制的隐私与保密",
   "Suppressed expression": "遭到压制的表达",
   "Censored scientific claims": "受到审查的科学主张",
-  "Restricted public expression": "被限制的公共表达"
+  "Restricted public expression": "被限制的公共表达",
+  "Anne Frank": "安妮·弗兰克",
+  "Sophie Scholl and the White Rose": "索菲·朔尔与白玫瑰",
+  "Anna Akhmatova": "安娜·阿赫玛托娃",
+  "Nicolaus Copernicus": "尼古拉·哥白尼",
+  "Harriet Jacobs": "哈丽雅特·雅各布斯",
+  "Emily Dickinson": "艾米莉·狄金森",
+  "Alan Turing": "艾伦·图灵",
+  "Oscar Wilde": "奥斯卡·王尔德",
+  "Liu Xiaobo": "刘晓波",
+  "Galileo Galilei": "伽利略",
+  "Harriet Tubman": "哈丽雅特·塔布曼",
+  "Franz Kafka": "弗朗茨·卡夫卡",
+  "Abraham Lincoln": "亚伯拉罕·林肯",
+  "Anne Lister": "安妮·李斯特",
+  "Sophie Germain": "索菲·热尔曼",
+  "Fanny Mendelssohn Hensel": "范妮·门德尔松·亨泽尔",
+  "Eileen Chang": "张爱玲",
+  "Charlotte Brontë": "夏洛蒂·勃朗特",
+  "Emily Brontë": "艾米莉·勃朗特",
+  "Anne Brontë": "安妮·勃朗特",
+  "Jane Austen": "简·奥斯汀",
+  "George Eliot": "乔治·艾略特",
+  "Louisa May Alcott": "路易莎·梅·奥尔科特",
+  "Thomas More": "托马斯·莫尔",
+  "Elizabeth I": "伊丽莎白一世",
+  "Queen Victoria": "维多利亚女王",
+  "Thomas Hardy": "托马斯·哈代"
 },scenarios:{
   "friendship": {
     "title": "朋友之间",
