@@ -47,3 +47,10 @@ Review every historical exhibit against the linked primary or institutional sour
 - Removed the ENGL course prototype footer credit. The footer now shows only the museum name in the selected interface language.
 - Added Chinese-only literary Song/Ming typography with locally available fallback families; English pages retain their original typographic scheme.
 - The five collective histories now include ten case-specific explanations and a period-sensitive overview of religious, legal, gendered, educational, economic, technological and social factors. A fifth case draws on the UK National Archives' workhouse and anonymous poor-law complaint collections.
+
+## Collective exhibition curatorial change — ordinary endurance (November 2026)
+The five **publicly indexed** Collective Archives now focus on everyday life under durable oppression, **not on successful or unsuccessful uprising narratives**. The featured cohorts are: Victorian British live-in domestic servants, widows in late-eighteenth/nineteenth-century North India, people subject to status discrimination in Edo Japan, enslaved Black households in the antebellum United States, and applicants/recipients of Victorian poor relief.
+
+Each new longform essay has >1,000 English words and >1,000 Chinese Han characters, and names its historical setting, enforced constraints, cultural/religious and economic conditions, and evidence limitations. Particularly revealing records include anonymous 1889 letters by British servants and cautious later interviews with formerly enslaved people. The older protest-centred group records are no longer in the visible selection; the 69 Personal Archives remain unchanged.
+
+Method: **nonparticipation in overt rebellion does not prove acquiescence, secretly wished-for rebellion, or an absence of quieter forms of agency**. Do not invent collective first-person statements. When no individual's thoughts survive, state structural risk as an explanation to investigate, not as a documented motive.
