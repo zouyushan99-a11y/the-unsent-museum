@@ -1,4 +1,6 @@
 /* Workhouse Voices: a fifth collective dossier centred on conditional welfare and anonymous complaints. */
+window.MUSEUM_COLLECTIVES=window.MUSEUM_COLLECTIVES||[];
+window.MUSEUM_COLLECTIVE_AUDIT=window.MUSEUM_COLLECTIVE_AUDIT||[];
 window.MUSEUM_COLLECTIVES.push({
   "id": "victorian-poor-relief",
   "year": "1834–1870 · England and Wales",
