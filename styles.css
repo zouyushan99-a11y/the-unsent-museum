@@ -1947,3 +1947,69 @@ body::before{display:none!important}
  #app:not(:has(.museum-home))>.site-header{padding:10px 16px}
  #app:not(:has(.museum-home))>.site-header .brand{font-size:1.15rem}
 }
+
+
+/* Responsive consistency audit — shared layout only, no changes to visual themes. */
+#app,#app main,#app section,#app article{min-width:0}
+#app .page-hero,#app .choice-panel,#app .archive-item,#app .history-longform,
+#app .collective-article,#app .collective-card,#app .card,#app .gateway-card{
+ min-width:0;box-sizing:border-box;
+}
+#app .page-hero h1,#app .page-hero p,#app .archive-item h3,
+#app .history-longform h2,#app .collective-article h2,
+#app .collective-card h2,#app .archive-prose,#app .public-story-body{
+ overflow-wrap:anywhere;
+}
+#app .story-editor-panel input,#app .story-editor-panel textarea,
+#app .museum-feedback-form input,#app .museum-feedback-form textarea{
+ box-sizing:border-box;max-width:100%;min-width:0;
+}
+#app .story-editor-panel .actions,#app .archive-item .actions,
+#app .museum-feedback-inbox-toolbar{flex-wrap:wrap;min-width:0}
+#app .story-editor-panel .btn,#app .archive-item .btn{max-width:100%;white-space:normal}
+#app img,#app video,#app iframe{max-width:100%}
+#app .history-longform img,#app .history-archive-figure img{height:auto}
+#app .collective-references a,#app .history-evidence-section a,
+#app .museum-feedback-inbox-message,#app .research-dossier-paper{overflow-wrap:anywhere}
+#app .collective-grid,#app .history-grid,#app .archive,
+#app .gallery-gateways,#app .research-dossier-grid{min-width:0}
+
+/* Tablet reading: avoid cramped columns in long-form archives and controls. */
+@media(min-width:701px) and (max-width:1100px){
+ #app .story-editor-panel{max-width:100%}
+ #app .story-editor-panel .actions{gap:12px}
+ #app .collective-reading-grid>*,#app .history-reading>*{min-width:0}
+ #app .site-header .nav a{flex-shrink:0}
+}
+/* Mobile: the same horizontally accessible theme navigation on all rooms.
+   Overrides older contradictory wrap/scroll rules without touching link destinations. */
+@media(max-width:700px){
+ #app:has(.museum-home)>.site-header .nav,
+ #app:not(:has(.museum-home))>.site-header .nav{
+  display:flex;flex-wrap:nowrap;justify-content:flex-start;
+  width:100%;max-width:100%;min-width:0;gap:15px;
+  overflow-x:auto;overflow-y:hidden;
+  overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;padding:9px 2px 13px;box-sizing:border-box;
+ }
+ #app:has(.museum-home)>.site-header .nav a,
+ #app:not(:has(.museum-home))>.site-header .nav a{
+  flex:0 0 auto;white-space:nowrap;min-height:34px;display:inline-flex;align-items:center;
+ }
+ #app .story-editor-panel .actions .btn,
+ #app .archive-item .actions .btn{flex:1 1 180px;min-height:44px}
+ #app .page-hero{max-width:100%}
+ #app .page-hero h1{overflow-wrap:anywhere}
+ #app .history-longform,#app .collective-article{max-width:100%}
+ #app .collective-reading-grid,#app .collective-grid,#app .history-grid,
+ #app .gallery-gateways,#app .archive{grid-template-columns:minmax(0,1fr)}
+ #app .collective-article .collective-prose,
+ #app .history-longform .history-prose{min-width:0}
+ #app .category-nav .pill{max-width:100%;overflow-wrap:anywhere}
+ #app .museum-feedback-form,#app .museum-feedback-inbox-item{max-width:100%}
+}
+@media(max-width:390px){
+ #app .archive-item{padding:19px 16px}
+ #app .story-editor-panel{padding-left:15px;padding-right:15px}
+ #app .museum-feedback-inbox-item{padding:16px}
+}
