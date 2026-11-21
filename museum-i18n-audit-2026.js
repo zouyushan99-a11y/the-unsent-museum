@@ -28,5 +28,9 @@
   "HIDDEN": "已隐藏",
   "PUBLIC": "公开",
   "The Story Archive": "故事档案馆",
-  "It should address why silence matters to the author, how the scenes were selected and reconstructed, the limits of personal memory, the use of audience responses, and the influence of assigned literary journalism texts (for example Bowles, Krakauer, Márquez, or Capote, where genuinely relevant).": "作者应说明沉默为什么值得书写，文章中的场景如何选择与重构，个人记忆有哪些局限，读者回应如何影响创作，以及课堂文学报道作品（例如鲍尔斯、克拉考尔、马尔克斯或卡波特）在确实相关时带来了什么影响。"
+  "It should address why silence matters to the author, how the scenes were selected and reconstructed, the limits of personal memory, the use of audience responses, and the influence of assigned literary journalism texts (for example Bowles, Krakauer, Márquez, or Capote, where genuinely relevant).": "作者应说明沉默为什么值得书写，文章中的场景如何选择与重构，个人记忆有哪些局限，读者回应如何影响创作，以及课堂文学报道作品（例如鲍尔斯、克拉考尔、马尔克斯或卡波特）在确实相关时带来了什么影响。",
+  "What stays unsaid between people we care about?": "面对我们在乎的人，有哪些话始终没有说出口？",
+  "When is a different opinion too difficult to voice?": "什么时候，表达不同意见会变得如此困难？",
+  "What goes unspoken around familiar tables?": "在熟悉的家庭餐桌旁，哪些话没有被说出来？",
+  "A message written, revised, then left behind.": "一条写下、修改，最终却没有发出的消息。"
 });})();
