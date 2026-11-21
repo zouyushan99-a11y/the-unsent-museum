@@ -40,7 +40,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Churches, families and local authorities sometimes shaped how work and migration were discussed; religious communities also provided networks of support. Ideas of male responsibility could intensify pressure to earn wages for relatives.",
     "These arrangements were not static. Labour recruitment, compounds and pass regulation evolved across the colonial, segregationist and later apartheid eras. There were strikes and numerous forms of resistance, which would be inaccurate to deny. It is the many contract periods during which men went down to work, returned through guarded spaces and waited for opportunities to send money home.",
     "Evidence is also uneven. Companies and governments generated contracts, inspections, pass regulations and accommodation plans. Oral histories and social scholarship provide additional perspectives but vary in period and scope.",
-    "The mine needed labour, the family needed wages, and the state could regulate movement between them. What freedom does a man possess if the work that keeps his children fed also determines where he may sleep and when he may return home?"
+    "From the late nineteenth century, South African mining companies recruited Black male labour across broad regions. Some workers lived in enclosed compounds and were subject to changing restrictions on movement. Families often remained in rural communities while men earned wages away from home. Contracts, pass rules and architectural records describe accommodation, recruitment and the separation of employment from family life."
   ],
   "zh": [
     "十九世纪末的南部非洲，一些黑人男子离开家乡，前往越来越繁忙的金矿和钻石矿工作。他们需要工资，家里的亲人也依靠这些收入生活。可是，找到工作并不意味着拥有自由安排生活的能力。矿工可能要离开妻儿很长时间，住在由公司管理的宿舍里，按照规定上下工。一个人为了养家去工作，却可能因此失去陪伴家人的机会。",
@@ -54,7 +54,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "家庭责任也可能强化继续工作的压力。在一些社会期待中，一个成年男子需要挣钱养家、照顾亲属。矿业制度利用了这种经济需求，却不等于家庭责任本身是压迫的来源。一个人可以真心愿意供养孩子，同时不愿接受公司对生活的控制。宗教与社群关系同样有不同作用，有时提供支持，有时强化责任，不能简单用『文化顺从』来解释这些矿工的处境。",
     "这些制度在后来的数十年不断变化，也确实发生过罢工与反抗。",
     "政府和企业保存了大量合同、通行证规定与宿舍管理资料。一座宿舍的围墙证明了空间限制的存在，不能单凭这道墙就断言所有住在里面的人都打算反抗。",
-    "矿区需要他们的劳动力，家人需要他们的收入，国家又决定他们能够在什么地方居住和通行。当这几种力量联系在一起，继续工作可能不是对不公平的赞成，而是一个人为了让家庭维持生活所作出的现实决定。"
+    "十九世纪末起，南非矿业公司从较广的地区招募黑人男性劳动力。部分工人住在受到严格管理的男性宿舍，通行与居住受到公司制度及相关法律限制，家庭则经常留在农村。土地分配、现金税收、农村收入与矿区工资之间的联系，构成了移民矿业劳动的经济背景。矿区宿舍建筑、劳动合同及通行证规定保存了这些安排的历史记录。"
   ],
   "mechanisms": [
     "racially restricted movement",
