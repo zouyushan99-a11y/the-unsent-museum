@@ -24,7 +24,11 @@ create index if not exists museum_stories_user_idx on public.museum_stories(user
 create index if not exists museum_stories_public_idx on public.museum_stories(scenario,updated_at desc) where status='published';
 alter table public.museum_stories enable row level security;
 revoke all on public.museum_stories from anon;
-grant select,insert,update,delete on public.museum_stories to authenticated;
+grant select,insert,delete on public.museum_stories to authenticated;
+-- Keep curator-only column blocked_by_curator out of the author's UPDATE grant.
+revoke update on public.museum_stories from authenticated;
+grant update (scenario,title,story,why,status,publication_mode,display_name,public_consent,updated_at)
+  on public.museum_stories to authenticated;
 drop policy if exists "Stories: author read" on public.museum_stories;
 drop policy if exists "Stories: author insert" on public.museum_stories;
 drop policy if exists "Stories: author update" on public.museum_stories;
@@ -99,5 +103,6 @@ grant execute on function public.museum_set_story_blocked(uuid,boolean) to authe
 -- In Supabase Dashboard > Authentication > Users copy the curator's exact User UID.
 -- Run: insert into public.museum_curators(user_id) values ('PASTE-EXACT-USER-UUID-HERE');
 -- Never place that assignment in the public website JavaScript.
+-- Curator-only blocked_by_curator updates run through a server-checked security-definer RPC.
 -- When a curator blocks a story, it stays in the database as private archival data,
 -- but the public RPC removes it from all visitors' results until the curator unblocks.
