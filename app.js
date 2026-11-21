@@ -29,8 +29,48 @@ let authUser=null;
 let authLoading=Boolean(authClient);
 let authMessage='';
 let authBusy=false;
-function authPage(){if(authUser){return '<main class="container"><section class="page-hero"><h1>Your place in the museum.</h1></section><section class="section-compact narrow auth-area"><div class="auth-panel"><h2>Welcome back.</h2><p class="auth-email">'+esc(authUser.email||'Authenticated visitor')+'</p><p class="muted">Answers and drafts are still stored in this browser, not synced to your account.</p><button class="btn btn-outline" id="auth-signout">Sign out</button></div></section></main>'}return '<main class="container"><section class="page-hero"><div class="eyebrow">YOUR ACCOUNT</div><h1>Enter the museum.</h1><p class="muted">Sign in using your Google account—no email verification links.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel"><h2>One account, one entrance.</h2><p class="muted">Choose your Google account to continue.</p><button class="btn google-signin" id="google-signin">Continue with Google ↗</button><p class="muted small">Google sign-in must first be enabled in the museum Supabase project.</p>'+(authMessage?'<div class="auth-feedback" role="status">'+esc(authMessage)+'</div>':'')+'</div><p class="privacy-caption">Logging in does not upload or publish your stories or answers. Those still remain on this device.</p></section></main>'}
-function bindAuth(){const google=$('#google-signin');if(google){google.onclick=async()=>{if(!authClient){authMessage='Authentication service failed to load.';render(false);return}google.disabled=true;google.textContent='Opening Google…';try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}catch(e){authMessage=String(e.message||e);render(false)}}}const signout=$('#auth-signout');if(signout){signout.onclick=async()=>{if(!authClient)return;const {error}=await authClient.auth.signOut();authMessage=error?error.message:'You have signed out.';if(!error)authUser=null;render(false)}}}
+
+let emailAuthMode='login';
+function authPage(){
+if(authUser)return `<main class="container"><section class="page-hero"><div class="eyebrow">YOUR ACCOUNT</div><h1>Your place in the museum.</h1></section><section class="section-compact narrow auth-area"><div class="auth-panel"><div class="eyebrow">SIGNED IN</div><h2>Welcome back.</h2><p class="auth-email">${esc(authUser.email||'Authenticated visitor')}</p><p class="muted">Answers and story drafts still stay in this browser. They are not yet synced to your account.</p><button type="button" class="btn btn-outline" id="auth-signout">Sign out ↗</button></div></section></main>`;
+return `<main class="container"><section class="page-hero"><div class="eyebrow">THE MUSEUM / ACCOUNT</div><h1>Enter the museum.</h1><p class="muted narrow" style="margin-left:0">Choose Google sign-in, or create your own account with an email address and password.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel">
+<div class="eyebrow">A FAMILIAR ENTRANCE</div><h2>Continue with Google</h2><button type="button" class="btn google-signin" id="google-signin">Continue with Google ↗</button>
+<div class="auth-separator"><span>or use your own email</span></div>
+<div class="auth-tab-buttons"><button class="auth-tab ${emailAuthMode==='login'?'is-active':''}" type="button" data-auth-mode="login">Sign in</button><button class="auth-tab ${emailAuthMode==='signup'?'is-active':''}" type="button" data-auth-mode="signup">Create account</button></div>
+<form id="email-auth-form" class="email-auth-form">
+<label for="account-email">Email address</label><input class="field" type="email" id="account-email" autocomplete="email" inputmode="email" maxlength="254" placeholder="you@example.com" required>
+<label for="account-password">Password</label><input class="field" type="password" id="account-password" autocomplete="${emailAuthMode==='signup'?'new-password':'current-password'}" minlength="8" maxlength="128" placeholder="At least 8 characters" required>
+${emailAuthMode==='signup'?'<p class="small muted">Use a strong, unique password. Supabase may send a one-time email verification during registration, depending on project settings.</p>':''}
+<button class="btn" type="submit" id="email-auth-submit">${emailAuthMode==='signup'?'Create account ↗':'Sign in with email ↗'}</button>
+</form>
+${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}
+</div><p class="privacy-caption">Authentication is provided by Supabase. Signing in does not publish or synchronize your stories, answers or stars. Those remain in this browser until shared storage is enabled.</p></section></main>`;
+}
+function bindAuth(){
+const google=$('#google-signin');
+if(google)google.onclick=async()=>{if(!authClient){authMessage='Authentication service failed to load.';render(false);return}google.disabled=true;google.textContent='Opening Google…';try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}catch(e){authMessage=String(e.message||e);render(false)}};
+document.querySelectorAll('[data-auth-mode]').forEach(btn=>btn.onclick=()=>{emailAuthMode=btn.dataset.authMode;authMessage='';render(false)});
+const form=$('#email-auth-form');
+if(form)form.onsubmit=async ev=>{ev.preventDefault();if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
+const email=$('#account-email')?.value.trim(),password=$('#account-password')?.value;
+if(!email||!password||password.length<8)return;
+const submit=$('#email-auth-submit');if(submit){submit.disabled=true;submit.textContent='Please wait…'}
+try{
+if(emailAuthMode==='signup'){
+const {data,error}=await authClient.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}});
+if(error)authMessage=error.message;
+else if(data?.session){authMessage='Account created. You are signed in.';authUser=data.user||null}
+else authMessage='Registration received. Please check your inbox for the one-time verification email if required by the museum’s Supabase settings.';
+}else{
+const {data,error}=await authClient.auth.signInWithPassword({email,password});
+if(error)authMessage=error.message;
+else {authMessage='Signed in successfully.';authUser=data?.user||null}
+}
+}catch(e){authMessage=String(e.message||e)}
+render(false);
+};
+const signout=$('#auth-signout');if(signout)signout.onclick=async()=>{if(!authClient)return;const {error}=await authClient.auth.signOut();authMessage=error?error.message:'You have signed out.';if(!error)authUser=null;render(false)};
+}
 async function initAuth(){if(!authClient){authLoading=false;return}authClient.auth.onAuthStateChange((event,session)=>{const next=session?.user||null;if(authUser?.id!==next?.id){authUser=next;if($('#app'))render(false)}});try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}catch(e){authMessage='Could not restore login: '+String(e.message||e)}authLoading=false;if($('#app'))render(false)}
 
 function header(route){return `<div class="notice">PROTOTYPE · Replies are saved only in this browser. No cross-visitor statistics or public story publishing.</div><header class="site-header container"><a class="brand" href="#/"><span class="brand-mark">✧</span>The Unsent Museum</a><nav class="nav"><a class="${route==='/'?'active':''}" href="#/">Home</a><a class="${route.startsWith('/galleries')||route.startsWith('/gallery/')||route.startsWith('/archive')||route.startsWith('/contribute')?'active':''}" href="#/galleries">Galleries</a><a class="${route.startsWith('/lookout')?'active':''}" href="#/lookout">The Lookout</a><a class="${route.startsWith('/archive')?'active':''}" href="#/archive">Story Archive</a><a class="${route==='/about'?'active':''}" href="#/about">About</a><a class="account-link" href="#/account">${authUser?'✧ '+esc(authUser.email?.split('@')[0]||'Account'):'Sign in'}</a></nav></header>`}
