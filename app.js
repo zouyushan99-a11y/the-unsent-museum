@@ -81,16 +81,17 @@ function museumTranslateInterfaceValue(value,dict){
   const numerals={I:'一',II:'二',III:'三',IV:'四',V:'五',VI:'六',VII:'七',VIII:'八',IX:'九',X:'十'};
   const gallery=n=>'第'+(numerals[n]||n)+'展厅';
   const dynamic=[
-   [/^RESEARCH\\s*·\\s*GALLERY\\s+([IVX0-9]+)/i,(_,n)=>'研究资料 · '+gallery(n)],
-   [/^GALLERY\\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
-   [/^Gallery\\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
-   [/^([0-9]+)\\s+responses?\\s*·\\s*Multiple choice.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
-   [/^([0-9]+)\\s+reason stars?\\s*·\\s*([0-9]+)\\s+answers?/i,(_,n,m)=>n+' 颗理由星辰 · '+m+' 份回答'],
-   [/^([0-9]+)\\s+local responses?/i,(_,n)=>n+' 份本地回答'],
-   [/^([0-9]+)\\s+accounts? in this wing/i,(_,n)=>'本展厅共有 '+n+' 份档案'],
-   [/^([0-9]+)\\s+(?:stories|responses|stars|reasons|records)\\b/i,(_,n)=>n+' 份记录'],
-   [/^Blue\\s*·\\s*Silence/i,()=> '蓝色 · 沉默'],
-   [/^Gold\\s*·\\s*Speak up/i,()=> '金色 · 开口'],
+   [/^([0-9]+)\s+response\(s\)\s*·.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
+   [/^RESEARCH\s*·\s*GALLERY\s+([IVX0-9]+)/i,(_,n)=>'研究资料 · '+gallery(n)],
+   [/^GALLERY\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
+   [/^Gallery\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
+   [/^([0-9]+)\s+responses?\s*·\s*Multiple choice.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
+   [/^([0-9]+)\s+reason stars?\s*·\s*([0-9]+)\s+answers?/i,(_,n,m)=>n+' 颗理由星辰 · '+m+' 份回答'],
+   [/^([0-9]+)\s+local responses?/i,(_,n)=>n+' 份本地回答'],
+   [/^([0-9]+)\s+accounts? in this wing/i,(_,n)=>'本展厅共有 '+n+' 份档案'],
+   [/^([0-9]+)\s+(?:stories|responses|stars|reasons|records)\b/i,(_,n)=>n+' 份记录'],
+   [/^Blue\s*·\s*Silence/i,()=> '蓝色 · 沉默'],
+   [/^Gold\s*·\s*Speak up/i,()=> '金色 · 开口'],
    [/^Could not load (?:public )?(?:stories|star data):/i,()=> '暂时无法载入公开资料：'],
    [/^Cloud (?:backup|save) failed:/i,()=> '云端保存失败：']
   ];
