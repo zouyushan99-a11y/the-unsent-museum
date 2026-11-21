@@ -249,3 +249,12 @@ line-height:1.42;overflow-wrap:anywhere;
 .star-info-tooltip span{display:block;font-size:.84rem;color:#e7e9ef}
 .immersive-sky-page{cursor:default}
 @media(max-width:700px){.star-info-tooltip{padding:11px 13px 12px}.star-info-tooltip strong{font-size:.96rem}}
+
+/* Browser-only answers can be imported to shared star data only with visitor consent. */
+.legacy-star-import{display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;margin:23px 0 42px;padding:21px 25px;border:1px solid rgba(232,198,112,.34);border-radius:16px;background:linear-gradient(120deg,#152037,#0c1220)}
+.legacy-star-import strong{color:#f1d79d;font-size:.98rem}
+.legacy-star-import div{flex:1 1 270px}
+.legacy-star-import p{margin:7px 0 0}
+.legacy-star-import .btn{flex:0 0 auto}
+.legacy-star-import .auth-feedback{flex:1 1 100%;margin:0}
+@media(max-width:700px){.legacy-star-import{padding:19px 16px;display:block}.legacy-star-import .btn{margin-top:16px;min-height:44px;width:100%}.legacy-star-import .auth-feedback{margin-top:17px}}
