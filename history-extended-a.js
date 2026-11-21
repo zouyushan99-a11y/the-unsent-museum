@@ -1,4 +1,4 @@
-/* The Unsent Museum: sourced historical dossiers, volume one. */
+/* The Unsent Museum — research-grounded longform biographies and documentary images. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "anna-akhmatova": {
     "title": "A Poem That Could Not Stay on Paper",
@@ -60,7 +60,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://academic.oup.com/cornell-scholarship-online/book/51575/chapter-abstract/418176230"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://live-production.wcms.abc-cdn.net.au/506b9375b83d18b8cf3425f9814375fd?cropH=1412&cropW=2121&height=575&impolicy=wcms_crop_resize&width=862&xPos=0",
+        "page": "https://www.abc.net.au/listen/programs/earshot/the-enduring-appeal-of-soviet-era-poet-anna-ahkmatova/7389984",
+        "kind": "Historical portrait photograph",
+        "caption": "Photographic portrait of Anna Akhmatova, published by ABC. This is not a photograph of the prison queues.",
+        "credit": "ABC Listen · archival photograph",
+        "at": 0
+      }
+    ]
   },
   "nicolaus-copernicus": {
     "title": "The Universe Before the Book Was Printed",
@@ -118,7 +127,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://plato.sydney.edu.au/entries/copernicus/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Nikolaus_KopernikusFXD.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Nikolaus_KopernikusFXD.jpg",
+        "kind": "Historical painted portrait",
+        "caption": "Posthumous portrait of Copernicus, attributed to an unknown artist and dated to around 1580. No photograph could exist from his lifetime.",
+        "credit": "Wikimedia Commons · Regional Museum in Toruń",
+        "at": 0
+      }
+    ]
   },
   "harriet-jacobs": {
     "title": "Seven Years Above the Room",
@@ -181,6 +199,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://docsouth.unc.edu/fpn/jacobs/jacobs.html"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://d3m7xw68ay40x8.cloudfront.net/assets/2021/02/Mar21-Harriet-Jacobs-edenton-north-carolina-Cabinet-photograph-by-Gilbert-Studios-Washington-D.C.-Gold-toned-albumen-print-2-768x1003.jpg",
+        "page": "https://www.ourstate.com/4-items-for-your-march-to-do-list/",
+        "kind": "Historical studio portrait",
+        "caption": "Historical studio portrait identified as Harriet Jacobs. Photographed many years after the concealment described in her memoir.",
+        "credit": "Our State · Gilbert Studios albumen photograph",
+        "at": 0
+      }
+    ]
   }
 });
