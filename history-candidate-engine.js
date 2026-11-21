@@ -60,5 +60,10 @@ window.MUSEUM_NEW_BUILD = function() {
   c.enWords=e.join(" ").trim().split(/\s+/).length;
   c.zhChars=(z.join("").match(/[\u3400-\u9fff]/g)||[]).length;
  }
- window.MUSEUM_NEW_AUDIT=all.map(c=>({id:c.id,enWords:c.enWords,zhChars:c.zhChars}));
+ for(const c of (window.MUSEUM_ZH_REPAIRS||[])){
+   const z=zhStory(c);
+   ZH[c.id]={title:c.zhTitle,subtitle:c.zhSubtitle,story:z,setting:c.zh[1],act:c.zh[2],cause:c.zh[3],proof:c.zh[4],after:c.zh[5],question:c.zhQuestion};
+   LABELS[c.id]={...(LABELS[c.id]||{}),period:c.cnPlace+" · "+c.cnYear,object:c.cnArtifact,kind:c.cnType,source:c.cnSource,image:"与人物和事件相关的历史材料，请点击来源核对"};
+ }
+  window.MUSEUM_NEW_AUDIT=all.map(c=>({id:c.id,enWords:c.enWords,zhChars:c.zhChars}));
 };
