@@ -66,7 +66,7 @@ async function loadCloudStories(){
 async function loadPublicStories(){
  if(!authClient){storyCloudStatus='error';storyCloudError='The story service could not load.';return}
  const {data,error}=await authClient.rpc('get_public_museum_stories');
- if(error){storyCloudStatus='error';storyCloudError=error.message;return}
+ if(error){storyCloudStatus='error';storyCloudError=error.message;publicStories=[];return}
  publicStories=Array.isArray(data)?data.filter(st=>st&&validStoryCategory(st.scenario)):[];
  storyCloudStatus='ready';storyCloudError='';
  const r=route();if(r.type==='archive'||r.type==='my-stories')render(false);
