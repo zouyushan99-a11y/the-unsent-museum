@@ -38,3 +38,12 @@
 .collective-references a,.collective-return a{color:#e4bc75}
 .collective-return{padding:1.5rem 0 4rem}
 @media(max-width:700px){.collective-grid,.collective-reading-grid{grid-template-columns:1fr}.collective-card{min-height:235px}.collective-hero{padding-top:2.5rem}.collective-article>header{padding-top:0}}
+
+.unsent-lenses{padding:1.4rem 0 3rem}
+.unsent-lenses .collective-section-heading p{max-width:720px;line-height:1.8;color:var(--muted,#bcb7aa)}
+.unsent-lenses-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.unsent-lenses-grid>div{border:1px solid rgba(196,162,104,.24);border-radius:6px;padding:1.35rem 1.2rem;background:rgba(188,154,103,.055)}
+.unsent-lenses-grid h3{font:400 1.3rem/1.45 Georgia,"Times New Roman",serif;margin:0 0 .55rem}
+.unsent-lenses-grid p{font-size:.9rem;line-height:1.75;color:var(--muted,#c5c0b8)}
+@media(max-width:850px){.unsent-lenses-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.unsent-lenses-grid{grid-template-columns:1fr}}
