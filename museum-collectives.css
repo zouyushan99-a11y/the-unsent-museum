@@ -47,3 +47,14 @@
 .unsent-lenses-grid p{font-size:.9rem;line-height:1.75;color:var(--muted,#c5c0b8)}
 @media(max-width:850px){.unsent-lenses-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){.unsent-lenses-grid{grid-template-columns:1fr}}
+
+/* The unsaid moment: explanatory inquiry rather than a single oppression label */
+.collective-tension{padding:3rem 0;margin:3rem 0;border-top:1px solid rgba(202,179,133,.28)}
+.collective-tension-intro{max-width:760px;font:400 clamp(1.02rem,1.9vw,1.2rem)/2.05 Georgia,"Songti SC","Noto Serif CJK SC",serif;color:var(--ink,#e3dccf);margin:0 0 2rem}
+.collective-factors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.collective-factor{display:flex;align-items:flex-start;gap:1rem;padding:1.5rem;border:1px solid rgba(191,168,127,.28);border-radius:6px;background:rgba(171,145,100,.06)}
+.collective-factor>span{font:400 1rem Georgia,serif;color:#bb9e6c;padding-top:.1rem}
+.collective-factor h3{font:400 1.25rem/1.4 Georgia,"Songti SC",serif;margin:0 0 .6rem}
+.collective-factor p{font-size:.94rem;line-height:1.85;color:var(--muted,#c5c0b8);margin:0}
+.collective-evidence-boundary{max-width:830px;margin:2rem 0 0;padding:1.2rem 1.4rem;border-left:2px solid rgba(186,159,113,.7);line-height:1.85;font-size:.92rem}
+@media(max-width:740px){.collective-factors{grid-template-columns:1fr}}
