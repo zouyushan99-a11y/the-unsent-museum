@@ -806,7 +806,15 @@ const SILENCE_RESEARCH_ZH={
 };
 function behindSilence(id){
  const original=SILENCE_RESEARCH[id];if(!original)return '';
- const item=museumLang==='en'?original:{...original,...SILENCE_RESEARCH_ZH[id]};
+ const translated=SILENCE_RESEARCH_ZH[id];
+ const item=museumLang==='en'||!translated?original:{
+  ...original,
+  ...Object.fromEntries(Object.entries(translated).map(([key,value])=>[
+   key,
+   key==='reasons'?value.map(pair=>pair.map(museumConvert)):
+   typeof value==='string'?museumConvert(value):value
+  ]))
+ };
  return `<section class="behind-silence" id="behind-the-silence" aria-labelledby="behind-title">
   <div class="behind-heading"><span class="eyebrow">BEHIND THE SILENCE</span><h2 id="behind-title">${esc(item.title)}</h2>
     <p class="muted">A closer look at the reasons people sometimes choose silence, through published research.</p></div>
