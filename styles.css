@@ -1703,3 +1703,37 @@ body::before{display:none!important}
 .history-end{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
 @media(max-width:850px){.history-grid{grid-template-columns:1fr}.history-card{min-height:190px;border-radius:8px 28px 8px 8px}.history-symbol{margin:16px 0 4px}.history-reading{grid-template-columns:1fr}.history-reading-head{padding:31px}.history-reading-head h2{margin-top:16px}.history-text{padding:28px}}
 @media(prefers-reduced-motion:reduce){.history-card{transition:none}.history-card:hover{transform:none}}
+
+/* Historical long-form reading experience: archival typography, readable prose, differentiated evidence. */
+.history-longform{border:1px solid rgba(215,179,114,.42);border-radius:12px;overflow:hidden;box-shadow:0 22px 70px rgba(0,0,0,.3);margin:40px auto 15px}
+.history-longform-header{padding:clamp(40px,6vw,92px) clamp(22px,7vw,100px);background:linear-gradient(170deg,rgba(4,21,41,.68),rgba(2,13,28,.94)),url("assets/museum-v26-ornament.webp") center/cover;text-align:center;color:#eac992}
+.history-longform-header h2{font:normal clamp(2.1rem,5vw,4.3rem)/1.12 Georgia,'Times New Roman',serif;max-width:900px;margin:22px auto 15px;color:#f6e3bc}
+.history-longform-subtitle{font:italic clamp(1.05rem,1.8vw,1.35rem)/1.6 Georgia,'Times New Roman',serif;color:#e5c994}
+.history-longform-meta{font-size:.81rem;color:#d7d1c8;letter-spacing:.06em;margin-top:20px}
+.history-toc{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:38px}
+.history-toc button{border:1px solid rgba(231,193,121,.45);padding:10px 15px;border-radius:3px;background:rgba(6,25,43,.65);color:#f0dbb3;font:inherit;font-size:.83rem;cursor:pointer;transition:background .18s}
+.history-toc button:hover,.history-toc button:focus-visible{background:rgba(100,73,35,.45);outline:2px solid #dfc08d;outline-offset:2px}
+.history-story-section{padding:clamp(30px,5vw,75px) clamp(20px,6vw,85px) clamp(50px,7vw,100px);background:linear-gradient(rgba(245,232,206,.94),rgba(239,223,193,.96)),url("assets/museum-v26-paper.webp") center/650px auto;color:#30291f}
+.history-section-title{text-align:center;margin:0 auto 45px;max-width:780px}
+.history-section-title span{font-size:.72rem;letter-spacing:.18em;font-weight:700;color:inherit;opacity:.75}
+.history-section-title h2{font:normal clamp(1.8rem,3.7vw,3rem)/1.25 Georgia,'Times New Roman',serif;margin:15px 0;color:inherit}
+.history-section-title p{font:italic 1.03rem/1.7 Georgia,'Times New Roman',serif}
+.history-prose{max-width:760px;margin:0 auto;font:normal clamp(1.05rem,1.18vw,1.16rem)/2 Georgia,'Times New Roman',serif}
+.history-prose-paragraph{margin:0 0 1.7em;text-indent:1.6em}
+.history-prose-paragraph:first-child{text-indent:0}
+.history-prose-paragraph:first-child::first-letter{float:left;font-size:3.9em;line-height:.78;margin:9px 10px 0 0;color:#876b3e}
+.history-analysis-section{padding:clamp(40px,6vw,80px) clamp(22px,7vw,100px);background:linear-gradient(170deg,rgba(7,27,49,.90),rgba(4,18,35,.96)),url("assets/museum-v26-overall.webp") center/cover;color:#eddfc8}
+.history-analysis-section .history-section-title{color:#e7c78e}
+.history-analysis-point{display:grid;grid-template-columns:44px minmax(0,1fr);max-width:790px;gap:18px;margin:0 auto;padding:26px 0;border-top:1px solid rgba(233,204,153,.26)}
+.history-analysis-index{font:italic 1.35rem Georgia,serif;color:#d1a963}
+.history-analysis-point h3{font:normal clamp(1.2rem,2vw,1.5rem) Georgia,serif;color:#f4ddb1;margin:0 0 11px}
+.history-analysis-point p{color:#e4ddd4;line-height:1.9;font-size:1rem;margin:0}
+.history-final-question{max-width:790px;margin:55px auto 0;padding:27px 35px;border-left:3px solid #d7b06b;background:rgba(255,255,255,.06);color:#f4dfb8;font:italic clamp(1.24rem,2.5vw,1.65rem)/1.7 Georgia,serif}
+.history-evidence-section{padding:clamp(32px,5vw,72px) clamp(22px,7vw,100px);background:linear-gradient(rgba(236,225,206,.96),rgba(226,209,178,.96)),url("assets/museum-v26-paper.webp") center/650px auto;color:#31291f}
+.history-evidence-section>p,.history-evidence-section ol{max-width:790px;margin:15px auto;line-height:1.9}
+.history-evidence-section ol{padding-left:25px}
+.history-evidence-section li{padding:7px 0;overflow-wrap:anywhere}
+.history-evidence-section a{color:#644622;text-decoration:underline;text-underline-offset:3px}
+.history-evidence-warning{font-size:.88rem;border-top:1px solid #baa785;padding-top:16px;opacity:.83}
+@media(max-width:650px){.history-grid{gap:12px}.history-longform-header{padding:40px 20px}.history-toc{display:grid;grid-template-columns:1fr}.history-story-section{padding:35px 22px 55px}.history-prose{line-height:1.85}.history-analysis-section{padding:40px 22px}.history-analysis-point{grid-template-columns:30px minmax(0,1fr);gap:9px}.history-final-question{padding:20px}.history-evidence-section{padding:40px 23px}}
+@media(prefers-reduced-motion:reduce){.history-toc button{transition:none}}
