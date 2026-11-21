@@ -36,7 +36,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Information could also be uneven. Colonial administrative records travelled through literate bureaucracies, while ordinary farmers often encountered obligations through local authorities and spoken instructions. The ability to read did not itself provide relief from a tax or labour demand. A person needed access to a recognised procedure, resources to make a case and some expectation that the decision-maker could change the result. Knowing that the requirement was burdensome and having the means to challenge it were not the same achievement.",
     "Researchers have examined the demographic consequences of compulsory agricultural labour, including the relationship between forced cultivation and mortality in particular places. Local ecology, crop mix and implementation shaped outcomes. Nevertheless, the evidence demonstrates that the demands of colonial export production were not merely abstract accounting entries. They entered household labour, food production and the conditions under which people lived and died.",
     "Records made by Dutch officials are stronger at showing quotas, crops and revenue than at preserving the private reflections of a farmer who carried out an order. The absence of a written petition does not show approval. Nor can a researcher assume that because no uprising is recorded in a particular district, each person was privately waiting to rebel. A village might negotiate, avoid attention, comply under threat, or find limited ways to protect food production. Specific motives require specific testimony; where that evidence is unavailable, the constraints can still be described accurately.",
-    "For years, farmers continued to plant, harvest and meet obligations while the colonial administration drew revenue from their work. A family could remain within an exploitative system because the land, official authority, village relationships and need to eat all existed in the same place. Modern scholarship helps reconstruct that structure, even when individual voices are absent."
+    "The Dutch Cultivation System directed Javanese land and labour toward export crops from the 1830s. Local officials and village leaders administered obligations that differed by district and agricultural conditions. Colonial records document production and revenue, while economic and demographic studies examine effects upon household labour and food cultivation."
   ],
   "zh": [
     "十九世纪的爪哇，农民种出的作物，有相当一部分并不是为自己的家庭准备的。十九世纪三十年代开始，荷兰殖民政府推行强制种植制度，要求村庄提供土地和劳动，生产咖啡、糖等出口作物。这些作物最终进入远方的贸易和财政体系，农民却仍要在同一片土地上解决自己一家人的吃饭问题。对于他们来说，问题往往不是喜欢不喜欢种植，而是怎样在完成规定的同时活下去。",
@@ -50,7 +50,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "教育与消息渠道会影响人们知道哪些选择，却不一定改变他们面对的权力。殖民官员依靠文字和统计管理产量，农民则可能更多通过地方规定和口头通知接触任务。就算有人读得懂命令，也未必有钱、有人脉，或者有资格要求修改规定。知识能够让人知道发生了什么，不能保证制定规则的人愿意听取他的意见。",
     "学者还研究了强制劳动与部分地区人口死亡状况之间的关系。但不同地区的结果并不一致，研究也不能替每一个村庄确认相同的损害。",
     "许多保存下来的记录由殖民官员制作，详细写着作物、产量、土地和收入，却很少留下那些照常完成劳役的农民当天在想什么。没有投诉记录，不等于他们赞同征收；同样，也不能认为每一个人都曾打算组织反抗。有人可能尝试协商，有人可能避免冲突，有人只能先保证家里的粮食。",
-    "土地、家人、地方权力和生计都在同一个地方，一个人很难只把不满意的那部分生活单独拿走。"
+    "十九世纪三十年代开始，荷兰殖民政府要求爪哇部分村庄提供土地与劳动力生产出口作物。地方官员和村庄首领参与执行征收任务，实际负担因地区、农作物与耕作条件而不同。殖民档案详细记录产量与财政收入，农业经济史研究则进一步分析了这种制度对家庭劳动和粮食生产的影响。"
   ],
   "mechanisms": [
     "colonial labour obligations",
