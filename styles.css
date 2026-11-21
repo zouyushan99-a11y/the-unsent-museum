@@ -1911,3 +1911,7 @@ body::before{display:none!important}
 .museum-portal-history{border:1px solid rgba(218,177,104,.52);background:linear-gradient(155deg,rgba(10,34,58,.83),rgba(7,24,43,.94))!important;box-shadow:0 12px 36px rgba(1,9,23,.35)}
 .museum-portal-history .museum-portal-icon{color:#dfb96e!important;font:inherit;line-height:normal}
 .museum-portal-history .museum-portal-heading{color:#f5d6a1}
+
+/* Interpretation is evidence-led prose; the reflective question is a separate reading pause. */
+.history-reflection-kicker{max-width:790px;margin:58px auto 0;color:#dfbe83;font:600 .71rem/1.5 system-ui,-apple-system,sans-serif;letter-spacing:.19em;text-transform:uppercase;padding-top:26px;border-top:1px solid rgba(227,195,139,.26)}
+.history-reflection-kicker+.history-final-question{margin-top:18px}
