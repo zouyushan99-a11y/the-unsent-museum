@@ -5,9 +5,11 @@ An interactive literary museum about the words people choose not to say.
 ## Live site
 https://zouyushan99-a11y.github.io/the-unsent-museum/
 
-## Current implementation (v27 visual release)
+## Current implementation (historical archive expansion)
 - The homepage retains a painted museum foyer with individually linked visual assets, including a high-resolution foyer image and separate ornamental, room, and paper textures.
-- The interface source is English-only.
+- The interactive interface supports English, Simplified Chinese, and Traditional Chinese. Its language toggle keeps museum-owned text and historical reading editions separate; original visitor-submitted stories are preserved as authored.
+- The historical wing now includes 69 indexed figures and cases: 36 earlier records and 33 newly curated cases. The 33 new English stories each exceed 1,000 words; all 33 new Chinese stories exceed 1,000 Han characters. Four previously incomplete Chinese reading editions are now populated.
+- Archive entries distinguish deliberate withholding, protective secrecy and expression suppressed by external powers, and offer source links and explicit evidence limits.
 - Visitors can explore galleries, make decisions, view choice/reason starfields, and browse story collections.
 - The frontend contains Supabase integration for shared star data, public story reads, optional email sign-in and author-owned story workflows.
 - There is a read-only diagnostic screen at `#/diagnostics` that checks public RPC responses. A code-level review does not guarantee that the database is configured or accessible to every visitor.
@@ -29,5 +31,5 @@ https://zouyushan99-a11y.github.io/the-unsent-museum/
 - Review public-facing privacy disclosures against the real deployed database configuration and storage behavior.
 - Publishing, moderation and database-dependent features may be unavailable until the corresponding SQL and access controls are correctly configured.
 
-## Content work remaining
-Replace illustrative accounts with verified or ethically gathered stories, check permission and anonymity, and complete course-related source citations, bibliography, and curator's reflective statement.
+## Content and verification work remaining
+Review every historical exhibit against the linked primary or institutional sources, especially where a curatorial interpretation extends beyond documented actions. Verify all language routes in a live browser, including dynamically updated labels and links. Check permission and anonymity of visitor-submitted stories, and complete course-related bibliography and the curator's reflective statement. The current scripts have passed structural and text-count checks, but this does not guarantee browser compatibility or database availability.
