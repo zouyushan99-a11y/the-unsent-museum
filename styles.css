@@ -299,3 +299,18 @@ line-height:1.42;overflow-wrap:anywhere;
 .story-category-editor label{display:block;margin-bottom:7px;font-size:.84rem;color:#efd9a2}
 .story-category-editor p{margin:8px 0 0}
 .story-category-editor .field{max-width:520px}
+
+/* Author-controlled public storytelling: distinct from private autosaved drafts. */
+.publication-section{margin:32px 0 20px;padding:clamp(18px,3vw,26px);border:1px solid rgba(235,205,145,.38);border-radius:16px;background:linear-gradient(130deg,rgba(235,205,145,.055),rgba(68,100,165,.09))}
+.publication-section h3{font-size:1.7rem;margin:11px 0 10px}
+.publication-section .choice-option{margin:10px 0}
+.publication-section .choice-option input[type="checkbox"],.publication-section .choice-option input[type="radio"]{flex:0 0 auto}
+.publication-section .choice-option span{line-height:1.62}
+.publication-section .actions{gap:10px;flex-wrap:wrap}
+.publication-section .actions .btn{font-size:.85rem}
+#display-name-row[hidden]{display:none!important}
+#edit-story-feedback:empty{display:none}
+.story-editor-panel{max-width:840px}
+.story-editor-panel textarea{resize:vertical}
+.draft-save-status{color:#d2c29d;margin:10px 0}
+@media(max-width:650px){.publication-section{padding:16px 14px}.publication-section .btn{width:100%;text-align:center}.publication-section h3{font-size:1.42rem}}
