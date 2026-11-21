@@ -301,12 +301,12 @@ if(!authClient){authLoading=false;return}
 authClient.auth.onAuthStateChange((event,session)=>{
 const next=session?.user||null;
 if(event==='PASSWORD_RECOVERY'){authRecovery=true;authMessage='Recovery link confirmed. Set your new password below.';if(location.hash!=='#/account')location.hash='#/account';}
-if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;refreshStoryCloud();if($('#app'))render(false)}
+if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;setTimeout(()=>refreshStoryCloud(),0);if($('#app'))render(false)}
 });
 try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}
 catch(e){authMessage='Could not restore login: '+String(e.message||e)}
 authLoading=false;
-refreshStoryCloud();
+setTimeout(()=>refreshStoryCloud(),0);
 if(authRecovery&&authUser&&location.hash!=='#/account')location.hash='#/account';
 if($('#app'))render(false);
 }
@@ -667,14 +667,14 @@ function bindStoryEditor(){
   st.displayName=st.publicationMode==='named'?st.displayName.trim():'';
   st.publicConsent=true;st.status='published';
   const button=$('#publish-story');button.disabled=true;
-  try{await syncCloudStory(st);await loadPublicStories();location.hash='#/my-stories';render(true)}
+  try{await syncCloudStory(st);await loadPublicStories();if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id))){throw new Error('The story was saved, but the public archive did not confirm its visibility. Check the Story Cloud Diagnostics page before retrying.')}location.hash='#/my-stories';render(true)}
   catch(e){feedback('Could not publish; your edits remain on this device. '+String(e.message||e));button.disabled=false}
  };
  const withdraw=$('#unpublish-story');
  if(withdraw)withdraw.onclick=async()=>{
   if(!confirm('Withdraw this story from the public archive?'))return;
   const st=read();st.status='private-draft';st.publicConsent=false;
-  const done=await saveNow(st);if(!done){addLocalStory({...original,status:'published'});feedback('Withdrawal did not reach the cloud. Your published story is still visible.');return}await loadPublicStories();
+  const done=await saveNow(st);if(!done){addLocalStory({...original,status:'published'});feedback('Withdrawal did not reach the cloud. Your published story is still visible.');return}await loadPublicStories();if(storyCloudStatus!=='ready'||publicStories.some(row=>String(row.id)===String(st.id))){feedback('Cloud save completed, but the public archive has not confirmed withdrawal yet. Please retry or contact the curator.');return}
   location.hash='#/my-stories';render(true);
  };
 }
