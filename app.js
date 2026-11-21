@@ -804,6 +804,11 @@ async function runMuseumDiagnostics(){
   if(!Array.isArray(data))throw Error('Unexpected data shape');
   return data.length+' shared answers returned';
  });
+ await check('Star identity visibility (public RPC)',async()=>{
+  const {data,error}=await authClient.rpc('get_museum_star_attributions');
+  if(error)throw error;
+  return (Array.isArray(data)?data.length:0)+' stars with opted-in public names';
+ });
  await check('Published story archive (public RPC)',async()=>{
   const {data,error}=await authClient.rpc('get_public_museum_stories');if(error)throw error;
   if(!Array.isArray(data))throw Error('Unexpected data shape');
@@ -814,6 +819,11 @@ async function runMuseumDiagnostics(){
   if(error)throw error;return (data||[]).length+' own stories accessible';
  });
  else rows.push({label:'Your private story cloud',ok:null,info:'Not checked — sign in to test your own private records.'});
+ if(authUser)await check('Curator authorization (server RPC)',async()=>{
+  const {data,error}=await authClient.rpc('museum_is_curator');
+  if(error)throw error;
+  return data===true?'This account has curator permissions.':'This account is not a curator.';
+ });
  container.innerHTML=rows.map(row=>'<div class="system-check-line"><strong class="'+(row.ok===true?'check-ok':row.ok===false?'check-fail':'')+'">'+
  (row.ok===true?'✓':row.ok===false?'!':'–')+' '+esc(row.label)+'</strong><p>'+esc(row.info)+'</p></div>').join('');
 }
