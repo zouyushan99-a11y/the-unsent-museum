@@ -589,7 +589,7 @@ function privateStories(){
  const stories=db.stories.filter(st=>!st.ownerId||st.ownerId===authUser?.id).slice().sort((a,b)=>(b.updatedAt||b.time||0)-(a.updatedAt||a.time||0));
  const cards=stories.map(st=>{
   const name=esc(st.title||'Untitled draft'),id=esc(st.id),gallery=esc(scenario(st.scenario)?.title||'Others');
-  return '<article class="archive-item"><div class="eyebrow">'+gallery+' · '+(st.status==='published'?'Public story':'Private draft')+'</div><h3 class="serif">'+name+'</h3><p class="archive-prose">'+esc(st.story||'Continue writing…')+'</p>'+
+  return '<article class="archive-item"><div class="eyebrow">'+gallery+' · '+(st.status==='published'?(storyCloudStatus==='ready'&&publicStories.some(row=>String(row.id)===String(st.id))?'Public story · Verified':'Publication needs verification'):'Private draft')+'</div><h3 class="serif">'+name+'</h3><p class="archive-prose">'+esc(st.story||'Continue writing…')+'</p>'+
    '<div class="actions"><a class="btn btn-outline" href="#/edit-story/'+encodeURIComponent(st.id)+'">Continue / Edit ↗</a><button type="button" class="btn btn-outline delete-story" data-id="'+id+'">Delete story</button></div>'+
    '<p class="small muted">'+(st.synced?'Cloud backup confirmed':'Saved on this device · cloud backup not confirmed')+'</p></article>';
  }).join('');
