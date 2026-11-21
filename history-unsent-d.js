@@ -1,4 +1,4 @@
-/* The Unsent Museum — selected anonymity and conscience records II */
+/* Research-grounded historical entries, with provenance-labelled archival imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "jane-austen": {
     "title": "A Novel by a Lady",
@@ -67,7 +67,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.bl.uk/stories/blogs/posts/jane-austen-names-and-notability"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/9/96/SenseAndSensibilityTitlePage.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:SenseAndSensibilityTitlePage.jpg",
+        "kind": "Original book-title page",
+        "caption": "Title page of the 1811 first edition of Sense and Sensibility, showing 'By a Lady' instead of Jane Austen's name.",
+        "credit": "Lilly Library, Indiana University / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "george-eliot": {
     "title": "The Name Chosen for the Novels",
@@ -136,7 +145,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.britannica.com/biography/George-Eliot"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/9/9c/George_Eliot_by_Samuel_Laurence.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:George_Eliot_by_Samuel_Laurence.jpg",
+        "kind": "Historical painted portrait",
+        "caption": "George Eliot (Mary Ann Evans), painted by Samuel Laurence, circa 1860; a period portrait, not a photograph.",
+        "credit": "Samuel Laurence / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "louisa-may-alcott": {
     "title": "A Second Name for Darker Stories",
@@ -205,7 +223,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.tandfonline.com/doi/abs/10.1300/J269v04n03_03"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Louisa_May_Alcott,_c._1870_-_Warren%27s_Portraits,_Boston.jpg",
+        "kind": "Historical photograph",
+        "caption": "Louisa May Alcott, around 1870, in an original nineteenth-century portrait photograph; not an image of her writing as A. M. Barnard.",
+        "credit": "G. K. Warren / Library of Congress / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "thomas-more": {
     "title": "A Silence Before the Crown",
@@ -274,6 +301,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.parliament.uk/about/living-heritage/transformingsociety/private-lives/religion/overview/reformation/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Sir_Thomas_More%2C_by_Hans_Holbein_the_Younger.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Sir_Thomas_More,_by_Hans_Holbein_the_Younger.jpg",
+        "kind": "Historical painted portrait",
+        "caption": "Sir Thomas More, painted by Hans Holbein the Younger, circa 1527. Historical portrait, not a trial photograph.",
+        "credit": "Hans Holbein the Younger / Frick Collection / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   }
 });
