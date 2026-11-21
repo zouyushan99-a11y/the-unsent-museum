@@ -37,19 +37,19 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "The presence of reform debates in nineteenth-century India is not the natural ending for this particular room. Some campaigns sought to revise the law; others defended established customs, and individual circumstances continued to differ after legal measures changed. The number of public legal cases is not a census of those who quietly endured, any more than a lack of litigation proves agreement with family decisions.",
     "Colonial records are also selective witnesses. They tend to foreground people whose disputes reached administrative institutions, especially disputes substantial enough to leave traces on paper. A woman who settled a disagreement privately, postponed it, or had no safe means to pursue it may have left little documentation. The silence is most visible as an absence produced by unequal access to the means of formal argument.",
     "In North India, colonial reforms combined administrative techniques with European ideas, locally influential religious interpretations and existing hierarchies of caste and property. More elaborate courts did not automatically secure more freedom for every woman. Institutions could formalise disadvantages as well as resolve disputes.",
-    "Here the object is neither a burned letter nor the portrait of a heroic protester. It is the set of social and legal relations surrounding an ordinary widow's continued life."
+    "Widowhood in North India differed by caste, locality, family property and household ties. Some inheritance and residence disputes reached colonial courts; others were settled outside formal litigation. Colonial interpretations of Hindu law interacted with local custom and kinship arrangements in defining women's recorded legal positions."
   ],
   "zh": [
     "丈夫去世了，留下来的女人却未必能够重新决定自己的生活。在十八世纪末到十九世纪的印度北部，一些女性从成为寡妇的那一天起，就要面对另一套关于衣着、生活、婚姻和财产的期待。她仍然是一个人，仍然需要吃饭、生活，也可能有自己的愿望；只是这些愿望能否实现，往往要先经过亲属、社群和法律的认可。",
     "不同地区、种姓、家庭和年代的习惯并不一样。在某些高种姓印度教社群中，再婚受到严格限制；另一些群体则有不同的传统。有些寡妇能够管理财产，有些甚至走进法庭为自己争取权益。",
     "宗教是其中的一部分，却不是全部。某些宗教法律与家庭伦理规定了寡妇应有的身份和责任，地方习俗和亲属关系又决定这些规定如何进入日常。后来英国殖民政府试图把特定的宗教文本解释纳入法律体系，使一些原本能够在家庭或地方协商的关系，变成由官方规定和法庭认定的身份。于是，压迫并不只是古老传统的延续，它也可能在新的行政制度里获得更稳定的形式。",
-    "研究印度贝拿勒斯地区的历史学者发现，殖民时期的土地与司法改革影响了女性取得和控制财产的机会。有寡妇试图争取继承权，也有人通过熟悉的关系网络处理纠纷。但对另一些没有财力、没有支持者的女性来说，走进法庭未必是现实的选项。她也许知道自己受到了不公正对待，却需要先想清楚：若与夫家争执，今后还住在哪里？孩子由谁照顾？谁会愿意帮助自己？",
+    "研究印度贝拿勒斯地区的历史学者发现，殖民时期的土地与司法改革影响了女性取得和控制财产的机会。有寡妇试图争取继承权，也有人通过熟悉的关系网络处理纠纷。但对另一些没有财力、没有支持者的女性来说，走进法庭未必是现实的选项。",
     "当时社会对于『守节』『体面』和家庭荣誉的看法，也可能使反对变得困难。一个女人想再婚，可能被解释成不守本分；她想争取财产，也可能被亲属指责贪心。最令人窒息的地方，有时不是有人明确地禁止，而是一个人早已知道，说出愿望之后会听见什么评价。为了继续生活在熟悉的关系里，她也许只能把愿望收回去。",
     "可我也不愿简单说她们都是被宗教洗脑的人。一个人可能真诚地重视家庭责任与宗教信仰，也可能同时对某些具体要求感到痛苦。",
-    "教育能够改变些什么？识字可能帮助一个人看懂契约、理解继承规则，知道哪些权利正在被讨论。但她即使读得懂文件，也未必有钱去请律师；她即使明白自己的处境，也未必敢让家里的人知道她想提出要求。知识与行动之间，还有经济、身份和权力的距离。",
+    "识字可能帮助一个人看懂契约、理解继承规则，知道哪些权利正在被讨论。但她即使读得懂文件，也未必有钱去请律师；她即使明白自己的处境，也未必敢让家里的人知道她想提出要求。知识与行动之间，还有经济、身份和权力的距离。",
     "历史上确实发生过改变法律的行动，但改变法律之后，有些女人仍然要在原有的亲属关系里生活。对她们而言，人生没有从一个明确的日期开始变得简单。",
     "档案不会回答所有问题。能够留下文字的，往往是进入诉讼或行政记录的纠纷。",
-    "把这一切归结为印度当时『不够文明』，同样轻率。殖民政府拥有法院、法律文书与复杂的行政制度，却未必让所有寡妇得到更多自由。现代化的治理也可能把既有不平等写进更难改变的规则。宗教、习俗、土地财产、殖民法律、家庭依赖，共同塑造了她们可以行动的范围。一个人的沉默，就发生在这些关系相互交错的地方。"
+    "十八世纪末至十九世纪印度北部的寡妇，因地区、种姓、财产和亲属关系而面对不同的婚姻及继承安排。部分争议进入殖民法院，留下财产诉讼记录；另一些家庭决定则未形成正式案件。殖民机构对印度教法律的解释与地方习惯共同影响了这些女性的法律地位。"
   ],
   "mechanisms": [
     "kinship dependence",
