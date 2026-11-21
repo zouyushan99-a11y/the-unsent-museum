@@ -46,5 +46,6 @@
 "Cloud backup confirmed":"云端备份已确认",
 "Saved on this device · cloud backup not confirmed":"已保存在此设备 · 云端备份尚未确认",
 "Sign in to sync drafts across devices.":"登录后可在不同设备间同步草稿。",
-  "Delete my published story": "删除我发布的故事"
+  "Delete my published story": "删除我发布的故事",
+  "Why this happened · A curator’s reading · Three questions to consider": "为什么如此选择 · 策展人的分析 · 留给读者的三个问题"
 });})();
