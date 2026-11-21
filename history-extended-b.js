@@ -1,4 +1,4 @@
-/* The Unsent Museum — research-grounded longform biographies and documentary images. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "emily-dickinson": {
     "title": "The Poems That Did Not Go to Press",
@@ -74,7 +74,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Emily Dickinson Museum · daguerreotype (image reproduced by Hyperallergic)",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Privacy",
+      "Publication",
+      "Literary form"
+    ],
+    "moment": {
+      "addressed": "Private correspondents and a potential public readership",
+      "intended": "To write and sometimes share poems.",
+      "withheld": "Most poems did not enter public print in her lifetime, although some circulated privately.",
+      "why": "No single established explanation: personal circulation, aesthetic preferences, editorial changes and circumstance are all relevant.",
+      "certainty": "Publication pattern established; motive unresolved. Do not equate unpublished with never expressed."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.emilydickinsonmuseum.org/emily-dickinson/poetry/the-poet-at-work/the-publication-question/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "alan-turing": {
     "title": "A State Secret and a Private Life",
@@ -149,7 +167,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Elliott & Fry portrait · reproduced by Art Blart",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Privacy",
+      "Identity",
+      "Law"
+    ],
+    "moment": {
+      "addressed": "Selected friends, intelligence authorities and public readers",
+      "intended": "To work in classified codebreaking and live with private relationships.",
+      "withheld": "Wartime cryptographic work was secret; intimate life was subject to discriminatory criminal law.",
+      "why": "Military secrecy and criminalization were different legal structures; Turing was not always personally secretive.",
+      "certainty": "Both systems documented; do not presume lifelong self-silencing."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.gchq.gov.uk/information/alan-turing",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "claudette-colvin": {
     "title": "Nine Months Before the Famous Photograph",
@@ -238,6 +274,24 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Wikimedia Commons · identified as 1953 portrait",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Historical memory",
+      "Civil rights",
+      "Recognition"
+    ],
+    "moment": {
+      "addressed": "Police, courts and the wider civil-rights public",
+      "intended": "To challenge an unjust segregation rule.",
+      "withheld": "She did not withhold her refusal or testimony; later popular narratives gave other events greater attention.",
+      "why": "Movement strategy, legal context and subsequent historical storytelling shaped uneven recognition.",
+      "certainty": "Documented public action; the silence concerns collective remembrance rather than a voluntary decision."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://docsteach.org/document/fingerprints-colvin/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 });
