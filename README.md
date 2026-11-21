@@ -54,3 +54,10 @@ The five **publicly indexed** Collective Archives now focus on everyday life und
 Each new longform essay has >1,000 English words and >1,000 Chinese Han characters, and names its historical setting, enforced constraints, cultural/religious and economic conditions, and evidence limitations. Particularly revealing records include anonymous 1889 letters by British servants and cautious later interviews with formerly enslaved people. The older protest-centred group records are no longer in the visible selection; the 69 Personal Archives remain unchanged.
 
 Method: **nonparticipation in overt rebellion does not prove acquiescence, secretly wished-for rebellion, or an absence of quieter forms of agency**. Do not invent collective first-person statements. When no individual's thoughts survive, state structural risk as an explanation to investigate, not as a documented motive.
+
+## November 2026: Ten collective archives
+The independent `#/collectives` wing now presents **10** bilingual historically grounded collective dossiers: British domestic servants, North Indian widows, Edo Japan status communities, antebellum enslaved Black households, Joseon Korean widows, rural Chinese footbinding, Javanese farmers under Dutch forced cultivation, post-emancipation Black American sharecroppers, US industrial child workers, and Victorian British recipients of poor relief.
+
+Each exhibit is a **social-historical account**, not a fictional composite biography or a story of a successful uprising. Each has over 1,000 English words and 1,000 Chinese characters, plus a separate analytical section (5–10 factors with specific historical context) and three audience reflection questions, followed by evidence limits and external historical sources. No individual's silent thoughts are invented.
+
+The earlier four protest-centred group archive exhibits (`enslaved-literacy`, `married-women-property`, `matchgirls-1888`, `south-africa-pass-women`) were removed from the live catalogue and their now-unused source modules deleted. Personal Archives (69 historical cases) remain separate and unchanged.
