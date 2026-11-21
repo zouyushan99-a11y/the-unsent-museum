@@ -233,10 +233,16 @@ async function submitSharedAnswer(){
  if(!allowed){submitError='One of your selected reasons is invalid.';render(false);return}
  submitBusy=true;submitError='';const next=$('#next');if(next){next.disabled=true;next.textContent='Saving your star…'}
  try{
-   const {data:saved,error}=await authClient.from('museum_answers').upsert({
-     user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],star_visibility:flow.starMode,
-     star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):''
-   },{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single();
+   const payload={user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],
+      star_visibility:flow.starMode,star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):''};
+   let {data:saved,error}=await authClient.from('museum_answers').upsert(payload,{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single();
+   // Anonymous contributions remain compatible with the existing star database
+   // until the optional star-attribution migration is activated.
+   if(error&&flow.starMode==='anonymous'&&/star_visibility|star_display_name|schema cache|column/i.test(error.message||'')){
+     ({data:saved,error}=await authClient.from('museum_answers').upsert({
+       user_id:payload.user_id,scenario:payload.scenario,decision:payload.decision,reasons:payload.reasons
+     },{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single());
+   }
    if(error)throw error;
    if(!saved?.id)throw new Error('The database did not confirm a saved answer.');
    
