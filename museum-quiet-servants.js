@@ -37,20 +37,20 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Nor was religion a single explanation for silence. The published letters contain differing Christian affiliations and references to religious intermediaries who helped grievances reach an editor. Faith could be used to insist upon duty, but religious networks also offered a route for complaint. A useful account asks which institution interpreted the moral rule, who had authority to enforce it, and whether the servant had an alternative community willing to listen. Reducing the subject to 'Victorian religion' would conceal the very contradictions that the evidence exposes.",
     "Education made some differences visible. Reading an advertisement, writing a letter, recognising the value of a testimonial, and understanding an employer's expectations could change a worker's options. But literacy was not the same as power. A servant could write clearly and still fear that the sentence would cost her position. The 1889 collection survived in part because editors, investigators and intermediaries created a channel unavailable to every servant at every moment.",
     "These letters also require careful reading. They were selected for publication by investigators who had their own commitments. Not every servant wrote, not every letter survived, and not every household resembled the worst examples described. It may be evidence of resistance shaped by a need to survive its consequences.",
-    "The anonymous signature is enough. It means that getting her words into public life required keeping one essential thing out of sight: the identity on which her livelihood depended."
+    "Letters from London domestic servants published in 1889 document wages, long working hours, illness and restrictions on private life. Some requested anonymity because disclosure could endanger their employment. Live-in service placed working arrangements, accommodation and reputational assessments under the authority of the employing household."
   ],
   "zh": [
-    "1889年，一些在伦敦做女佣的女人，终于把自己的不满写在了纸上。她们讲每天做不完的活，讲微薄的工资，讲身体病痛，也讲没有多少属于自己的时间。可是，其中有人又恳求收信的人：千万别把我的名字写出来。她不是不知道自己受了委屈。相反，正因为知道，才会写下这封信。只是她还需要那份工作，还需要一处能够睡觉的地方。她想让别人知道发生了什么，却不敢让雇主知道，说话的人是她。",
+    "1889年刊出的伦敦女佣来信，记载了工作时间、工资、身体不适和私人活动受到限制等情况。有写信者请求调查者不要公开姓名，并说明身份暴露可能导致被雇主解雇。调查者与编辑公开刊登了部分来信，匿名要求也因此保存下来。",
     "十九世纪的英国，家庭佣工是许多女性可以找到的重要工作。对于从乡下进城的年轻女孩，一户人家可能同时意味着工资、饭食和住处。她每天在那里工作，晚上也在那里睡觉。雇主不只决定她做什么，还可能决定她什么时候休息、能不能出去见朋友、是否有机会照顾自己的身体。一个人对工作的不满，因而很难与她整个生活分开。",
     "有位女佣在来信中回忆，自己曾被许诺会像家庭成员一样受到照顾。等真正到了伦敦，等待她的却是漫长的工作时间和极低的年薪。还有人提到，她所属的教派与主人家不同，却依然被要求按照雇主的安排参与宗教活动。这里的宗教并不是一句『当时的人都相信什么』便能解释的。",
-    "可是，假如她今天与雇主大吵一架，明天又能去哪儿呢？离开意味着另找工作，可能还意味着失去住处。下一户人家会不会向前任雇主询问她的品行？会不会觉得一个曾经投诉过的人不好管教？她必须预先承担那句话之后的一连串事情。",
+    "离开意味着另找工作，可能还意味着失去住处。她必须预先承担那句话之后的一连串事情。",
     "这些女佣之间也未必有机会互相认识。一个工厂里的人可以看到许多工友，而住在一户小家庭里的佣工，也许整日只有一两个同伴。即使每个人都觉得不公平，也未必知道别人是否怀着同样的想法。有时候，沉默并不是所有人的共识，而是每个人都误以为只有自己不愿继续忍受。能够相互确认、彼此支持，本身就需要一个人无法独自创造的条件。",
     "当时社会对『好女佣』有许多期待。如果雇主把一切要求都包装成对一个年轻女孩的教导，那么她想保护自己的权益时，便可能先被指责不够懂事。",
     "然而，宗教与道德并不只站在雇主那一边。1889年的信件有些就是通过关心佣工处境的宗教人士传递出去的。相同的信仰语言，可以被用来要求人服从，也可以成为帮助弱者说话的理由。因此，不能说『宗教让她们沉默』。",
     "识字同样不能自动改变处境。能够写信的人，至少多了一种表达工具；但她写得再清楚，也未必有能力承担雇主的报复。那几封进入报刊的信，并不是所有女佣的共同经历。没有这些人，纸上的话或许根本无法抵达公众面前。",
     "有人讲自己膝盖疼痛，仍然需要跪下来擦洗厨房；有人描述主人如何限制她见朋友；有人说，如果让女主人知道自己写了信，她就会被解雇。这些话没有宏大的宣言，也没有要求一群人马上走上街头。",
     "有人能够换工作，有人得到过体面的待遇，也有人留下了直接的投诉。这是建立在制度与现存书信上的解释，而不是可以替每位女佣确认的心理活动。",
-    "许多小小的决定，没有人替她们记录。她不愿让雇主发现那封信来自自己。"
+    "1889年刊出的伦敦女佣来信，记载了工资、劳动时间、身体不适和私人活动受到限制等情况。有些写信人明确要求匿名，以免被雇主认出并失去工作。住家雇佣使劳动、食宿和雇主评价集中在同一户家庭，部分女佣通过调查者与编辑才得以公开自己的经历。"
   ],
   "mechanisms": [
     "housing tied to employment",
