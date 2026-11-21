@@ -114,6 +114,7 @@
    suppressed:'在这里，我不愿把遭到阻断的表达称作“自愿沉默”。当事人已经采取的行动，与后来由法律、警察、审查机构或其他权威施加的限制，是两类应当分别归责的事实。'
   };
   const enSetting=english=>String(english||'').trim();
+  const enM=essay.moment||{};
   const enSettingText=essay.analysis?.[0]?.[1]||'The institutions and social expectations surrounding this decision shaped the available choices.';
   const enActText=essay.analysis?.[1]?.[1]||enM.intended||'The record documents an act concerning who could speak and who could listen.';
   const enWhyText=essay.analysis?.[2]?.[1]||enM.why||'The surviving record suggests multiple pressures rather than one certain personal motive.';
