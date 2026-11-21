@@ -1,4 +1,4 @@
-/* The Unsent Museum — archives of discretion and documentary erasure III */
+/* Research-grounded historical entries, with provenance-labelled archival imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "elizabeth-i": {
     "title": "The Successor She Would Not Name",
@@ -136,7 +136,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.hrp.org.uk/blog/the-revealing-tale-of-queen-victorias-early-biography/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://upload.wikimedia.org/wikipedia/commons/1/18/Queen_Victoria_in_1890.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Queen_Victoria_in_1890.jpg",
+        "kind": "Historical photograph",
+        "caption": "Queen Victoria photographed around 1890. This portrait does not depict the editing of her private journals.",
+        "credit": "Nineteenth-century photographer unknown / Wikimedia Commons",
+        "at": 0
+      }
+    ]
   },
   "thomas-hardy": {
     "title": "A Life Edited by Its Author",
