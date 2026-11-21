@@ -1503,3 +1503,160 @@ body::before{
 @media(prefers-reduced-motion:reduce){
  .museum-portal{transition:none}
 }
+
+
+/* ====================================================================
+   V26: SOURCE IMAGE ARTWORK — FOUR ORIGINAL RASTER IMAGES IN /assets.
+   These are generated painted images, not CSS-drawn substitute patterns.
+   1672px museum hero, 900px navy paper, 900px card filigree,
+   1000px archival paper. Interactive star canvas is unchanged.
+   ==================================================================== */
+:root{
+ --museum-v26-hero: url("assets/museum-v26-hero.webp");
+ --museum-v26-room: url("assets/museum-v26-overall.webp");
+ --museum-v26-ornament: url("assets/museum-v26-ornament.webp");
+ --museum-v26-paper: url("assets/museum-v26-paper.webp");
+}
+html{background:#061426}
+body{
+ background-color:#061426;
+ background-image:
+  linear-gradient(rgba(4,15,29,.48),rgba(3,12,26,.67)),
+  var(--museum-v26-room);
+ background-repeat:no-repeat,repeat;
+ background-size:cover,900px 900px;
+ background-position:center,center top;
+ background-attachment:fixed,fixed;
+}
+/* The generated painted image provides the texture and delicate ornaments. */
+body::before{display:none!important}
+#app:has(.museum-home)>.site-header{
+ background-image:linear-gradient(rgba(4,14,27,.83),rgba(5,17,32,.83)),var(--museum-v26-room);
+ background-position:center;
+ background-size:cover;
+}
+/* Home: true wide-format illustration; text/cards remain live elements. */
+.museum-home .museum-hero{
+ background-color:#071728;
+ background-image:
+  linear-gradient(180deg,rgba(3,12,27,.30),rgba(5,15,29,.13) 49%,rgba(4,13,25,.52) 100%),
+  var(--museum-v26-hero);
+ background-size:cover;
+ background-position:center,center 49%;
+ background-repeat:no-repeat;
+}
+.museum-home .museum-hero:before{
+ background-image:linear-gradient(90deg,rgba(4,15,30,.06),rgba(4,15,30,.10));
+ opacity:1;
+}
+.museum-hero-copy{text-shadow:0 4px 31px rgba(1,10,22,.70)}
+.museum-hero-copy h1{text-shadow:0 4px 25px rgba(2,12,27,.8)}
+/* Different gallery and archival surfaces have bespoke painted ornamental art. */
+.museum-portal{
+ background-color:#071d34;
+ background-image:
+  linear-gradient(180deg,rgba(4,17,36,.38),rgba(3,17,34,.80)),
+  var(--museum-v26-ornament);
+ background-size:cover;
+ background-position:center;
+ background-repeat:no-repeat;
+}
+.museum-portal:before{
+ background:none!important;
+ border:1px solid rgba(222,180,102,.57);
+}
+.museum-portal:after{display:none!important}
+.museum-portal:hover,.museum-portal:focus-visible{
+ background-image:
+  linear-gradient(180deg,rgba(7,23,42,.25),rgba(6,23,41,.70)),
+  var(--museum-v26-ornament);
+ box-shadow:0 16px 49px rgba(1,8,19,.5),inset 0 0 26px rgba(255,211,137,.09);
+}
+.cards .card,.gallery-gateways .gateway-card,
+.archive-item,.archive-preview,.reason-panel,.constellation,
+.stat,.empty-state{
+ background-color:#0a223a;
+ background-image:
+  linear-gradient(130deg,rgba(4,15,30,.87),rgba(5,20,37,.75)),
+  var(--museum-v26-ornament);
+ background-size:cover;
+ background-position:center center;
+ background-repeat:no-repeat;
+}
+.cards .card:nth-child(even){
+ background-image:
+  linear-gradient(135deg,rgba(5,18,35,.82),rgba(5,20,39,.79)),
+  var(--museum-v26-ornament);
+ background-size:cover;
+ background-position:center;
+}
+.cards .card:before,.gateway-card:before,.archive-item:before{
+ background:none!important;
+}
+.choice-panel,.auth-panel,.story-editor-panel,.publication-section,
+.story-category-editor,.story-sky-preview,.legacy-star-import{
+ background-color:#0b2036;
+ background-image:
+  linear-gradient(120deg,rgba(5,19,36,.88),rgba(7,24,44,.87)),
+  var(--museum-v26-room);
+ background-size:cover;
+ background-position:center center;
+ background-repeat:no-repeat;
+}
+.choice-panel:before{background:none!important}
+.behind-silence,.research-page .behind-silence,.diagnostic-results{
+ background-color:#0b2036;
+ background-image:
+  linear-gradient(145deg,rgba(6,22,40,.90),rgba(5,19,36,.89)),
+  var(--museum-v26-room);
+ background-position:center;
+ background-size:cover;
+ background-repeat:no-repeat;
+}
+/* The story is a tangible museum archival document, not a simulated
+   gradient or computer-drawn noise texture. */
+.story-reader{
+ background-color:#f1dfbd;
+ background-image:
+  linear-gradient(rgba(255,251,236,.18),rgba(245,228,193,.13)),
+  var(--museum-v26-paper);
+ background-size:cover,100% 100%;
+ background-repeat:no-repeat,no-repeat;
+ background-position:center;
+ border:1px solid #c7a97a;
+ color:#342a20;
+}
+.story-reader::before{color:#6e5a3f}
+.story-reader .archive-prose{
+ color:#302b25!important;
+ text-shadow:none;
+}
+.story-reader .eyebrow{color:#795a30}
+.story-reader .divider{
+ background:linear-gradient(90deg,transparent,rgba(109,82,53,.40),transparent);
+}
+/* Browser fallback for reduced-data devices: keep text readable. */
+@media(max-width:900px){
+ body{background-attachment:scroll,scroll}
+ .museum-home .museum-hero{
+  background-image:
+   linear-gradient(180deg,rgba(4,15,29,.43),rgba(5,15,27,.27) 50%,rgba(3,11,24,.73)),
+   var(--museum-v26-hero);
+  background-position:center,46% center;
+ }
+ .museum-portal{background-position:center center}
+}
+@media(max-width:700px){
+ .museum-home .museum-hero{
+  background-image:
+   linear-gradient(180deg,rgba(3,12,24,.67),rgba(4,14,27,.49) 49%,rgba(2,10,22,.83)),
+   var(--museum-v26-hero);
+  background-position:center,43% center;
+ }
+ .museum-portal{background-position:center}
+ .story-reader{background-size:cover,100% 100%}
+}
+@media(prefers-reduced-transparency:reduce){
+ .museum-portal{background-color:#0b2239}
+ .story-reader{background-color:#f3e4c9}
+}
