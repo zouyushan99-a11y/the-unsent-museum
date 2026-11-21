@@ -1,0 +1,12 @@
+/* Replace victory-centred group selection with historically sourced archives of ordinary endurance. */
+(function(){
+ const old=(window.MUSEUM_COLLECTIVES||[]).find(x=>x.id==='victorian-poor-relief');
+ const chosen=(window.MUSEUM_QUIET_EXHIBITS||[]).slice();
+ if(old)chosen.push(old);
+ const ids=new Set(chosen.map(x=>x.id));
+ if(chosen.length!==5||ids.size!==5)throw Error('Expected four ordinary-life dossiers and the poor-relief dossier.');
+ window.MUSEUM_COLLECTIVES=chosen;
+ window.MUSEUM_RESISTANCE_ANALYSIS={...(window.MUSEUM_QUIET_ANALYSES||{}),...(old?{'victorian-poor-relief':window.MUSEUM_RESISTANCE_ANALYSIS?.['victorian-poor-relief']}: {})};
+ window.MUSEUM_COLLECTIVE_AUDIT=chosen.map(x=>({id:x.id,enWords:x.en.join(' ').trim().split(/\s+/).length,zhChars:(x.zh.join('').match(/[\u3400-\u9fff]/g)||[]).length}));
+ window.MUSEUM_QUIET_AUDIT=window.MUSEUM_COLLECTIVE_AUDIT;
+})();
