@@ -185,3 +185,58 @@ window.MUSEUM_QUIET_ANALYSES={
     "zhBoundary": "美国国会图书馆明确提醒，晚年访谈受到采访环境影响。没有参加反抗，既不能证明内心认同，也不能证明某个人曾计划反抗却放弃。"
   }
 };
+/* Questions belong to each specific society; no generic audience-moralising prompts. */
+(function(){
+ const archive=window.MUSEUM_QUIET_ANALYSES||{};
+ const prompts={
+ "victorian-domestic-servants":{
+ en:[
+ "If the same household pays your wages and provides your room, when is disagreement genuinely safe?",
+ "Why might a servant dare to tell an investigator the truth, but ask her not to print the name beneath it?",
+ "Does a promise to treat someone 'like family' create security, or can it make a worker's rights harder to name?"
+ ],
+ zh:[
+ "当工资与住处都掌握在同一户人家手中，女佣究竟还有多少自由可以提出反对？",
+ "为什么有人敢于把遭遇告诉调查者，却不敢让自己的名字和这些话一起出现？",
+ "当雇主说要把佣工『当成家里人』时，这究竟是一种保障，还是让劳动关系更难被清楚讨论的说法？"
+ ]},
+ "colonial-indian-widows":{
+ en:[
+ "If refusing a family rule may endanger the relatives and resources one depends on, what does 'choice' mean in practice?",
+ "How can a religious obligation become a social requirement, and who gets to interpret it?",
+ "Does the absence of a court petition tell us anything reliable about what a widow privately wanted?"
+ ],
+ zh:[
+ "如果拒绝一项家庭规范，便可能失去赖以生活的亲属关系，那么『自由选择』究竟意味着什么？",
+ "宗教义务在什么条件下会成为不可违背的社会要求？又是谁拥有解释这些义务的权力？",
+ "如果一位寡妇没有走上法庭，我们究竟能从这种沉默中知道多少，又有什么是不能推断的？"
+ ]},
+ "edo-status-communities":{
+ en:[
+ "When a person's inherited status is treated as a public fact, to whom can that person appeal against it?",
+ "How does a boundary upheld by institutions and neighbours enter ordinary decisions before anyone issues an explicit order?",
+ "Why does the legal removal of a status category not necessarily erase the social meaning attached to it?"
+ ],
+ zh:[
+ "当一个人的出身被社会当成早已确定的事实，他要向谁说明这份分类本身并不公平？",
+ "一种同时存在于规定和日常习惯中的界线，怎样让人还未遭到拒绝，便已经主动停下脚步？",
+ "如果身份规定已经被废除，为什么别人对出身的看法仍可能继续限制一个人的生活？"
+ ]},
+ "enslaved-households-survival":{
+ en:[
+ "Can continued work under the threat of punishment be mistaken for willing agreement?",
+ "How could concern for children or a partner change the cost of an openly defiant act?",
+ "When interviews occur long after emancipation and within another unequal society, how should we read what is remembered and what remains unspoken?"
+ ],
+ zh:[
+ "当一个人在惩罚的威胁下继续工作，我们凭什么认定他已经接受了这种制度？",
+ "如果拒绝命令可能影响孩子、伴侣或父母，一个人是否真的只需要替自己承担反抗的后果？",
+ "当幸存者几十年后在另一种不平等环境中回忆过去，我们该如何理解他们说出的内容与没有说出的部分？"
+ ]}
+ };
+ for(const [id,data] of Object.entries(prompts)){
+  if(!archive[id])throw Error("Missing individual group analysis "+id);
+  archive[id].questionsEn=data.en;
+  archive[id].questionsZh=data.zh;
+ }
+})();
