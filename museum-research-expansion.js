@@ -17,6 +17,7 @@ const DATA={
       {
         "year": "2021",
         "authors": "Reminder avoidance research",
+      "authorsZh": "有关反复提醒的研究",
         "paper": "Reminder Avoidance: Why People Hesitate to Disclose Their Insecurities to Friends",
         "url": "https://doi.org/10.1037/pspi0000330",
         "type": [
@@ -69,6 +70,7 @@ const DATA={
       {
         "year": "2024",
         "authors": "Longitudinal friendship research",
+      "authorsZh": "友谊发展追踪研究",
         "paper": "Just Between Us…: The Role of Sharing and Receiving Secrets in Friendship Across Time",
         "url": "https://doi.org/10.1111/pere.12527",
         "type": [
@@ -107,6 +109,7 @@ const DATA={
       {
         "year": "2022",
         "authors": "Self-efficacy research in nursing education",
+      "authorsZh": "护理教育中的自我效能研究",
         "paper": "Self-Efficacy and Negative Silence in the Classroom: The Mediating Role of Fear of Negative Evaluation",
         "url": "https://pubmed.ncbi.nlm.nih.gov/35738157/",
         "type": [
@@ -197,6 +200,7 @@ const DATA={
       {
         "year": "2006",
         "authors": "Smetana and colleagues",
+      "authorsZh": "Smetana 等人",
         "paper": "Disclosure and Secrecy in Adolescent–Parent Relationships",
         "url": "https://doi.org/10.1111/j.1467-8624.2006.00865.x",
         "type": [
@@ -249,6 +253,7 @@ const DATA={
       {
         "year": "2010",
         "authors": "Communication privacy management scholarship",
+      "authorsZh": "传播隐私管理理论研究",
         "paper": "Communication Privacy Management Theory: What Do We Know About Family Privacy Regulation?",
         "url": "https://doi.org/10.1111/j.1756-2589.2010.00052.x",
         "type": [
@@ -339,6 +344,7 @@ const DATA={
       {
         "year": "2016",
         "authors": "Privacy calculus research",
+      "authorsZh": "隐私权衡研究",
         "paper": "An Extended Privacy Calculus Model for SNSs: Analyzing Self-Disclosure and Self-Withdrawal in a Representative U.S. Sample",
         "url": "https://doi.org/10.1111/jcc4.12163",
         "type": [
@@ -376,7 +382,7 @@ window.museumResearchExpansion=function(id,language){
  const cards=d.studies.map((study,n)=>{
   return '<article class="research-dossier"><div class="research-dossier-overline"><span>0'+(n+1)+'</span><span>'+esc(study.year)+'</span><span>'+pair(study.type)+'</span></div>'+
   '<h3>'+pair(study.title)+'</h3>'+
-  '<p class="research-dossier-author">'+esc(study.authors)+'</p>'+
+  '<p class="research-dossier-author">'+(chinese&&study.authorsZh?txt(study.authors,study.authorsZh):esc(study.authors))+'</p>'+
   '<div class="research-dossier-finding"><strong>'+txt('WHAT THE RESEARCH FOUND','研究实际发现')+'</strong><p>'+pair(study.finding)+'</p></div>'+
   '<div class="research-dossier-interpretation"><strong>'+txt('WHAT IT ADDS TO THE MUSEUM','对于沉默的进一步理解')+'</strong><p>'+pair(study.meaning)+'</p></div>'+
   '<details class="research-dossier-evidence"><summary>'+txt('Evidence limits & original publication','证据边界与原始文献')+'</summary><p>'+pair(study.limit)+'</p><p class="research-dossier-paper">'+esc(study.paper)+'</p><a target="_blank" rel="noopener noreferrer" href="'+esc(study.url)+'">'+txt('Read the research ↗','查阅原始研究 ↗')+'</a></details></article>';
