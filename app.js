@@ -41,6 +41,7 @@ function cloudStoryPayload(st){return {id:st.id,user_id:authUser.id,scenario:st.
 function addLocalStory(st){const i=db.stories.findIndex(a=>String(a.id)===String(st.id));if(i<0)db.stories.push(st);else db.stories[i]={...db.stories[i],...st};save()}
 async function syncCloudStory(st){
  if(!authClient||!authUser)throw Error('Sign in to keep a backup in the cloud.');
+ cancelPendingStorySync(st.id);
  if(st.ownerId&&st.ownerId!==authUser.id)throw Error('This draft belongs to a different account.');
  const row=cloudStoryPayload(st);
  const {error}=await authClient.from(cloudStoryTable).upsert(row,{onConflict:'id'});
@@ -74,11 +75,22 @@ async function refreshStoryCloud(){
  await Promise.all([loadPublicStories(),loadCloudStories()]);
  const r=route();if(r.type==='archive'||r.type==='my-stories')render(false);
 }
+const storySaveTimers=new Map();
+function cancelPendingStorySync(id){
+ if(storySaveTimers.has(id)){clearTimeout(storySaveTimers.get(id));storySaveTimers.delete(id)}
+}
 function queueStorySync(st){
- if(st.ownerId&&!authUser?.id)return;
  if(!authUser||!authClient)return;
- clearTimeout(st._syncTimer);
- st._syncTimer=setTimeout(async()=>{try{await syncCloudStory(st);setDraftStatus('Saved privately to your account cloud.')}catch(e){st.synced=false;setDraftStatus('Saved on this device; cloud backup unavailable: '+e.message)}},1100);
+ if(st.ownerId&&st.ownerId!==authUser.id)return;
+ cancelPendingStorySync(st.id);
+ // Published versions are never changed by background autosave.
+ if(st.status==='published')return;
+ const timer=setTimeout(async()=>{
+   storySaveTimers.delete(st.id);
+   try{await syncCloudStory(st);setDraftStatus('Saved privately to your account cloud.')}
+   catch(e){st.synced=false;setDraftStatus('Saved on this device; cloud backup unavailable: '+e.message)}
+ },1200);
+ storySaveTimers.set(st.id,timer);
 }
 function setDraftStatus(message){document.querySelectorAll('.draft-save-status').forEach(el=>el.textContent=message)}
 function autosaveDraft(st){
