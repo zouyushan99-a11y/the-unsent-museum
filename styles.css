@@ -211,3 +211,26 @@ h1,h2,h3,.story-text,.archive-prose,.muted{overflow-wrap:break-word}
 @media (prefers-reduced-motion:reduce){
   .site-header .nav{scroll-behavior:auto}
 }
+
+/* Expand either lookout sky into a full-viewport, distraction-free observatory. */
+.expandable-sky{position:relative}
+.sky-expand-link{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;justify-content:flex-end;padding:18px;color:#f4dfa4;text-decoration:none;cursor:zoom-in}
+.sky-expand-hint{background:rgba(9,16,30,.75);border:1px solid rgba(238,198,91,.5);padding:9px 17px;border-radius:999px;backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);font-size:.82rem;transition:background .2s,transform .2s}
+.sky-expand-link:hover .sky-expand-hint,.sky-expand-link:focus-visible .sky-expand-hint{background:rgba(27,45,72,.93);transform:translateY(-2px)}
+.immersive-sky-page{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;background:#020510;overflow:hidden;isolation:isolate;z-index:100}
+.immersive-sky-page canvas{position:absolute;inset:0;display:block;width:100%;height:100%;pointer-events:none}
+.immersive-sky-back{position:absolute;left:max(18px,env(safe-area-inset-left));top:max(18px,env(safe-area-inset-top));z-index:3;display:inline-flex;gap:9px;align-items:center;min-height:46px;padding:10px 18px;border:1px solid rgba(238,198,91,.65);background:rgba(8,15,29,.76);color:#f0d994;border-radius:999px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-weight:600;letter-spacing:.02em}
+.immersive-sky-back:hover,.immersive-sky-back:focus-visible{background:rgba(33,54,83,.92);color:#fff1c2}
+.immersive-sky-back span{font-size:.8rem;font-weight:400;opacity:.88}
+.immersive-sky-caption{position:absolute;bottom:max(25px,env(safe-area-inset-bottom));left:22px;right:22px;z-index:2;pointer-events:none;display:flex;justify-content:space-between;align-items:end;gap:15px;text-shadow:0 2px 14px #000}
+.immersive-count{font-size:.81rem;color:#bec7d8}
+.immersive-empty{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#abb8cf;pointer-events:none;z-index:1}
+.immersive-empty div{font-size:2.8rem;color:#e6c66f}
+@media(max-width:700px){
+.sky-expand-link{padding:13px}
+.sky-expand-hint{font-size:.78rem;padding:9px 13px}
+.immersive-sky-back{left:max(13px,env(safe-area-inset-left));top:max(15px,env(safe-area-inset-top));padding:10px 14px}
+.immersive-sky-back span{font-size:.75rem}
+.immersive-sky-caption{left:17px;right:17px;bottom:max(18px,env(safe-area-inset-bottom));display:block}
+.immersive-count{display:block;margin-top:5px;font-size:.75rem}
+}
