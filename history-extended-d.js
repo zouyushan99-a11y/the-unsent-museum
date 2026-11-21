@@ -1,4 +1,4 @@
-/* History expansion IV: narrative and source-backed analysis. */
+/* Source-based museum archive and documented imagery. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "liu-xiaobo": {
     "title": "The Chair Reserved for an Absent Writer",
@@ -59,7 +59,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://pen.org/writer-at-risk/liu-xiaobo/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://www.hrw.org/sites/default/files/styles/embed_xxl/public/multimedia_images_2017/201707asia_china_liu.jpg?itok=TI1YgSed",
+        "page": "https://www.hrw.org/news/2019/07/11/nobel-winner-liu-xiaobos-spirit-lives",
+        "kind": "Documentary portrait photograph",
+        "caption": "Photograph of Liu Xiaobo reproduced by Human Rights Watch, not from the 2010 Nobel ceremony.",
+        "credit": "Human Rights Watch",
+        "at": 0
+      }
+    ]
   },
   "galileo-galilei": {
     "title": "The Book That Brought a Telescope to Trial",
@@ -112,7 +121,16 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://plato.stanford.edu/archives/sum2024/entries/galileo/"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://static.wixstatic.com/media/da232c_dc9f58122231462194a2ebd5914f3dcb~mv2.jpg/v1/fill/w_980,h_1160,al_c,q_85/da232c_dc9f58122231462194a2ebd5914f3dcb~mv2.jpg",
+        "page": "https://plato.stanford.edu/entries/galileo/",
+        "kind": "Historical painted portrait",
+        "caption": "Historical painted portrait of Galileo; photography did not exist in his lifetime. Not a photograph of the trial.",
+        "credit": "Historical portrait; see scholarly biography",
+        "at": 0
+      }
+    ]
   },
   "rosalind-franklin": {
     "title": "The Photograph and the Story Told Later",
@@ -173,6 +191,15 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "https://www.kcl.ac.uk/news/rosalind-franklin-deliberately-created-photo-51-after-earlier-photograph-revealed-dnas-structure"
       ]
     ],
-    "images": []
+    "images": [
+      {
+        "src": "https://cdn.prod.website-files.com/6435d6dda1e1468a3ed846b7/64c0f3d3d04805c75a0caa85_Rosalind%20Protrait%20ex%20NPG.jpg",
+        "page": "https://www.kcl.ac.uk/people/rosalind-franklin",
+        "kind": "Archival photographic portrait",
+        "caption": "Portrait of Rosalind Franklin (Elliott & Fry, 1946), predating Photograph 51.",
+        "credit": "Elliott & Fry / National Portrait Gallery reproduction",
+        "at": 0
+      }
+    ]
   }
 });
