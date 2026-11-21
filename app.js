@@ -43,7 +43,7 @@ async function syncCloudStory(st){
  if(!authClient||!authUser)throw Error('Sign in to keep a backup in the cloud.');
  cancelPendingStorySync(st.id);
  if(st.ownerId&&st.ownerId!==authUser.id)throw Error('This draft belongs to a different account.');
- const row=cloudStoryPayload(st);
+ const row={...cloudStoryPayload(st),updated_at:new Date().toISOString()};
  const {error}=await authClient.from(cloudStoryTable).upsert(row,{onConflict:'id'});
  if(error)throw error;
  st.ownerId=authUser.id;st.synced=true;st.updatedAt=Date.now();addLocalStory(st);
@@ -224,7 +224,7 @@ ${passwordFields()}
 ${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}
 <p class="small muted">For security, use a new password you do not use for Google. Your current museum password is never displayed.</p>
 ${!authRecovery?'<button class="btn btn-outline" type="button" id="auth-signout">Sign out ↗</button>':''}
-</div><p class="privacy-caption">Answers and story drafts still stay only in this browser, not synced to your account.</p></section></main>`;
+</div><p class="privacy-caption">Choice stars are shared anonymously. Your story drafts stay private and can be backed up to your account after the story database is connected. Stories become public only when you explicitly publish them.</p></section></main>`;
 if(emailAuthMode==='forgot')return `<main class="container"><section class="page-hero"><div class="eyebrow">ACCOUNT RECOVERY</div><h1>Find your way back.</h1><p class="muted narrow" style="margin-left:0">Forgot your museum password? We can send a one-time reset link to your email.</p></section><section class="section-compact narrow auth-area"><div class="auth-panel">
 <h2>Reset your password</h2><form class="email-auth-form" id="forgot-password-form"><label for="recovery-email">Account email</label><input class="field" id="recovery-email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"/><button class="btn" type="submit">Send reset link ↗</button></form>
 ${authMessage?`<div class="auth-feedback" role="status">${esc(authMessage)}</div>`:''}<button class="auth-text-button" type="button" id="back-to-login">← Back to sign in</button></div></section></main>`;
