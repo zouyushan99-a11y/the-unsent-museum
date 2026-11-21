@@ -33,12 +33,17 @@ https://zouyushan99-a11y.github.io/the-unsent-museum/
 
 
 ## Collective Archives and the Unsent framework (current)
-- The Historical Wing is split into **Personal Archives** (69 dossiers) and **Collective Archives** (4 researched group dossiers). The collective gallery lives at `#/collectives`.
+- The Historical Wing is split into **Personal Archives** (69 dossiers) and **Collective Archives** (5 researched group dossiers). The collective gallery lives at `#/collectives`.
 - The guiding question is **why an impulse to resist may be restrained despite experienced injustice**, not simply which groups were oppressed or who eventually protested.
-- Four group dossiers analyse five case-specific explanatory mechanisms each, including possible economic risk, threat of punishment, family obligations, the anticipation of futility, social norms, missing support networks, and sometimes strategically withheld opposition. The landing page offers six cross-cutting research lenses.
+- Five group dossiers analyse ten case-specific explanatory mechanisms each, including possible economic risk, threat of punishment, family obligations, the anticipation of futility, social norms, missing support networks, and sometimes strategically withheld opposition. The landing page offers six cross-cutting research lenses.
 - Do not treat nonparticipation as evidence that a person privately wished to revolt. Clearly distinguish documentary proof of laws and public actions from interpretive social-psychological mechanisms.
 - The research links include institutional historical sources and later scholarship on repression, social norms and perceived efficacy; the latter are explanatory frames, not proof of individual historic motives.
 - Chinese localization includes static UI, dynamic labels, form placeholders, accessibility text, account status and dialogue prompts; user-submitted stories retain their authors' language. Code-level scans verify that the curated Chinese catalogue and group narratives contain no Latin-script text. This does **not** constitute an exhaustive live-browser visual regression test.
 
 ## Content and verification work remaining
 Review every historical exhibit against the linked primary or institutional sources, especially where a curatorial interpretation extends beyond documented actions. Verify all language routes in a live browser, including dynamically updated labels and links. Check permission and anonymity of visitor-submitted stories, and complete course-related bibliography and the curator's reflective statement. The current scripts have passed structural and text-count checks, but this does not guarantee browser compatibility or database availability.
+
+## Latest public-facing design changes
+- Removed the ENGL course prototype footer credit. The footer now shows only the museum name in the selected interface language.
+- Added Chinese-only literary Song/Ming typography with locally available fallback families; English pages retain their original typographic scheme.
+- The five collective histories now include ten case-specific explanations and a period-sensitive overview of religious, legal, gendered, educational, economic, technological and social factors. A fifth case draws on the UK National Archives' workhouse and anonymous poor-law complaint collections.
