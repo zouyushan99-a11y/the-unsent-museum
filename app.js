@@ -56,6 +56,29 @@ function museumHistoryLocalized(essay,id){
   note:tr('本展品中文版依据同一批历史资料重新组织叙述，并非逐字翻译，篇幅与英文稿可能不同。历史事件与主观动机分别呈现；如需核查，请使用下方的原始资料链接。'),
   tags:(essay.tags||[]).map(v=>tr(window.MUSEUM_I18N?.zh?.[v]||v))};
 }
+function museumTranslateInterfaceValue(value,dict){
+ const original=String(value??''),key=original.trim();
+ if(!key)return original;
+ let translation=dict[key];
+ if(!translation){
+  const dynamic=[
+   [/^GALLERY\\s+([IVX0-9]+)/i,(_,n)=>'第'+n+'展厅'],
+   [/^Gallery\\s+([IVX0-9]+)/i,(_,n)=>'第'+n+'展厅'],
+   [/^([0-9]+)\\s+responses?\\s*·\\s*Multiple choice.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
+   [/^([0-9]+)\\s+reason stars?\\s*·\\s*([0-9]+)\\s+answers?/i,(_,n,m)=>n+' 颗理由星辰 · '+m+' 份回答'],
+   [/^([0-9]+)\\s+local responses?/i,(_,n)=>n+' 份本地回答'],
+   [/^([0-9]+)\\s+accounts? in this wing/i,(_,n)=>'本展厅共有 '+n+' 份档案'],
+   [/^([0-9]+)\\s+(?:stories|responses|stars|reasons|records)\\b/i,(_,n)=>n+' 份记录'],
+   [/^Blue\\s*·\\s*Silence/i,()=> '蓝色 · 沉默'],
+   [/^Gold\\s*·\\s*Speak up/i,()=> '金色 · 开口'],
+   [/^Could not load (?:public )?(?:stories|star data):/i,()=> '暂时无法载入公开资料：'],
+   [/^Cloud (?:backup|save) failed:/i,()=> '云端保存失败：']
+  ];
+  for(const [re,fn] of dynamic){if(re.test(key)){translation=key.replace(re,fn);break;}}
+ }
+ if(!translation)return original;
+ return original.replace(key,museumConvert(translation));
+}
 function museumLocalizeText(root){
  if(museumLang==='en'||!root)return;
  const dict=window.MUSEUM_I18N?.zh||{};
@@ -64,15 +87,36 @@ function museumLocalizeText(root){
  let node;
  while((node=walker.nextNode())){
   const parent=node.parentElement;
-  if(!parent||parent.closest('script,style,textarea,.archive-prose,.public-story-body,.story-reader-prose,[data-visitor-story]'))continue;
+  if(!parent||parent.closest('script,style,textarea,.archive-prose,.public-story-body,.story-reader-prose,[data-visitor-story],[data-original-language],code,pre'))continue;
   const raw=node.nodeValue,trim=raw.trim();if(!trim)continue;
-  const translation=dict[trim];
-  if(translation)changed.push([node,raw.replace(trim,museumConvert(translation))]);
+  const translated=museumTranslateInterfaceValue(raw,dict);
+  if(translated!==raw)changed.push([node,translated]);
  }
  changed.forEach(([node,value])=>{node.nodeValue=value});
- root.querySelectorAll('[placeholder]').forEach(el=>{const value=dict[el.getAttribute('placeholder')];if(value)el.setAttribute('placeholder',museumConvert(value))});
- root.querySelectorAll('[aria-label]').forEach(el=>{const value=dict[el.getAttribute('aria-label')];if(value)el.setAttribute('aria-label',museumConvert(value))});
- root.querySelectorAll('[title]').forEach(el=>{const value=dict[el.getAttribute('title')];if(value)el.setAttribute('title',museumConvert(value))});
+ for(const attr of ['placeholder','aria-label','title']){
+  root.querySelectorAll('['+attr+']').forEach(el=>{
+   if(el.closest('[data-visitor-story],[data-original-language]'))return;
+   const old=el.getAttribute(attr);
+   const newValue=museumTranslateInterfaceValue(old,dict);
+   if(newValue!==old)el.setAttribute(attr,newValue);
+  });
+ }
+}
+let museumI18nObserver=null;
+function museumObserveLocalizedUpdates(root){
+ if(museumI18nObserver)museumI18nObserver.disconnect();
+ if(museumLang==='en'||!root||typeof MutationObserver==='undefined')return;
+ museumI18nObserver=new MutationObserver(records=>{
+   const roots=new Set();
+   for(const record of records){
+    if(record.type==='characterData')roots.add(record.target.parentElement);
+    else for(const child of record.addedNodes)if(child.nodeType===1)roots.add(child);
+   }
+   museumI18nObserver.disconnect();
+   for(const el of roots)if(el&&root.contains(el)&&!el.closest('[data-visitor-story],[data-original-language]'))museumLocalizeText(el);
+   museumI18nObserver.observe(root,{childList:true,characterData:true,subtree:true});
+ });
+ museumI18nObserver.observe(root,{childList:true,characterData:true,subtree:true});
 }
 function museumBindLanguage(){
  const el=document.getElementById('museum-language');if(!el)return;
@@ -1080,7 +1124,7 @@ function privacy(){return '<main class="container"><section class="page-hero"><d
 '<h3>Shared choice stars</h3><p>Signed-in choices and selected predefined reasons contribute anonymously to the shared stars. These are separate from story categories and from publication consent.</p>'+
 '<h3>Check database access</h3><p>Use the <a href="#/diagnostics" class="link-arrow">Data & Access Check</a> page to verify whether shared stars and the public archive can be read.</p>'+ '<h3>Safety and moderation</h3><p>Do not include private identifying information about others. The current prototype does not provide comprehensive pre-publication human moderation or guarantee removal of copies kept elsewhere. Broader public launch requires stronger moderation and reporting mechanisms.</p></section></main>'}
 function route(){let path=decodeURI(location.hash.slice(1)||'/');if(path==='/collectives')return{type:'collective',path};if(path.startsWith('/collectives/'))return{type:'collective',id:path.split('/')[2],path};if(path.startsWith('/story-sky/'))return{type:'story-sky',id:path.split('/')[2],path};if(path==='/story-sky')return{type:'story-sky',path};if(path.startsWith('/story/'))return{type:'story-detail',id:path.split('/')[2],path};if(path.startsWith('/archive/'))return{type:'archive',id:path.split('/')[2],path};if(path.startsWith('/contribute/'))return{type:'contribute',id:path.split('/')[2],path};if(path.startsWith('/edit-story/'))return{type:'edit-story',id:path.split('/')[2],path};if(path==='/diagnostics')return{type:'diagnostics',path};if(path==='/curator')return{type:'curator',path};if(path==='/history')return{type:'history',path};if(path.startsWith('/history/'))return{type:'history',id:path.split('/')[2],path};if(path==='/research')return{type:'research-index',path};if(path.startsWith('/research/'))return{type:'research',id:path.split('/')[2],path};if(path.startsWith('/experience/'))return{type:'experience',id:path.split('/')[2],path};if(path.startsWith('/gallery/'))return{type:'gallery',id:path.split('/')[2],path};if(path.startsWith('/sky/')){const bits=path.split('/');return {type:'sky',kind:bits[2],id:bits[3]||'all',path}}if(path.startsWith('/lookout/'))return{type:'lookout',id:path.split('/')[2],path};return {type:path.slice(1)||'home',path}}
-function render(scroll=true){hideStarTooltip();const r=route(),body=r.type==='home'?home():r.type==='galleries'?galleries():r.type==='gallery'?gallery(r.id):r.type==='experience'?experience(r.id):r.type==='research'?researchPage(r.id):r.type==='research-index'?researchIndex():r.type==='history'?historyPage(r.id):r.type==='collective'?window.museumCollectivePage(r.id):r.type==='archive'?archive(r.id):r.type==='story-sky'?storySkyPage(r.id):r.type==='story-detail'?publicStoryReader(r.id):r.type==='contribute'?contributeOthers():r.type==='edit-story'?editStoryPage(r.id):r.type==='diagnostics'?diagnosticsPage():r.type==='curator'?curatorPage():r.type==='lookout'?lookout(r.id):r.type==='sky'?fullSky(r.kind,r.id):r.type==='about'?about():r.type==='privacy'?privacy():r.type==='my-stories'?privateStories():r.type==='account'?authPage():home();$('#app').innerHTML=r.type==='sky'?body+museumLangControl():header(r.path)+body+footer();document.documentElement.lang=museumLang;museumLocalizeText($('#app'));museumBindLanguage();document.title=(r.type==='gallery'?museumZh(scenario(r.id)?.title)+' · ':r.type==='lookout'?museumZh('The Lookout')+' · ':'')+museumZh('The Unsent Museum');if(scroll)window.scrollTo(0,0);if(r.type==='history'){
+function render(scroll=true){hideStarTooltip();const r=route(),body=r.type==='home'?home():r.type==='galleries'?galleries():r.type==='gallery'?gallery(r.id):r.type==='experience'?experience(r.id):r.type==='research'?researchPage(r.id):r.type==='research-index'?researchIndex():r.type==='history'?historyPage(r.id):r.type==='collective'?window.museumCollectivePage(r.id):r.type==='archive'?archive(r.id):r.type==='story-sky'?storySkyPage(r.id):r.type==='story-detail'?publicStoryReader(r.id):r.type==='contribute'?contributeOthers():r.type==='edit-story'?editStoryPage(r.id):r.type==='diagnostics'?diagnosticsPage():r.type==='curator'?curatorPage():r.type==='lookout'?lookout(r.id):r.type==='sky'?fullSky(r.kind,r.id):r.type==='about'?about():r.type==='privacy'?privacy():r.type==='my-stories'?privateStories():r.type==='account'?authPage():home();$('#app').innerHTML=r.type==='sky'?body+museumLangControl():header(r.path)+body+footer();document.documentElement.lang=museumLang;museumLocalizeText($('#app'));museumBindLanguage();museumObserveLocalizedUpdates($('#app'));document.title=(r.type==='gallery'?museumZh(scenario(r.id)?.title)+' · ':r.type==='lookout'?museumZh('The Lookout')+' · ':'')+museumZh('The Unsent Museum');if(scroll)window.scrollTo(0,0);if(r.type==='history'){
  const search=document.getElementById('history-search');
  const tabs=[...document.querySelectorAll('[data-silence-tab]')];
  let active=HISTORICAL_SILENCES.find(x=>x.id===r.id)?.silenceClass||'withheld';
