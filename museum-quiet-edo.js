@@ -35,9 +35,9 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "Religious and cultural language created another kind of constraint. A practice associated with impurity can appear self-evident when repeated through custom, ritual and official classification. Someone may not need to hear a daily command if they already know that entering a particular space will invite refusal or ridicule. Such ordinary anticipation is harder to archive than a written prohibition. But it is also important not to portray religion itself as inevitably oppressive. Beliefs were diverse and could be interpreted in more than one way; historians must identify the particular institutions that enforced an exclusion.",
     "A literate individual may still have lacked an administrative path to contest an inherited category. A community with knowledge of local regulations might still face the force of an official hierarchy. Public argument requires not only words but an audience authorised to change something.",
     "Evidence from surviving regulations is stronger about rules than about private emotions. A decree can show what authorities tried to enforce. Historians are also left with uneven documentary voices: administrators and elites frequently produced the records, while ordinary households often appear through the categories imposed upon them. The result is a society that seems to speak most clearly in the language of those holding power.",
-    "There were conflicts, negotiations and efforts to protect communal interests within these populations. To call the people 'those who never resisted' would impose a false historical unanimity. How does someone inhabit a social order they did not choose when leaving it does not seem to be an ordinary option?",
+    "There were conflicts, negotiations and efforts to protect communal interests within these populations. To call the people 'those who never resisted' would impose a false historical unanimity.",
     "Meiji-era changes to legal status did not make deep social prejudice disappear overnight. The survival of discrimination after formal changes underscores how power can exist in law and also in local memory, marriage expectations and informal exclusion.",
-    "Its objects are the administrative traces of classification and the scholarship through which modern historians try to read against them. In the spaces between those records lived people who worked, cared for families, quarrelled, negotiated and continued to belong to communities that also protected them."
+    "In Tokugawa Japan, authorities and local communities maintained distinct status classifications linked in some places to inherited occupations. Residents sustained households and community institutions under those arrangements. Later changes to formal status did not immediately end informal discrimination. Surviving records chiefly document administrative classification and regulation."
   ],
   "zh": [
     "一个人的身份，有时在他还没有来得及做出任何选择之前，就已经被别人决定了。日本江户时代，一些群体被纳入带有歧视性的身份分类。后世史学研究会区分当时不同的被排斥身份类别，其中一些历史称谓本身便带有侮辱意味。",
@@ -50,7 +50,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "受教育程度也不是唯一答案。懂得阅读的人，未必拥有修改身份记录或反对行政规定的渠道。没有留下书面诉状的人，也不意味着他从未判断过制度是否公平。能够说话，与能够把话送到具有改变权力的人那里，本来就是两回事。历史档案里留下许多官员制定的规定，却少有普通家庭当时如何权衡生活的完整记录。",
     "不同社群确实有过交涉、争议和维护自身利益的行动。",
     "后来，法律上的身份区分发生变化，但社会偏见并没有在同一天消失。人们如何看待出身、婚姻和共同生活，往往不只由一份法令决定。一个制度的结束，是可以写上日期的；一种长期存在的轻视，却未必能用同样的方法找到终点。",
-    "他们没有选择自己的出身，却可能需要一生与别人对这份出身的看法相处。"
+    "江户时代的行政分类、职业安排与地方习惯，在各地区以不同方式影响受歧视社群。部分身份与世代劳动或社群出身联系在一起，居民仍维持家庭与地方组织。此后的法律变化没有立即消除有关婚姻、职业和出身的社会偏见；历史档案主要保存了官员的分类与管理记录。"
   ],
   "mechanisms": [
     "hereditary and administratively imposed status",
