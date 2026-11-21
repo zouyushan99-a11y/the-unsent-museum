@@ -61,3 +61,8 @@ The independent `#/collectives` wing now presents **10** bilingual historically 
 Each exhibit is a **social-historical account**, not a fictional composite biography or a story of a successful uprising. Each has over 1,000 English words and 1,000 Chinese characters, plus a separate analytical section (5–10 factors with specific historical context) and three audience reflection questions, followed by evidence limits and external historical sources. No individual's silent thoughts are invented.
 
 The earlier four protest-centred group archive exhibits (`enslaved-literacy`, `married-women-property`, `matchgirls-1888`, `south-africa-pass-women`) were removed from the live catalogue and their now-unused source modules deleted. Personal Archives (69 historical cases) remain separate and unchanged.
+
+## November 2026: gender and social-institution balance
+The Collective Archives now show **13** longform dossiers, adding three male-focused historical groups: Royal Navy sailors subject to British impressment (18th–early 19th century); Black male migrant mine workers in South Africa (late 19th–early 20th century); Christian boys levied through the Ottoman devshirme (15th–early 17th century). These introduce different forms of coercion involving military recruitment, racialised labour housing and forced childhood recruitment. Each contains >1,000 English words, >1,000 Chinese characters, six case-specific explanatory factors, three reflection questions, evidence limits and scholarly/historical sources.
+
+As before, the exhibit does not equate nonparticipation in an uprising with consent, cowardice, or proven internal dissent. The independent 69 Personal Archives are not modified.
