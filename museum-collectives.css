@@ -67,3 +67,12 @@
 .collective-motives-grid p{font-size:.92rem;line-height:1.9;color:var(--muted,#c8c0b3)}
 @media(max-width:900px){.collective-motives-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.collective-motives-grid{grid-template-columns:1fr}}
+
+/* The era behind a choice — richer social history without anachronistic determinism */
+.collective-historical-context{max-width:900px;margin:1.7rem 0 2rem;padding:1.5rem 1.75rem;background:linear-gradient(135deg,rgba(189,158,106,.12),rgba(189,158,106,.025));border-left:2px solid rgba(211,179,117,.85);border-top:1px solid rgba(189,158,106,.26);border-bottom:1px solid rgba(189,158,106,.26)}
+.collective-historical-context>span{display:block;color:#d3b980;font-size:.75rem;letter-spacing:.12em;margin:0 0 .8rem}
+.collective-historical-context p{font:400 1.04rem/2.1 Georgia,"Songti SC","Noto Serif CJK SC",serif;margin:0;letter-spacing:.014em}
+.collective-reflection-questions{max-width:830px;margin:2rem 0}
+.collective-reflection-questions h3{font:400 1.38rem Georgia,"Songti SC",serif;margin:0 0 1rem}
+.collective-reflection-questions ol{padding-left:1.7rem;line-height:1.9}
+.collective-reflection-questions li{padding:.4rem 0 .4rem .5rem}
