@@ -1,4 +1,4 @@
-/* History expansion III: extended narrative and source-backed analysis. */
+/* The Unsent Museum: all historical exhibits with curatorial event, intent and evidence records. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "oscar-wilde": {
     "title": "The Calling Card and the Prison Cell",
@@ -63,7 +63,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Wikimedia Commons · Napoleon Sarony",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Privacy",
+      "Law",
+      "Social judgment"
+    ],
+    "moment": {
+      "addressed": "Public readers and private acquaintances",
+      "intended": "To live a personal life while maintaining a public literary career.",
+      "withheld": "Some intimate relationships were not safely disclosed openly under British criminal law.",
+      "why": "The legal prohibition on sexual conduct between men and public stigma made exposure consequential.",
+      "certainty": "Legal danger documented; cannot prove one uniform personal motive for all private conduct."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.nationalarchives.gov.uk/explore-the-collection/explore-by-topic/identity-and-community/the-life-and-court-trials-of-oscar-wilde/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "janusz-korczak": {
     "title": "The Children Who Were Supposed to Be Heard",
@@ -136,7 +154,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Poland National Digital Archives",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Children's voices",
+      "Education",
+      "Resistance"
+    ],
+    "moment": {
+      "addressed": "Children who were routinely overruled by adults",
+      "intended": "To build institutions where children could speak and influence rules.",
+      "withheld": "The children were often denied decision-making authority by adult norms and ultimately their lives were destroyed by persecution.",
+      "why": "Education conventions and then Nazi persecution imposed different levels of powerlessness.",
+      "certainty": "Documented educational advocacy; Korczak was not himself choosing silence."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://encyclopedia.ushmm.org/content/en/article/janusz-korczak-1",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "etty-hillesum": {
     "title": "Pages from a World That Was Closing",
@@ -209,7 +245,25 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "Amsterdam Museum / Jewish Museum",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Testimony",
+      "Persecution",
+      "Archival survival"
+    ],
+    "moment": {
+      "addressed": "Her diary, correspondents and later readers",
+      "intended": "To record private reflection and life under occupation.",
+      "withheld": "Her public reach was restricted by persecution; deportation ended her surviving record.",
+      "why": "Occupation laws, forced displacement and the later history of manuscripts shaped what readers could receive.",
+      "certainty": "Documented diaries and letters; not an instance of choosing not to write."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://ettyhillesumhuis.nl/en/etty-hillesum/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   },
   "ida-b-wells": {
     "title": "The Newspaper They Tried to Destroy",
@@ -274,6 +328,24 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
         "credit": "University of Chicago Library",
         "at": 0
       }
-    ]
+    ],
+    "tags": [
+      "Resistance",
+      "Journalism",
+      "Threats"
+    ],
+    "moment": {
+      "addressed": "Newspaper readers and the public",
+      "intended": "To expose lynching and challenge racist public explanations.",
+      "withheld": "She did not withdraw her journalism; a mob destroyed her newspaper office and threatened her.",
+      "why": "White supremacist violence tried to stop the circulation of her reporting.",
+      "certainty": "Documented attempted silencing; not voluntary withdrawal."
+    },
+    "object": {
+      "name": "Documented event, text or archive associated with this figure",
+      "kind": "Historical context exhibit",
+      "url": "https://www.lib.uchicago.edu/collex/exhibits/voice-for-justice-life-and-legacy-ida-b-wells/mob-violence-and-anti-lynching-campaign/",
+      "evidence": "Interpretive case; consult the listed primary or institutional sources. Not all historical people left an intentionally withheld object."
+    }
   }
 });
