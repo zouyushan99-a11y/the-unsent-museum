@@ -1906,3 +1906,8 @@ body::before{display:none!important}
  .history-home-feature .btn{width:100%}
  .footer-inner{gap:18px}
 }
+
+/* Keep the Historical Archive card consistent with all four adjacent museum portals. */
+.museum-portal-history{border:1px solid rgba(218,177,104,.52);background:linear-gradient(155deg,rgba(10,34,58,.83),rgba(7,24,43,.94))!important;box-shadow:0 12px 36px rgba(1,9,23,.35)}
+.museum-portal-history .museum-portal-icon{color:#dfb96e!important;font:inherit;line-height:normal}
+.museum-portal-history .museum-portal-heading{color:#f5d6a1}
