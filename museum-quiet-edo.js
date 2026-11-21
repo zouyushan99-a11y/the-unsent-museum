@@ -40,7 +40,7 @@ window.MUSEUM_QUIET_EXHIBITS.push({
     "This archive therefore ends without a liberating speech. Its objects are the administrative traces of classification and the scholarship through which modern historians try to read against them. In the spaces between those records lived people who worked, cared for families, quarrelled, negotiated and continued to belong to communities that also protected them. We cannot claim to know each person's internal response to the hierarchy. We can know that the hierarchy made some choices unusually difficult, and that ordinary survival should never be mistaken for proof that the boundaries were accepted as just."
   ],
   "zh": [
-    "一个人的身份，有时在他还没有来得及做出任何选择之前，就已经被别人决定了。日本江户时代，一些群体被纳入带有歧视性的身份分类。后世研究会提到河原者、皮多等不同历史称谓，其中一些称呼本身具有侮辱意味。为了避免把歧视重新说成理所当然，我们只在辨认制度时谨慎提及这些名称。真正值得注意的，是它们如何进入日常生活，影响一个人能够从事什么工作、与谁往来，以及在别人眼中应当站在哪里。",
+    "一个人的身份，有时在他还没有来得及做出任何选择之前，就已经被别人决定了。日本江户时代，一些群体被纳入带有歧视性的身份分类。后世史学研究会区分当时不同的被排斥身份类别，其中一些历史称谓本身便带有侮辱意味。为了避免把歧视重新说成理所当然，我们只在辨认制度时谨慎提及这些名称。真正值得注意的，是它们如何进入日常生活，影响一个人能够从事什么工作、与谁往来，以及在别人眼中应当站在哪里。",
     "我们熟悉的江户时代，既有繁华城市，也有商业、戏剧和复杂的行政制度。但正是在这样的社会里，身份界线依然被不断划定。历史学者指出，一些被排斥群体的地位，并非仅仅来自古老的『不洁』观念，政治与经济权力也参与制造、巩固了这些等级。因而不能简单说，歧视是因为当时的日本还不够发达。一个管理有序的社会，也完全可能把不平等管理得井井有条。",
     "某些与皮革、动物遗体或死亡有关的工作，被附加上不洁的含义。明明是社会需要有人承担的劳动，做这些工作的人却可能因为工作本身受到轻视。当职业与家族身份联系起来，一个人便不只是被评价今天做得好不好；他的出身，也可能成为旁人判断他能否进入某种关系的理由。难以摆脱的不是一份工作，而是工作以外那层附着在人身上的意义。",
     "但我们也不能把这些群体混成一个整体。不同身份类别、地区与年代，其制度安排并不相同；有些社群内部还有自己的组织与管理者。不是每个人都受到完全一致的限制，也不是人人都没有办法协商或争取一些生活空间。正是这些差异，提醒我们不要把历史写成一个只会忍耐的巨大人群。",
