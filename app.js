@@ -177,13 +177,16 @@ let starIdentityNotice='';
 let curatorAccess=false;
 let curatorStories=[];
 let curatorError='';
+let curatorFeedback=[];
+let curatorFeedbackError='';
+let curatorFeedbackLoading=false;
 async function checkCuratorAccess(){
- curatorAccess=false;curatorStories=[];
+ curatorAccess=false;curatorStories=[];curatorFeedback=[];curatorFeedbackError='';
  if(!authClient||!authUser)return;
  const {data,error}=await authClient.rpc('museum_is_curator');
  if(error)return;
  curatorAccess=data===true;
- if(curatorAccess){await loadCuratorStories()}
+ if(curatorAccess){await Promise.all([loadCuratorStories(),loadCuratorFeedback()])}
  const current=route();
  if(current.type==='curator')render(false);
 }
@@ -202,15 +205,68 @@ async function changeStoryBlock(id,blocked){
  await Promise.all([loadCuratorStories(),loadPublicStories()]);
  render(false);
 }
+async function loadCuratorFeedback(){
+ if(!curatorAccess||!authClient){curatorFeedback=[];return}
+ curatorFeedbackLoading=true;curatorFeedbackError='';
+ try{
+  const {data,error}=await authClient.rpc('museum_curator_feedback');
+  if(error)throw error;
+  curatorFeedback=Array.isArray(data)?data:[];
+ }catch(e){
+  curatorFeedbackError=String(e.message||e);
+  curatorFeedback=[];
+ }finally{curatorFeedbackLoading=false}
+}
+async function setCuratorFeedbackReviewed(id,reviewed){
+ if(!curatorAccess||!authClient)return;
+ const {data,error}=await authClient.rpc('museum_set_feedback_reviewed',{p_feedback_id:id,p_reviewed:reviewed});
+ if(error||data!==true){
+  curatorFeedbackError=String(error?.message||'Could not update this feedback item.');
+  render(false);return;
+ }
+ await loadCuratorFeedback();render(false);
+}
+function curatorFeedbackSection(){
+ const isChinese=museumLang!=='en';
+ const t=(en,zh)=>esc(isChinese?museumConvert(zh):en);
+ const labels={
+  history:['Historical accuracy & sources','史实与文献'],
+  language:['Translation & language','语言与翻译'],
+  technical:['Website & accessibility','网站功能与无障碍'],
+  idea:['Museum suggestions','展馆改进建议'],
+  other:['Other','其他']
+ };
+ const pending=curatorFeedback.filter(x=>!x.reviewed).length;
+ const rows=curatorFeedback.map(item=>{
+  const tag=labels[item.category]||labels.other;
+  const date=item.created_at&& !Number.isNaN(Date.parse(item.created_at))?new Date(item.created_at).toLocaleString(museumLang==='zh-Hant'?'zh-HK':museumLang==='zh-Hans'?'zh-CN':'en-GB'):'';
+  return '<article class="museum-feedback-inbox-item'+(item.reviewed?' is-reviewed':'')+'"><div class="museum-feedback-inbox-top"><span class="eyebrow">'+t(tag[0],tag[1])+'</span><span class="small muted">'+esc(date)+'</span></div>'+
+   (item.page_reference?'<p class="small"><strong>'+t('Page: ','相关页面：')+'</strong>'+esc(item.page_reference)+'</p>':'')+
+   '<p class="museum-feedback-inbox-message">'+esc(item.message)+'</p>'+
+   '<button type="button" class="btn btn-outline curator-feedback-toggle" data-feedback-id="'+esc(item.id)+'" data-reviewed="'+String(Boolean(item.reviewed))+'">'+(item.reviewed?t('Mark as unread','标为未处理'):t('Mark as reviewed','标为已处理'))+'</button></article>';
+ }).join('');
+ return '<section class="section-compact museum-feedback-inbox" id="curator-feedback"><div class="collective-section-heading"><span>'+t('PRIVATE CURATOR INBOX','策展人私人收件箱')+'</span><h2>'+t('Visitor Feedback','访客反馈')+'</h2><p>'+t('Only authorized curators can view these submissions. Visitor messages are not public.','仅获得授权的策展人可以查看这些反馈，访客留言不会公开。')+'</p></div>'+
+ '<div class="museum-feedback-inbox-toolbar"><strong>'+t('Unreviewed: ','未处理：')+pending+'</strong><button type="button" id="refresh-curator-feedback" class="btn btn-outline">'+t('Refresh feedback ↗','刷新反馈 ↗')+'</button></div>'+
+ (curatorFeedbackError?'<p class="auth-feedback" role="alert">'+t('Feedback inbox unavailable. Run the feedback SQL setup in Supabase. Details: ','反馈收件箱暂不可用。请先在 Supabase 执行反馈数据库配置。详情：')+esc(curatorFeedbackError)+'</p>':'')+
+ (curatorFeedbackLoading?'<p class="muted">'+t('Loading feedback…','正在加载反馈……')+'</p>':'')+
+ (rows?'<div class="museum-feedback-inbox-list">'+rows+'</div>':(!curatorFeedbackError&&!curatorFeedbackLoading?'<p class="muted">'+t('No feedback received yet.','暂时还没有收到反馈。')+'</p>':''))+
+ '</section>';
+}
 function curatorPage(){
- if(!authUser||!curatorAccess)return '<main class="container"><section class="page-hero"><h1>Curator access required.</h1><p class="muted">Only the museum curator can moderate public stories. Accounts must be authorized through the Supabase database.</p><a href="#/galleries" class="btn btn-outline">Return to the galleries</a></section></main>';
+ if(!authUser||!curatorAccess)return '<main class="container"><section class="page-hero"><h1>'+museumZh('Curator access required.')+'</h1><p class="muted">'+museumZh('Only the museum curator can moderate public stories. Accounts must be authorized through the Supabase database.')+'</p><a href="#/galleries" class="btn btn-outline">'+museumZh('Return to the galleries')+'</a></section></main>';
  return '<main class="container"><section class="page-hero"><div class="eyebrow">CURATOR · PUBLIC STORIES</div><h1>Story Moderation.</h1><p class="muted">Stories publish immediately without prior review. You can hide a published story from every visitor and restore it later. Hidden stories remain in the database, but are excluded from the public archive.</p><button class="btn btn-outline" id="refresh-curator">Refresh public stories ↗</button></section><section class="section-compact">'+
  (curatorError?'<p class="auth-feedback" role="alert">'+esc(curatorError)+'</p>':'')+
- (curatorStories.length?'<div class="archive">'+curatorStories.map(st=>'<article class="archive-item"><div class="eyebrow">'+esc(st.scenario)+' · '+esc(st.author_name||'Anonymous')+' · '+(st.blocked?'HIDDEN':'PUBLIC')+'</div><h3>'+esc(st.title)+'</h3><p class="archive-prose">'+esc(st.story)+'</p><p class="small muted">'+esc(st.why)+'</p><button class="btn btn-outline curate-story" data-id="'+esc(st.id)+'" data-blocked="'+String(!!st.blocked)+'">'+(st.blocked?'Restore public visibility':'Hide from public archive')+'</button></article>').join('')+'</div>':'<p class="muted">No published stories are available for moderation.</p>')+'</section></main>'
+ (curatorStories.length?'<div class="archive">'+curatorStories.map(st=>'<article class="archive-item"><div class="eyebrow">'+esc(st.scenario)+' · '+esc(st.author_name||'Anonymous')+' · '+(st.blocked?'HIDDEN':'PUBLIC')+'</div><h3>'+esc(st.title)+'</h3><p class="archive-prose">'+esc(st.story)+'</p><p class="small muted">'+esc(st.why)+'</p><button class="btn btn-outline curate-story" data-id="'+esc(st.id)+'" data-blocked="'+String(!!st.blocked)+'">'+(st.blocked?'Restore public visibility':'Hide from public archive')+'</button></article>').join('')+'</div>':'<p class="muted">No published stories are available for moderation.</p>')+'</section>'+curatorFeedbackSection()+'</main>';
 }
 function bindCurator(){
- const reload=$('#refresh-curator');if(reload)reload.onclick=async()=>{await loadCuratorStories();render(false)};
+ const reload=$('#refresh-curator');
+ if(reload)reload.onclick=async()=>{await loadCuratorStories();render(false)};
  document.querySelectorAll('.curate-story').forEach(btn=>btn.onclick=()=>changeStoryBlock(btn.dataset.id,btn.dataset.blocked!=='true'));
+ const feedbackReload=$('#refresh-curator-feedback');
+ if(feedbackReload)feedbackReload.onclick=async()=>{await loadCuratorFeedback();render(false)};
+ document.querySelectorAll('.curator-feedback-toggle').forEach(btn=>{
+  btn.onclick=()=>setCuratorFeedbackReviewed(btn.dataset.feedbackId,btn.dataset.reviewed!=='true');
+ });
 }
 
 
