@@ -258,3 +258,36 @@ line-height:1.42;overflow-wrap:anywhere;
 .legacy-star-import .btn{flex:0 0 auto}
 .legacy-star-import .auth-feedback{flex:1 1 100%;margin:0}
 @media(max-width:700px){.legacy-star-import{padding:19px 16px;display:block}.legacy-star-import .btn{margin-top:16px;min-height:44px;width:100%}.legacy-star-import .auth-feedback{margin-top:17px}}
+
+/* Behind the Silence: museum research, paced for a narrative reading experience. */
+.research-page{padding-bottom:90px}
+.research-page .page-hero{padding-bottom:18px}
+.behind-silence{max-width:860px;margin:32px auto 88px;padding:clamp(25px,4.5vw,54px);border:1px solid rgba(224,202,161,.24);background:linear-gradient(160deg,#152034 0%,#111927 46%,#0b111e 100%);border-radius:23px;box-shadow:0 25px 70px rgba(0,0,0,.17)}
+.behind-heading{padding-bottom:18px;border-bottom:1px solid rgba(228,202,147,.19)}
+.behind-heading h2{margin:15px 0 14px;font-size:clamp(2rem,4.5vw,3.3rem);line-height:1.22;letter-spacing:-.025em}
+.behind-heading p{max-width:620px;font-size:.98rem}
+.behind-first{padding:25px 0 8px}
+.behind-first p{font-size:1rem;line-height:1.88;max-width:710px}
+.behind-overline{font-size:.68rem;color:#e4c77f;font-weight:700;letter-spacing:.17em;margin:22px 0 9px}
+.behind-highlight{display:flex;align-items:center;gap:20px;padding:16px 0;color:#e8c46f}
+.behind-highlight strong{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(3.2rem,7vw,5rem);line-height:1}
+.behind-highlight span{color:#d6cfc0;max-width:430px;line-height:1.6}
+.behind-more{margin:18px 0 28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.behind-more summary{display:flex;align-items:center;justify-content:space-between;gap:16px;list-style:none;cursor:pointer;font-size:.92rem;color:#f5dfae;font-weight:600;padding:22px 4px}
+.behind-more summary::-webkit-details-marker{display:none}
+.behind-more summary:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.behind-plus{transition:transform .25s ease;font-size:1.25rem;line-height:1}
+.behind-more[open] .behind-plus{transform:rotate(45deg)}
+.behind-reasons{padding:2px 0 14px}
+.behind-reason{display:grid;grid-template-columns:48px minmax(0,1fr);gap:12px;padding:18px 0 23px;border-top:1px solid rgba(210,221,243,.11)}
+.behind-number{font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;color:#d4af64;padding-top:3px}
+.behind-reason h3{font-size:1.3rem;line-height:1.35;margin:0 0 9px}
+.behind-reason p{font-size:.96rem;color:#c4ccda;line-height:1.84;margin:0}
+.behind-reflection{margin:35px 0;padding:2px 0 2px 24px;border-left:2px solid #d5b46b;font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.16rem,2.6vw,1.48rem);font-style:italic;line-height:1.65;color:#f0dfb8}
+.behind-source{display:flex;justify-content:space-between;align-items:center;gap:22px;border-top:1px solid var(--line);padding-top:23px}
+.behind-source strong{font-size:.78rem;color:#e8c46f}
+.behind-source p{color:#aeb9ca;font-size:.81rem;margin:5px 0}
+.behind-source .behind-caveat{font-size:.75rem;color:#8e9caf;max-width:530px}
+.behind-source-link{flex:0 0 auto;font-size:.81rem;color:#f0d38f;text-decoration:underline;text-underline-offset:4px}
+@media(max-width:680px){.behind-silence{margin:18px auto 60px;padding:24px 20px;border-radius:17px}.behind-first p{font-size:.95rem}.behind-reason{grid-template-columns:31px minmax(0,1fr)}.behind-reason h3{font-size:1.14rem}.behind-source{display:block}.behind-source-link{display:inline-block;margin-top:12px}.behind-highlight{align-items:flex-start;flex-direction:column;gap:6px}.research-page{padding-bottom:25px}}
+@media(prefers-reduced-motion:reduce){.behind-plus{transition:none}}
