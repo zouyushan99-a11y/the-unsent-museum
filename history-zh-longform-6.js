@@ -1,0 +1,5 @@
+/* Final substantive narrative links for strict Chinese 1,000-Han-character floor. */
+if(window.MUSEUM_HISTORY_ZH?.["nicolaus-copernicus"]){let p=window.MUSEUM_HISTORY_ZH["nicolaus-copernicus"].story;p.splice(p.length-2,0,"此后，不同学者对那本书的阅读产生了不同影响。有人将数学模型当成便利的计算工具，有人进一步思考它是否描述真实的宇宙结构。一个理论在尚未印成书时可能只需要面对熟悉的同行，正式出版以后却会进入更广泛、更难控制的争论。这正是从有限传播转为公开表达的关键区别。");}
+if(window.MUSEUM_HISTORY_ZH?.["charlotte-bronte"]){let p=window.MUSEUM_HISTORY_ZH["charlotte-bronte"].story;p.splice(p.length-2,0,"作为已经拥有现实工作和家庭责任的女性，夏洛蒂无法保证每位读者都只讨论文学本身。她的成名不仅带来了赞誉，也意味着私人生活可能成为被打听的对象。笔名曾经为作者和作品之间制造空间，名声却让这层空间逐渐缩小。");}
+if(window.MUSEUM_HISTORY_ZH?.["emily-bronte"]){let p=window.MUSEUM_HISTORY_ZH["emily-bronte"].story;p.splice(p.length-2,0,"她没有机会看到后世所有的评价，更不可能回应每一种关于自己性格的推测。留下来的出版物与姐妹的说明，可以证明最初的身份选择，却不能让我们知道她当时每一次犹豫的具体内容。文学历史有时必须允许那些没有被记录下来的想法继续留白。");}
+if(window.MUSEUM_HISTORY_ZH?.["queen-victoria"]){let p=window.MUSEUM_HISTORY_ZH["queen-victoria"].story;p.splice(p.length-2,0,"对女王而言，这种控制具有一般私人写作者很难拥有的力量。保存者是自己的女儿，整理对象是王室连续几十年的生活记录，而原稿一旦毁去，几乎没有其他机构能够把相同的文字重新找回来。编辑成为一项无法轻易撤销的安排。");}
