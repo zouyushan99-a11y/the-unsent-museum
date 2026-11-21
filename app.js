@@ -16,7 +16,7 @@ if(!Array.isArray(db.stories))db.stories=[];
 function dedupeAnswers(){const seen=new Set();db.answers=db.answers.slice().reverse().filter(a=>{if(!a||!a.scenario||seen.has(a.scenario))return false;seen.add(a.scenario);return true}).reverse()}
 dedupeAnswers();
 const save=()=>{dedupeAnswers();localStorage.setItem(KEY,JSON.stringify(db))};
-let flow={scenario:null,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,submitted:false};
+let flow={scenario:null,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false};
 let sharedAnswers=[];
 let sharedStatus='loading';
 let sharedError='';
@@ -27,6 +27,10 @@ let sharedRefreshPromise=null;
 let importBusy=false;
 let importMessage='';
 let publicStarVerified=false;
+let starNames=new Map();
+let starIdentityServiceReady=false;
+let starIdentityNotice='';
+
 let cloudStories=[];
 let publicStories=[];
 let storyCloudStatus='loading';
@@ -133,6 +137,19 @@ async function refreshSharedAnswers(){
        id:String(a.id),scenario:a.scenario,decision:a.decision,
        reasons:Array.isArray(a.reasons)?a.reasons.filter(n=>Number.isInteger(n)&&((n>=0&&n<=6)||n===99)):[]
      }));
+     // Public names are fetched independently: the original public star RPC never exposes accounts.
+     starNames=new Map();
+     const namesResponse=await authClient.rpc('get_museum_star_attributions');
+     if(namesResponse.error){
+       starIdentityServiceReady=false;
+       starIdentityNotice='Named stars need the Supabase star attribution SQL setup.';
+     }else{
+       starIdentityServiceReady=true;starIdentityNotice='';
+       for(const row of Array.isArray(namesResponse.data)?namesResponse.data:[]){
+         if(row?.id&&typeof row.author_name==='string'&&row.author_name.trim())starNames.set(String(row.id),row.author_name.trim());
+       }
+     }
+     sharedAnswers=sharedAnswers.map(a=>({...a,authorName:starNames.get(a.id)||null}));
      sharedStatus='ready';sharedError='';lastSharedSync=Date.now();
    }catch(e){sharedStatus='error';sharedError=String(e.message||e)}
    finally{sharedRefreshPromise=null;const r=route();if(r.type==='lookout'||r.type==='sky'||r.type==='home')render(false)}
@@ -169,6 +186,8 @@ async function submitSharedAnswer(){
  if(submitBusy)return;
  if(!authClient){submitError='The login service is unavailable. Please refresh the page.';render(false);return}
  if(!authUser){submitError='Please sign in to save your answer to the shared sky. Your choices will remain here while you sign in.';render(false);return}
+ if(!['anonymous','named'].includes(flow.starMode)){submitError='Please choose how your star should appear.';render(false);return}
+ if(flow.starMode==='named'&&!flow.starName?.trim()){submitError='Enter the name you want visitors to see on your star.';render(false);return}
  const sc=scenario(flow.scenario);
  if(!sc||!['silent','speak'].includes(flow.decision)||!flow.reasons.length){submitError='Please complete your choice and reasons first.';render(false);return}
  const allowed=flow.reasons.every(n=>Number.isInteger(n)&&((n>=0&&n<sc[flow.decision].length)||n===99));
@@ -176,27 +195,21 @@ async function submitSharedAnswer(){
  submitBusy=true;submitError='';const next=$('#next');if(next){next.disabled=true;next.textContent='Saving your star…'}
  try{
    const {data:saved,error}=await authClient.from('museum_answers').upsert({
-     user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)]
+     user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],star_visibility:flow.starMode,
+     star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):''
    },{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single();
    if(error)throw error;
    if(!saved?.id)throw new Error('The database did not confirm a saved answer.');
+   if(flow.starMode==='named'&&!starIdentityServiceReady)throw new Error('Star saved, but public names are not enabled. Run supabase-star-identity.sql to allow named stars.');
    await refreshSharedAnswers();
    publicStarVerified=sharedStatus==='ready'&&sharedAnswers.some(a=>a.id===String(saved.id)&&a.scenario===saved.scenario);
    if(!publicStarVerified){
       throw new Error('Your answer was saved, but it could not be confirmed in the public starfield. Please check the Lookout status before submitting again.');
    }
-   const now={id:globalThis.crypto?.randomUUID?.()||String(Date.now()),scenario:flow.scenario,decision:flow.decision,
-     reasons:[...flow.reasons],other:flow.other,time:Date.now()};
-   // Local drafts are optional and private. Public star data comes only from the server.
-   if(flow.share==='yes'){
-     const storyDraft={id:flow.draftId||uuid(),scenario:validStoryCategory(flow.storyCategory)?flow.storyCategory:flow.scenario,
-       title:flow.title.trim(),story:flow.story,why:flow.why,time:now.time,
-       status:'private-draft',ownerId:authUser?.id||null,synced:false};
-     addLocalStory(storyDraft);
-     try{await syncCloudStory(storyDraft)}catch(err){storyCloudError='Cloud story backup unavailable: '+String(err.message||err);}
-
-   }
-   flow.submitted=true;flow.step=3;save();
+   // Star submission and public confirmation finish BEFORE story writing begins.
+   flow.submitted=true;
+   flow.step=3;
+   save();
  }catch(e){submitError='Could not confirm your star in the shared sky: '+String(e.message||e)}
  finally{submitBusy=false;render(false)}
 }
@@ -385,7 +398,7 @@ function bindComposingInputs(){
  const category=$('#story-category');if(category)category.addEventListener('change',()=>{flow.storyCategory=category.value;trackExperienceDraft()});
 }
 function progress(step){return `<div class="progress">${[0,1,2,3].map(i=>`<span class="${step>=i?'done':''}"></span>`).join('')}</div>`}
-function experience(id){const s=scenario(id);if(!s)return galleries();if(flow.scenario!==id){flow={scenario:id,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,submitted:false}}const stage=flow.step;let inner='';if(stage===0){inner=`<div class="eyebrow">01 · The choice</div><h2>Would you remain silent?</h2><p class="muted">${esc(s.question)}</p>${radio('decision','silent','Yes, I would remain silent.',flow.decision)}${radio('decision','speak','No, I would speak up.',flow.decision)}<div class="toolbar"><span class="small muted">There is no correct answer.</span><button class="btn" id="next" ${!flow.decision?'disabled':''}>Continue ↗</button></div>`}
+function experience(id){const s=scenario(id);if(!s)return galleries();if(flow.scenario!==id){flow={scenario:id,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false}}const stage=flow.step;let inner='';if(stage===0){inner=`<div class="eyebrow">01 · The choice</div><h2>Would you remain silent?</h2><p class="muted">${esc(s.question)}</p>${radio('decision','silent','Yes, I would remain silent.',flow.decision)}${radio('decision','speak','No, I would speak up.',flow.decision)}<div class="toolbar"><span class="small muted">There is no correct answer.</span><button class="btn" id="next" ${!flow.decision?'disabled':''}>Continue ↗</button></div>`}
 if(stage===1){let opts=flow.decision==='silent'?s.silent:s.speak;inner=`<div class="eyebrow">02 · The reasons</div><h2>${flow.decision==='silent'?'Why would you remain silent?':'Why would you speak up?'}</h2><p class="muted">Select every reason that fits. Your decision may have more than one cause.</p>${opts.map((o,i)=>check(i,o,flow.reasons.includes(i))).join('')}${check(99,'Other reason — write your own',flow.reasons.includes(99))}${flow.reasons.includes(99)?`<div class="form-row"><label for="other">Your other reason</label><textarea id="other" class="field" maxlength="600" placeholder="Tell us what else matters to you…">${esc(flow.other)}</textarea></div>`:''}<div class="toolbar"><button class="btn btn-outline" id="back">← Back</button><button class="btn" id="next" ${(!flow.reasons.length||(flow.reasons.includes(99)&&!flow.other.trim()))?'disabled':''}>Continue ↗</button></div>`}
 if(stage===2){inner=`<div class="eyebrow">03 · An invitation</div><h2>Have you been there?</h2><p class="muted">Have you experienced something similar? You can write a private story draft here. Publishing is always a separate decision.</p>${radio('share','no','No, I would rather go straight to the Lookout.',flow.share)}${radio('share','yes','Yes, I would like to write a story.',flow.share)}${flow.share==='yes'?`<div class="form-row"><label for="story-category">Which gallery does your story belong to? · 故事分类</label><select id="story-category" class="field" required>${storyCategoryOptions(flow.storyCategory||id)}</select><p class="small muted">You can choose a different gallery from this scene, and change it again later in Your Story Drafts.</p></div><div class="form-row"><label for="story-title">Story Title · 故事标题</label><input id="story-title" class="field" type="text" maxlength="120" required placeholder="Give your story a title…" value="${esc(flow.title)}"></div><div class="form-row"><label for="story">Your Story · 你的故事</label><textarea id="story" class="field" rows="5" maxlength="4000" placeholder="What happened? What did you want to say, and what did you choose?">${esc(flow.story)}</textarea></div><div class="form-row"><label for="why">Your Reason · 你的原因</label><textarea id="why" class="field" rows="4" maxlength="2000" placeholder="Why did you stay silent, or decide to speak?">${esc(flow.why)}</textarea></div><label class="choice-option"><input id="consent" type="checkbox" ${flow.consent?'checked':''}/><span>I understand this is a private draft, backed up on this device and to my account when cloud storage is available. It will not be published without a separate confirmation.</span></label>`:''}<p class="draft-save-status small muted" role="status">While you write, your private draft is saved on this device and synced to your account when signed in.</p><p class="privacy-caption">Your selected choice and reasons will be saved to the shared star database under your account. They are shown anonymously in the public sky. Your optional story remains a private draft unless you deliberately publish it. Free-text “other reasons” stay on this device. Avoid identifying or sensitive details.</p>${!authUser?'<div class="note">To contribute a star, please <a class="link-arrow" href="#/account">sign in or create an account</a> first. If you use Google sign-in, please return to this scene afterward and complete your choice again.</div>':''}${submitError?`<div class="auth-feedback" role="alert">${esc(submitError)}</div>`:''}<div class="toolbar"><button class="btn btn-outline" id="back">← Back</button><button class="btn" id="next" ${flow.share==='yes'&&(!flow.title.trim()||!flow.story.trim()||!flow.why.trim()||!flow.consent)?'disabled':''}>${flow.share==='yes'?'Save privately & view the sky ↗':'Enter the Lookout ↗'}</button></div>`}
 if(stage===3){inner=`<div class="eyebrow">04 · Your light</div><h2>A choice becomes a star.</h2><p class="muted">Your choice and selected reasons were saved to the shared museum database. When you answer this gallery again, your previous choice and reason stars are replaced rather than added.</p><div class="actions"><a class="btn" href="#/research/${encodeURIComponent(id)}">Discover what research says ↗</a><a class="btn btn-outline" id="see-gallery-lookout" href="https://zouyushan99-a11y.github.io/the-unsent-museum/lookout.html?v=lookout-direct3#/lookout/${encodeURIComponent(id)}">See this gallery's lookout ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this gallery's stories ↗</a>${flow.share==='yes'?'<a class="btn btn-outline" href="#/edit-story/${encodeURIComponent(flow.draftId)}">Review &amp; publish my story ↗</a>':''}<button class="btn btn-outline" id="edit-answer">Change my answer ↗</button><a class="btn btn-outline" href="#/galleries">Explore another gallery</a></div>`}
@@ -393,7 +406,7 @@ return `<main class="container"><div class="page-hero" style="padding-bottom:0">
 function radio(name,value,label,selected){return `<label class="choice-option"><input type="radio" name="${name}" value="${esc(value)}" ${selected===value?'checked':''}/><span>${esc(label)}</span></label>`}
 function check(value,label,checked){return `<label class="choice-option"><input class="reason-check" type="checkbox" value="${value}" ${checked?'checked':''}/><span>${esc(label)}</span></label>`}
 function bindExperience(id){const s=scenario(id);if(!s)return;let $next=$('#next');if(flow.step===0){document.querySelectorAll('input[name=decision]').forEach(el=>el.onchange=()=>{flow.decision=el.value;flow.reasons=[];flow.other='';render(false)})}if(flow.step===1){document.querySelectorAll('.reason-check').forEach(el=>el.onchange=()=>{let n=Number(el.value);flow.reasons=el.checked?[...flow.reasons,n]:flow.reasons.filter(x=>x!==n);if(n===99)flow.other='';render(false)});let o=$('#other');if(o)o.oninput=()=>{flow.other=o.value;$('#next').disabled=!flow.other.trim()||!flow.reasons.length}}if(flow.step===2){document.querySelectorAll('input[name=share]').forEach(el=>el.onchange=()=>{flow.share=el.value;render(false)});const category=$('#story-category');if(category)category.onchange=()=>{flow.storyCategory=category.value;trackExperienceDraft()};['title','story','why'].forEach(id=>{let el=$('#'+(id==='title'?'story-title':id));if(el)el.oninput=()=>{flow[id]=el.value;updateReady();trackExperienceDraft()}});let c=$('#consent');if(c)c.onchange=()=>{flow.consent=c.checked;updateReady()};let ex=$('#exhibit');if(ex)ex.onchange=()=>{flow.exhibit=ex.checked}}
-const edit=$('#edit-answer');if(edit)edit.onclick=()=>{flow={scenario:id,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,submitted:false};render(false)};const back=$('#back');if(back)back.onclick=()=>{flow.step--;render(false)};if($next)$next.onclick=()=>{if(flow.step===2){submitSharedAnswer();return}flow.step++;render(false)};function updateReady(){let n=$('#next');if(n)n.disabled=flow.share==='yes'&&(!flow.title.trim()||!flow.story.trim()||!flow.why.trim()||!flow.consent)}}
+const edit=$('#edit-answer');if(edit)edit.onclick=()=>{flow={scenario:id,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false};render(false)};const back=$('#back');if(back)back.onclick=()=>{flow.step--;render(false)};if($next)$next.onclick=()=>{if(flow.step===2){submitSharedAnswer();return}flow.step++;render(false)};function updateReady(){let n=$('#next');if(n)n.disabled=flow.share==='yes'&&(!flow.title.trim()||!flow.story.trim()||!flow.why.trim()||!flow.consent)}}
 function results(id){return sharedAnswers.filter(a=>!id||a.scenario===id)}
 function reasonData(arr,decision,id){const s=scenario(id);if(!s)return[];let pool=s[decision==='silent'?'silent':'speak'];return pool.map((name,i)=>({name,n:arr.filter(a=>a.decision===decision&&a.reasons.includes(i)).length})).filter(r=>r.n).sort((a,b)=>b.n-a.n)}
 function reasonPanel(arr,decision,id){const filtered=arr.filter(a=>a.decision===decision);let items=reasonData(arr,decision,id);const sc=scenario(id);const pool=sc[decision];return `<div class="reason-panel"><h3><span class="dot ${decision==='silent'?'blue':'gold'}"></span>${decision==='silent'?'Why they stayed silent':'Why they spoke up'}</h3><p class="small muted">${filtered.length} response(s) · Multiple choice, so percentages may sum above 100%.</p>${items.length?items.map(item=>{const pct=Math.round(item.n/filtered.length*100);const i=pool.indexOf(item.name);const colour=reasonColour(decision,i);return `<div class="bar-item"><div class="bar-label"><span><i class="reason-colour-dot" style="--reason-colour:${colour}"></i>${esc(item.name)}</span><b>${item.n} · ${pct}%</b></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colour}"></div></div></div>`}).join(''):'<p class="muted small">No reasons recorded yet.</p>'}</div>`}
