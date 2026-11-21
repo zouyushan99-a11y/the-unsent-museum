@@ -1810,9 +1810,6 @@ body::before{display:none!important}
 /* November 2026: Main historical collection + dedicated tablet and phone layout. */
 .museum-portal-grid{width:min(1170px,calc(100% - 160px));grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.2vw,18px)}
 .museum-portal{min-width:0;min-height:258px;padding:25px 12px 20px}
-.museum-portal-history{border:2px solid #f6d596;background:linear-gradient(145deg,rgba(74,54,33,.65),rgba(6,28,51,.98)),url("assets/museum-v26-ornament.webp") center/cover;box-shadow:0 12px 40px rgba(2,8,22,.5),inset 0 0 42px rgba(215,164,86,.13)}
-.museum-portal-history .museum-portal-icon{color:#f5d594;font:normal clamp(2.8rem,4vw,4.5rem)/1 Georgia,serif}
-.museum-portal-history .museum-portal-heading{color:#f7deb1}
 .history-home-feature{padding-top:clamp(65px,9vw,115px);padding-bottom:clamp(45px,6vw,85px)}
 .history-home-feature-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:30px}
 .history-home-feature-heading>div{max-width:750px}
@@ -1907,10 +1904,6 @@ body::before{display:none!important}
  .footer-inner{gap:18px}
 }
 
-/* Keep the Historical Archive card consistent with all four adjacent museum portals. */
-.museum-portal-history{border:1px solid rgba(218,177,104,.52);background:linear-gradient(155deg,rgba(10,34,58,.83),rgba(7,24,43,.94))!important;box-shadow:0 12px 36px rgba(1,9,23,.35)}
-.museum-portal-history .museum-portal-icon{color:#dfb96e!important;font:inherit;line-height:normal}
-.museum-portal-history .museum-portal-heading{color:#f5d6a1}
 
 /* Interpretation is evidence-led prose; the reflective question is a separate reading pause. */
 .history-reflection-kicker{max-width:790px;margin:58px auto 0;color:#dfbe83;font:600 .71rem/1.5 system-ui,-apple-system,sans-serif;letter-spacing:.19em;text-transform:uppercase;padding-top:26px;border-top:1px solid rgba(227,195,139,.26)}
