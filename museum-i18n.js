@@ -1,4 +1,4 @@
-/* Museum authored multilingual interface dictionary and historical names. */
+/* Trilingual museum interface and story text localization. */
 window.MUSEUM_I18N={zh:{
   "Home": "首页",
   "Galleries": "展厅",
@@ -475,7 +475,24 @@ window.MUSEUM_I18N={zh:{
   "Thomas More": "托马斯·莫尔",
   "Elizabeth I": "伊丽莎白一世",
   "Queen Victoria": "维多利亚女王",
-  "Thomas Hardy": "托马斯·哈代"
+  "Thomas Hardy": "托马斯·哈代",
+  "The Historical Archive": "历史档案馆",
+  "Real letters, private manuscripts and deliberate silence": "真实信件、私人手稿与主动沉默",
+  "FEATURED COLLECTION · THE UNSENT ARCHIVES": "精选馆藏 · 未曾寄出的档案",
+  "Some words never reached their readers.": "有些话，始终没有抵达收信人。",
+  "Start with documented moments when someone wrote, composed or prepared to speak — then deliberately held something back.": "从真实的信件、手稿和历史决定开始，看看人们如何在表达之后选择保留某些话。",
+  "Enter the Historical Archive ↗": "进入历史档案馆 ↗",
+  "1919 · PRAGUE": "1919 · 布拉格",
+  "1863 · WASHINGTON": "1863 · 华盛顿",
+  "1806–1840 · YORKSHIRE": "1806–1840 · 约克郡",
+  "The Letter Never Delivered": "未交出去的信",
+  "The Anger Left on Paper": "留在纸上的愤怒",
+  "A Diary Written in Code": "加密的日记",
+  "Kafka wrote to his father. The letter never arrived.": "卡夫卡写给父亲的长信，最终没有送达。",
+  "Lincoln wrote a sharp rebuke — then left it unsent.": "林肯写下严厉的责备，却最终没有寄出。",
+  "Anne Lister wrote down her private life, but guarded who could read it.": "安妮·李斯特记录私人生活，却谨慎选择谁能够读懂。",
+  "Read this exhibit ↗": "阅读这份展品 ↗",
+  "Arranged by the year of the relevant event, earliest first — not by birth date.": "按相关事件发生的大致时间从早到晚排列，而非依照人物出生年份。"
 },scenarios:{
   "friendship": {
     "title": "朋友之间",
