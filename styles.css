@@ -314,3 +314,12 @@ line-height:1.42;overflow-wrap:anywhere;
 .story-editor-panel textarea{resize:vertical}
 .draft-save-status{color:#d2c29d;margin:10px 0}
 @media(max-width:650px){.publication-section{padding:16px 14px}.publication-section .btn{width:100%;text-align:center}.publication-section h3{font-size:1.42rem}}
+
+/* Public/private data access diagnostics; shown without revealing stories or identities. */
+.diagnostic-results{padding:20px;border:1px solid rgba(210,221,243,.2);border-radius:15px;background:#111a2a}
+.system-check-line{padding:14px 0;border-bottom:1px solid rgba(210,221,243,.13)}
+.system-check-line:last-child{border-bottom:0}
+.system-check-line strong{font-size:.94rem}
+.system-check-line p{font-size:.85rem;color:#afbdd1;margin:5px 0 0;overflow-wrap:anywhere}
+.check-ok{color:#b3d8b8}
+.check-fail{color:#f2b3a2}
