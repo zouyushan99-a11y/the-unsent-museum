@@ -32,5 +32,18 @@
   "What stays unsaid between people we care about?": "面对我们在乎的人，有哪些话始终没有说出口？",
   "When is a different opinion too difficult to voice?": "什么时候，表达不同意见会变得如此困难？",
   "What goes unspoken around familiar tables?": "在熟悉的家庭餐桌旁，哪些话没有被说出来？",
-  "A message written, revised, then left behind.": "一条写下、修改，最终却没有发出的消息。"
+  "A message written, revised, then left behind.": "一条写下、修改，最终却没有发出的消息。",
+"Delete this story permanently":"永久删除这篇故事",
+"Only the account that published this story can delete it.":"只有最初发布这篇故事的账号才能删除。",
+"Sign in with the account that published this story to delete it from the public archive.":"请登录最初发布这篇故事的账号，才能将其从公开档案中删除。",
+"Permanently delete your published story? It will disappear from the museum archive. This cannot be undone, and copies saved by others may remain.":"确定永久删除已经发布的故事吗？它将从博物馆公开档案中移除，而且无法恢复。但其他人先前保存的副本可能仍然存在。",
+"Permanently delete this private draft? This cannot be undone.":"确定永久删除这份私人草稿吗？删除后无法恢复。",
+"Sign in with the original story account before removing its cloud copy.":"请先登录原来保存这篇故事的账号，才能删除云端副本。",
+"Deletion was not confirmed by the cloud. Your story has been kept. Check that you are signed in with the original account and try again.":"云端没有确认删除成功，故事已保留。请确认你登录的是原作者账号，然后重试。",
+"Cloud deletion could not be verified. Your draft has been kept.":"无法核实云端是否已删除。为安全起见，草稿已保留。",
+"Your story was deleted from your cloud account, but the public archive could not be refreshed. Please check again later.":"故事已从你的云端账号删除，但公开档案暂时无法刷新。请稍后再次检查。",
+"Could not delete this story. No local copy was removed. ":"删除失败，本地故事尚未移除。原因：",
+"Cloud backup confirmed":"云端备份已确认",
+"Saved on this device · cloud backup not confirmed":"已保存在此设备 · 云端备份尚未确认",
+"Sign in to sync drafts across devices.":"登录后可在不同设备间同步草稿。"
 });})();
