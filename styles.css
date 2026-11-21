@@ -1512,7 +1512,7 @@ body::before{
    1000px archival paper. Interactive star canvas is unchanged.
    ==================================================================== */
 :root{
- --museum-v26-hero: url("assets/museum-v26-hero.webp");
+ --museum-v26-hero: url("assets/museum-v27-hero-hq.webp");
  --museum-v26-room: url("assets/museum-v26-overall.webp");
  --museum-v26-ornament: url("assets/museum-v26-ornament.webp");
  --museum-v26-paper: url("assets/museum-v26-paper.webp");
@@ -1659,4 +1659,14 @@ body::before{display:none!important}
 @media(prefers-reduced-transparency:reduce){
  .museum-portal{background-color:#0b2239}
  .story-reader{background-color:#f3e4c9}
+}
+
+/* V27: retain the original painted foyer at full detail. */
+.museum-home .museum-hero{
+ image-rendering:auto;
+ background-position:center,center 49%;
+ background-size:cover;
+}
+@media(min-width:1600px){
+ .museum-home .museum-hero{background-position:center,center 47%}
 }
