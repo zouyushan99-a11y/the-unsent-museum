@@ -1792,3 +1792,17 @@ body::before{display:none!important}
 .history-reason-tags{max-width:760px;display:flex;flex-wrap:wrap;gap:8px;margin:24px auto 0}
 .history-reason-tag{display:inline-block;border-radius:100px;padding:7px 12px;border:1px solid #a98a58;color:#624a2d;font-size:.81rem;background:rgba(255,255,255,.35)}
 @media(max-width:680px){.history-moment-rows{grid-template-columns:1fr}.history-source-object{padding:20px}.history-moment-rows>div{padding:16px}}
+
+/* Bilingual navigation control: language preference stays in the browser. */
+.site-header{gap:12px}
+.museum-language-switch{display:flex;align-items:center;gap:8px;flex-shrink:0;font-family:system-ui,-apple-system,sans-serif;font-size:.78rem}
+.museum-language-switch label{color:#e8d7ad;white-space:nowrap}
+.museum-language-switch select{border:1px solid rgba(233,194,121,.6);border-radius:6px;background:#0d2034;color:#f3e4cc;padding:8px 11px;min-height:37px;max-width:150px;cursor:pointer}
+.museum-language-switch select:focus-visible{outline:2px solid #ffd995;outline-offset:2px}
+.immersive-sky-page~.museum-language-switch{position:fixed;top:14px;right:14px;z-index:100}
+.history-analysis-section .history-moment-section{background:rgba(242,228,206,.96);margin:24px auto 34px;color:#322a20;max-width:830px;padding:34px 24px;border:1px solid rgba(159,121,67,.3)}
+.history-analysis-section .history-moment-section .history-section-title{display:none}
+.history-analysis-section .history-moment-rows{grid-template-columns:repeat(2,minmax(0,1fr))}
+.history-analysis-section .history-moment-rows .history-moment-certainty{grid-column:1/-1}
+@media(max-width:930px){.site-header{flex-wrap:wrap}.site-header .museum-language-switch{margin-left:auto}}
+@media(max-width:640px){.museum-language-switch{font-size:.72rem}.museum-language-switch select{padding:7px 8px}.history-analysis-section .history-moment-rows{grid-template-columns:1fr}.history-analysis-section .history-moment-rows .history-moment-certainty{grid-column:1/-1}}
