@@ -358,5 +358,5 @@ line-height:1.42;overflow-wrap:anywhere;
 /* The five public story collections each have a fixed star color. */
 .story-star-legend{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin:12px 0 20px;padding:14px 18px;border:1px solid rgba(222,209,175,.20);border-radius:13px;background:rgba(23,33,52,.64)}
 .story-legend-item{display:inline-flex;align-items:center;gap:9px;font-size:.78rem;line-height:1.5;color:#d7dce8}
-.story-legend-star{flex:0 0 auto;font-size:1.2rem;color:var(--story-star-color);text-shadow:0 0 9px var(--story-star-color),0 0 15px var(--story-star-color)}
+.story-legend-star{flex:0 0 12px;width:12px;height:12px;display:inline-block;border-radius:50%;background:radial-gradient(circle at 42% 37%,#fff9e7 0%,var(--story-star-color) 26%,var(--story-star-color) 50%,transparent 77%);box-shadow:0 0 7px 2px var(--story-star-color),0 0 15px var(--story-star-color)}
 @media(max-width:600px){.story-star-legend{gap:7px 13px;padding:12px}.story-legend-item{font-size:.73rem}}
