@@ -466,7 +466,7 @@ function reasonPanel(arr,decision,id){const filtered=arr.filter(a=>a.decision===
 const REASON_COLOURS=['#C47749','#D9A044','#E5C46A','#8F9F65','#579487','#5A9FB0','#5681B1','#7B79B3','#A16C87','#B27B4F','#B7AD6F','#78A69A','#79A5BD','#CAA05A','#987C99','#97A7D1'];
 function reasonIndex(decision,number){return (decision==='speak'?8:0)+(Number(number)===99?7:Number(number))}
 function reasonColour(decision,number){return REASON_COLOURS[reasonIndex(decision,number)]||'#d6c7b2'}
-function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const label=Number(n)===99?'Other reason':pool[Number(n)];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.decision,n),label,scenario:a.scenario,decision:a.decision})}}return stars}
+function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const label=Number(n)===99?'Other reason':pool[Number(n)];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.decision,n),label,scenario:a.scenario,decision:a.decision,authorName:a.authorName||null})}}return stars}
 function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SCENARIOS;return groups.map(sc=>{const parts=['silent','speak'].map(decision=>{const pool=sc[decision];const items=pool.map((name,i)=>({name,n:i})).concat([{name:'Other reason',n:99}]);const observed=reasonStars(arr).filter(x=>x.scenario===sc.id&&x.decision===decision);return '<div class="reason-colour-group"><h4>'+(decision==='silent'?'Reasons for silence':'Reasons for speaking')+'</h4><div class="reason-colour-grid">'+items.filter(item=>observed.some(x=>x.label===item.name)).map(item=>'<div class="reason-colour-item"><i class="reason-colour-dot" style="--reason-colour:'+reasonColour(decision,item.n)+'"></i><span>'+esc(item.name)+'</span></div>').join('')+'</div></div>'}).join('');return '<section class="reason-legend-gallery"><h3>'+esc(sc.title)+'</h3>'+parts+'</section>'}).filter(html=>!id||html).join('')}
 // Van Gogh-inspired multi-vortex placement. Brush strokes are decorative; each star still represents a real choice or reason.
 const VORTICES=[{x:.22,y:.68,sx:.31,sy:.36,turn:1},{x:.74,y:.31,sx:.30,sy:.34,turn:-1},{x:.52,y:.55,sx:.27,sy:.25,turn:1}];
@@ -504,9 +504,9 @@ function paintStar(ctx,x,y,r,colour){const glow=ctx.createRadialGradient(x,y,0,x
 // Individual-star hit detection for mouse hover and phone/tablet taps.
 // Only answers and predefined reason labels are displayed; no email or private free-text.
 function starDescription(st){
-const name=scenario(st.scenario)?.title||'The Museum';
-if(st.kind==='reason')return {gallery:name,title:st.decision==='silent'?'Reason for silence':'Reason for speaking',detail:st.label};
-return {gallery:name,title:st.decision==='silent'?'Chose to remain silent':'Chose to speak up',detail:st.decision==='silent'?'Silence':'Speak up'}
+const name=scenario(st.scenario)?.title||'The Museum';const author=st.authorName||'无名的星星';
+if(st.kind==='reason')return {gallery:name,title:st.decision==='silent'?'Reason for silence':'Reason for speaking',detail:st.label,author};
+return {gallery:name,title:st.decision==='silent'?'Chose to remain silent':'Chose to speak up',detail:st.decision==='silent'?'Silence':'Speak up',author}
 }
 function closestSkyStar(canvas,clientX,clientY,touch=false){
 const rect=canvas.getBoundingClientRect();
@@ -520,7 +520,7 @@ function showStarTooltip(st,x,y){
 hideStarTooltip();if(!st)return;
 const d=starDescription(st);
 const t=document.createElement('div');t.className='star-info-tooltip';t.setAttribute('role','status');
-t.innerHTML='<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span>'+esc(d.detail)+'</span>';
+t.innerHTML='<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span>'+esc(d.detail)+'</span><span class="sky-star-author">✧ '+esc(d.author)+'</span>';
 document.body.append(t);
 const width=Math.min(300,innerWidth-24);
 t.style.maxWidth=width+'px';
@@ -529,24 +529,43 @@ t.style.left=Math.max(12,Math.min(innerWidth-box.width-12,x+16))+'px';
 t.style.top=Math.max(12,Math.min(innerHeight-box.height-12,y-box.height-14))+'px'
 }
 function bindStarInteractions(){
-for(const canvas of document.querySelectorAll('#main-sky,#reason-sky,#immersive-sky-canvas')){
-if(canvas.dataset.starsBound)continue;canvas.dataset.starsBound='true';
-const overlay=canvas.closest('.expandable-sky')?.querySelector('.sky-expand-link');
-const target=overlay||canvas.closest('.immersive-sky-page')||canvas;
-target.addEventListener('pointermove',ev=>{
-if(ev.pointerType==='touch')return;
-const st=closestSkyStar(canvas,ev.clientX,ev.clientY);
-if(st){showStarTooltip(st,ev.clientX,ev.clientY);target.style.cursor='pointer'}
-else{hideStarTooltip();target.style.cursor=overlay?'zoom-in':'default'}
-});
-target.addEventListener('pointerleave',hideStarTooltip);
-target.addEventListener('click',ev=>{
-if(ev.target.closest('.immersive-sky-back'))return;
-const st=closestSkyStar(canvas,ev.clientX,ev.clientY,ev.pointerType==='touch');
-if(st){if(overlay)ev.preventDefault();showStarTooltip(st,ev.clientX,ev.clientY)}
-else hideStarTooltip()
-});
-}
+ for(const canvas of document.querySelectorAll('#main-sky,#reason-sky,#immersive-sky-canvas')){
+  if(canvas.dataset.starsBound)continue;canvas.dataset.starsBound='true';
+  const overlay=canvas.closest('.expandable-sky')?.querySelector('.sky-expand-link');
+  const target=overlay||canvas.closest('.immersive-sky-page')||canvas;
+  let heldTimer=null,held=false,holdX=0,holdY=0;
+  const clearHold=()=>{if(heldTimer){clearTimeout(heldTimer);heldTimer=null}};
+  target.addEventListener('pointerdown',ev=>{
+   if(ev.target.closest('.immersive-sky-back'))return;
+   held=false;holdX=ev.clientX;holdY=ev.clientY;clearHold();
+   if(ev.pointerType==='mouse')return;
+   heldTimer=setTimeout(()=>{
+    heldTimer=null;
+    const st=closestSkyStar(canvas,holdX,holdY,true);
+    if(st){held=true;showStarTooltip(st,holdX,holdY)}
+   },550);
+  });
+  target.addEventListener('pointermove',ev=>{
+   if(ev.pointerType==='touch'||ev.pointerType==='pen'){
+     if(Math.hypot(ev.clientX-holdX,ev.clientY-holdY)>12)clearHold();
+     return;
+   }
+   const st=closestSkyStar(canvas,ev.clientX,ev.clientY);
+   if(st){showStarTooltip(st,ev.clientX,ev.clientY);target.style.cursor='pointer'}
+   else{hideStarTooltip();target.style.cursor=overlay?'zoom-in':'default'}
+  });
+  target.addEventListener('pointerup',clearHold);
+  target.addEventListener('pointercancel',clearHold);
+  target.addEventListener('pointerleave',()=>{clearHold();if(!held)hideStarTooltip()});
+  target.addEventListener('contextmenu',ev=>{if(held)ev.preventDefault()});
+  target.addEventListener('click',ev=>{
+   if(ev.target.closest('.immersive-sky-back'))return;
+   if(held){ev.preventDefault();held=false;return}
+   const st=closestSkyStar(canvas,ev.clientX,ev.clientY,ev.pointerType==='touch');
+   if(st){if(overlay)ev.preventDefault();showStarTooltip(st,ev.clientX,ev.clientY)}
+   else hideStarTooltip();
+  });
+ }
 }
 
 // Every recorded answer stays in the same place. Only its light changes.
@@ -586,7 +605,7 @@ function makeSkyCanvasScene(canvas,arr,kind){
     const colour=reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
     const hash=starHash(id),random=seededRand(hash);
     targets.push({...pos,r:flowTrack.r,flowTrack,kind:reason?'reason':'choice',scenario:answer.scenario,
-      decision:answer.decision,...(reason?{label:answer.label}:{}),
+      decision:answer.decision,authorName:answer.authorName||null,...(reason?{label:answer.label}:{}),
       sprite:makeStarSprite(colour,flowTrack.r),phase:random()*Math.PI*2,
       speed:.48+random()*1.35,secondPhase:random()*Math.PI*2,
       // Each star has its own brightness and rhythm; no synchronized flashing.
@@ -646,7 +665,7 @@ skyReduceMotion.addEventListener?.('change',()=>{
 });
 function drawReasonSky(canvas,arr){makeSkyCanvasScene(canvas,arr,'reason')}
 function legacyStarImportPanel(){if(!db.answers.length)return '';return '<section class="legacy-star-import"><div><strong>Earlier answers on this device</strong><p class="small muted">You have '+db.answers.length+' answer(s) from the older browser-only version. They were not automatically uploaded when the museum switched to shared stars. You can add missing answers without replacing newer cloud entries. Private stories stay here.</p></div>'+(authUser?'<button type="button" class="btn btn-outline" id="import-old-stars" '+(importBusy?'disabled':'')+'>Import earlier stars ↗</button>':'<a class="btn btn-outline" href="#/account">Sign in to import ↗</a>')+(importMessage?'<p class="auth-feedback" role="status">'+esc(importMessage)+'</p>':'')+'</section>'}
-function lookout(id){const s=id?scenario(id):null;if(id&&!s)return home();const arr=results(id),sil=arr.filter(a=>a.decision==='silent').length,sp=arr.length-sil,reasonEntries=reasonStars(arr);let pct=(n)=>arr.length?Math.round(n/arr.length*100)+'%':'—';return `<main class="sky-page"><div class="container"><div class="sky-heading"><div class="eyebrow">${s?`Gallery ${s.num} · The Lookout`:'The Observatory / 瞭望区'}</div><h1>${s?esc(s.title):'A Sky Made of Choices'}.</h1><p class="muted">${s?'A constellation for this one moment.':'Every gallery has its own sky. This one brings them together.'}</p><p class="small muted">${sharedStatus==='ready'?'Shared museum database · '+arr.length+' anonymous response(s)':sharedStatus==='loading'?'Loading the shared museum sky…':'Shared sky temporarily unavailable'}</p>${sharedStatus==='error'?`<div class="note" role="alert">Could not load public star data: ${esc(sharedError)}. <button type="button" class="btn btn-outline" id="retry-stars">Retry</button></div>`:''}</div>${legacyStarImportPanel()}<div class="observatory-section"><h2 class="observatory-title">I. The Choice Sky</h2><p class="small muted">One blue or golden star for each answer about remaining silent or speaking up.</p><div class="sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/choice/${id||'all'}" aria-label="Open choice sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="main-sky" role="img" aria-label="Starfield of locally recorded silent and speaking choices"></canvas>${arr.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>An empty sky, for now.</h3><p>Every response will become a blue or golden star. Nothing has been invented.</p></div>`:''}</div><div class="legend"><span><i class="dot blue"></i>Silence · 沉默</span><span><i class="dot gold"></i>Speak up · 表达</span></div><div class="stats"><div class="stat"><strong>${arr.length}</strong><span>Total scenario responses</span></div><div class="stat"><strong>${pct(sil)}</strong><span>Blue · Silence (${sil})</span></div><div class="stat"><strong>${pct(sp)}</strong><span>Gold · Speak up (${sp})</span></div></div></div><section class="observatory-section reason-observatory"><div class="eyebrow">WHAT LIES BEHIND EACH CHOICE</div><h2 class="observatory-title">II. The Reasons Sky</h2><p class="muted narrow">One star for every reason selected. A visitor who chooses three reasons leaves <strong>three differently coloured stars</strong>. Each reason has its own colour within its gallery.</p><div class="sky-frame reason-sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/reasons/${id||'all'}" aria-label="Open reasons sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="reason-sky" role="img" aria-label="Multi-colour starfield. One star represents one selected reason."></canvas>${reasonEntries.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>Every reason has a colour.</h3><p>When visitors select reasons, their stars will appear here.</p></div>`:''}</div><p class="reason-sky-count"><strong>${reasonEntries.length}</strong> reason star(s) · ${arr.length} answer(s). Multiple selections create multiple stars.</p>${reasonEntries.length?`<details class="reason-colour-legend" ${s?'open':''}><summary>Explore the colours and their meanings</summary><div class="reason-colour-content">${reasonLegend(arr,id)}</div></details>`:''}</section><p class="privacy-caption">The star data is shared anonymously across visitors. Each signed-in account may leave one current answer per gallery. Choice sky: one star per answer. Reasons sky: one star per selected reason. This is a voluntary sample, not a representative survey. Private story drafts stay in your browser.</p>${s?`<div class="reason-panels">${reasonPanel(arr,'silent',id)}${reasonPanel(arr,'speak',id)}</div><div class="actions"><a class="btn btn-outline" href="#/gallery/${id}">Read the story ↗</a><a class="btn btn-outline" href="#/lookout">See the entire sky ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this room's stories ↗</a></div>`:`<section class="section-compact"><div class="eyebrow">The constellations</div><h2>Find a gallery's sky.</h2><div class="constellations">${SCENARIOS.map(x=>`<a href="#/lookout/${x.id}" class="constellation"><canvas data-mini="${x.id}" aria-hidden="true"></canvas><b>${esc(x.title)}</b><span>${results(x.id).length} local response(s) · View the gallery →</span></a>`).join('')}</div></section>`}<div class="divider"></div><div class="actions"><a class="btn btn-outline" href="#/galleries">Explore the galleries ↗</a><a class="btn btn-outline" href="#/archive">Read all stories ↗</a><a class="btn btn-soft" href="#/my-stories">Your private story drafts ↗</a></div></div></main>`}
+function lookout(id){const s=id?scenario(id):null;if(id&&!s)return home();const arr=results(id),sil=arr.filter(a=>a.decision==='silent').length,sp=arr.length-sil,reasonEntries=reasonStars(arr);let pct=(n)=>arr.length?Math.round(n/arr.length*100)+'%':'—';return `<main class="sky-page"><div class="container"><div class="sky-heading"><div class="eyebrow">${s?`Gallery ${s.num} · The Lookout`:'The Observatory / 瞭望区'}</div><h1>${s?esc(s.title):'A Sky Made of Choices'}.</h1><p class="muted">${s?'A constellation for this one moment.':'Every gallery has its own sky. This one brings them together.'}</p><p class="small muted">${sharedStatus==='ready'?'Shared museum database · '+arr.length+' visitor response(s)':sharedStatus==='loading'?'Loading the shared museum sky…':'Shared sky temporarily unavailable'}</p>${sharedStatus==='error'?`<div class="note" role="alert">Could not load public star data: ${esc(sharedError)}. <button type="button" class="btn btn-outline" id="retry-stars">Retry</button></div>`:''}</div>${legacyStarImportPanel()}<div class="observatory-section"><h2 class="observatory-title">I. The Choice Sky</h2><p class="small muted">One blue or golden star for each answer about remaining silent or speaking up. Tap or press a star to see its choice and public name, or 无名的星星 for anonymous visitors.</p><div class="sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/choice/${id||'all'}" aria-label="Open choice sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="main-sky" role="img" aria-label="Starfield of locally recorded silent and speaking choices"></canvas>${arr.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>An empty sky, for now.</h3><p>Every response will become a blue or golden star. Nothing has been invented.</p></div>`:''}</div><div class="legend"><span><i class="dot blue"></i>Silence · 沉默</span><span><i class="dot gold"></i>Speak up · 表达</span></div><div class="stats"><div class="stat"><strong>${arr.length}</strong><span>Total scenario responses</span></div><div class="stat"><strong>${pct(sil)}</strong><span>Blue · Silence (${sil})</span></div><div class="stat"><strong>${pct(sp)}</strong><span>Gold · Speak up (${sp})</span></div></div></div><section class="observatory-section reason-observatory"><div class="eyebrow">WHAT LIES BEHIND EACH CHOICE</div><h2 class="observatory-title">II. The Reasons Sky</h2><p class="muted narrow">One star for every reason selected. A visitor who chooses three reasons leaves <strong>three differently coloured stars</strong>. Each reason has its own colour within its gallery.</p><div class="sky-frame reason-sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/reasons/${id||'all'}" aria-label="Open reasons sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="reason-sky" role="img" aria-label="Multi-colour starfield. One star represents one selected reason."></canvas>${reasonEntries.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>Every reason has a colour.</h3><p>When visitors select reasons, their stars will appear here.</p></div>`:''}</div><p class="reason-sky-count"><strong>${reasonEntries.length}</strong> reason star(s) · ${arr.length} answer(s). Multiple selections create multiple stars.</p>${reasonEntries.length?`<details class="reason-colour-legend" ${s?'open':''}><summary>Explore the colours and their meanings</summary><div class="reason-colour-content">${reasonLegend(arr,id)}</div></details>`:''}</section><p class="privacy-caption">The star data is shared anonymously across visitors. Each signed-in account may leave one current answer per gallery. Choice sky: one star per answer. Reasons sky: one star per selected reason. This is a voluntary sample, not a representative survey. Private story drafts stay in your browser.</p>${s?`<div class="reason-panels">${reasonPanel(arr,'silent',id)}${reasonPanel(arr,'speak',id)}</div><div class="actions"><a class="btn btn-outline" href="#/gallery/${id}">Read the story ↗</a><a class="btn btn-outline" href="#/lookout">See the entire sky ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this room's stories ↗</a></div>`:`<section class="section-compact"><div class="eyebrow">The constellations</div><h2>Find a gallery's sky.</h2><div class="constellations">${SCENARIOS.map(x=>`<a href="#/lookout/${x.id}" class="constellation"><canvas data-mini="${x.id}" aria-hidden="true"></canvas><b>${esc(x.title)}</b><span>${results(x.id).length} local response(s) · View the gallery →</span></a>`).join('')}</div></section>`}<div class="divider"></div><div class="actions"><a class="btn btn-outline" href="#/galleries">Explore the galleries ↗</a><a class="btn btn-outline" href="#/archive">Read all stories ↗</a><a class="btn btn-soft" href="#/my-stories">Your private story drafts ↗</a></div></div></main>`}
 function fullSky(kind,id){const s=id&&id!=='all'?scenario(id):null;if(id!=='all'&&!s)return lookout();const reasons=kind==='reasons';const arr=results(id==='all'?undefined:id);return `<main class="immersive-sky-page"><canvas id="immersive-sky-canvas" role="img" aria-label="${reasons?'Reasons starfield':'Choice starfield'}"></canvas><a class="immersive-sky-back" href="#/lookout${s?'/'+s.id:''}" aria-label="返回瞭望区">← 返回 <span>Back to the Lookout</span></a><div class="immersive-sky-caption" aria-hidden="true"><span class="eyebrow">${reasons?'The Reasons Sky':'The Choice Sky'}</span><span class="immersive-count">${reasons?reasonStars(arr).length:arr.length} ${reasons?'reason stars':'choice stars'} · ${s?esc(s.title):'All galleries'}</span></div>${sharedStatus==='loading'?'<div class="immersive-empty"><div>✧</div><p>Gathering stars from the museum…</p></div>':sharedStatus==='error'?'<div class="immersive-empty"><div>✧</div><p>The shared sky is temporarily unavailable.</p></div>':arr.length===0?'<div class="immersive-empty"><div>✧</div><p>An empty sky, for now.</p></div>':''}</main>`}
 
 function privateStories(){
