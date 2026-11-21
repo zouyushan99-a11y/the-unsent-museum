@@ -1,4 +1,4 @@
-/* Research-grounded historical entries, with provenance-labelled archival imagery. */
+/* Sourced historical dossiers and verified Wikimedia Commons images. */
 window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{}, {
   "jane-austen": {
     "title": "A Novel by a Lady",
@@ -225,7 +225,7 @@ window.MUSEUM_HISTORY_LONGFORM=Object.assign(window.MUSEUM_HISTORY_LONGFORM||{},
     ],
     "images": [
       {
-        "src": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg",
+        "src": "https://upload.wikimedia.org/wikipedia/commons/8/82/Louisa_May_Alcott%2C_c._1870_-_Warren%27s_Portraits%2C_Boston.jpg",
         "page": "https://commons.wikimedia.org/wiki/File:Louisa_May_Alcott,_c._1870_-_Warren%27s_Portraits,_Boston.jpg",
         "kind": "Historical photograph",
         "caption": "Louisa May Alcott, around 1870, in an original nineteenth-century portrait photograph; not an image of her writing as A. M. Barnard.",
