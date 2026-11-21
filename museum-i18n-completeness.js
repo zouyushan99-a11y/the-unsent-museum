@@ -106,3 +106,9 @@
   "THE MUSEUM": "本馆",
   "OPEN ARCHIVE": "开放收藏室"
 });})();
+
+/* Translate surviving Latin-script artifact names in Chinese museum metadata. */
+(function(){const labels=window.MUSEUM_HISTORY_LABELS||{};
+const names={"sophie-germain":"索菲·热尔曼署名勒布朗先生的数学通信","emily-bronte":"署名埃利斯·贝尔的《呼啸山庄》初版","anne-bronte":"署名阿克顿·贝尔的《威尔德菲尔庄园的房客》初版","louisa-may-alcott":"署名巴纳德的惊险小说"};
+for(const [id,name] of Object.entries(names))if(labels[id])labels[id].object=name;
+})();
