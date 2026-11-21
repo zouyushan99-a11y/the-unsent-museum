@@ -1197,7 +1197,7 @@ function editStoryPage(id){
  '<button type="button" class="btn" id="publish-story" '+(!authUser?'disabled':'')+'>'+(published?'Update public story':'Publish for everyone')+' ↗</button>'+
  (published?'<button type="button" class="btn btn-outline" id="unpublish-story">Withdraw from public archive</button>':'')+'</div>'+
  '<p id="edit-story-feedback" class="auth-feedback" role="status">'+(!authUser?'Sign in before publishing; local editing is still available.':'')+'</p></section>'+
- '<div class="actions"><a class="btn btn-outline" href="#/my-stories">← Back to my stories</a></div></form></section></main>';
+ '<div class="actions"><a class="btn btn-outline" href="#/my-stories">← Back to my stories</a><button type="button" class="btn btn-outline delete-story-editor" data-id="'+esc(st.id)+'">Delete this story permanently</button></div></form></section></main>';
 }
 function bindStoryEditor(){
  const form=$('#story-edit-form');if(!form)return;
@@ -1244,6 +1244,7 @@ function bindStoryEditor(){
   try{await syncCloudStory(st);await loadPublicStories();if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id))){throw new Error('The story was saved, but the public archive did not confirm its visibility. Check the Story Cloud Diagnostics page before retrying.')}location.hash='#/my-stories';render(true)}
   catch(e){feedback('Could not publish; your edits remain on this device. '+String(e.message||e));button.disabled=false}
  };
+ const erase=$('.delete-story-editor');if(erase)erase.onclick=()=>deleteStoryFromLibrary(id);
  const withdraw=$('#unpublish-story');
  if(withdraw)withdraw.onclick=async()=>{
   if(!museumConfirm('Withdraw this story from the public archive?'))return;
@@ -1252,18 +1253,61 @@ function bindStoryEditor(){
   location.hash='#/my-stories';render(true);
  };
 }
+const storyDeleteInProgress=new Set();
 async function deleteStoryFromLibrary(id){
- const st=findLocalStory(id);if(!st)return;
- if(!museumConfirm('Delete this story? If published, it will also be withdrawn from the public archive.'))return;
- if(authUser&&(!st.ownerId||st.ownerId===authUser.id)){
-   const {error}=await authClient.from(cloudStoryTable).delete().eq('id',id);
-   if(error&&st.status==='published'){console.warn('Cloud deletion failed',error);alert(museumZh('Cloud deletion failed; the story may still be public. '));return}
- }else if(st.status==='published'){
-   alert(museumZh('Sign in and connect to the cloud before deleting a public story.'));return
+ const st=findLocalStory(id);
+ if(!st||storyDeleteInProgress.has(String(id)))return;
+ const published=st.status==='published';
+ if(st.ownerId&&st.ownerId!==authUser?.id){
+  alert(museumZh('Only the account that published this story can delete it.'));
+  return;
  }
- cancelPendingStorySync(id);
- db.stories=db.stories.filter(x=>String(x.id)!==String(id));save();
- await loadPublicStories();render(false);
+ if(published&&(!authUser||!authClient)){
+  alert(museumZh('Sign in with the account that published this story to delete it from the public archive.'));
+  return;
+ }
+ if(!museumConfirm(published
+  ?'Permanently delete your published story? It will disappear from the museum archive. This cannot be undone, and copies saved by others may remain.'
+  :'Permanently delete this private draft? This cannot be undone.'))return;
+ storyDeleteInProgress.add(String(id));
+ const controls=[...document.querySelectorAll('.delete-story,.delete-story-editor')].filter(b=>b.dataset.id===String(id));
+ controls.forEach(b=>{b.disabled=true;b.setAttribute('aria-busy','true')});
+ try{
+  // A published story, or a cloud-backed draft, must be removed from the server first.
+  // Supabase RLS enforces user_id=auth.uid(); never treat a successful zero-row
+  // response as confirmation that the story was deleted.
+  const needsCloudDelete=published||st.synced===true;
+  if(needsCloudDelete){
+   if(!authUser||!authClient)throw Error(museumZh('Sign in with the original story account before removing its cloud copy.'));
+   const {data,error}=await authClient.from(cloudStoryTable)
+    .delete().eq('id',String(id)).eq('user_id',authUser.id).select('id');
+   if(error)throw error;
+   if(!Array.isArray(data)||!data.some(row=>String(row.id)===String(id)))
+    throw Error(museumZh('Deletion was not confirmed by the cloud. Your story has been kept. Check that you are signed in with the original account and try again.'));
+  }else if(authUser&&authClient&&st.ownerId===authUser.id){
+   // An unsynced editing copy may still have an earlier published version online.
+   const {data,error}=await authClient.from(cloudStoryTable)
+    .delete().eq('id',String(id)).eq('user_id',authUser.id).select('id');
+   if(error)throw error;
+   if(!Array.isArray(data))throw Error(museumZh('Cloud deletion could not be verified. Your draft has been kept.'));
+  }
+  cancelPendingStorySync(id);
+  if(compositionDraftId===id){compositionDraftId=null;localStorage.removeItem('unsent-active-composition-id')}
+  db.stories=db.stories.filter(x=>String(x.id)!==String(id));
+  cloudStories=cloudStories.filter(x=>String(x.id)!==String(id));
+  publicStories=publicStories.filter(x=>String(x.id)!==String(id));
+  save();
+  if(authClient)await loadPublicStories();
+  location.hash='#/my-stories';
+  render(false);
+  if(published&&storyCloudStatus!=='ready')alert(museumZh('Your story was deleted from your cloud account, but the public archive could not be refreshed. Please check again later.'));
+ }catch(e){
+  console.warn('Author story deletion was not completed:',e);
+  alert(museumZh('Could not delete this story. No local copy was removed. ') + String(e.message||e));
+ }finally{
+  storyDeleteInProgress.delete(String(id));
+  controls.forEach(b=>{b.disabled=false;b.removeAttribute('aria-busy')});
+ }
 }
 function about(){return `<main class="container"><section class="page-hero"><div class="eyebrow">About & Research</div><h1>Behind the silence.</h1></section><section class="section-compact narrow about-copy"><h3>The question</h3><p>Why do people sometimes choose silence, even when they have something to say? This project approaches that question through situated stories, reader choices, and a visual archive of responses.</p><h3>What this first version is</h3><p>This is an interactive museum prototype with a shared choice sky and a story archive that is public only after explicit consent. Its scenario texts are <strong>fictional placeholders</strong>, not the curator's documented personal memories. The final literary journalism piece should replace them with specific, honestly presented nonfiction accounts and grounded research.</p><h3>What the answers show</h3><p>Survey responses here are hypothetical choices submitted by participating visitors. They do not show what participants actually did in real life, establish causation, or represent a general population. The starfield is a metaphorical visualization of recorded answers, with explicit numerical labels alongside it.</p><h3>Research directions</h3><p>Four Behind the Silence research panels now introduce published research on friendship, classroom participation, family communication, and online self-censorship. Read original sources through each panel. Interpretations are labeled separately from direct research results.</p><h3>A note from the curator · Reflective Statement</h3><p><em>To be written by the author.</em> It should address why silence matters to the author, how the scenes were selected and reconstructed, the limits of personal memory, the use of audience responses, and the influence of assigned literary journalism texts (for example Bowles, Krakauer, Márquez, or Capote, where genuinely relevant).</p><h3>Bibliography</h3><p><em>Pending verified sources.</em> No invented citations have been inserted. The final submission should include a carefully checked APA or MLA bibliography, including course readings that genuinely inform the work.</p><div class="actions"><a class="btn" href="#/galleries">Visit the galleries ↗</a><a class="btn btn-outline" href="#/privacy">Read the privacy note ↗</a></div></section></main>`}
 
