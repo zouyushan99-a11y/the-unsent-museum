@@ -1,0 +1,38 @@
+name: Publish four unique research card paintings
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-research-card-paintings.yml'
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore original high-resolution WebP artwork
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re,base64
+          names=['library-studies','library-comparisons','library-syntheses','library-verification']
+          for name in names:
+              src=Path('research-assets')/(name+'.svg')
+              content=src.read_text(encoding='utf-8')
+              m=re.search(r'href="data:image/webp;base64,([A-Za-z0-9+/=]+)"',content)
+              assert m, 'Image payload missing: '+name
+              data=base64.b64decode(m.group(1),validate=True)
+              assert data[:4]==b'RIFF' and data[8:12]==b'WEBP',name
+              out=src.with_suffix('.webp')
+              out.write_bytes(data)
+              print('Created',out,len(data),'bytes')
+          PY
+      - name: Commit four original images to repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research-assets/library-{studies,comparisons,syntheses,verification}.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish four original independent research card paintings'
+            git push
+          fi
