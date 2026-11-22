@@ -221,8 +221,24 @@ return '<main class="container atlas-page">'+nav()+heading(T(c[0],c[1]),T('A str
 }
 
 function auditRegister(){
-const all=['R01','R02','R03','R04','R05','R06','R08','R09','R10','R11','R12','R14','R15','R16','R19','R22','R23','R25','R26','R29'];
+const all=Array.from({length:36},(_,i)=>'R'+String(i+1).padStart(2,'0'));
 const notes={
+'R07':["Stanford/Cornell institutional abstract and deposit","斯坦福／康奈尔机构摘要与存档","Six studies; full individual statistics need checking","六项研究；各项实验统计尚需核实"],
+'R13':["Academy of Management article metadata and article PDF source","管理学会原文出版资料及论文PDF来源","Two-phase leadership/employee voice field design; exact coefficients not asserted","两阶段领导及员工表达实地研究；不虚构精确系数"],
+'R17':["Publisher review abstract and institutional deposit","出版方综述摘要及高校存档","Conversation versus conformity orientation, RFCP; no new sample claimed","谈话与一致性取向、RFCP量表；不宣称新样本"],
+'R18':["Publisher abstract and university publication record","出版方摘要与高校记录","Topic avoidance by family role and gender; sample N unknown","亲属角色及性别差异；样本量尚未核实"],
+'R20':["Publisher review abstract and bibliographic source","综述出版摘要与正式书目","Emotion sharing theory and evidence scope; full citations not separately audited","情绪分享理论及综述范围；未逐项核对全部引用"],
+'R21':["Original journal abstract and university institutional summary","期刊摘要与高校机构总结","Two studies and six apology components; exact effects not supplied","两项研究与六种道歉要素；不虚构统计系数"],
+'R24':["Author-hosted article PDF and official Microsoft research record","作者存档论文PDF与微软研究记录","Qualitative networked privacy and its audience contexts","定性网络化隐私及受众情境"],
+'R27':["JSTOR book record and publisher book preview","JSTOR图书记录与出版预览","Privacy ownership, co-management and boundary turbulence; no full-book audit","隐私所有权、共同管理及边界扰动；尚未全文审阅"],
+'R28':["Original Gross theoretical-review PDF","Gross理论综述论文PDF","Five process-model stages; not five new experiments","情绪调节模型五个环节；不是五个新实验"],
+'R30':["Yale publisher description and JSTOR book record","耶鲁出版介绍与JSTOR图书记录","Public and hidden transcript distinction; not cover-to-cover checked","公开与隐藏话语的区分；未逐页核实全书"],
+'R31':["Duke University Press open-access article page","杜克大学出版社开放论文页面","14-page archival essay, ethics of reconstructing enslaved life","14页历史档案论文及重构被奴役者生命的伦理"],
+'R32':["Princeton Press chapter excerpt and publisher catalog","普林斯顿出版社章节节选与目录","Dutch colonial archive method; entire book not independently audited","荷属东印度殖民档案方法；未独立审阅整本书"],
+'R33':["1988 essay bibliographic record and Columbia reprint record","1988年论文记录及哥伦比亚重印记录","Representation and subaltern gender; later versions distinguished","代表性与从属女性；区分后续版本"],
+'R34':["SUNY 1991 book publisher/library records","SUNY 1991年著作出版及图书馆记录","Oral-history method; 1991 monograph not 1979 article","口述史方法；为1991年专著而非1979年文章"],
+'R35':["Original 2022 open-access methodological article","2022年原始开放获取方法论文","25 interview requests / 4 initial interviews; three tracing strategies","25次访谈邀请／最初4次成功；三种追踪策略"],
+'R36':["Original encyclopedia full entry and DOI","百科全书完整原始条目与DOI","Dragojlovic & Samuels 2023; three anthropological themes","Dragojlovic与Samuels，2023年；人类学三大主题"],
 'R04':['Official publisher abstract and bibliographic record; full review text unavailable','正式出版摘要与书目；未取得综述全文','Three social motivations and review scope; underlying primary studies NOT independently audited','三类社会动机与综述范围；尚未逐项核对原始实验'],
 'R05':['Original theoretical synthesis PDF','理论综述正文','Belongingness criteria and diversity of supporting literature; no new trial','归属需要判断标准及不同类型证据；不是新实验'],
 'R06':['Original theory article PDF','理论论文正文','Autonomy, competence, relatedness, goal content and motivation processes','自主、胜任、关系需要，以及目标与动机过程'],
@@ -246,7 +262,7 @@ const notes={
 };
 return '<main class="container atlas-page">'+nav()+heading(T('Research Verification Register','研究来源核实记录'),T('An honest distinction between source review, partial access, and the work still required.','明确区分已经审阅的资料、仅能部分获取的文献和剩余的核实工作。'))+
 '<section class="atlas-panel"><h2>'+E(T('What does verified mean here?','本馆如何定义“核实”？'))+'</h2><p>'+E(T('This register reports which original-source materials were checked. A long article page is not automatically a completed scholarly peer review. Original authors’ data, museum interpretation and missing evidence remain separate.','这里记录已核对哪些原始材料。研究页面写得长，并不自动代表已经完成严格学术审查；作者数据、本馆解读与缺失证据必须分开。'))+'</p></section>'+
-'<div class="atlas-study-list">'+all.map(id=>{const x=C.find(s=>s.id===id),n=notes[id];return '<article class="atlas-panel"><h2><a href="'+go(id)+'">'+id+' · '+E(x.author)+'</a></h2><p><strong>'+E(T('Available source: ','已获取来源：'))+'</strong>'+E(T(n[0],n[1]))+'</p><p><strong>'+E(T('Verified scope: ','已核实范围：'))+'</strong>'+E(T(n[2],n[3]))+'</p><p class="small muted">'+E(id==='R15'?T('Partial access — NOT complete full-text verification.','仅能部分获取——尚未完成全文核实。'):id==='R29'?T('Chapter-based verification — NOT full-book page-by-page verification.','按章节核实——尚未完成整本书逐页核实。'):['R04','R14'].includes(id)?T('Publisher or primary bibliographic / conceptual sources checked; full independent article audit remains limited.','已核对出版或概念性原始资料；完整独立全文审校仍有限。'):T('Original-source details recorded in the dossier; further source checks remain possible.','论文的原文核查内容见档案，仍可继续补充核对。'))+'</p></article>'}).join('')+'</div></main>';
+'<div class="atlas-study-list">'+all.map(id=>{const x=C.find(s=>s.id===id),n=notes[id];return '<article class="atlas-panel"><h2><a href="'+go(id)+'">'+id+' · '+E(x.author)+'</a></h2><p><strong>'+E(T('Available source: ','已获取来源：'))+'</strong>'+E(T(n[0],n[1]))+'</p><p><strong>'+E(T('Verified scope: ','已核实范围：'))+'</strong>'+E(T(n[2],n[3]))+'</p><p class="small muted">'+E(id==='R15'?T('Partial access — NOT complete full-text verification.','仅能部分获取——尚未完成全文核实。'):id==='R29'?T('Chapter-based verification — NOT full-book page-by-page verification.','按章节核实——尚未完成整本书逐页核实。'):['R04','R07','R13','R17','R18','R20','R21','R27','R30','R32','R33','R34'].includes(id)?T('Some materials remain limited to abstracts, previews or publisher catalogs; complete original-text auditing is not claimed.','部分材料仍只取得摘要、章节预览或出版目录，不宣称完成原文全文审阅。'):T('Original-source details recorded in the dossier; further source checks remain possible.','论文的原文核查内容见档案，仍可继续补充核对。'))+'</p></article>'}).join('')+'</div></main>';
 }
 function method(){
 const items=[
