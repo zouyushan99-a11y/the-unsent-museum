@@ -13,6 +13,8 @@ const groupTitles={
 const canonical=x=>String(x||"").trim().replace(/\s+/g," ");
 const glossary=(window.MUSEUM_NEW_CASES||[]).reduce((acc,c)=>{acc[c.id]=canonical(c.name);return acc},personalTitles);
 const existing=new Map();
+const imageCache=new Map();
+const cv=text=>window.museumConvertPublic?.(text)??text;
 function routeInfo(){const m=(window.location.hash||"").match(/^#\/(history|collectives)\/([^?&/]+)/);return m?{group:m[1]==="collectives",id:decodeURIComponent(m[2])}:null}
 function figure(imgUrl,fileName,subject,group,language){
  const zh=language!=="en";
@@ -22,7 +24,9 @@ function figure(imgUrl,fileName,subject,group,language){
  const caption=document.createElement("figcaption");const title=document.createElement("strong");title.textContent=zh?"真实历史图像／相关馆藏":"Real archival or historical image";caption.appendChild(title);
  caption.appendChild(document.createTextNode(zh?" · 资料主题："+subject+"。这张图像不一定拍摄了正文中的特定场景。":" · Related subject: "+subject+". This image is not presented as a photograph of a specific described event."));
  const credit=document.createElement("span");credit.className="history-photo-credit";const a=document.createElement("a");a.href=link.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=zh?"Wikimedia Commons · 查看原图、年代、作者与使用条款":"Wikimedia Commons · Check original, date, creator and image rights";credit.appendChild(a);caption.appendChild(credit);element.append(link,caption);
- img.addEventListener("error",()=>element.remove(),{once:true});
+ if(zh){const subjectLabel=document.createElement('span');subjectLabel.textContent=cv('资料主题保留来源名称，供核查：');const original=document.createElement('span');original.dataset.originalLanguage='true';original.textContent=subject;caption.childNodes[1].textContent=cv(' · 这张图像不一定拍摄了正文中的特定场景。 ');caption.insertBefore(subjectLabel,credit);caption.insertBefore(original,credit);}
+ if(language==='zh-Hant'){img.alt=cv(img.alt);title.textContent=cv(title.textContent);a.textContent=cv(a.textContent);}
+ img.addEventListener("error",()=>{img.hidden=true;const fallback=document.createElement('p');fallback.textContent=zh?cv('图片暂时无法显示，请通过下方原始来源查看。'):'Image unavailable here. Use the original source below.';element.insertBefore(fallback,caption)},{once:true});
  return element;
 }
 function language(){const html=document.documentElement.lang;return html.startsWith("zh")?html:"en"}
@@ -71,19 +75,21 @@ async function hydrate(){
  const story=article.querySelector(r.group?".collective-prose":".history-prose");
  if(!story)return;
  const imgs=story.querySelectorAll("figure.history-archive-figure img");
- if(imgs.length){imgs.forEach(img=>{const recover=()=>{img.closest("figure")?.remove();existing.delete(id);hydrate()};if(img.complete&&img.naturalWidth===0)recover();else img.addEventListener("error",recover,{once:true})});return}
+ if(imgs.length){imgs.forEach(img=>{const recover=()=>{const fig=img.closest('figure');img.hidden=true;const fallback=fig?.querySelector('.history-photo-fallback');if(fallback)fallback.hidden=false;};if(img.complete&&img.naturalWidth===0)recover();else img.addEventListener("error",recover,{once:true})});return}
  if(existing.get(id)==="loading")return;
  const subject=r.group?groupTitles[id]:(glossary[id]||id.replaceAll("-"," "));
  if(!subject)return;
  existing.set(id,"loading");
  try{
-  const result=await lookup(subject);
+  const result=imageCache.get(id)||await lookup(subject);
+  if(result)imageCache.set(id,result);
   if(!result){existing.set(id,"unavailable");return}
   const current=routeInfo();if(!current||current.id!==id||current.group!==r.group)return;
   const target=document.querySelector(r.group?".collective-article .collective-prose":".history-longform .history-prose");
   if(target&&!target.querySelector("figure.history-archive-figure"))target.prepend(figure(result.url,result.file,result.subject,r.group,language()));
   existing.set(id,"loaded");
  }catch(e){existing.set(id,"unavailable");}
+ finally{if(existing.get(id)==="loading")existing.delete(id);}
 }
 function ready(){
  const root=document.getElementById("app");if(root){const observer=new MutationObserver(records=>{if(records.some(r=>r.target===root))hydrate()});observer.observe(root,{childList:true});}
