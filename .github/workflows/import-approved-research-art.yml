@@ -1,0 +1,60 @@
+name: Import approved research art (once)
+on:
+  push:
+    paths:
+      - '.github/workflows/import-approved-research-art.yml'
+permissions:
+  contents: write
+jobs:
+  import-art:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate optimized, real-raster image assets from the approved artwork
+        env:
+          MOCKUP_URL: 'https://media.canva.com/v2/image-resize/format:PNG/height:200/quality:100/uri:ifs%3A%2F%2FM%2Fe771a973-d4f2-4dce-9e16-75de46726306/watermark:F/width:182?csig=AAAAAAAAAAAAAAAAAAAAAN1GbpF6PTXoYArD1Qvp3ayDUAWWjpdm6qNatGeuSUdB&exp=1795352558&osig=AAAAAAAAAAAAAAAAAAAAADtYWn57Koov0cPUiFljzJxXCwPcn0o0-Zatypz-DnLv&signer=media-rpc&token=AAIAAU0AJGU3NzFhOTczLWQ0ZjItNGRjZS05ZTE2LTc1ZGU0NjcyNjMwNgAAAAABogNZ-bBFG7sPs3Mo66C2q6XSvat3U9lUCviScRfh3WVSFQ7z4g&x-canva-quality=thumbnail'
+          PAINTED_BACKGROUND_URL: 'https://media.canva.com/v2/image-resize/format:PNG/height:112/quality:100/uri:ifs%3A%2F%2FM%2Fde1bf314-0397-4107-bba7-749fb5f5e10d/watermark:F/width:200?csig=AAAAAAAAAAAAAAAAAAAAACExeU5vgCTMK7yu9xKox-O7oQiTBumno3HgKKZRqorV&exp=1795350004&osig=AAAAAAAAAAAAAAAAAAAAABo9OEsJJJLRlpzvTRwJdbJVs2-LFKjOrenDxp5be6S3&signer=media-rpc&token=AAIAAU0AJGRlMWJmMzE0LTAzOTctNDEwNy1iYmE3LTc0OWZiNWY1ZTEwZAAAAAABogMzASAR8xU1EVol7hcU52Ki733nQIYiRo8FKjDoDN9Gsdr6rQ&x-canva-quality=thumbnail'
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          import os,re,io,urllib.request
+          from PIL import Image
+          from pathlib import Path
+          def acquire(url,width,height):
+              attempts=[
+                  re.sub(r'/height:\\d+/',f'/height:{height}/',re.sub(r'/width:\\d+\\?',f'/width:{width}?',url)).replace('x-canva-quality=thumbnail','x-canva-quality=original'),
+                  re.sub(r'/height:\\d+/',f'/height:{height}/',re.sub(r'/width:\\d+\\?',f'/width:{width}?',url)),
+                  url]
+              errors=[]
+              for attempt in attempts:
+                  try:
+                      req=urllib.request.Request(attempt,headers={'User-Agent':'Mozilla/5.0'})
+                      with urllib.request.urlopen(req,timeout=25) as result: raw=result.read()
+                      img=Image.open(io.BytesIO(raw)).convert('RGB')
+                      if img.width >= width*0.65:
+                          return img
+                      errors.append(f'image too small {img.size}')
+                  except Exception as exc: errors.append(str(exc)[:120])
+              raise RuntimeError('No high-resolution image was accessible: '+str(errors))
+          bg=acquire(os.environ['PAINTED_BACKGROUND_URL'],1672,941)
+          design=acquire(os.environ['MOCKUP_URL'],1199,1312)
+          out=Path('research-assets');out.mkdir(exist_ok=True)
+          bg.save(out/'painted-research-background.webp','WEBP',quality=86,method=6)
+          # Five artwork crops. Paintings inside the five arch frames, without baked-in captions.
+          widths=[(46,263),(278,495),(503,716),(724,938),(948,1160)]
+          for i,(left,right) in enumerate(widths,1):
+              tile=design.crop((left,373,right,554))
+              tile.save(out/f'painted-research-arch-{i}.webp','WEBP',quality=88,method=6)
+          # Authentic painted parchment, from the real illustrated banner's border.
+          design.crop((43,687,358,809)).resize((945,366)).save(out/'painted-research-parchment.webp','WEBP',quality=85,method=6)
+          print('Saved',*(str(x) for x in sorted(out.glob('painted-*.webp'))),sep='\\n')
+          PY
+      - name: Commit artwork
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research-assets/painted-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import original painted museum imagery for research library'
+            git push
+          fi
