@@ -281,3 +281,12 @@
  #app .site-header .museum-language-switch select{max-width:102px;font-size:.75rem}
  #app .museum-portal,#app .museum-portal-history{padding:17px 16px;column-gap:12px}
 }
+
+/* Song/Ming headings, clean UI descriptions; decorative drop caps impede short lines. */
+@media (max-width:1180px), (max-width:1366px) and (pointer:coarse){
+ #app .history-prose-paragraph:first-child::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0;color:inherit}
+ #app .museum-portal-copy,#app .card p,#app .history-card>p,#app .collective-card>p,
+ #app .gateway-card p{font-family:var(--handheld-ui);font-style:normal;letter-spacing:0}
+ html:lang(zh) #app .history-longform-subtitle,html:lang(zh) #app .collective-subtitle,
+ html:lang(zh) #app .museum-hero-copy .hero-intro,html:lang(zh) #app .museum-hero-copy p{font-style:normal}
+}
