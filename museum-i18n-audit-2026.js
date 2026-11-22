@@ -47,7 +47,19 @@
 "Saved on this device · cloud backup not confirmed":"已保存在此设备 · 云端备份尚未确认",
 "Sign in to sync drafts across devices.":"登录后可在不同设备间同步草稿。",
   "Delete my published story": "删除我发布的故事",
-  "Why this happened · A curator’s reading · Three questions to consider": "为什么如此选择 · 策展人的分析 · 留给读者的三个问题"
+  "Why this happened · A curator’s reading · Three questions to consider": "为什么如此选择 · 策展人的分析 · 留给读者的三个问题",
+"Original writing language":"原稿语言",
+"Choose the language you actually wrote in. Your original text will always be preserved.":"请选择你实际写作时使用的语言。网站会永久保留你的原文，不会用译文覆盖。",
+"I agree to send my story, title and reason to an automated translation provider when I publish. The museum keeps my original wording.":"我同意在发布时，将故事、标题和理由发送给自动翻译服务进行处理。博物馆会保留我的原文。",
+"Agree to automated translation before publishing, or keep this as a private draft.":"请先同意自动翻译，才能发布；你也可以继续将故事保留为私人草稿。",
+"Could not publish a three-language story. Your writing is still on this device. ":"三语故事发布失败。你的文字仍保存在本设备。原因：",
+"Machine-translated · Author’s original preserved":"机器翻译 · 作者原文已保留",
+"Author’s original text":"作者原文",
+"Original text · Translation not yet available":"原文展示 · 当前语言的译文尚不可用",
+"Automatic translation has not been activated in the museum database. Your draft is safe. Ask the curator to finish the translation service setup.":"博物馆尚未启用云端自动翻译。你的草稿已保留，请联系策展人完成翻译服务配置。",
+"The translated public archive has not confirmed this story. Please check your account before retrying.":"公开档案尚未确认三语故事已发布。重试前请检查账号中的故事状态。",
+"The translation could not be completed.":"翻译尚未完成。",
+"Only published stories with completed translations are shown in the visitor's selected language.":"仅当译文完成后，公开故事才会按照访客选择的语言展示。"
 });})();
 /* Browser acceptance corrections: retain original research titles for traceability. */
 Object.assign(window.MUSEUM_I18N.zh,{
