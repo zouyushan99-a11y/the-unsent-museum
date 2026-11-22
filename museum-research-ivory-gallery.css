@@ -728,3 +728,53 @@
     padding-bottom:68px!important;
   }
 }
+
+/* v12 · Comparative research is not complete without a bounded conclusion.
+   Distinguish the museum's inference from the original research evidence.
+   Existing research images, parchment and text remain unmodified. */
+.atlas-page .atlas-comparative-conclusion{
+  border:2px solid var(--gold,#EEC65B)!important;
+  background:linear-gradient(112deg,rgba(18,44,64,.96),rgba(7,21,40,.94)),url("research-assets/research-hd-background.webp") center/cover!important;
+  box-shadow:inset 0 0 0 6px rgba(238,198,91,.11),0 13px 32px #0007;
+  padding:clamp(1.65rem,3.5vw,3rem);
+  position:relative;
+}
+.atlas-page .atlas-comparative-conclusion::before{
+  content:"✦";position:absolute;right:clamp(18px,4vw,48px);top:20px;
+  font-size:1.4rem;color:var(--gold,#EEC65B);
+}
+.atlas-page .atlas-comparative-conclusion h2,
+.atlas-page .atlas-comparative-implication h2,
+.atlas-page .atlas-comparative-boundary h2{
+  font:500 clamp(1.4rem,2.5vw,2.3rem)/1.4 Georgia,"Noto Serif SC",serif;
+  color:#ffeed1!important;
+  margin:.7rem 0 1.2rem;
+  max-width:35ch;
+}
+.atlas-page .atlas-comparative-conclusion p,
+.atlas-page .atlas-comparative-implication p,
+.atlas-page .atlas-comparative-boundary p{
+  max-width:75ch;line-height:1.95;color:#f4e7d1!important;
+  font-size:clamp(1rem,1.17vw,1.14rem);
+}
+.atlas-page .atlas-comparative-conclusion .eyebrow,
+.atlas-page .atlas-comparative-implication .eyebrow,
+.atlas-page .atlas-comparative-boundary .eyebrow{
+  color:#f6d58e!important;opacity:1;
+}
+.atlas-page .atlas-comparative-implication{
+  border-left:4px solid var(--gold,#EEC65B)!important;
+  background:linear-gradient(110deg,rgba(26,54,72,.93),rgba(9,25,47,.95)),url("research-assets/library-comparisons.webp") right center/auto 100% no-repeat!important;
+}
+.atlas-page .atlas-comparative-boundary{
+  background:linear-gradient(120deg,rgba(12,33,53,.95),rgba(8,24,42,.94))!important;
+  border:1px solid rgba(238,198,91,.78)!important;
+}
+@media(max-width:700px){
+ .atlas-page .atlas-comparative-conclusion,
+ .atlas-page .atlas-comparative-implication,
+ .atlas-page .atlas-comparative-boundary{padding:1.35rem!important;}
+ .atlas-page .atlas-comparative-conclusion h2,
+ .atlas-page .atlas-comparative-implication h2,
+ .atlas-page .atlas-comparative-boundary h2{font-size:1.4rem!important;}
+}
