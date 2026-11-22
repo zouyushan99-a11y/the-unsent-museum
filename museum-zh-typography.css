@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap");
 
-/* Regional Ming faces for exhibits and prose, with system sans for controls. */
-:root{--museum-zh-serif:"Noto Serif SC","Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","Source Han Serif CN","SimSun",serif;--museum-zh-sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
-html:lang(zh-Hant){--museum-zh-serif:"Noto Serif TC","Songti TC","Noto Serif CJK TC","Source Han Serif TC","PMingLiU",serif;--museum-zh-sans:"PingFang TC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif}
+/* Regional Ming faces for exhibits and prose, with Kai for display titles. */
+:root{--museum-zh-serif:"Noto Serif SC","Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","Source Han Serif CN","SimSun",serif}
+html:lang(zh-Hant){--museum-zh-serif:"Noto Serif TC","Songti TC","Noto Serif CJK TC","Source Han Serif TC","PMingLiU",serif}
 html:lang(zh) body{font-family:var(--museum-zh-serif);font-size:15.5px;line-height:1.85;letter-spacing:.012em}
 html:lang(zh) h1,html:lang(zh) h2,html:lang(zh) h3,html:lang(zh) h4,html:lang(zh) .serif,html:lang(zh) .brand,html:lang(zh) .hero-intro,html:lang(zh) .collective-card h2,html:lang(zh) .collective-article>header h2,html:lang(zh) .collective-factor h3,html:lang(zh) .collective-prose>p,html:lang(zh) .history-prose p,html:lang(zh) .history-longform-header h2{font-family:var(--museum-zh-serif);font-weight:400;letter-spacing:.025em}
 html:lang(zh) .nav,html:lang(zh) .eyebrow,html:lang(zh) .btn,html:lang(zh) .badge,html:lang(zh) .collective-eyebrow,html:lang(zh) .history-reason-tag,html:lang(zh) button,html:lang(zh) input,html:lang(zh) select,html:lang(zh) textarea,html:lang(zh) .museum-language-switch{font-family:var(--museum-zh-sans);letter-spacing:.025em}
@@ -18,4 +18,17 @@ html:lang(zh) :is(h1, h2, h3, h4, .brand, .collective-card h2, .collective-artic
 }
 html:lang(zh) :is(.history-prose p, .collective-prose>p) {
   line-break: strict;
+}
+
+/* Keep Chinese controls on the same Ming face across viewport sizes. */
+html:lang(zh) {
+  --museum-zh-sans: var(--museum-zh-serif);
+  --museum-zh-display: "LXGW WenKai TC", "Kaiti SC", "KaiTi", var(--museum-zh-serif);
+}
+html:lang(zh-Hant) {
+  --museum-zh-display: "LXGW WenKai TC", "Kaiti TC", "DFKai-SB", var(--museum-zh-serif);
+}
+html:lang(zh) #app :is(.museum-hero, .page-hero) h1 {
+  font-family: var(--museum-zh-display);
+  font-weight: 400;
 }
