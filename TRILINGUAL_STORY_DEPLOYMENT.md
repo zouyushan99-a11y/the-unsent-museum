@@ -18,7 +18,7 @@ supabase link --project-ref bmsumzkxyoprpoavgslr
 supabase functions deploy publish-translated-story --project-ref bmsumzkxyoprpoavgslr
 ```
 
-If the database migration has not been applied, the site can still **read existing legacy stories** through the original RPC, but **new trilingual publication is not available yet**. Authors may still choose the legacy **original-language-only** publishing path after a second, explicit warning. No automatic translation is claimed until the backend is configured. Drafts still save locally and can still sync through the original Supabase table.
+If the database migration has not been applied, the site can still **read existing legacy stories** through the original RPC, but **new publishing is paused until the three-language backend is configured**. Private drafts continue to save. This prevents new single-language publications from violating the author's multilingual requirement. Drafts still save locally and can still sync through the original Supabase table.
 
 ## Data and privacy rules
 
