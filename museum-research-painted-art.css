@@ -53,17 +53,17 @@
   background-size:cover;
 }
 .atlas-library .atlas-study-link::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-1.webp");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-studies.svg");
   background-size:cover;
 }
 .atlas-library .atlas-study-link:nth-child(4n+2)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-2.webp");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-comparisons.svg");
 }
 .atlas-library .atlas-study-link:nth-child(4n+3)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-3.webp");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-syntheses.svg");
 }
 .atlas-library .atlas-study-link:nth-child(4n+4)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-4.webp");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-verification.svg");
 }
 .atlas-page.atlas-deep .atlas-deep-section{
   background-image:url("research-assets/research-hd-parchment.webp");
@@ -186,4 +186,21 @@
   .atlas-library .atlas-portal-text em{
     font-size:clamp(.6rem,2.1vw,.73rem);
   }
+}
+
+/* Four independent, fully composed 1983 × 793 paintings.
+   Show the whole horizontal artwork: no cut fragments, no oversized crops. */
+.atlas-library .atlas-study-link::before{
+  content:"";
+  display:block;
+  width:auto;
+  height:auto;
+  aspect-ratio:1983 / 793;
+  min-height:0;
+  background-color:#081b2f;
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  border-bottom:2px solid #ba9057;
+  flex:none;
 }
