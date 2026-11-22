@@ -12,7 +12,7 @@
    comes from a translucent ivory paper layer, not opaque text shadows. */
 .atlas-page.atlas-deep .atlas-deep-section{
   position:relative;isolation:isolate;overflow:hidden;
-  background:linear-gradient(90deg,rgba(255,244,221,.96),rgba(255,243,216,.93) 72%,rgba(248,225,186,.87)),url("research-assets/research-hd-parchment.webp") center/cover no-repeat!important;
+  background:linear-gradient(90deg,rgba(255,244,221,.83) 0%,rgba(255,242,217,.76) 48%,rgba(248,225,186,.62) 100%),url("research-assets/research-hd-parchment.webp") center/cover no-repeat!important;
   border:3px double #d3a251!important;border-radius:7px!important;
   outline:1px solid #fbd78c;outline-offset:-9px;
   box-shadow:0 16px 28px #0005,inset 0 0 0 7px #fff5da64,0 0 0 1px #af762b;
@@ -23,7 +23,7 @@
   content:"";position:absolute;inset:auto 0 0 auto;width:min(33%,340px);height:70%;pointer-events:none;
   background:url("research-assets/library-studies.webp") center/cover no-repeat;
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 75%);mask-image:linear-gradient(90deg,transparent 0%,#000 75%);
-  opacity:.12;z-index:-1;
+  opacity:.22;z-index:-1;
 }
 .atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+2):before{background-image:url("research-assets/library-comparisons.webp")}
 .atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+3):before{background-image:url("research-assets/library-syntheses.webp")}
