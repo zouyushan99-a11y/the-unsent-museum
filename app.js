@@ -1498,7 +1498,7 @@ const MUSEUM_RESEARCH_ASSETS = {
     'museum-research-expansion.css?v=research-mobile-trilang2',
     'museum-research-atlas.css?v=research-art-20261122-2',
     'museum-research-painted-art.css?v=research-topics-art-20261122-2',
-    'museum-research-ivory-gallery.css?v=all-dossier-art-reveal-4'
+    'museum-research-ivory-gallery.css?v=unified-dossier-5'
   ],
   js: [
     'museum-research-five.js?v=research-five-audit-20261122-3',
@@ -1507,7 +1507,7 @@ const MUSEUM_RESEARCH_ASSETS = {
     'museum-research-third-b.js?v=research-trilang-20261122-1',
     'museum-research-final-a.js?v=research-trilang-20261122-1',
     'museum-research-final-b.js?v=research-trilang-20261122-1',
-    'museum-research-atlas.js?v=research-topics-art-20261122-1',
+    'museum-research-atlas.js?v=unified-dossier-5',
     'museum-research-ivory-gallery.js?v=ivory-museum-1'
   ]
 };
