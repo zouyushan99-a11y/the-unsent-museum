@@ -63,6 +63,11 @@ for(const lang of ['en','zh-Hans','zh-Hant']){
  form.dispatchEvent(new w.Event('submit',{cancelable:true}));await new Promise(r=>setTimeout(r,0));
  assert.match(w.document.getElementById('feedback-status').textContent,/成功保存/);
  assert.equal(w.document.getElementById('feedback-message').value,'');
+ w.eval("museumLang='zh-Hant'");
+ const translated=w.eval("localizeVisitorStory({original_language:'zh-Hans',translation_status:'ready',translations:{'zh-Hant':{title:'这个故事',story:'这个故事',why:'这个原因'}}})");
+ assert.equal(translated.title,w.museumConvertPublic('这个故事'));
+ const original=w.eval("localizeVisitorStory({original_language:'zh-Hant',translation_status:'ready',translations:{'zh-Hant':{title:'作者原稿',story:'作者原稿',why:'作者原稿'}}})");
+ assert.equal(original.title,'作者原稿');
  const status=w.document.getElementById('feedback-status');status.textContent='Gathering the stories…';await new Promise(r=>setTimeout(r,0));
  assert.equal(status.textContent,w.museumConvertPublic('正在汇集故事……'));
  console.log(`${checked} three-language route renders passed; form preservation, failure/success recovery, and asynchronous localization passed.`);
