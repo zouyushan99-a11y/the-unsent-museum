@@ -87,16 +87,15 @@ return '<main class="container atlas-page">'+nav()+heading(T('Why might this rea
 }
 function catalog(){
 const entrances=[
-['research-arch-books.svg','All Studies','研究目录','36','#/research" data-atlas-scroll="library'],
-['research-arch-comparison.svg','Comparative Research','跨研究比较','08','#/research" data-atlas-scroll="comparisons'],
-['research-arch-synthesis.svg','Research Synthesis','综合研究专题','06','#/research" data-atlas-scroll="syntheses'],
+['research-arch-books.svg','All Studies','研究目录','36','#/research','library'],
+['research-arch-comparison.svg','Comparative Research','跨研究比较','08','#/research','comparisons'],
+['research-arch-synthesis.svg','Research Synthesis','综合研究专题','06','#/research','syntheses'],
 ['research-arch-verification.svg','Source Verification','来源核实馆','36','#/research/audit'],
 ['research-arch-method.svg','Methods & Perspectives','研究方法与视角','', '#/research/method']
 ];
-const entrancesMarkup=entrances.map((item,i)=>'<a class="atlas-portal" href="'+item[4]+'" aria-label="'+E(T(item[1],item[2]))+'"><img alt="" loading="'+(i<2?'eager':'lazy')+'" src="research-assets/'+item[0]+'"><span class="atlas-portal-text"><strong>'+E(T(item[1],item[2]))+'</strong><small>'+E(item[1])+'</small><em>'+(item[3]?item[3]+' · ':'')+E(T('Explore collection','探索馆藏'))+' →</em></span></a>').join('');
-const curated=['R01','R02','R03','R04'];
+const entrancesMarkup=entrances.map((item,i)=>'<a class="atlas-portal" href="'+item[4]+'"'+(item[5]?' data-atlas-scroll="'+item[5]+'"':'')+' aria-label="'+E(T(item[1],item[2]))+'"><img alt="" loading="'+(i<2?'eager':'lazy')+'" src="research-assets/'+item[0]+'"><span class="atlas-portal-text"><strong>'+E(T(item[1],item[2]))+'</strong><small>'+E(item[1])+'</small><em>'+(item[3]?item[3]+' · ':'')+E(T('Explore collection','探索馆藏'))+' →</em></span></a>').join('');
 return '<main class="container atlas-page atlas-designed atlas-library">'+nav()+
-'<header class="atlas-museum-hero"><span class="atlas-mini-star">✦</span><p class="eyebrow">'+E(T('THE UNSENT MUSEUM · RESEARCH COLLECTION','未寄之言博物馆 · 研究藏馆'))+'</p><h1>'+E(T('Research Library','研究资料馆'))+'</h1><p class="atlas-hero-secondary">'+E(T('Behind the Silence','Research Library'))+'</p><div class="atlas-divider-gold">✧ ── ✦ ── ✧</div><p class="atlas-hero-description">'+E(T('A collection of research on communication, emotion and history—exploring what is said, what is overlooked, and what is silenced.','一座关于沟通、情感与历史的研究资料馆。在证据、批判与多重声音中，探索那些被说出、被忽略或被迫沉默的经历。'))+'</p></header>'+
+'<header class="atlas-museum-hero"><span class="atlas-mini-star">✦</span><p class="eyebrow">'+E(T('THE UNSENT MUSEUM · RESEARCH COLLECTION','未寄之言博物馆 · 研究藏馆'))+'</p><h1>'+E(T('Research Library','研究资料馆'))+'</h1><p class="atlas-hero-secondary">'+E(T('Behind the Silence','沉默背后'))+'</p><div class="atlas-divider-gold">✧ ── ✦ ── ✧</div><p class="atlas-hero-description">'+E(T('A collection of research on communication, emotion and history—exploring what is said, what is overlooked, and what is silenced.','一座关于沟通、情感与历史的研究资料馆。在证据、批判与多重声音中，探索那些被说出、被忽略或被迫沉默的经历。'))+'</p></header>'+
 '<section class="atlas-portal-grid" aria-label="'+E(T('Enter the research collection','进入研究资料馆'))+'">'+entrancesMarkup+'</section>'+
 '<section class="atlas-featured" aria-label="'+E(T('Featured Study','精选研究'))+'"><div class="atlas-featured-art" aria-hidden="true"><span class="atlas-featured-star">✦</span></div><div class="atlas-featured-copy"><span class="atlas-ribbon">'+E(T('FEATURED STUDY','本月精选研究'))+'</span><h2>'+E(T('R26 · Confronting a Traumatic Event','R26 · 创伤经历与私人写作'))+'</h2><p class="atlas-featured-original">Pennebaker & Beall (1986) · Expressive Writing</p><p>'+E(T('A four-evening writing experiment explored how private expression can be emotionally difficult in the moment while relating to later health-service use.','一项连续四晚的写作实验提示：私人表达可能伴随即时的不适，却与之后的医疗服务使用次数存在联系。'))+'</p><a class="atlas-feature-link" href="#/research/study/R26">'+E(T('Read the study','阅读研究'))+' →</a></div></section>'+
 '<div class="atlas-catalog-layout"><aside class="atlas-catalog-aside"><h2>'+E(T('Browse by Theme','按主题浏览'))+'</h2>'+Object.entries(G).map(([g,n])=>'<a href="#/research/group/'+g+'"><span class="atlas-theme-dot">✧</span>'+E(T(n[0],n[1]))+' <small>'+(g==='cross'?'8':'7')+'</small></a>').join('')+'<a href="#/research/method"><span class="atlas-theme-dot">✧</span>'+E(T('Methods & Ethics','研究方法与伦理'))+'</a></aside>'+
@@ -342,7 +341,7 @@ if(route.type==='research-index' && window.location?.hash?.includes('#library'))
 if(route.type==='research-index'){document.querySelectorAll('[data-atlas-scroll]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();document.getElementById(el.getAttribute('data-atlas-scroll'))?.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));}
 if(route.type==='research-index'){
  const inp=document.getElementById('atlas-search');const results=document.getElementById('atlas-results');const count=document.getElementById('atlas-count');
- if(inp&&results)inp.addEventListener('input',()=>{const q=inp.value.trim().toLowerCase(),filtered=C.filter(x=>(x.id+' '+x.title+' '+x.author+' '+x.subject+' '+x.zhSubject).toLowerCase().includes(q));results.innerHTML=studies(filtered.map(x=>x.id))||'<p>'+E(T('No matching sources.','没有匹配的文献。'))+'</p>';if(count)count.textContent=filtered.length+' / 36';});
+ if(inp&&results)inp.addEventListener('input',()=>{const q=inp.value.trim().toLowerCase(),filtered=C.filter(x=>(x.id+' '+x.title+' '+(STUDY_TITLES_ZH[x.id]||'')+' '+x.author+' '+x.subject+' '+x.zhSubject).toLowerCase().includes(q));results.innerHTML=studies(filtered.map(x=>x.id))||'<p>'+E(T('No matching sources.','没有匹配的文献。'))+'</p>';if(count)count.textContent=filtered.length+' / 36';});
 }
 if(route.type==='lookout'&&route.id&&G[route.id]){
  const anchor=document.querySelector('.reason-panel');if(anchor&&!document.getElementById('atlas-lookout-links')){
