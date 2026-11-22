@@ -2048,3 +2048,8 @@ html:lang(zh) .history-curator-questions li{font-family:var(--museum-zh-serif,Ge
  .story-editor-panel .choice-option{min-width:0}
  .story-editor-panel .choice-option span{overflow-wrap:anywhere}
 }
+/* CSS-generated navigation guidance also follows the selected language. */
+@media(max-width:700px){
+ html[lang="zh-Hans"] .site-header:after{content:"← 左右滑动菜单，探索展馆 →"}
+ html[lang="zh-Hant"] .site-header:after{content:"← 左右滑動選單，探索展館 →"}
+}
