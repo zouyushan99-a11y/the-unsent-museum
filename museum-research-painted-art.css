@@ -80,3 +80,107 @@
 @media(max-width:700px){
   .atlas-library .atlas-portal-text{padding-top:.5rem}
 }
+
+
+/* Arch entrances: restored the actual arched silhouette and separated the
+   title block from the illustrated museum objects (2026-11-22).
+   Only the research-library portals are affected. */
+.atlas-library .atlas-portal-grid{
+  align-items:stretch;
+  column-gap:clamp(.55rem,1.35vw,1.2rem);
+  row-gap:1.25rem;
+}
+.atlas-library .atlas-portal{
+  display:flex;
+  flex-direction:column;
+  overflow:visible;
+  border-radius:0;
+  background:transparent;
+  filter:none;
+  text-decoration:none;
+}
+.atlas-library .atlas-portal img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1122 / 1402;
+  object-fit:contain;
+  /* Follow the crown and curved gilded arch; remove the two square
+     midnight-paper corners baked into the original rectangular picture. */
+  clip-path:polygon(
+    0% 100%, 0% 35%,
+    2% 31%, 5% 27%, 9% 23%, 15% 17.5%,
+    22% 12%, 30% 7%, 39% 2.7%, 46% .4%,
+    50% 0%,
+    54% .4%, 61% 2.7%, 70% 7%,
+    78% 12%, 85% 17.5%, 91% 23%,
+    95% 27%, 98% 31%, 100% 35%,
+    100% 100%
+  );
+  border-radius:0;
+  image-rendering:auto;
+  filter:drop-shadow(0 7px 11px rgba(0,0,0,.35));
+}
+.atlas-library .atlas-portal-text{
+  position:relative;
+  inset:auto;
+  z-index:2;
+  display:flex;
+  flex:1 0 auto;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:.27rem;
+  min-height:clamp(96px,9vw,122px);
+  margin:-2px 3.2% 0;
+  padding:.7rem .5rem .85rem;
+  background:linear-gradient(180deg,#0a1c30 0%,#071522 100%);
+  border:1px solid #bc9158;
+  border-top:2px solid #cba46c;
+  box-shadow:0 8px 16px rgba(0,0,0,.3),inset 0 0 0 4px rgba(181,140,77,.11);
+  text-shadow:0 2px 5px #000b;
+}
+.atlas-library .atlas-portal-text strong{
+  color:#f3d9a5;
+  font-size:clamp(.87rem,1.3vw,1.28rem);
+  line-height:1.24;
+  text-wrap:balance;
+}
+.atlas-library .atlas-portal-text small{
+  color:#d4b78b;
+  font-size:clamp(.63rem,.86vw,.88rem);
+  line-height:1.2;
+  text-wrap:balance;
+}
+.atlas-library .atlas-portal-text em{
+  color:#dcb777;
+  font-size:clamp(.64rem,.8vw,.8rem);
+  line-height:1.25;
+  margin-top:.17rem;
+}
+.atlas-library .atlas-portal:hover{
+  transform:translateY(-5px);
+  filter:brightness(1.09);
+}
+.atlas-library .atlas-portal:focus-visible{
+  outline:3px solid #f2d28c;
+  outline-offset:5px;
+}
+@media(max-width:700px){
+  .atlas-library .atlas-portal-text{
+    inset:auto;
+    min-height:94px;
+    margin:-2px 2.5% 0;
+    padding:.65rem .3rem .7rem;
+    gap:.2rem;
+  }
+  .atlas-library .atlas-portal-text strong{
+    font-size:clamp(.75rem,2.65vw,1rem);
+  }
+  .atlas-library .atlas-portal-text small{
+    font-size:clamp(.61rem,2.3vw,.8rem);
+  }
+  .atlas-library .atlas-portal-text em{
+    font-size:clamp(.6rem,2.1vw,.73rem);
+  }
+}
