@@ -132,3 +132,44 @@
  .atlas-page.atlas-deep .atlas-verification-plate:after{opacity:.09;width:50%}
 }
 @media(prefers-reduced-motion:reduce){.atlas-page:not(.atlas-designed) .atlas-study-link{transition:none}}
+
+/* Balance pass: restore the starry navy as the dominant surface.
+   First research chapter remains an illuminated parchment exhibit;
+   subsequent chapters are dark-blue research panels with bright ivory type. */
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section{
+ background:linear-gradient(115deg,rgba(16,48,76,.97),rgba(7,27,52,.96)),url("research-assets/research-hd-background.webp") center/cover no-repeat!important;
+ border:2px solid #d6a759!important;outline:1px solid #e8ba6d;outline-offset:-8px;
+ box-shadow:0 13px 30px #0006,inset 0 0 0 6px #efc37c13!important;
+}
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section:before{opacity:.17;mix-blend-mode:screen}
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section:after{color:#edc57e}
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section .eyebrow{color:#eac27f!important}
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section h2{
+ color:#ffedcb!important;border-bottom-color:#bc8f53;
+}
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section p{
+ color:#f0e5d4!important;
+}
+/* Verification becomes a dark museum plaque rather than another large ivory sheet. */
+.atlas-page.atlas-deep .atlas-verification-plate{
+ background:linear-gradient(110deg,rgba(18,53,77,.97),rgba(7,27,51,.94)),url("research-assets/research-hd-background.webp") center/cover!important;
+ border-color:#e0ad60!important;color:#f4e6ce!important
+}
+.atlas-page.atlas-deep .atlas-verification-plate:after{opacity:.27;mix-blend-mode:screen}
+.atlas-page.atlas-deep .atlas-verification-plate h2,
+.atlas-page.atlas-deep .atlas-verification-plate p{color:#f8ead2!important}
+.atlas-page.atlas-deep .atlas-verification-plate .eyebrow{color:#e9c280!important}
+.atlas-page.atlas-deep .atlas-verification-plate a{color:#f3cc81!important;border-bottom-color:#e4af5c}
+.atlas-page.atlas-deep .atlas-verification-plate a:hover{color:#ffe4ae!important}
+/* Connection links are midnight enamel, not a wall of ivory cards. */
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-reason-grid a{
+ background:linear-gradient(130deg,#294c67,#142f4c)!important;color:#f5e5ce!important;
+ border-color:#caa166;box-shadow:inset 0 0 0 3px #e3b66b17
+}
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-reason-grid a:before{color:#f6c87b}
+/* Warm paper stays in small editorial accents and one opening exhibit. */
+.atlas-page .atlas-evidence-table th{background:#b89a67;color:#172c3e}
+.atlas-page .atlas-evidence-table td{background:rgba(10,35,57,.82)}
+@media(max-width:760px){
+ .atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section p{color:#f7e8d0!important}
+}
