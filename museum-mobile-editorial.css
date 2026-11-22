@@ -1,0 +1,283 @@
+/* Phone and tablet editorial system. Loaded after the original museum styles.
+   No content, routing, star colours, canvas drawing or publishing behavior changes.
+   Desktop stays on the original system; large touch tablets share the tablet rules. */
+@media (max-width:1180px), (max-width:1366px) and (pointer:coarse) {
+ :root{
+  --handheld-gutter:clamp(22px,4vw,48px);
+  --handheld-reading:42rem;
+  --handheld-ui:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ }
+ html:lang(zh){--handheld-ui:var(--museum-zh-sans)}
+ body,html:lang(zh) body{font-size:17px;line-height:1.8;letter-spacing:0}
+ #app main{font-size:1rem}
+ #app .container{width:calc(100% - var(--handheld-gutter)*2);max-width:1080px}
+ #app h1,#app h2,#app h3{font-weight:400;text-wrap:pretty;word-break:normal;overflow-wrap:break-word}
+ #app .page-hero h1,#app .collective-hero h1,#app .sky-heading h1{
+  font-size:clamp(2.5rem,5.4vw,3.5rem);line-height:1.22;letter-spacing:-.025em;margin:14px 0 22px;
+ }
+ html:lang(zh) #app .page-hero h1,html:lang(zh) #app .collective-hero h1,
+ html:lang(zh) #app .sky-heading h1{letter-spacing:.025em;line-height:1.4}
+ #app h2{font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.35;letter-spacing:0}
+ #app h3{font-size:1.4rem;line-height:1.45;letter-spacing:0}
+ #app .eyebrow,#app .card-num,#app .collective-eyebrow,#app .collective-section-heading>span,
+ #app .history-object-label{font-family:var(--handheld-ui);font-size:.75rem;line-height:1.6;letter-spacing:.1em}
+ #app .small,#app .privacy-caption,#app .history-method,#app .history-longform-meta,
+ #app .history-photo-credit,#app .research-expansion-method{font-size:.875rem;line-height:1.75}
+ #app .muted{color:#c6ced5}
+ #app .page-hero,#app .collective-hero{padding:48px 0 28px;max-width:48rem}
+ #app .page-hero>p,#app .collective-hero>p{max-width:44rem;font-size:1.0625rem;line-height:1.85}
+ #app .section{padding:58px 0}
+ #app .section-compact{padding-top:34px;padding-bottom:40px}
+ #app .section-heading{align-items:start;gap:24px;margin-bottom:26px}
+ #app .section-heading h2{margin-bottom:16px}
+ #app .two-col{gap:32px}
+ /* A stable masthead: brand/language above a horizontally browsable room list. */
+ #app:has(.museum-home)>.site-header,#app:not(:has(.museum-home))>.site-header{
+  position:relative;inset:auto;display:grid;grid-template-columns:minmax(0,1fr) auto;
+  width:100%;height:auto;min-height:0;margin:0;padding:18px var(--handheld-gutter) 0;
+  gap:14px 18px;background:rgba(5,18,34,.96);border-bottom:1px solid rgba(230,195,127,.3);
+  box-sizing:border-box;align-items:center;
+ }
+ #app .site-header .brand{font-size:1.3rem;line-height:1.5;white-space:normal;min-width:0}
+ #app .site-header .brand-mark{margin-right:8px}
+ #app .site-header .museum-language-switch{grid-area:1/2;margin:0;min-width:0}
+ #app .site-header .museum-language-switch label{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ #app .site-header .museum-language-switch select{font:500 .875rem/1.35 var(--handheld-ui);min-height:44px;max-width:160px;border-radius:9px;padding:9px 10px}
+ #app:has(.museum-home)>.site-header .nav,#app:not(:has(.museum-home))>.site-header .nav{
+  grid-area:2/1/3/-1;display:flex;order:initial;width:100%;min-width:0;flex-wrap:nowrap;
+  align-items:center;justify-content:flex-start;gap:22px;margin:0;padding:0 1px 12px;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scroll-padding-inline:6px;
+  overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;
+ }
+ #app .site-header .nav a{font:500 .875rem/1.4 var(--handheld-ui);flex:0 0 auto;min-height:44px;padding:7px 1px;white-space:nowrap}
+ #app .site-header .nav .account-link{padding:8px 14px;max-width:180px}
+ #app .site-header:after{display:none}
+ /* Controls are set in the UI face; 16px inputs avoid iOS focus zoom. */
+ #app .btn,#app .pill,#app .collective-switch a,#app .category-nav a,
+ #app .history-toc button,#app .auth-tab-buttons button{font-family:var(--handheld-ui);font-size:.9375rem;line-height:1.5;letter-spacing:.01em;min-height:44px;white-space:normal;text-align:center}
+ #app .btn{padding:11px 20px}
+ #app .pill{align-items:center;padding:9px 16px}
+ #app .actions{gap:12px;margin-top:24px}
+ #app input:not([type=radio]):not([type=checkbox]),#app textarea,#app select{font-family:var(--handheld-ui);font-size:16px;line-height:1.6;min-height:48px}
+ #app .field,#app .museum-feedback-form input,#app .museum-feedback-form textarea{padding:13px 15px;border-radius:10px}
+ #app label,#app .form-row>p{line-height:1.7}
+ #app .choice-option{padding:18px 20px;gap:14px;font-size:1.0625rem;line-height:1.7;margin-top:12px}
+ #app .choice-option input{width:20px;height:20px;margin-top:4px}
+ #app .choice-panel{width:100%;max-width:var(--handheld-reading);padding:32px;margin:12px auto 50px;border-radius:20px}
+ #app .choice-panel h2{font-size:1.9rem;line-height:1.4}
+ #app .auth-panel,#app .story-editor-panel{padding:32px}
+ /* Long-form reading: one consistent measure, not several nested narrow columns. */
+ #app .history-longform{margin:32px auto 0;max-width:100%;border-radius:20px}
+ #app .history-longform-header{padding:40px 36px}
+ #app .history-longform-header h2,#app .collective-article>header h2{
+  font-size:clamp(2.2rem,4.5vw,3rem);line-height:1.35;letter-spacing:0;margin:16px 0 20px;
+ }
+ #app .history-longform-subtitle,#app .collective-subtitle{font-size:1.125rem;line-height:1.8}
+ #app .history-toc{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+ #app .history-toc button{flex:1 1 180px;padding:12px 14px}
+ #app .history-story-section,#app .history-analysis-section,#app .history-evidence-section{padding:40px 36px!important}
+ #app .history-section-title{max-width:var(--handheld-reading);margin:0 auto 28px}
+ #app .history-section-title h2,#app .collective-section-heading h2{font-size:2rem;line-height:1.4;margin:10px 0 16px}
+ #app .history-prose,#app .collective-prose,#app .story-reader{width:100%;max-width:var(--handheld-reading);margin-inline:auto}
+ #app .history-prose p,#app .collective-prose>p,#app .history-curator-paragraph,
+ #app .story-reader .archive-prose,#app .story-text{
+  font-size:1.1875rem;line-height:1.9;letter-spacing:0;word-break:normal;overflow-wrap:break-word;margin:0 0 1.45em;
+ }
+ html:lang(zh) #app .history-prose p,html:lang(zh) #app .collective-prose>p,
+ html:lang(zh) #app .history-curator-paragraph,html:lang(zh) #app .story-reader .archive-prose,
+ html:lang(zh) #app .story-text{font-family:var(--museum-zh-serif);font-size:1.1875rem;line-height:2;letter-spacing:.015em;line-break:strict}
+ #app .history-archive-figure{margin:30px auto;max-width:100%}
+ #app .history-archive-figure img{max-height:560px;width:100%;object-fit:contain}
+ #app .history-archive-figure figcaption{font-family:var(--handheld-ui);font-size:.875rem;line-height:1.8;padding:15px 18px}
+ #app .history-curator-analysis{max-width:var(--handheld-reading);margin-top:28px;padding:28px 30px;border-radius:12px}
+ #app .history-curator-label,#app .history-curator-questions h3{font-size:1.625rem;line-height:1.45}
+ #app .history-curator-intro{font-family:var(--handheld-ui);font-size:.9375rem;line-height:1.8}
+ #app .history-curator-questions{max-width:var(--handheld-reading);margin:32px auto 0;padding:26px 12px}
+ #app .history-curator-questions li{font-size:1.125rem;line-height:1.9;padding-left:.3em}
+ #app .history-curator-questions ol{gap:20px;padding-left:1.5em}
+ #app .history-evidence-section{font-size:1rem;line-height:1.85}
+ #app .history-evidence-section li,#app .collective-references li{margin:14px 0;line-height:1.85}
+ #app .collective-article{max-width:var(--handheld-reading)}
+ #app .collective-article>header{padding:18px 0 28px}
+ #app .collective-object,#app .collective-historical-context{padding:24px;margin:26px 0 32px}
+ #app .collective-tension{margin:36px 0;padding:32px 0}
+ #app .collective-factors{grid-template-columns:1fr;gap:16px}
+ #app .collective-factor{padding:24px;gap:18px}
+ #app .collective-factor h3{font-size:1.375rem;line-height:1.5}
+ #app .collective-factor p,#app .collective-historical-context p,#app .collective-tension-intro{font-size:1.0625rem;line-height:1.95}
+ #app .collective-reading-grid{grid-template-columns:1fr;gap:24px}
+ #app .collective-references{font-size:1rem}
+ /* Readable catalogue rhythm: two columns on tablets, no tiny three-column text. */
+ #app .cards,#app .history-grid,#app .collective-grid,#app .gallery-gateways,
+ #app .archive,#app .research-library-index .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+ #app .card,#app .history-card,#app .collective-grid .collective-card,#app .gateway-card,#app .archive-item{padding:28px;min-height:240px;border-radius:18px}
+ #app .history-card h2,#app .collective-card h3,#app .card h3,#app .gateway-card h2,#app .archive-item h3{font-size:1.625rem;line-height:1.45;margin:12px 0}
+ #app .history-card p,#app .collective-card p,#app .card p,#app .gateway-card p{font-size:1rem;line-height:1.8}
+ #app .collective-date,#app .history-date,#app .history-open,#app .collective-arrow{font-family:var(--handheld-ui);font-size:.875rem;line-height:1.6}
+ #app .archive-item .archive-prose{font-size:1.0625rem;line-height:1.9}
+ #app .archive-topbar{align-items:center;gap:20px}
+ #app .unsent-lenses-grid,#app .collective-motives-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+ #app .unsent-lenses-grid>div,#app .collective-motives-grid>article{padding:24px}
+ #app .unsent-lenses-grid p,#app .collective-motives-grid p{font-size:1rem;line-height:1.85}
+ #app .history-class-tabs{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ #app .history-class-tabs button,#app .history-class-tabs button:first-child{font-size:.9375rem;line-height:1.55;min-height:64px;padding:14px;letter-spacing:0}
+ #app .history-library-search{padding:22px;gap:12px}
+ #app .history-library-search input{min-height:48px}
+ /* Research is a sequence of reading cards, with a quieter type scale. */
+ #app .research-page .behind-silence{padding:32px;margin:10px auto 40px;max-width:var(--handheld-reading)}
+ #app .behind-heading h2{font-size:2rem;line-height:1.4}
+ #app .research-page .behind-first p,#app .research-page .behind-reason p,
+ #app .research-dossier p,#app .research-expansion-header p{font-size:1.0625rem;line-height:1.9}
+ #app .research-dossier-grid{grid-template-columns:1fr;gap:22px;max-width:var(--handheld-reading);margin-inline:auto}
+ #app .research-dossier{padding:30px;grid-column:auto}
+ #app .research-dossier h3{font-size:1.625rem;line-height:1.5;margin:18px 0}
+ #app .research-dossier-author,#app .research-dossier-overline{font-size:.875rem}
+ #app .research-dossier-finding strong,#app .research-dossier-interpretation strong{font-size:.8125rem;line-height:1.6;letter-spacing:.07em}
+ #app .research-dossier-evidence summary,#app .behind-more summary{font-size:1rem;min-height:48px;line-height:1.6}
+ #app .research-expansion-header{max-width:var(--handheld-reading);margin:0 auto 28px}
+ #app .research-page .category-nav .pill{flex:0 1 auto}
+ #app .about-copy{font-size:1.125rem;line-height:1.95}
+ #app .about-copy h3{font-size:1.5rem;margin-top:32px}
+ #app .paper-panel{padding:32px}
+ #app .reason-colour-item,#app .bar-label{font-family:var(--handheld-ui);font-size:.9375rem;line-height:1.7}
+ #app .reason-colour-legend summary{min-height:44px;line-height:1.6;font-size:1rem}
+ #app .footer{padding:32px 0 40px;font-family:var(--handheld-ui);font-size:.875rem}
+ #app .footer-links{gap:10px 24px}
+ #app .footer-links a{display:inline-flex;align-items:center;min-height:44px}
+ /* Entrance: keep the painting and gold frames, with a legible tablet rhythm. */
+ #app .museum-hero{min-height:auto}
+ #app .museum-hero-inner{width:calc(100% - var(--handheld-gutter)*2);padding:48px 0 44px}
+ #app .museum-hero-copy{width:100%;max-width:46rem;margin:0 auto 30px}
+ #app .museum-home .museum-hero-copy h1{font-size:clamp(3.5rem,8vw,5rem);line-height:1.12;margin:16px 0}
+ #app .museum-portal-grid{width:100%;margin:32px auto 0;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+ #app .museum-portal,#app .museum-portal-history{grid-column:auto;min-height:214px;padding:24px 16px;border-radius:34px 34px 16px 16px}
+ #app .museum-portal-heading{font-size:1.25rem!important;line-height:1.45;letter-spacing:0}
+ #app .museum-portal-copy{font-size:.9375rem!important;line-height:1.7}
+ #app .museum-portal-icon{width:64px;height:64px;margin:0 auto 16px}
+ #app .museum-portal-icon svg{width:100%;height:100%}
+ #app .museum-hero-down{margin-top:32px;font-size:.8125rem}
+}
+
+/* Handheld reading: generous text, restrained headings, one column. */
+@media(max-width:600px){
+ :root{--handheld-gutter:20px;--handheld-reading:100%}
+ body,html:lang(zh) body{font-size:16px;line-height:1.8}
+ #app .page-hero,#app .collective-hero{padding:32px 0 20px}
+ #app .page-hero h1,#app .collective-hero h1,#app .sky-heading h1{font-size:clamp(2rem,8.5vw,2.625rem);line-height:1.3;margin:12px 0 18px;letter-spacing:-.025em}
+ html:lang(zh) #app .page-hero h1,html:lang(zh) #app .collective-hero h1,html:lang(zh) #app .sky-heading h1{line-height:1.45;letter-spacing:.02em}
+ #app .page-hero>p,#app .collective-hero>p{font-size:1rem;line-height:1.85}
+ #app h2,#app .history-section-title h2,#app .collective-section-heading h2,#app .behind-heading h2{font-size:1.625rem;line-height:1.45}
+ #app h3{font-size:1.25rem;line-height:1.5}
+ #app .eyebrow,#app .card-num,#app .collective-eyebrow{font-size:.6875rem;line-height:1.65;letter-spacing:.09em}
+ #app .site-header .brand{font-size:1.0625rem;line-height:1.45;letter-spacing:0}
+ #app .site-header .brand-mark{margin-right:5px}
+ #app:has(.museum-home)>.site-header,#app:not(:has(.museum-home))>.site-header{padding-top:12px;gap:10px 8px}
+ #app .site-header .museum-language-switch select{font-size:.8125rem;max-width:112px;padding:8px 6px}
+ #app .site-header .nav{gap:20px!important;padding-bottom:10px!important}
+ #app .site-header .nav a{font-size:.875rem}
+ #app .section{padding:40px 0}
+ #app .section-compact{padding-top:24px;padding-bottom:32px}
+ #app .section-heading{display:block;margin-bottom:24px}
+ #app .two-col{grid-template-columns:1fr;gap:24px}
+ #app .cards,#app .history-grid,#app .collective-grid,#app .gallery-gateways,#app .archive,
+ #app .research-library-index .cards,#app .unsent-lenses-grid,#app .collective-motives-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+ #app .card,#app .history-card,#app .collective-grid .collective-card,#app .gateway-card,#app .archive-item{padding:24px;min-height:0;border-radius:16px}
+ #app .history-card h2,#app .collective-card h3,#app .card h3,#app .gateway-card h2,#app .archive-item h3{font-size:1.5rem;line-height:1.45}
+ #app .card-num{margin-bottom:20px}
+ #app .card .link-arrow,#app .history-open,#app .collective-arrow{margin-top:20px;display:inline-block}
+ #app .gateway-card .gateway-icon{font-size:2rem;margin-bottom:18px}
+ #app .gateway-card .link-arrow{margin-top:18px}
+ #app .history-class-tabs{grid-template-columns:1fr;gap:10px}
+ #app .history-class-tabs button,#app .history-class-tabs button:first-child{min-height:50px;padding:13px 16px;text-align:left}
+ #app .history-library-search{padding:18px;display:flex;flex-wrap:wrap}
+ #app .history-library-search label,#app .history-library-search input{width:100%}
+ #app .collective-switch{gap:10px;margin:20px 0 28px}
+ #app .collective-switch a{flex:1;padding:10px 12px;font-size:.875rem}
+ #app .collective-entrance-note{margin:-8px 0 24px;font-size:.9375rem}
+ #app .collective-category-nav{gap:10px}
+ #app .collective-category-nav a{padding:12px 14px;font-size:.875rem;line-height:1.6;min-height:44px}
+ #app .category-nav{gap:8px;margin:20px 0 24px}
+ #app .category-nav .pill{font-size:.875rem;padding:9px 13px}
+ #app .history-longform{margin:24px auto 0;border-radius:16px}
+ #app .history-longform-header{padding:28px 22px}
+ #app .history-longform-header h2,#app .collective-article>header h2{font-size:clamp(1.875rem,7.7vw,2.375rem);line-height:1.45;letter-spacing:0}
+ #app .history-longform-subtitle,#app .collective-subtitle{font-size:1rem;line-height:1.85}
+ #app .history-toc{display:grid;grid-template-columns:1fr;gap:8px;margin-top:22px}
+ #app .history-toc button{font-size:.875rem;line-height:1.6;text-align:left;padding:11px 14px;min-height:46px}
+ #app .history-story-section,#app .history-analysis-section,#app .history-evidence-section{padding:30px 22px!important}
+ #app .history-prose p,#app .collective-prose>p,#app .history-curator-paragraph,
+ #app .story-reader .archive-prose,#app .story-text{font-size:1.0625rem;line-height:1.9;margin-bottom:1.35em}
+ html:lang(zh) #app .history-prose p,html:lang(zh) #app .collective-prose>p,
+ html:lang(zh) #app .history-curator-paragraph,html:lang(zh) #app .story-reader .archive-prose,
+ html:lang(zh) #app .story-text{font-size:1.0625rem;line-height:2;letter-spacing:.01em}
+ #app .history-curator-analysis{padding:22px 0;margin-top:24px;background:transparent;border-width:1px 0;border-radius:0}
+ #app .history-curator-label,#app .history-curator-questions h3{font-size:1.375rem;line-height:1.5}
+ #app .history-curator-intro{font-size:.875rem;line-height:1.85;padding-bottom:18px;margin-bottom:20px}
+ #app .history-curator-questions{padding:24px 0;margin-top:28px}
+ #app .history-curator-questions li{font-size:1.0625rem;line-height:1.9}
+ #app .history-evidence-section{font-size:.9375rem;line-height:1.85}
+ #app .history-archive-figure{margin:24px auto}
+ #app .history-archive-figure figcaption{font-size:.8125rem;line-height:1.85;padding:13px 12px}
+ #app .collective-object,#app .collective-historical-context{padding:20px;margin:24px 0}
+ #app .collective-factor{padding:22px 18px;gap:12px}
+ #app .collective-factor h3{font-size:1.25rem}
+ #app .collective-factor p,#app .collective-historical-context p,#app .collective-tension-intro{font-size:1rem;line-height:1.95}
+ #app .collective-tension{margin:28px 0;padding:26px 0}
+ #app .unsent-lenses-grid>div,#app .collective-motives-grid>article{padding:22px}
+ #app .research-page .behind-silence{padding:26px 22px;margin-bottom:32px}
+ #app .research-dossier{padding:26px 22px}
+ #app .research-dossier h3{font-size:1.375rem;line-height:1.5}
+ #app .research-page .behind-first p,#app .research-page .behind-reason p,
+ #app .research-dossier p,#app .research-expansion-header p{font-size:1rem;line-height:1.9}
+ #app .research-dossier-evidence .research-dossier-paper{font-size:.875rem}
+ #app .research-page .category-nav{display:grid;grid-template-columns:1fr}
+ #app .choice-panel,#app .auth-panel,#app .story-editor-panel,#app .paper-panel{padding:24px 22px;border-radius:16px}
+ #app .choice-panel h2{font-size:1.5rem;line-height:1.5}
+ #app .choice-option{padding:16px 15px;font-size:1rem;gap:12px}
+ #app .toolbar{gap:12px;align-items:stretch}
+ #app .toolbar .btn{flex:1 1 130px}
+ #app .about-copy{font-size:1.0625rem;line-height:1.95}
+ #app .about-copy h3{font-size:1.375rem}
+ #app .reason-colour-grid{grid-template-columns:1fr;gap:14px}
+ #app .reason-colour-item,#app .bar-label{font-size:.875rem;line-height:1.7}
+ #app .reason-panel{padding:22px 18px}
+ #app .stats{gap:10px}
+ #app .stat{padding:18px 14px}
+ #app .stat strong{font-size:2rem}
+ #app .stat span{font-size:.875rem}
+ #app .legend{font-size:.875rem;gap:14px}
+ #app .sky-frame{height:360px;border-radius:16px}
+ #app .story-sky-preview{display:block;padding:22px}
+ #app .story-sky-preview[hidden]{display:none}
+ #app .footer-inner{display:block}
+ #app .footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 20px;margin-top:20px}
+ #app .footer-links a{line-height:1.6;min-height:44px}
+ /* Five equal entrance tickets, rather than squeezed miniature desktop doors. */
+ #app .museum-hero-inner{padding:32px 0 34px}
+ #app .museum-hero-copy{margin-bottom:24px}
+ #app .museum-home .museum-hero-copy h1{font-size:clamp(2.75rem,11.5vw,3.625rem);line-height:1.18;letter-spacing:.01em}
+ #app .museum-hero-copy .hero-intro,#app .museum-hero-copy p{font-size:1rem;line-height:1.85}
+ #app .museum-portal-grid{grid-template-columns:1fr;gap:12px;margin-top:26px}
+ #app .museum-portal,#app .museum-portal-history{
+  display:grid;grid-template-columns:48px minmax(0,1fr) 18px;grid-template-rows:auto auto;
+  align-content:center;align-items:center;column-gap:16px;row-gap:5px;text-align:left;
+  min-height:104px;padding:18px 20px;border-radius:18px;
+ }
+ #app .museum-portal-icon{grid-area:1/1/3/2;width:46px;height:46px;margin:0}
+ #app .museum-portal-heading{grid-area:1/2;font-size:1.125rem!important;line-height:1.45;margin:0}
+ #app .museum-portal-copy{grid-area:2/2;font-size:.875rem!important;line-height:1.65;margin:0;max-width:none}
+ #app .museum-portal-arrow{grid-area:1/3/3/4;position:static;opacity:.9;margin:0;font-size:1.25rem}
+ #app .museum-portal-corner{display:none}
+ #app .museum-hero-down{margin-top:26px}
+ #app .history-home-feature-grid{grid-template-columns:1fr}
+ #app .history-home-exhibit:last-child{grid-column:auto}
+ #app .history-home-exhibit{padding:24px;min-height:210px}
+}
+@media(max-width:360px){
+ :root{--handheld-gutter:16px}
+ #app .history-longform-header{padding:26px 18px}
+ #app .history-story-section,#app .history-analysis-section,#app .history-evidence-section{padding:26px 18px!important}
+ #app .site-header .brand{font-size:1rem}
+ #app .site-header .museum-language-switch select{max-width:102px;font-size:.75rem}
+ #app .museum-portal,#app .museum-portal-history{padding:17px 16px;column-gap:12px}
+}
