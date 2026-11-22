@@ -53,17 +53,17 @@
   background-size:cover;
 }
 .atlas-library .atlas-study-link::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-studies.svg");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-studies.webp");
   background-size:cover;
 }
 .atlas-library .atlas-study-link:nth-child(4n+2)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-comparisons.svg");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-comparisons.webp");
 }
 .atlas-library .atlas-study-link:nth-child(4n+3)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-syntheses.svg");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-syntheses.webp");
 }
 .atlas-library .atlas-study-link:nth-child(4n+4)::before{
-  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-verification.svg");
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/library-verification.webp");
 }
 .atlas-page.atlas-deep .atlas-deep-section{
   background-image:url("research-assets/research-hd-parchment.webp");
