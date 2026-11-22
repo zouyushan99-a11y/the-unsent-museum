@@ -25,3 +25,9 @@
 .atlas-page a[href^="https://"]{overflow-wrap:anywhere}
 @media(max-width:720px){.atlas-group-grid,.atlas-study-list,.atlas-reason-grid{grid-template-columns:minmax(0,1fr)}.atlas-nav{gap:.35rem}.atlas-nav a{padding:.45rem .7rem;font-size:.8rem}.atlas-category{min-height:130px}.atlas-panel{margin:1rem 0}}
 @media(prefers-reduced-motion:reduce){.atlas-category,.atlas-study-link,.atlas-reason-grid a{transition:none}}
+
+.atlas-evidence-table{max-width:100%;overflow-x:auto;margin:1rem 0}
+.atlas-evidence-table table{width:100%;border-collapse:collapse;min-width:540px}
+.atlas-evidence-table th,.atlas-evidence-table td{padding:.85rem .75rem;text-align:left;vertical-align:top;border-bottom:1px solid rgba(187,154,97,.25);line-height:1.6}
+.atlas-evidence-table th{font-weight:600;color:#d9be8a}
+.atlas-evidence-table a{overflow-wrap:anywhere}
