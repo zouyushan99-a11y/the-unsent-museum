@@ -87,11 +87,11 @@ return '<main class="container atlas-page">'+nav()+heading(T('Why might this rea
 }
 function catalog(){
 const entrances=[
-['research-arch-books.svg','All Studies','研究目录','36','#/research','library'],
-['research-arch-comparison.svg','Comparative Research','跨研究比较','08','#/research','comparisons'],
-['research-arch-synthesis.svg','Research Synthesis','综合研究专题','06','#/research','syntheses'],
-['research-arch-verification.svg','Source Verification','来源核实馆','36','#/research/audit'],
-['research-arch-method.svg','Methods & Perspectives','研究方法与视角','', '#/research/method']
+['research-hd-arch-1.webp','All Studies','研究目录','36','#/research','library'],
+['research-hd-arch-2.webp','Comparative Research','跨研究比较','08','#/research','comparisons'],
+['research-hd-arch-3.webp','Research Synthesis','综合研究专题','06','#/research','syntheses'],
+['research-hd-arch-4.webp','Source Verification','来源核实馆','36','#/research/audit'],
+['research-hd-arch-5.webp','Methods & Perspectives','研究方法与视角','', '#/research/method']
 ];
 const entrancesMarkup=entrances.map((item,i)=>'<a class="atlas-portal" href="'+item[4]+'"'+(item[5]?' data-atlas-scroll="'+item[5]+'"':'')+' aria-label="'+E(T(item[1],item[2]))+'"><img alt="" loading="'+(i<2?'eager':'lazy')+'" src="research-assets/'+item[0]+'"><span class="atlas-portal-text"><strong>'+E(T(item[1],item[2]))+'</strong><small>'+E(item[1])+'</small><em>'+(item[3]?item[3]+' · ':'')+E(T('Explore collection','探索馆藏'))+' →</em></span></a>').join('');
 return '<main class="container atlas-page atlas-designed atlas-library">'+nav()+
