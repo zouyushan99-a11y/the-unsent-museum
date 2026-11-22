@@ -94,10 +94,10 @@ return '<main class="container atlas-page">'+nav()+heading(T(G[g]?.[0]||'Researc
 }
 const curated12=['R01','R02','R03','R09','R15','R16','R21','R22','R26']; 
 function deepStudy(id,x){
-const d=window.MUSEUM_RESEARCH_FIVE?.[id];if(!d)return null;
+const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id];if(!d)return null;
 const chinese=window.museumLangPublic?.()!=='en',content=chinese?d.zh:d.en;
 const label=(en,zh)=>E(T(en,zh));
-const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):T('Source-based detailed reading','基于原始文献的深入解读');
+const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):d.stage==='abstract-verified'?T('Abstract-verified analysis · complete methods and statistics await full-text review','基于摘要核实的解读 · 完整方法和统计数字仍待全文审阅'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
 const sections=content.map((s,i)=>'<section class="atlas-panel atlas-deep-section"><span class="eyebrow">'+String(i+1).padStart(2,'0')+' / '+label('RESEARCH DOSSIER','研究档案')+'</span><h2>'+E(s[0])+'</h2><p>'+E(s[1])+'</p></section>').join('');
 const linkHistory=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id)).map(([k])=>'<a href="#/'+(['franz-kafka','anne-lister'].includes(k)?'history':'collectives')+'/'+E(k)+'">'+E(k.replaceAll('-',' '))+' ↗</a>').join('');
 const matching=Object.entries(reasonMap).flatMap(([g,arr])=>arr.flatMap((ids,i)=>ids.some(n=>'R'+String(n).padStart(2,'0')===id)?['<a href="#/research/reason/'+g+'/'+i+'">'+E(T(G[g][0]+' · Reason '+(i+1),G[g][1]+' · '+reasonName(g,i)))+'</a>']:[])).join('');
