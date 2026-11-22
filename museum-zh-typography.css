@@ -1,6 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+TC:wght@400;600&display=swap");
 
-/* Regional Ming faces for exhibits and prose, with Kai for display titles. */
+/* Regional Ming faces for exhibits and prose, for titles, prose, and controls. */
 :root{--museum-zh-serif:"Noto Serif SC","Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC","Source Han Serif CN","SimSun",serif}
 html:lang(zh-Hant){--museum-zh-serif:"Noto Serif TC","Songti TC","Noto Serif CJK TC","Source Han Serif TC","PMingLiU",serif}
 html:lang(zh) body{font-family:var(--museum-zh-serif);font-size:15.5px;line-height:1.85;letter-spacing:.012em}
@@ -23,14 +23,10 @@ html:lang(zh) :is(.history-prose p, .collective-prose>p) {
 /* Keep Chinese controls on the same Ming face across viewport sizes. */
 html:lang(zh) {
   --museum-zh-sans: var(--museum-zh-serif);
-  --museum-zh-display: "LXGW WenKai TC", "Kaiti SC", "KaiTi", var(--museum-zh-serif);
-}
-html:lang(zh-Hant) {
-  --museum-zh-display: "LXGW WenKai TC", "Kaiti TC", "DFKai-SB", var(--museum-zh-serif);
 }
 html:lang(zh) #app :is(.museum-hero, .page-hero) h1 {
-  font-family: var(--museum-zh-display);
-  font-weight: 400;
+  font-family: var(--museum-zh-serif);
+  font-weight: 600;
 }
 
 html:lang(zh) #app .site-header .nav a,
