@@ -1,0 +1,38 @@
+name: Restore painted WebP artwork
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-painted-webp.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode actual image pixels from embedded archival assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re, base64
+          assets=list(Path('research-assets').glob('painted-research-*.svg'))
+          assert len(assets)==11, f'Expected 11 painted images, found {len(assets)}'
+          for source in assets:
+              text=source.read_text(encoding='utf-8')
+              match=re.search(r'href="data:image/webp;base64,([A-Za-z0-9+/=]+)"', text)
+              assert match, f'Missing embedded source image: {source}'
+              data=base64.b64decode(match.group(1),validate=True)
+              assert data[:4]==b'RIFF' and data[8:12]==b'WEBP', source
+              target=source.with_suffix('.webp')
+              target.write_bytes(data)
+              print(f'{source.name} -> {target.name}: {len(data)} bytes')
+          PY
+      - name: Commit original WebP image files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research-assets/painted-research-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'Install original raster-painted research artwork'
+            git push
+          fi
