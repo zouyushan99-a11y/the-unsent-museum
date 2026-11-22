@@ -140,3 +140,18 @@ Do not blindly rerun schema migrations or overwrite live data. Inspect and back 
 If the creator says: “Explain how we built this website,” start with the vision in section 1, then walk through the timeline in section 4, and illustrate the architecture in section 3. Use simple analogies: GitHub Pages = exhibition building; Supabase = back office and archive database; translation adapter = switchable translation desk; DeepL = currently hired translator. Explain problems that were fixed, data ownership/privacy, and ongoing maintenance. Avoid claiming a feature is working without checking current code or production logs.
 
 If asked to make a change, read this handover **and current repo files**. After substantial changes, update this document and the more detailed deployment guide with any new architectural decisions.
+
+## 11. Curatorial update — four cross-generational interactive galleries (22 November 2026)
+
+At the creator's request, the four interactive scenarios were rethought for participation by adults of different generations, including parents and teachers, rather than mainly students. The updated public names are:
+
+1. **The No We Never Said** — personal refusal, boundaries and apparent consent (`friendship` remains the legacy internal ID).
+2. **The Silent Witness** — witnessing unfair treatment, bystander responsibility and choosing whether to intervene (`classroom` remains the legacy internal ID).
+3. **The Feelings We Never Voiced** — gratitude, affection, apology, opportunities missed and emotional disclosure (`family` remains the legacy internal ID).
+4. **Before Sending** — a letter, email or message composed but not delivered (`before-sending` remains the stable internal ID).
+
+The first gallery is about an *unspoken refusal*, the third about *unspoken feelings*. The curated homepage cards retain short taglines, while each gallery opening has a fuller explanation. Scenario questions and all seven reasons on both pathways are in English and fully authored Simplified Chinese; Traditional Chinese is produced through the site's existing OpenCC conversion, rather than displaying English scenario text. The scenario texts are **illustrative placeholders**, not yet the creator's personal lived stories; those are to replace them in a later editorial step.
+
+**Important compatibility decisions:** Do not rename the four internal IDs without migrating existing votes, visitor stories, stars, routes, category statistics and research. The current redesign deliberately preserved the IDs, the existing star colors, starfield generation, original data, private drafts, public story publication and the complete interactive progression. Earlier votes and stories were made under the *older* prompts: public caveats now disclose that historical mismatch. Existing research panels likewise predate the revised curatorial themes and carry a scope notice until new appropriately sourced research is curated. The historical museum, visual assets and responsive design were not redesigned as part of this change.
+
+Updated: `app.js`, `museum-i18n.js`, `museum-i18n-audit-2026.js`, `index.html`. Syntax checks passed for all modified JavaScript scripts; a multi-device live visual regression test and a fresh full interactive/publication test are still recommended.
