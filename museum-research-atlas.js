@@ -100,8 +100,8 @@ return '<main class="container atlas-page atlas-designed atlas-library">'+nav()+
 '<section class="atlas-featured" aria-label="'+E(T('Featured Study','精选研究'))+'"><div class="atlas-featured-art" aria-hidden="true"><span class="atlas-featured-star">✦</span></div><div class="atlas-featured-copy"><span class="atlas-ribbon">'+E(T('FEATURED STUDY','本月精选研究'))+'</span><h2>'+E(T('R26 · Confronting a Traumatic Event','R26 · 创伤经历与私人写作'))+'</h2><p class="atlas-featured-original">Pennebaker & Beall (1986) · Expressive Writing</p><p>'+E(T('A four-evening writing experiment explored how private expression can be emotionally difficult in the moment while relating to later health-service use.','一项连续四晚的写作实验提示：私人表达可能伴随即时的不适，却与之后的医疗服务使用次数存在联系。'))+'</p><a class="atlas-feature-link" href="#/research/study/R26">'+E(T('Read the study','阅读研究'))+' →</a></div></section>'+
 '<div class="atlas-catalog-layout"><aside class="atlas-catalog-aside"><h2>'+E(T('Browse by Theme','按主题浏览'))+'</h2>'+Object.entries(G).map(([g,n])=>'<a href="#/research/group/'+g+'"><span class="atlas-theme-dot">✧</span>'+E(T(n[0],n[1]))+' <small>'+(g==='cross'?'8':'7')+'</small></a>').join('')+'<a href="#/research/method"><span class="atlas-theme-dot">✧</span>'+E(T('Methods & Ethics','研究方法与伦理'))+'</a></aside>'+
 '<div class="atlas-catalog-main"><section id="library" class="atlas-catalog-section"><div class="atlas-section-head"><h2>'+E(T('All Studies','研究目录'))+' <span>36</span></h2><label class="atlas-search-wrap"><span class="sr-only">'+E(T('Search titles, authors and topics','搜索题名、作者和主题'))+'</span><input id="atlas-search" class="field" type="search" placeholder="'+E(T('Search studies, authors or keywords…','搜索研究、作者或关键词……'))+'"></label></div><div id="atlas-count" class="small muted"></div><div id="atlas-results">'+studies(C.map(x=>x.id))+'</div></section></div></div>'+
-'<section id="comparisons" class="atlas-essay-wing"><div class="atlas-section-head"><h2>'+E(T('Comparative Research','跨研究比较'))+'</h2><span class="atlas-roman">VIII</span></div><p>'+E(T('Compare what research actually measures—and where its findings differ.','比较不同研究究竟测量了什么，以及它们的结论有何分歧。'))+'</p><div class="atlas-mini-grid">'+comparisons.map((c,i)=>'<a href="#/research/compare/'+i+'"><span>0'+(i+1)+'</span><strong>'+E(T(c[0],c[1]))+'</strong><em>↗</em></a>').join('')+'</div></section>'+
-'<section id="syntheses" class="atlas-essay-wing"><div class="atlas-section-head"><h2>'+E(T('Research Synthesis','综合研究专题'))+'</h2><span class="atlas-roman">VI</span></div><p>'+E(T('Six thematic interpretations connecting evidence, disagreement and unanswered questions.','六个综合专题，连接研究证据、学术分歧和尚未解决的问题。'))+'</p><div class="atlas-mini-grid">'+themes.map((x,i)=>'<a href="#/research/synthesis/'+i+'"><span>0'+(i+1)+'</span><strong>'+E(T(x.en,x.zh))+'</strong><em>↗</em></a>').join('')+'</div></section>'+
+'<section id="comparisons" class="atlas-essay-wing"><div class="atlas-section-head"><h2>'+E(T('Comparative Research','跨研究比较'))+'</h2><span class="atlas-roman">VIII</span></div><p>'+E(T('Compare what research actually measures—and where its findings differ.','比较不同研究究竟测量了什么，以及它们的结论有何分歧。'))+'</p><div class="atlas-mini-grid atlas-illustrated-grid atlas-compare-grid">'+comparisons.map((c,i)=>'<a class="atlas-illustrated-card" href="#/research/compare/'+i+'"><span class="atlas-card-picture"><img src="research-assets/research-theme-compare-'+i+'.webp" alt="" loading="lazy" decoding="async"></span><span class="atlas-card-label"><span class="atlas-card-number">'+String(i+1).padStart(2,'0')+'</span><strong>'+E(T(c[0],c[1]))+'</strong><em aria-hidden="true">↗</em></span></a>').join('')+'</div></section>'+
+'<section id="syntheses" class="atlas-essay-wing"><div class="atlas-section-head"><h2>'+E(T('Research Synthesis','综合研究专题'))+'</h2><span class="atlas-roman">VI</span></div><p>'+E(T('Six thematic interpretations connecting evidence, disagreement and unanswered questions.','六个综合专题，连接研究证据、学术分歧和尚未解决的问题。'))+'</p><div class="atlas-mini-grid atlas-illustrated-grid atlas-synthesis-grid">'+themes.map((x,i)=>'<a class="atlas-illustrated-card" href="#/research/synthesis/'+i+'"><span class="atlas-card-picture"><img src="research-assets/research-theme-synthesis-'+i+'.webp" alt="" loading="lazy" decoding="async"></span><span class="atlas-card-label"><span class="atlas-card-number">'+String(i+1).padStart(2,'0')+'</span><strong>'+E(T(x.en,x.zh))+'</strong><em aria-hidden="true">↗</em></span></a>').join('')+'</div></section>'+
 '<section class="atlas-panel atlas-library-method"><h2>'+E(T('How We Study Silence','我们如何研究沉默'))+'</h2><p>'+E(T('Research findings, curatorial interpretation and missing evidence are explicitly distinguished. The library is a critical narrative research collection, not a pooled statistical review.','本馆明确区分已发表研究、策展推论和证据缺口。这里是批判性的叙述研究收藏，而非将不同结果强行合并的统计综述。'))+'</p><a class="atlas-feature-link" href="#/research/method">'+E(T('Read our research method','阅读研究方法'))+' →</a></section></main>';
 }
 function shelf(g){
@@ -308,13 +308,22 @@ const items=[
 ];
 return '<main class="container atlas-page">'+nav()+heading(T('How We Read What Was Never Said','我们如何阅读未曾说出的话'),T('A curatorial statement on evidence, comparison, limits and responsibility.','关于证据、比较、局限与责任的策展方法说明。'))+items.map((p,i)=>'<section class="atlas-panel"><span class="eyebrow">'+String(i+1).padStart(2,'0')+'</span><h2>'+E(T(p[0],p[1]))+'</h2><p>'+E(T(p[2],p[3]))+'</p></section>').join('')+'<section class="atlas-panel"><h2>'+E(T('Methodological references','方法参考'))+'</h2><p><a href="https://www.cochrane.org/authors/handbooks-and-manuals/handbook/current/chapter-12" target="_blank" rel="noopener noreferrer">Cochrane Handbook · Synthesis without meta-analysis ↗</a></p><p><a href="https://www.bmj.com/content/368/bmj.l6890" target="_blank" rel="noopener noreferrer">SWiM reporting guideline ↗</a></p></section></main>';
 }
+function topicArtwork(html,kind,index,count){
+if(!Number.isInteger(index)||index<0||index>=count)return html;
+const source='research-assets/research-theme-'+kind+'-'+index+'.webp';
+const image='<figure class="atlas-topic-detail-art" aria-hidden="true"><img src="'+source+'" alt="" loading="eager" decoding="async"></figure>';
+const marker='<section class="page-hero">';
+if(html.includes(marker))return html.replace(marker,image+marker);
+const navEnd='</nav>';
+return html.includes(navEnd)?html.replace(navEnd,navEnd+image):html;
+}
 function page(id){
 if(!id)return catalog();
 const bits=id.split('/');
 if(bits[0]==='study')return study(bits[1]);
 if(bits[0]==='group')return shelf(bits[1]);
-if(bits[0]==='synthesis')return synthesis(bits[1]);
-if(bits[0]==='compare')return compare(bits[1]);
+if(bits[0]==='synthesis')return topicArtwork(synthesis(bits[1]),'synthesis',Number(bits[1]),6);
+if(bits[0]==='compare')return topicArtwork(compare(bits[1]),'compare',Number(bits[1]),8);
 if(bits[0]==='reason')return reason(bits[1],Number(bits[2]));
 if(bits[0]==='audit')return auditRegister();
 if(bits[0]==='method')return method();
