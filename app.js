@@ -1281,7 +1281,13 @@ function bindStoryEditor(){
       publicationMode:st.publicationMode,displayName:st.displayName,
       sourceLanguage:st.writingLanguage||museumLang,translationConsent:true}
    });
-   if(error||!data?.ok)throw Error(data?.error||error?.message||'The translation could not be completed.');
+   if(error||!data?.ok){
+    let detail=data?.error||'';
+    if(error?.context?.json){
+     try{const remote=await error.context.json();detail=remote?.error||remote?.message||detail}catch{}
+    }
+    throw Error(detail||error?.message||'The translation could not be completed.');
+   }
    st.ownerId=authUser.id;st.synced=true;addLocalStory(st);
    await loadPublicStories();
    if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id)&&row.translation_status==='ready')){
