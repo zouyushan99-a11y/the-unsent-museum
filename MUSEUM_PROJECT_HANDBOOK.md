@@ -245,3 +245,26 @@ Core verification records:
 Four comparisons expanded with actual methods and outcomes: \`#/research/compare/3\` (gratitude, disclosure, apology), \`#/research/compare/4\` (family communication), \`#/research/compare/5\` (imagined audiences), and \`#/research/compare/6\` (writing for oneself). These comparisons explicitly flag R17, R18, R21, R24, R27, R28 as research links *not yet full-text reviewed*, so no unverified statistics are attributed to them.
 
 The public \`#/research/audit\` source-verification register now contains **20 entries**, including a qualified disclosure of limited original access for R04, R14, the previously flagged R15, and book-based R29. "Twenty expanded research pages" does not mean "twenty independently signed off full-text studies". English and Chinese (simplified/traditional through existing language conversion) pages, verification register, and four comparisons passed JavaScript syntax and HTML-generation tests. Full live-browser visual acceptance and all third-party publication-link tests have not yet occurred. No Supabase tables, visitor-choice storage, stars, or private stories were changed.
+
+
+## 21. Final 16 research dossiers — full 36-record atlas (22 November 2026)
+
+With user authorization to complete the remaining 16 records to a high scholarly standard, added two bilingual editorial datasets:
+* \`museum-research-final-a.js\` — R07, R13, R17, R18, R20, R21, R24, R27.
+* \`museum-research-final-b.js\` — R28, R30, R31, R32, R33, R34, R35, R36.
+
+Each record has a scholarly source citation, an original source and alternate access URL, seven or eight substantial sections on research questions and background, actual research design or textual method, traceable findings or theoretical propositions, limitations, relation to other scholarship, and ethical curatorial interpretation, written independently in English and Chinese. Existing language conversion generates traditional Chinese from the authored simplified Chinese; full manual literary translation QA is still needed for scholarly nuance. \`museum-research-atlas.js\` now recognizes all six dossier datasets, serves 36/36 expanded records, renders source audit sections for every dossier and includes 36 entries in the public \`#/research/audit\` register. Eight cross-study comparisons and six synthesis thematic pages have sourced findings and discuss the limitations of comparison.
+
+Corrections to original bibliography and links: R34 is *The Death of Luigi Trastulli and Other Stories* (1991, SUNY Press), not Portelli's distinct earlier 1979 essay; R36 is attributed to **Ana Dragojlovic & Annemarie Samuels** (2023), not simply the Open Encyclopedia of Anthropology, DOI 10.29164/23silence; R35 is by **Elisabeth Schweiger & Kerstin Tomiak** (2022) in *Millennium* 50(3), 623–646. R07 has canonical DOI 10.1037/0022-3514.95.1.128.
+
+Academic QA and editorial limits:
+* R35 is an original freely accessible methodological article; notably a particular fieldwork example describes 25 interview requests with 4 initial interviews, not a general population rate. It supports honoring participants' right not to speak.
+* R36 is a directly available, authored, peer-reviewed encyclopedia synthesis. It provides a systematic account of relevant themes but is **not itself a systematic meta-analysis**.
+* R21's official article abstract describes two studies of apology components; the scholarly/institutional release reports 755 people, but this is not a claim that every coefficient or cell count was independently read.
+* R18 publisher abstract documents family-topic avoidance differences but does not supply the full sampling/measurement tables in accessible materials checked. R17 is a published review, not a newly conducted family experiment.
+* R27, R30, R32 and R34 are research books for which publisher text, institutional catalogs and in some cases chapters/previews were inspected. Do **not** say the entire books were read page by page.
+* The original 1988 version of R33 must not be conflated with revised versions in later collections; R31 is an essay about violently constructed historical records and does not license fictional first-person testimony.
+* R07, R13, R17, R18, R20, R21 and several historical monographs still have full-text/access limits, explicitly represented on the website. **36/36 is the number of expanded dossiers, not a claim that all 36 original works independently passed a full-text quality audit.**
+* Site regression check in JS offline mocked window: all 36 deep study pages, all 8 comparisons, all 6 synthesis themes and 36-source audit render across English, simplified and traditional Chinese, and scripts compile. Browser visual audit on real devices, live deployment verification and testing all outbound links remain outstanding. No user data, Supabase schema, star generation or story privacy settings have been changed.
+
+The project must distinguish detailed research writing from archival/empirical evidence verification: no fabricated sample numbers, quote locations, causal effects or historical motives. Future quality-control rounds can focus on acquiring licensed complete books and paywalled articles, checking page-specific citations and checking translation detail, not adding more arbitrary studies.
