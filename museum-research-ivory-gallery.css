@@ -12,7 +12,7 @@
    comes from a translucent ivory paper layer, not opaque text shadows. */
 .atlas-page.atlas-deep .atlas-deep-section{
   position:relative;isolation:isolate;overflow:hidden;
-  background:linear-gradient(90deg,rgba(255,244,221,.83) 0%,rgba(255,242,217,.76) 48%,rgba(248,225,186,.62) 100%),url("research-assets/research-hd-parchment.webp") center/cover no-repeat!important;
+  background:linear-gradient(90deg,rgba(255,244,221,.70) 0%,rgba(255,242,217,.58) 50%,rgba(248,225,186,.40) 100%),url("research-assets/research-hd-parchment.webp") center/cover no-repeat!important;
   border:3px double #d3a251!important;border-radius:7px!important;
   outline:1px solid #fbd78c;outline-offset:-9px;
   box-shadow:0 16px 28px #0005,inset 0 0 0 7px #fff5da64,0 0 0 1px #af762b;
@@ -23,7 +23,7 @@
   content:"";position:absolute;inset:auto 0 0 auto;width:min(33%,340px);height:70%;pointer-events:none;
   background:url("research-assets/library-studies.webp") center/cover no-repeat;
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 75%);mask-image:linear-gradient(90deg,transparent 0%,#000 75%);
-  opacity:.22;z-index:-1;
+  opacity:.31;z-index:-1;
 }
 .atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+2):before{background-image:url("research-assets/library-comparisons.webp")}
 .atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+3):before{background-image:url("research-assets/library-syntheses.webp")}
@@ -137,7 +137,7 @@
    First research chapter remains an illuminated parchment exhibit;
    subsequent chapters are dark-blue research panels with bright ivory type. */
 .atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section{
- background:linear-gradient(115deg,rgba(16,48,76,.97),rgba(7,27,52,.96)),url("research-assets/research-hd-background.webp") center/cover no-repeat!important;
+ background:linear-gradient(115deg,rgba(16,48,76,.80),rgba(7,27,52,.75)),url("research-assets/research-hd-background.webp") center/cover no-repeat!important;
  border:2px solid #d6a759!important;outline:1px solid #e8ba6d;outline-offset:-8px;
  box-shadow:0 13px 30px #0006,inset 0 0 0 6px #efc37c13!important;
 }
@@ -152,7 +152,7 @@
 }
 /* Verification becomes a dark museum plaque rather than another large ivory sheet. */
 .atlas-page.atlas-deep .atlas-verification-plate{
- background:linear-gradient(110deg,rgba(18,53,77,.97),rgba(7,27,51,.94)),url("research-assets/research-hd-background.webp") center/cover!important;
+ background:linear-gradient(110deg,rgba(18,53,77,.81),rgba(7,27,51,.76)),url("research-assets/research-hd-background.webp") center/cover!important;
  border-color:#e0ad60!important;color:#f4e6ce!important
 }
 .atlas-page.atlas-deep .atlas-verification-plate:after{opacity:.27;mix-blend-mode:screen}
@@ -172,4 +172,16 @@
 .atlas-page .atlas-evidence-table td{background:rgba(10,35,57,.82)}
 @media(max-width:760px){
  .atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section p{color:#f7e8d0!important}
+}
+
+/* Unified artwork visibility on every research-dossier exhibit panel.
+   Text stays opaque. Existing image assets are retained. */
+.atlas-page.atlas-deep .atlas-deep-section,
+.atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section,
+.atlas-page.atlas-deep .atlas-verification-plate{
+ background-blend-mode:normal;
+}
+@media(max-width:760px){
+ .atlas-page.atlas-deep .atlas-deep-section:before{opacity:.16}
+ .atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section:before{opacity:.19}
 }
