@@ -75,3 +75,9 @@ END;
 $$;
 REVOKE ALL ON FUNCTION public.museum_claim_translation_slot(uuid) FROM PUBLIC,anon,authenticated;
 GRANT EXECUTE ON FUNCTION public.museum_claim_translation_slot(uuid) TO service_role;
+
+-- The service role needs explicit table grants for the authenticated server-side
+-- translation function; this does not grant privileges to anon/authenticated users.
+GRANT USAGE ON SCHEMA public TO service_role;
+GRANT SELECT,INSERT,UPDATE,DELETE ON public.museum_stories TO service_role;
+GRANT SELECT,INSERT,UPDATE ON public.museum_translation_limits TO service_role;
