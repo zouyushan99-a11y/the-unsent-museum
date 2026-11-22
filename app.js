@@ -1535,7 +1535,9 @@ function museumLoadResearch() {
   if(museumResearchLoading)return museumResearchLoading;
   museumResearchLoading=(async()=>{
     await Promise.all(MUSEUM_RESEARCH_ASSETS.css.map(museumLoadStyle));
-    for(const file of MUSEUM_RESEARCH_ASSETS.js) await museumLoadScript(file);
+    // Classic dynamically inserted scripts with async=false execute in insertion order
+    // while their network downloads can proceed in parallel.
+    await Promise.all(MUSEUM_RESEARCH_ASSETS.js.map(museumLoadScript));
     if(!window.MUSEUM_RESEARCH_ATLAS)throw Error('Research gallery not initialized');
   })().catch(error=>{museumResearchLoading=null;throw error});
   return museumResearchLoading;
