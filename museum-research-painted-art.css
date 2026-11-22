@@ -320,3 +320,174 @@
     background-size:100% 100%,100% 100%,100% 100%,auto 100%;
   }
 }
+
+
+/* 2026-11-22 · Illustrated Comparative Research and Research Synthesis.
+   Fourteen unique, source-inspired original paintings. Independent responsive
+   cards and meaningful content labels, no text burned into the picture. */
+.atlas-library .atlas-essay-wing{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(1.2rem,2.8vw,2rem);
+  background:linear-gradient(145deg,rgba(5,23,45,.94),rgba(9,34,59,.91));
+  border:1px solid #b18b58;
+  box-shadow:0 14px 35px rgba(1,9,22,.44),inset 0 0 0 5px rgba(187,149,87,.065);
+}
+.atlas-library .atlas-essay-wing::before{
+  content:"✧";
+  position:absolute;
+  top:.35rem;
+  right:1rem;
+  color:#ccad79;
+  font:2rem Georgia,serif;
+  opacity:.64;
+}
+.atlas-library .atlas-essay-wing>.atlas-section-head{
+  border-bottom:1px solid rgba(202,163,99,.62);
+}
+.atlas-library .atlas-essay-wing>p{
+  color:#ebdecb;
+  line-height:1.85;
+}
+.atlas-library .atlas-illustrated-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(.75rem,1.3vw,1.15rem);
+  margin-top:1.45rem;
+}
+.atlas-library .atlas-mini-grid .atlas-illustrated-card{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  min-height:0;
+  padding:0;
+  background:#091d34;
+  border:2px solid #aa844f;
+  text-decoration:none;
+  box-shadow:0 10px 22px rgba(0,0,0,.32),inset 0 0 0 3px rgba(210,166,98,.12);
+  overflow:hidden;
+  position:relative;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+}
+.atlas-library .atlas-mini-grid .atlas-illustrated-card:hover{
+  transform:translateY(-5px);
+  border-color:#f0c98a;
+  box-shadow:0 15px 29px rgba(0,0,0,.41),0 0 19px rgba(207,167,99,.12);
+}
+.atlas-library .atlas-card-picture{
+  display:block;
+  width:100%;
+  aspect-ratio:1.28;
+  overflow:hidden;
+  border-bottom:2px solid #b7925d;
+  background:#0a233d;
+  position:relative;
+}
+.atlas-library .atlas-card-picture img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  image-rendering:auto;
+  transition:transform .28s ease;
+}
+.atlas-library .atlas-illustrated-card:hover .atlas-card-picture img{
+  transform:scale(1.045);
+}
+.atlas-library .atlas-card-label{
+  display:flex;
+  align-items:flex-start;
+  flex:1;
+  gap:.55rem;
+  padding:.85rem .72rem .9rem;
+  min-height:110px;
+  background:
+    linear-gradient(120deg,rgba(20,49,73,.96),rgba(6,21,41,.98));
+  color:#f1dfbf;
+}
+.atlas-library .atlas-card-label .atlas-card-number{
+  flex:none;
+  color:#d5ad6c;
+  font:italic .82rem/1.75 Georgia,serif;
+  letter-spacing:.035em;
+}
+.atlas-library .atlas-card-label strong{
+  flex:1;
+  font:400 clamp(.85rem,.92vw,1rem)/1.55 Georgia,"Noto Serif SC",serif;
+  color:#f4dfb8;
+  overflow-wrap:anywhere;
+  text-wrap:pretty;
+}
+.atlas-library .atlas-card-label em{
+  font-style:normal;
+  color:#dfb77b;
+  font-size:1.08rem;
+  line-height:1.5;
+}
+.atlas-topic-detail-art{
+  float:right;
+  width:clamp(165px,25vw,250px);
+  margin:1.3rem 0 1rem 2rem;
+  padding:7px;
+  background:#081b32;
+  border:2px solid #b68c52;
+  box-shadow:0 12px 25px rgba(1,9,20,.36),inset 0 0 0 3px rgba(219,176,103,.20);
+  position:relative;
+}
+.atlas-topic-detail-art img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1;
+  object-fit:cover;
+}
+.atlas-page:has(>.atlas-topic-detail-art)>.page-hero{
+  min-height:180px;
+}
+.atlas-page:has(>.atlas-topic-detail-art)>.atlas-panel:first-of-type{
+  clear:both;
+}
+@media(max-width:1050px){
+  .atlas-library .atlas-illustrated-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:700px){
+  .atlas-library .atlas-illustrated-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:.7rem;
+  }
+  .atlas-library .atlas-illustrated-card .atlas-card-label{
+    min-height:104px;
+    padding:.65rem .45rem .7rem;
+    gap:.34rem;
+  }
+  .atlas-library .atlas-card-label strong{
+    font-size:clamp(.76rem,2.8vw,.91rem);
+  }
+  .atlas-library .atlas-card-label .atlas-card-number{
+    font-size:.7rem;
+  }
+  .atlas-topic-detail-art{
+    width:min(38%,165px);
+    margin:.8rem 0 .8rem 1rem;
+    padding:5px;
+  }
+}
+@media(max-width:370px){
+  .atlas-library .atlas-illustrated-grid{
+    grid-template-columns:minmax(0,1fr);
+  }
+  .atlas-library .atlas-card-label{
+    min-height:80px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .atlas-library .atlas-illustrated-card,
+  .atlas-library .atlas-card-picture img{
+    transition:none;
+  }
+}
