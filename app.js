@@ -920,14 +920,93 @@ function bindExperience(id){const s=scenario(id);if(!s)return;let $next=$('#next
 if(flow.step===2){document.querySelectorAll('input[name=starMode]').forEach(el=>el.onchange=()=>{flow.starMode=el.value;submitError='';render(false)});const nameInput=$('#star-display-name');if(nameInput)nameInput.oninput=()=>{flow.starName=nameInput.value;$('#next').disabled=!flow.starName.trim()}}const edit=$('#edit-answer');if(edit)edit.onclick=()=>{flow={scenario:id,step:0,decision:'',reasons:[],other:'',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false};render(false)};const back=$('#back');if(back)back.onclick=()=>{flow.step--;render(false)};if($next)$next.onclick=()=>{if(flow.step===2){submitSharedAnswer();return}if(flow.step===3){saveStoryAfterStar();return}flow.step++;render(false)};function updateReady(){let n=$('#next');if(n)n.disabled=flow.share==='yes'&&(!flow.title.trim()||!flow.story.trim()||!flow.why.trim()||!flow.consent)}}
 function results(id){return sharedAnswers.filter(a=>!id||a.scenario===id)}
 function reasonData(arr,decision,id){const s=scenario(id);if(!s)return[];let pool=s[decision==='silent'?'silent':'speak'];return pool.map((name,i)=>({name,n:arr.filter(a=>a.decision===decision&&a.reasons.includes(i)).length})).filter(r=>r.n).sort((a,b)=>b.n-a.n)}
-function reasonPanel(arr,decision,id){const filtered=arr.filter(a=>a.decision===decision);let items=reasonData(arr,decision,id);const sc=scenario(id);const pool=sc[decision];return `<div class="reason-panel"><h3><span class="dot ${decision==='silent'?'blue':'gold'}"></span>${decision==='silent'?'Why they stayed silent':'Why they spoke up'}</h3><p class="small muted">${museumLang==='en'?filtered.length+' response(s) · Multiple choice, so percentages may sum above 100%.':museumConvert('收到 '+filtered.length+' 份回答 · 此处可以多选，百分比之和可能超过百分之百。')}</p>${items.length?items.map(item=>{const pct=Math.round(item.n/filtered.length*100);const i=pool.indexOf(item.name);const colour=reasonColour(decision,i);return `<div class="bar-item"><div class="bar-label"><span><i class="reason-colour-dot" style="--reason-colour:${colour}"></i>${esc(item.name)}</span><b>${item.n} · ${pct}%</b></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colour}"></div></div></div>`}).join(''):'<p class="muted small">No reasons recorded yet.</p>'}</div>`}
-// Stable option colours: a colour represents the same reason position within each gallery and decision.
-// Van Gogh-inspired palette: ochre, sienna, cypress, cobalt, blue-green and lilac. Stable per reason.
-const REASON_COLOURS=['#C47749','#D9A044','#E5C46A','#8F9F65','#579487','#5A9FB0','#5681B1','#7B79B3','#A16C87','#B27B4F','#B7AD6F','#78A69A','#79A5BD','#CAA05A','#987C99','#97A7D1'];
+function reasonPanel(arr,decision,id){const filtered=arr.filter(a=>a.decision===decision);let items=reasonData(arr,decision,id);const sc=scenario(id);const pool=sc[decision];return `<div class="reason-panel"><h3><span class="dot ${decision==='silent'?'blue':'gold'}"></span>${decision==='silent'?'Why they stayed silent':'Why they spoke up'}</h3><p class="small muted">${museumLang==='en'?filtered.length+' response(s) · Multiple choice, so percentages may sum above 100%.':museumConvert('收到 '+filtered.length+' 份回答 · 此处可以多选，百分比之和可能超过百分之百。')}</p>${items.length?items.map(item=>{const pct=Math.round(item.n/filtered.length*100);const i=pool.indexOf(item.name);const colour=reasonColour(id,decision,i);return `<div class="bar-item"><div class="bar-label"><span><i class="reason-colour-dot" style="--reason-colour:${colour}"></i>${esc(item.name)}</span><b>${item.n} · ${pct}%</b></div><div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${colour}"></div></div></div>`}).join(''):'<p class="muted small">No reasons recorded yet.</p>'}</div>`}
+// One stable, museum-curated sixteen-colour family per exhibition (64 unique colours).
+// Each family contains silence choices 0..6, silence Other (7), speaking 0..6 (8..14),
+// and speaking Other (15). These are presentation colours, NEVER database values.
+// Preserve category IDs and star animation/choice palettes when changing presentation.
+const REASON_PALETTES=Object.freeze({
+  "friendship": [
+    "#F8DC9A",
+    "#D99D38",
+    "#B97838",
+    "#F2BF5B",
+    "#A75B3C",
+    "#E9A65D",
+    "#D1B66A",
+    "#C68B4F",
+    "#F5CF82",
+    "#B77A28",
+    "#E6B971",
+    "#9D6943",
+    "#E5CE99",
+    "#CE8E32",
+    "#AD8455",
+    "#D6AC52"
+  ],
+  "classroom": [
+    "#D6E7F7",
+    "#77B5DC",
+    "#4179B8",
+    "#91CBEB",
+    "#365F9F",
+    "#6D93D2",
+    "#A5C8E8",
+    "#5574BB",
+    "#C2D9ED",
+    "#4CA3D0",
+    "#7E9ABF",
+    "#315788",
+    "#9EBEE0",
+    "#5C87A6",
+    "#6289D9",
+    "#3E789B"
+  ],
+  "family": [
+    "#E8D6F3",
+    "#B692D5",
+    "#885FAE",
+    "#D4A8D8",
+    "#AA73BF",
+    "#70578E",
+    "#D2B4E9",
+    "#9A71A6",
+    "#F0CDEB",
+    "#9961C5",
+    "#BB8FB5",
+    "#7C65AC",
+    "#DBB5CC",
+    "#A98ACB",
+    "#C17BA7",
+    "#81618F"
+  ],
+  "before-sending": [
+    "#D5E8D7",
+    "#81C0A7",
+    "#438A77",
+    "#A4D9BE",
+    "#4C9D97",
+    "#39736E",
+    "#BEDCC6",
+    "#66B7A2",
+    "#E0E8C9",
+    "#6EAA8D",
+    "#91C5BA",
+    "#3E7D8D",
+    "#B4D5A7",
+    "#519C79",
+    "#76B4B1",
+    "#658F83"
+  ]
+});
 function reasonIndex(decision,number){return (decision==='speak'?8:0)+(Number(number)===99?7:Number(number))}
-function reasonColour(decision,number){return REASON_COLOURS[reasonIndex(decision,number)]||'#d6c7b2'}
-function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const label=Number(n)===99?'Other reason':pool[Number(n)];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.decision,n),label,scenario:a.scenario,decision:a.decision,authorName:a.authorName||null})}}return stars}
-function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SCENARIOS.map(x=>scenario(x.id));return groups.map(sc=>{const parts=['silent','speak'].map(decision=>{const pool=sc[decision];const items=pool.map((name,i)=>({name,n:i})).concat([{name:'Other reason',n:99}]);const observed=reasonStars(arr).filter(x=>x.scenario===sc.id&&x.decision===decision);return '<div class="reason-colour-group"><h4>'+(decision==='silent'?'Reasons for silence':'Reasons for speaking')+'</h4><div class="reason-colour-grid">'+items.filter(item=>observed.some(x=>x.label===item.name)).map(item=>'<div class="reason-colour-item"><i class="reason-colour-dot" style="--reason-colour:'+reasonColour(decision,item.n)+'"></i><span>'+esc(item.name)+'</span></div>').join('')+'</div></div>'}).join('');return '<section class="reason-legend-gallery"><h3>'+esc(sc.title)+'</h3>'+parts+'</section>'}).filter(html=>!id||html).join('')}
+function reasonColour(scenarioId,decision,number){
+ const palette=REASON_PALETTES[scenarioId];
+ const index=reasonIndex(decision,number);
+ return palette?.[index]||'#d6c7b2';
+}
+function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const label=Number(n)===99?'Other reason':pool[Number(n)];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.scenario,a.decision,n),label,scenario:a.scenario,decision:a.decision,authorName:a.authorName||null})}}return stars}
+function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SCENARIOS.map(x=>scenario(x.id));return groups.map(sc=>{const parts=['silent','speak'].map(decision=>{const pool=sc[decision];const items=pool.map((name,i)=>({name,n:i})).concat([{name:'Other reason',n:99}]);const observed=reasonStars(arr).filter(x=>x.scenario===sc.id&&x.decision===decision);return '<div class="reason-colour-group"><h4>'+(decision==='silent'?'Reasons for silence':'Reasons for speaking')+'</h4><div class="reason-colour-grid">'+items.filter(item=>observed.some(x=>x.label===item.name)).map(item=>'<div class="reason-colour-item"><i class="reason-colour-dot" style="--reason-colour:'+reasonColour(sc.id,decision,item.n)+'"></i><span>'+esc(item.name)+'</span></div>').join('')+'</div></div>'}).join('');return '<section class="reason-legend-gallery"><h3>'+esc(sc.title)+'</h3>'+parts+'</section>'}).filter(html=>!id||html).join('')}
 // Van Gogh-inspired multi-vortex placement. Brush strokes are decorative; each star still represents a real choice or reason.
 const VORTICES=[{x:.22,y:.68,sx:.31,sy:.36,turn:1},{x:.74,y:.31,sx:.30,sy:.34,turn:-1},{x:.52,y:.55,sx:.27,sy:.25,turn:1}];
 function starHash(key){let h=2166136261;for(const c of String(key)){h=Math.imul(h^c.charCodeAt(0),16777619)}return h>>>0}
