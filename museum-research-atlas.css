@@ -1,0 +1,27 @@
+/* The Unsent Museum: Research Atlas — desktop, tablet & phone */
+.atlas-page{padding-bottom:5rem}
+.atlas-page .page-hero{max-width:900px}
+.atlas-nav{display:flex;flex-wrap:wrap;gap:.55rem;margin:1.5rem 0 0}
+.atlas-nav a{display:inline-flex;align-items:center;border:1px solid rgba(194,172,118,.42);border-radius:99px;padding:.52rem .95rem;text-decoration:none;color:inherit;background:rgba(16,31,51,.24);font-size:.89rem}
+.atlas-nav a:focus-visible,.atlas-category:focus-visible,.atlas-study-link:focus-visible,.atlas-reason-grid a:focus-visible{outline:3px solid #dbbe74;outline-offset:3px}
+.atlas-panel{border:1px solid rgba(187,154,97,.34);border-radius:16px;padding:clamp(1.15rem,2.8vw,2rem);background:linear-gradient(135deg,rgba(24,43,67,.46),rgba(18,34,51,.16));margin:1.3rem 0}
+.atlas-panel h2{font-family:Georgia,serif;font-size:clamp(1.3rem,2.5vw,1.75rem);line-height:1.3;margin:.5rem 0 .8rem}
+.atlas-panel p{line-height:1.83;max-width:78ch}
+.atlas-panel .eyebrow{letter-spacing:.12em}
+.atlas-panel .field{display:block;width:100%;margin-top:.6rem;max-width:720px}
+.atlas-group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.05rem;margin:1.5rem 0 2.5rem}
+.atlas-category{padding:clamp(1.2rem,2.6vw,2rem);display:flex;flex-direction:column;gap:.75rem;min-height:155px;border:1px solid rgba(187,154,97,.38);border-radius:16px;background:linear-gradient(150deg,rgba(31,51,76,.64),rgba(23,37,56,.23));color:inherit;text-decoration:none;transition:transform .18s,border-color .18s}
+.atlas-category:hover,.atlas-study-link:hover,.atlas-reason-grid a:hover{transform:translateY(-2px);border-color:rgba(232,193,117,.85)}
+.atlas-category h2,.atlas-category h3{font-family:Georgia,serif;font-size:clamp(1.15rem,2vw,1.5rem);margin:0;line-height:1.45}
+.atlas-category span:last-child{color:#dfc28b;font-size:.83rem;margin-top:auto}
+.atlas-study-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin:1.25rem 0 2rem}
+.atlas-study-link{padding:1.25rem;min-width:0;display:flex;flex-direction:column;gap:.55rem;border:1px solid rgba(187,154,97,.32);border-radius:12px;background:rgba(21,39,60,.27);text-decoration:none;color:inherit;transition:transform .18s,border-color .18s}
+.atlas-study-link span{font-size:.76rem;opacity:.76;letter-spacing:.03em}
+.atlas-study-link strong{font-family:Georgia,serif;font-weight:500;line-height:1.48;overflow-wrap:anywhere}
+.atlas-study-link small{opacity:.83;line-height:1.6}
+.atlas-reason-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin:1rem 0}
+.atlas-reason-grid a{padding:.85rem 1rem;border:1px solid rgba(187,154,97,.27);border-radius:9px;color:inherit;text-decoration:none;line-height:1.6;overflow-wrap:anywhere;transition:transform .18s,border-color .18s}
+.atlas-history-links{margin-top:2rem}
+.atlas-page a[href^="https://"]{overflow-wrap:anywhere}
+@media(max-width:720px){.atlas-group-grid,.atlas-study-list,.atlas-reason-grid{grid-template-columns:minmax(0,1fr)}.atlas-nav{gap:.35rem}.atlas-nav a{padding:.45rem .7rem;font-size:.8rem}.atlas-category{min-height:130px}.atlas-panel{margin:1rem 0}}
+@media(prefers-reduced-motion:reduce){.atlas-category,.atlas-study-link,.atlas-reason-grid a{transition:none}}
