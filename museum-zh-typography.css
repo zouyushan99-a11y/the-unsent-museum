@@ -33,3 +33,12 @@ html:lang(zh) #app .site-header .nav a,
 html:lang(zh) #app .site-header .museum-language-switch select {
   font-family: var(--museum-zh-serif);
 }
+
+html:lang(zh) #app .museum-home .museum-hero-copy h1 {
+  line-height: 1.32;
+  letter-spacing: .075em;
+}
+html:lang(zh) #app .museum-home .museum-hero-copy h1 em {
+  font-style: normal;
+  letter-spacing: inherit;
+}
