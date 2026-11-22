@@ -1,0 +1,38 @@
+name: Install native-resolution research WebP images
+on:
+  push:
+    paths:
+      - '.github/workflows/restore-research-hd-webp.yml'
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode verified native resolution source photographs
+        run: |
+          python - <<'PY'
+          import base64,re
+          from pathlib import Path
+          src=sorted(Path('research-assets').glob('research-hd-*.svg'))
+          assert len(src)==11, f'Expected 11 high-definition assets; found {len(src)}'
+          for entry in src:
+              text=entry.read_text(encoding='utf-8')
+              m=re.search(r'href="data:image/webp;base64,([A-Za-z0-9+/=]+)"',text)
+              assert m, f'Missing original WebP image payload: {entry}'
+              img=base64.b64decode(m.group(1),validate=True)
+              assert img[:4]==b'RIFF' and img[8:12]==b'WEBP',f'Invalid WebP: {entry}'
+              dest=entry.with_suffix('.webp')
+              dest.write_bytes(img)
+              print(f'Installed {dest} with {len(img)} original image bytes')
+          PY
+      - name: Commit genuine WebP files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research-assets/research-hd-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish genuine high-definition research library images'
+            git push
+          fi
