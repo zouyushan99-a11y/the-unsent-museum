@@ -39,6 +39,6 @@ html:lang(zh) #app .museum-home .museum-hero-copy h1 {
   letter-spacing: .075em;
 }
 html:lang(zh) #app .museum-home .museum-hero-copy h1 em {
-  font-style: normal;
+  font: inherit;
   letter-spacing: inherit;
 }
