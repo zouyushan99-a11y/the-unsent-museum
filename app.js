@@ -1561,7 +1561,7 @@ function museumResearchLoadError(error){
   console.error('Research module loading error',error);
 }
 function render(scroll=true){hideStarTooltip();const r=route();
-  const researchPageNeeded=r.type==='research-index'||(r.type==='research'&&!r.id?.startsWith('original/'));
+  const researchPageNeeded=r.type==='research-index'||r.type==='research';
   if(researchPageNeeded&&!window.MUSEUM_RESEARCH_ATLAS){
     museumLoadingResearch(r);
     museumLoadResearch().then(()=>{if(route().path===r.path)render(scroll)}).catch(museumResearchLoadError);
