@@ -1490,7 +1490,89 @@ function privacy(){return '<main class="container"><section class="page-hero"><d
 '<h3>Shared choice stars</h3><p>Signed-in choices and selected predefined reasons contribute anonymously to the shared stars. These are separate from story categories and from publication consent.</p>'+
 '<h3>Check database access</h3><p>Use the <a href="#/diagnostics" class="link-arrow">Data & Access Check</a> page to verify whether shared stars and the public archive can be read.</p>'+ '<h3>Safety and moderation</h3><p>Do not include private identifying information about others. The current prototype does not provide comprehensive pre-publication human moderation or guarantee removal of copies kept elsewhere. Broader public launch requires stronger moderation and reporting mechanisms.</p></section></main>'}
 function route(){let path=decodeURI(location.hash.slice(1)||'/');if(path==='/feedback')return{type:'feedback',path};if(path==='/collectives')return{type:'collective',path};if(path.startsWith('/collectives/'))return{type:'collective',id:path.split('/')[2],path};if(path.startsWith('/story-sky/'))return{type:'story-sky',id:path.split('/')[2],path};if(path==='/story-sky')return{type:'story-sky',path};if(path.startsWith('/story/'))return{type:'story-detail',id:path.split('/')[2],path};if(path.startsWith('/archive/'))return{type:'archive',id:path.split('/')[2],path};if(path.startsWith('/contribute/'))return{type:'contribute',id:path.split('/')[2],path};if(path.startsWith('/edit-story/'))return{type:'edit-story',id:path.split('/')[2],path};if(path==='/diagnostics')return{type:'diagnostics',path};if(path==='/creator')return{type:'creator',path};if(path==='/curator')return{type:'curator',path};if(path==='/curator-feedback')return{type:'curator-feedback',path};if(path==='/history')return{type:'history',path};if(path.startsWith('/history/'))return{type:'history',id:path.split('/')[2],path};if(path==='/research')return{type:'research-index',path};if(path.startsWith('/research/'))return{type:'research',id:path.split('/').slice(2).join('/'),path};if(path.startsWith('/experience/'))return{type:'experience',id:path.split('/')[2],path};if(path.startsWith('/gallery/'))return{type:'gallery',id:path.split('/')[2],path};if(path.startsWith('/sky/')){const bits=path.split('/');return {type:'sky',kind:bits[2],id:bits[3]||'all',path}}if(path.startsWith('/lookout/'))return{type:'lookout',id:path.split('/')[2],path};return {type:path.slice(1)||'home',path}}
-function render(scroll=true){hideStarTooltip();const r=route(),body=r.type==='home'?home():r.type==='galleries'?galleries():r.type==='gallery'?gallery(r.id):r.type==='experience'?experience(r.id):r.type==='research'?(r.id?.startsWith('original/')?researchPage(r.id.split('/')[1]):window.MUSEUM_RESEARCH_ATLAS.page(r.id)):r.type==='research-index'?window.MUSEUM_RESEARCH_ATLAS.page():r.type==='history'?historyPage(r.id):r.type==='collective'?window.museumCollectivePage(r.id):r.type==='archive'?archive(r.id):r.type==='story-sky'?storySkyPage(r.id):r.type==='story-detail'?publicStoryReader(r.id):r.type==='contribute'?contributeOthers():r.type==='edit-story'?editStoryPage(r.id):r.type==='diagnostics'?diagnosticsPage():r.type==='creator'?creatorLandingPage():r.type==='curator'?curatorPage():r.type==='curator-feedback'?curatorFeedbackPage():r.type==='lookout'?lookout(r.id):r.type==='sky'?fullSky(r.kind,r.id):r.type==='about'?window.museumAboutPage():r.type==='feedback'?window.museumFeedbackPage():r.type==='privacy'?privacy():r.type==='my-stories'?privateStories():r.type==='account'?authPage():home();$('#app').innerHTML=r.type==='sky'?body+museumLangControl():header(r.path)+body+footer();document.documentElement.lang=museumLang;museumLocalizeText($('#app'));museumBindLanguage();window.MUSEUM_RESEARCH_ATLAS?.decorate(r);if(r.type==='feedback')window.museumBindFeedback();museumObserveLocalizedUpdates($('#app'));document.title=(r.type==='gallery'?museumZh(scenario(r.id)?.title)+' · ':r.type==='lookout'?museumZh('The Lookout')+' · ':'')+museumZh('The Unsent Museum');if(scroll)window.scrollTo(0,0);if(r.type==='history'){
+/* Research wing: load its original data, artwork CSS and atlas only on demand.
+ * One shared promise keeps rapid navigation from downloading scripts twice.
+ * All original script ordering and source filenames remain intact. */
+const MUSEUM_RESEARCH_ASSETS = {
+  css: [
+    'museum-research-expansion.css?v=research-mobile-trilang2',
+    'museum-research-atlas.css?v=research-art-20261122-2',
+    'museum-research-painted-art.css?v=research-topics-art-20261122-2',
+    'museum-research-ivory-gallery.css?v=all-dossier-art-reveal-4'
+  ],
+  js: [
+    'museum-research-five.js?v=research-five-audit-20261122-3',
+    'museum-research-second-five.js?v=research-second-audit-20261122-3',
+    'museum-research-third-a.js?v=research-trilang-20261122-1',
+    'museum-research-third-b.js?v=research-trilang-20261122-1',
+    'museum-research-final-a.js?v=research-trilang-20261122-1',
+    'museum-research-final-b.js?v=research-trilang-20261122-1',
+    'museum-research-atlas.js?v=research-topics-art-20261122-1',
+    'museum-research-ivory-gallery.js?v=ivory-museum-1'
+  ]
+};
+let museumResearchLoading = null;
+function museumLoadStyle(url) {
+  return new Promise((resolve,reject)=>{
+    const link=document.createElement('link');
+    link.rel='stylesheet'; link.href=url;
+    link.onload=resolve;
+    link.onerror=()=>reject(new Error('Cannot load '+url));
+    document.head.appendChild(link);
+  });
+}
+function museumLoadScript(url) {
+  return new Promise((resolve,reject)=>{
+    const script=document.createElement('script');
+    script.src=url; script.async=false;
+    script.onload=resolve;
+    script.onerror=()=>reject(new Error('Cannot load '+url));
+    document.body.appendChild(script);
+  });
+}
+function museumLoadResearch() {
+  if(window.MUSEUM_RESEARCH_ATLAS)return Promise.resolve();
+  if(museumResearchLoading)return museumResearchLoading;
+  museumResearchLoading=(async()=>{
+    await Promise.all(MUSEUM_RESEARCH_ASSETS.css.map(museumLoadStyle));
+    for(const file of MUSEUM_RESEARCH_ASSETS.js) await museumLoadScript(file);
+    if(!window.MUSEUM_RESEARCH_ATLAS)throw Error('Research gallery not initialized');
+  })().catch(error=>{museumResearchLoading=null;throw error});
+  return museumResearchLoading;
+}
+function museumLoadingResearch(routeInfo){
+  const isEn=museumLang==='en';
+  $('#app').innerHTML=header(routeInfo.path)+
+  '<main class="container" style="min-height:48vh;padding:clamp(3rem,8vw,6rem) 1.5rem" role="status" aria-live="polite">'+
+  '<p class="eyebrow" style="color:#e4bc72">✦ THE UNSENT MUSEUM</p>'+
+  '<h1 style="color:#f4dbad;font-family:Georgia,serif">'+(isEn?'Opening the research collection…':'正在开启研究资料馆……')+'</h1>'+
+  '<p class="muted">'+(isEn?'Preparing the original sources and illustrated rooms.':'正在载入原始文献与研究展厅。')+'</p></main>'+footer();
+}
+function museumResearchLoadError(error){
+  const current=route();
+  if(current.type!=='research'&&current.type!=='research-index')return;
+  const isEn=museumLang==='en';
+  $('#app').innerHTML=header(current.path)+
+  '<main class="container" style="padding:4rem 1.5rem" role="alert"><h1>'+
+  (isEn?'The research room could not load.':'研究资料馆暂时无法载入。')+
+  '</h1><p>'+(isEn?'Your museum data has not been changed. Please try again.':'馆藏资料没有被更改，请重试。')+
+  '</p><button class="btn" id="research-retry">'+(isEn?'Retry loading':'重新载入')+'</button></main>'+footer();
+  document.getElementById('research-retry')?.addEventListener('click',()=>{museumLoadingResearch(route());museumLoadResearch().then(()=>render(false)).catch(museumResearchLoadError)});
+  console.error('Research module loading error',error);
+}
+function render(scroll=true){hideStarTooltip();const r=route();
+  const researchPageNeeded=r.type==='research-index'||(r.type==='research'&&!r.id?.startsWith('original/'));
+  if(researchPageNeeded&&!window.MUSEUM_RESEARCH_ATLAS){
+    museumLoadingResearch(r);
+    museumLoadResearch().then(()=>{if(route().path===r.path)render(scroll)}).catch(museumResearchLoadError);
+    return;
+  }
+  if(['gallery','lookout','history'].includes(r.type)&&!window.MUSEUM_RESEARCH_ATLAS){
+    museumLoadResearch().then(()=>{
+      if(route().path===r.path)window.MUSEUM_RESEARCH_ATLAS?.decorate(route());
+    }).catch(error=>console.warn('Optional research connections not available',error));
+  }
+  const body=r.type==='home'?home():r.type==='galleries'?galleries():r.type==='gallery'?gallery(r.id):r.type==='experience'?experience(r.id):r.type==='research'?(r.id?.startsWith('original/')?researchPage(r.id.split('/')[1]):window.MUSEUM_RESEARCH_ATLAS.page(r.id)):r.type==='research-index'?window.MUSEUM_RESEARCH_ATLAS.page():r.type==='history'?historyPage(r.id):r.type==='collective'?window.museumCollectivePage(r.id):r.type==='archive'?archive(r.id):r.type==='story-sky'?storySkyPage(r.id):r.type==='story-detail'?publicStoryReader(r.id):r.type==='contribute'?contributeOthers():r.type==='edit-story'?editStoryPage(r.id):r.type==='diagnostics'?diagnosticsPage():r.type==='creator'?creatorLandingPage():r.type==='curator'?curatorPage():r.type==='curator-feedback'?curatorFeedbackPage():r.type==='lookout'?lookout(r.id):r.type==='sky'?fullSky(r.kind,r.id):r.type==='about'?window.museumAboutPage():r.type==='feedback'?window.museumFeedbackPage():r.type==='privacy'?privacy():r.type==='my-stories'?privateStories():r.type==='account'?authPage():home();$('#app').innerHTML=r.type==='sky'?body+museumLangControl():header(r.path)+body+footer();document.documentElement.lang=museumLang;museumLocalizeText($('#app'));museumBindLanguage();window.MUSEUM_RESEARCH_ATLAS?.decorate(r);if(r.type==='feedback')window.museumBindFeedback();museumObserveLocalizedUpdates($('#app'));document.title=(r.type==='gallery'?museumZh(scenario(r.id)?.title)+' · ':r.type==='lookout'?museumZh('The Lookout')+' · ':'')+museumZh('The Unsent Museum');if(scroll)window.scrollTo(0,0);if(r.type==='history'){
  const search=document.getElementById('history-search');
  const tabs=[...document.querySelectorAll('[data-silence-tab]')];
  let active=HISTORICAL_SILENCES.find(x=>x.id===r.id)?.silenceClass||'withheld';
