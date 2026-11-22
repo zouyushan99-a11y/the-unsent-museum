@@ -1267,21 +1267,14 @@ function bindStoryEditor(){
   if(!validStoryCategory(st.scenario)||!st.title||!st.story||!st.why){feedback('Complete the title, story and reason before publishing.');return}
   if(st.publicationMode==='named'&&!st.displayName.trim()){feedback('Enter the name you want everyone to see.');return}
   if(!$('#publication-consent').checked){feedback('Check the consent box before publishing.');return}
-  if(storyTranslationBackendReady&&!$('#translation-consent').checked){feedback('Agree to automated translation before publishing, or keep this as a private draft.');return}
+  if(!$('#translation-consent').checked){feedback('Agree to automated translation before publishing, or keep this as a private draft.');return}
   if(!museumConfirm('Publish your story so anyone visiting this website can read it?'))return;
   st.displayName=st.publicationMode==='named'?st.displayName.trim():'';
   st.publicConsent=true;st.status='published';
   const button=$('#publish-story');button.disabled=true;
   try{
    if(!storyTranslationBackendReady){
-    // Keep the original publication workflow available until Supabase is configured.
-    // Explicit opt-in prevents silently claiming an untranslated story has three versions.
-    if(!museumConfirm('Automatic translation is not ready yet. Publish ONLY your original wording? Visitors in other languages may not understand it.')){button.disabled=false;return}
-    await syncCloudStory(st);
-    await loadPublicStories();
-    if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id)))
-     throw Error('The original-language publication could not be verified.');
-    location.hash='#/my-stories';render(true);return;
+    throw Error('Automatic translation has not been activated in the museum database. Your draft is safe. Ask the curator to finish the translation service setup.');
    }
    const {data,error}=await authClient.functions.invoke('publish-translated-story',{
     body:{id:st.id,scenario:st.scenario,title:st.title,story:st.story,why:st.why,
