@@ -561,3 +561,69 @@
  }
  .atlas-library #atlas-results .atlas-study-link>small{font-size:.9rem;}
 }
+
+/* v9: readable catalogue labels without painting over the original artwork.
+   The underlying parchment stays intact; each long line gets a discreet
+   antique-paper backing so the embedded gilded footer cannot obscure letters. */
+.atlas-library #atlas-results .atlas-study-link {
+  box-sizing:border-box;
+  height:auto!important;
+  min-height:unset!important;
+  padding-bottom:clamp(115px,9vw,145px)!important;
+  background-position:center bottom!important;
+  overflow:visible!important;
+  contain:none;
+}
+.atlas-library #atlas-results .atlas-study-link::before{
+  margin-bottom:.75rem!important;
+}
+.atlas-library #atlas-results .atlas-study-link>span,
+.atlas-library #atlas-results .atlas-study-link>strong,
+.atlas-library #atlas-results .atlas-study-link>small{
+  align-self:stretch;
+  max-width:100%;
+  padding:.16rem .35rem;
+  margin-inline:-.35rem;
+  background:rgba(249,231,200,.79);
+  box-shadow:0 1px 0 rgba(249,231,200,.48);
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+  overflow-wrap:anywhere;
+  text-shadow:none!important;
+}
+.atlas-library #atlas-results .atlas-study-link>small:last-child {
+  margin-bottom:.8rem;
+  padding:.48rem .5rem;
+  background:rgba(250,234,207,.91);
+  border-left:2px solid #b88740;
+  color:#302116!important;
+  font-size:clamp(.89rem,1.05vw,1.04rem)!important;
+  line-height:1.75!important;
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+.atlas-library #atlas-results .atlas-study-link>span{color:#4c311e!important}
+.atlas-library #atlas-results .atlas-study-link>strong{color:#2b1b13!important}
+.atlas-library #atlas-results .atlas-study-link>small:not(:last-child){color:#463020!important}
+@media(max-width:700px){
+ .atlas-library #atlas-results .atlas-study-link{padding-bottom:120px!important;}
+ .atlas-library #atlas-results .atlas-study-link>small:last-child{font-size:.92rem!important;}
+}
+/* Research portal entrance silhouettes: rounder high crowns with the entire
+   image retained, no scaling crop and no replacement of any original painting. */
+.atlas-library .atlas-portal{overflow:visible!important}
+.atlas-library .atlas-portal img{
+  clip-path:polygon(
+    0 100%,0 42%,
+    2% 34%,5% 27%,9% 20%,14% 14%,20% 9%,
+    27% 5%,35% 2%,43% .4%,50% 0,
+    57% .4%,65% 2%,73% 5%,80% 9%,86% 14%,
+    91% 20%,95% 27%,98% 34%,100% 42%,100% 100%
+  )!important;
+  transform:none!important;
+  object-fit:contain!important;
+  height:auto!important;
+  width:100%!important;
+  filter:drop-shadow(0 8px 12px rgba(0,0,0,.34));
+}
+.atlas-library .atlas-portal-text{margin-top:0!important;}
