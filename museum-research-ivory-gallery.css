@@ -562,53 +562,6 @@
  .atlas-library #atlas-results .atlas-study-link>small{font-size:.9rem;}
 }
 
-/* v9: readable catalogue labels without painting over the original artwork.
-   The underlying parchment stays intact; each long line gets a discreet
-   antique-paper backing so the embedded gilded footer cannot obscure letters. */
-.atlas-library #atlas-results .atlas-study-link {
-  box-sizing:border-box;
-  height:auto!important;
-  min-height:unset!important;
-  padding-bottom:clamp(115px,9vw,145px)!important;
-  background-position:center bottom!important;
-  overflow:visible!important;
-  contain:none;
-}
-.atlas-library #atlas-results .atlas-study-link::before{
-  margin-bottom:.75rem!important;
-}
-.atlas-library #atlas-results .atlas-study-link>span,
-.atlas-library #atlas-results .atlas-study-link>strong,
-.atlas-library #atlas-results .atlas-study-link>small{
-  align-self:stretch;
-  max-width:100%;
-  padding:.16rem .35rem;
-  margin-inline:-.35rem;
-  background:rgba(249,231,200,.79);
-  box-shadow:0 1px 0 rgba(249,231,200,.48);
-  -webkit-box-decoration-break:clone;
-  box-decoration-break:clone;
-  overflow-wrap:anywhere;
-  text-shadow:none!important;
-}
-.atlas-library #atlas-results .atlas-study-link>small:last-child {
-  margin-bottom:.8rem;
-  padding:.48rem .5rem;
-  background:rgba(250,234,207,.91);
-  border-left:2px solid #b88740;
-  color:#302116!important;
-  font-size:clamp(.89rem,1.05vw,1.04rem)!important;
-  line-height:1.75!important;
-  overflow-wrap:anywhere;
-  word-break:normal;
-}
-.atlas-library #atlas-results .atlas-study-link>span{color:#4c311e!important}
-.atlas-library #atlas-results .atlas-study-link>strong{color:#2b1b13!important}
-.atlas-library #atlas-results .atlas-study-link>small:not(:last-child){color:#463020!important}
-@media(max-width:700px){
- .atlas-library #atlas-results .atlas-study-link{padding-bottom:120px!important;}
- .atlas-library #atlas-results .atlas-study-link>small:last-child{font-size:.92rem!important;}
-}
 /* Research portal entrance silhouettes: rounder high crowns with the entire
    image retained, no scaling crop and no replacement of any original painting. */
 .atlas-library .atlas-portal{overflow:visible!important}
@@ -627,3 +580,105 @@
   filter:drop-shadow(0 8px 12px rgba(0,0,0,.34));
 }
 .atlas-library .atlas-portal-text{margin-top:0!important;}
+
+/* v10 · Compact parchment catalogue. No text backplates.
+   Preserve the actual parchment image and its integrated gilded footer.
+   Cards are concise previews; the research page retains full source titles. */
+.atlas-library #atlas-results .atlas-study-list{
+  align-items:stretch;
+  gap:clamp(.85rem,1.25vw,1.15rem);
+}
+.atlas-library #atlas-results .atlas-study-link{
+  display:flex;
+  flex-direction:column;
+  box-sizing:border-box;
+  height:390px!important;
+  min-height:390px!important;
+  max-height:390px!important;
+  padding:0 .9rem 78px!important;
+  gap:.36rem;
+  overflow:hidden!important;
+  align-items:stretch;
+  justify-content:flex-start;
+  background-image:url("research-assets/research-hd-parchment.webp")!important;
+  background-size:cover!important;
+  background-position:center bottom!important;
+}
+.atlas-library #atlas-results .atlas-study-link::before{
+  height:auto!important;
+  aspect-ratio:1983/793;
+  margin:0 -.9rem .5rem!important;
+  flex:none!important;
+  width:auto!important;
+}
+.atlas-library #atlas-results .atlas-study-link>span,
+.atlas-library #atlas-results .atlas-study-link>strong,
+.atlas-library #atlas-results .atlas-study-link>small{
+  position:relative;
+  display:block;
+  z-index:1;
+  flex:none!important;
+  width:100%;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  opacity:1!important;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+.atlas-library #atlas-results .atlas-study-link>span{
+  color:#603e25!important;
+  font-size:clamp(.78rem,.92vw,.95rem);
+  line-height:1.45;
+  font-weight:650;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+}
+.atlas-library #atlas-results .atlas-study-link>strong{
+  color:#302116!important;
+  font-size:clamp(.94rem,1.06vw,1.08rem);
+  font-weight:550;
+  line-height:1.45;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+}
+.atlas-library #atlas-results .atlas-study-link>small{
+  color:#664832!important;
+  font-size:clamp(.77rem,.88vw,.89rem);
+  line-height:1.5;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+}
+.atlas-library #atlas-results .atlas-study-link>small:last-child{
+  color:#48301e!important;
+  font-size:clamp(.77rem,.86vw,.88rem)!important;
+  line-height:1.5!important;
+  margin-top:.1rem!important;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+}
+/* Shorten the cards on smaller screens without allowing ornament overlap. */
+@media(max-width:1020px){
+ .atlas-library #atlas-results .atlas-study-link{
+   height:365px!important;min-height:365px!important;max-height:365px!important;
+   padding-bottom:72px!important;
+ }
+}
+@media(max-width:700px){
+ .atlas-library #atlas-results .atlas-study-link{
+   height:355px!important;min-height:355px!important;max-height:355px!important;
+   padding:0 .8rem 70px!important;
+ }
+ .atlas-library #atlas-results .atlas-study-link::before{margin-inline:-.8rem!important}
+}
