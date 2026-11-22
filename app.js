@@ -342,9 +342,10 @@ function localizeVisitorStory(st){
  const language=museumLang==='zh-Hant'?'zh-Hant':museumLang==='zh-Hans'?'zh-Hans':'en';
  const variants=st?.translations,translated=st?.translation_status==='ready'&&variants&&typeof variants==='object'&&variants[language];
  const original=st?.original_language===language;
- // Never show an English label over untranslated Chinese prose.
- return {...st,title:translated?.title||st.title,story:translated?.story||st.story,
-  why:translated?.why||st.why,visitorTranslationStatus:translated?(original?'original':'translated'):'unavailable'};
+ // Normalize a translated Traditional display copy; never alter the author's original.
+ const display=value=>translated&&!original&&language==='zh-Hant'?museumConvert(value):value;
+ return {...st,title:display(translated?.title||st.title),story:display(translated?.story||st.story),
+  why:display(translated?.why||st.why),visitorTranslationStatus:translated?(original?'original':'translated'):'unavailable'};
 }
 async function loadPublicStories(){
  if(!authClient){storyCloudStatus='error';storyCloudError='The story service could not load.';return}
