@@ -2,12 +2,12 @@
 
 ## Current state
 
-The GitHub Pages client and the backend source are committed. **Automatic translation will not work until both the SQL migration and the Supabase Edge Function are deployed.** This repository alone cannot install database schema changes or external API secrets.
+The GitHub Pages client, database migration and Supabase Edge Function are deployed (22 November 2026). The server uses DeepL API Developer; the real end-to-end publishing flow still requires a signed-in author's live test to verify the DeepL secret and API translation output.
 
 ### One-time setup
 
 1. In the existing Supabase project's **SQL Editor**, run the full contents of `supabase-story-translation-migration.sql`. This adds protected original-language/translation fields and the `get_public_museum_stories_i18n` public RPC, without discarding any stories.
-2. Add an API secret named `OPENAI_API_KEY` to the Supabase project's **Edge Functions > Secrets**. Never place that secret in a browser script, Git commit, issue, or chat message. The OpenAI API is a separate billed service. Optionally set `TRANSLATION_MODEL` (default: `gpt-4o-mini`).
+2. Add an API secret named `DEEPL_API_KEY` to the Supabase project's **Edge Functions > Secrets**. Never place that secret in a browser script, Git commit, issue, or chat message. The API Developer plan provides 1,000,000 characters total, not a repeating monthly allowance. The translation function translates to `EN-US`, `ZH-HANS`, and `ZH-HANT`, skipping the author's source language. It uses the official DeepL REST API and routes legacy free keys ending in `:fx` to the free endpoint.
 3. Deploy `supabase/functions/publish-translated-story/index.ts` as a Supabase Edge Function named **`publish-translated-story`**, leaving JWT verification **enabled**. The project's `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` must be available as server-side environment variables (typically automatically provided by Supabase). This function also validates the owner's signed-in JWT and the story's ownership.
 4. Open the deployed museum; sign in, write a small test draft, select the **language in which it was written**, check **both** publication and automatic-translation consent boxes, and publish. Confirm that the archive shows the original in the source language and machine translations in the other two languages. Verify the text, publication count, star-preview title, and removal from the archive after author deletion.
 
@@ -41,5 +41,13 @@ If the database migration has not been applied, the site can still **read existi
 - Anonymous and named authors still work.
 - Formerly published stories still show with a labelled untranslated fallback.
 - Existing author withdrawal and permanent deletion still work.
-- No OPENAI_API_KEY or service-role key appears in GitHub Pages output.
+- No DEEPL_API_KEY or service-role key appears in GitHub Pages output.
 - Test narrow mobile and tablet widths.
+
+## DeepL migration notes (22 November 2026)
+
+- The deployed function `publish-translated-story` (v4) uses `DEEPL_API_KEY`. `OPENAI_API_KEY` is no longer used by the new function and can be removed from Supabase Secrets after verifying DeepL publishing.
+- Authors must consent to third-party automated translation before public publication; private drafts never enter DeepL.
+- The title, story, and reason are translated as separate items per target language. Machine translation is not an editorial review: nuanced prose should be checked by a human when possible.
+- If DeepL rejects the configured key, hits its one-time usage limit, or returns an invalid response, publication fails closed and the local draft remains intact.
+- Database translation/read permissions are granted to Supabase's server-only `service_role`, not to anonymous site visitors. Do not add the API key to GitHub Pages code.
