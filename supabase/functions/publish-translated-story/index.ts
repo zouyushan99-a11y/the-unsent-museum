@@ -49,6 +49,9 @@ Deno.serve(async(req:Request)=>{
  const {data:existing,error:lookupError}=await admin.from("museum_stories").select("id,user_id").eq("id",id).maybeSingle();
  if(lookupError)return reply({error:"Could not verify story ownership"},502);
  if(existing&&existing.user_id!==user.id)return reply({error:"Not this story's author"},403);
+ const {data:slot,error:limitError}=await admin.rpc("museum_claim_translation_slot",{p_user_id:user.id});
+ if(limitError)return reply({error:"Translation quota could not be checked"},503);
+ if(slot!==true)return reply({error:"Too many translation requests. Wait briefly and try again (maximum 20 attempts per account each day)."},429);
  let translations:Record<L,Text>;
  try{translations=await translated(text,sourceLanguage,key)}
  catch(e){console.error(e);return reply({error:"Automatic translation failed. Your story was not published; please retry."},503)}
