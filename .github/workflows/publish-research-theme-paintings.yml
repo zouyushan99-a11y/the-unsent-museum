@@ -1,0 +1,47 @@
+name: Publish fourteen research theme paintings
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-research-theme-paintings.yml'
+permissions:
+  contents: write
+jobs:
+  art:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore original painted atlas and crop independent exhibits
+        run: |
+          python -m pip install --quiet Pillow
+          python - <<'PY'
+          import re,base64,io
+          from PIL import Image
+          from pathlib import Path
+          art=Path('research-assets')
+          source=(art/'research-fourteen-theme-source.svg').read_text('utf-8')
+          m=re.search(r'href="data:image/webp;base64,([A-Za-z0-9+/=]+)"',source)
+          assert m,'Original oil painting data not found'
+          raw=base64.b64decode(m.group(1),validate=True)
+          assert raw[:4]==b'RIFF' and raw[8:12]==b'WEBP'
+          image=Image.open(io.BytesIO(raw)).convert('RGB')
+          assert image.size==(1254,1254),image.size
+          for group,panels in [('compare',list(range(8))),('synthesis',list(range(8,14)))]:
+              for index,p in enumerate(panels):
+                  col,row=p%4,p//4
+                  # Avoid neighboring-panel black gutters; crops contain one complete illustration.
+                  x0=round(col*1254/4)+3;y0=round(row*1254/4)+3
+                  x1=round((col+1)*1254/4)-3;y1=round((row+1)*1254/4)-3
+                  tile=image.crop((x0,y0,x1,y1))
+                  target=art/f'research-theme-{group}-{index}.webp'
+                  tile.save(target,'WEBP',quality=90,method=6)
+                  print(target,'dimensions',tile.size,'bytes',target.stat().st_size)
+          PY
+      - name: Commit thematic images
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add research-assets/research-theme-compare-*.webp research-assets/research-theme-synthesis-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publish fourteen distinct painted thematic research miniatures'
+            git push
+          fi
