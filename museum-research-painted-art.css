@@ -6,7 +6,7 @@
 .atlas-page:has(.atlas-evidence-table)::before,
 .atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
   background-image:linear-gradient(180deg,rgba(4,14,29,.06),rgba(4,14,29,.42) 55%,rgba(4,14,29,.72)),
-    url("research-assets/painted-research-background.webp"),
+    url("research-assets/painted-research-background.svg"),
     url("research-assets/research-celestial-wall.svg");
   background-size:cover,cover,1600px auto;
   background-position:center top,center top,center top;
@@ -19,17 +19,17 @@
   clip-path:polygon(0 25%,3% 15%,11% 7%,24% 1%,50% 0,76% 1%,89% 7%,97% 15%,100% 25%,100% 100%,0 100%);
   pointer-events:none;
 }
-.atlas-library .atlas-portal:nth-child(1)::before{background-image:url("research-assets/painted-research-arch-1.webp")}
-.atlas-library .atlas-portal:nth-child(2)::before{background-image:url("research-assets/painted-research-arch-2.webp")}
-.atlas-library .atlas-portal:nth-child(3)::before{background-image:url("research-assets/painted-research-arch-3.webp")}
-.atlas-library .atlas-portal:nth-child(4)::before{background-image:url("research-assets/painted-research-arch-4.webp")}
-.atlas-library .atlas-portal:nth-child(5)::before{background-image:url("research-assets/painted-research-arch-5.webp")}
+.atlas-library .atlas-portal:nth-child(1)::before{background-image:url("research-assets/painted-research-arch-1.svg")}
+.atlas-library .atlas-portal:nth-child(2)::before{background-image:url("research-assets/painted-research-arch-2.svg")}
+.atlas-library .atlas-portal:nth-child(3)::before{background-image:url("research-assets/painted-research-arch-3.svg")}
+.atlas-library .atlas-portal:nth-child(4)::before{background-image:url("research-assets/painted-research-arch-4.svg")}
+.atlas-library .atlas-portal:nth-child(5)::before{background-image:url("research-assets/painted-research-arch-5.svg")}
 .atlas-library .atlas-portal-text{z-index:2;background:linear-gradient(0deg,rgba(2,13,27,.98),rgba(6,20,37,.85) 72%,transparent);inset:auto 5% 4.3% 5%;min-height:26%;padding-top:1rem}
-.atlas-library .atlas-featured{background-image:url("research-assets/painted-research-parchment.webp"),url("research-assets/research-parchment.svg");background-size:cover}
-.atlas-library .atlas-study-link:before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-1.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+2):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-2.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+3):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-3.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+4):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-4.webp")}
+.atlas-library .atlas-featured{background-image:url("research-assets/painted-research-parchment.svg"),url("research-assets/research-parchment.svg");background-size:cover}
+.atlas-library .atlas-study-link:before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-1.svg")}
+.atlas-library .atlas-study-link:nth-child(4n+2):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-2.svg")}
+.atlas-library .atlas-study-link:nth-child(4n+3):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-3.svg")}
+.atlas-library .atlas-study-link:nth-child(4n+4):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-4.svg")}
 @media(max-width:700px){
  .atlas-library .atlas-portal::before{top:16%;height:56%}
  .atlas-library .atlas-portal-text{padding-top:.5rem}
