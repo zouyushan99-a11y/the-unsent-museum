@@ -1,0 +1,134 @@
+/* The Unsent Museum — illuminated research rooms.
+   Uses committed original imagery, never a screenshot with baked-in text. */
+.atlas-page{--atlas-ivory:#fff1d5;--atlas-paper:#f9e8c8;--atlas-ink:#3d291e;--atlas-gold:#edbf68;--atlas-gold-bright:#ffd888;--atlas-cobalt:#163754; color:var(--atlas-ivory)}
+.atlas-page .page-hero{background:linear-gradient(98deg,rgba(4,22,44,.98),rgba(5,25,51,.91) 65%,rgba(6,29,50,.73)),url("research-assets/research-hd-background.webp") center 27%/cover no-repeat;border:1px solid rgba(242,190,95,.68);border-bottom:3px double var(--atlas-gold);box-shadow:inset 0 0 0 5px rgba(221,166,76,.08),0 16px 35px #0006;margin:1.3rem 0 2rem;padding:clamp(1.5rem,3.8vw,3rem) clamp(1.4rem,4.5vw,4rem);border-radius:7px}
+.atlas-page .page-hero:before{content:"✦   ✧   ✦";letter-spacing:.48em;font-size:1.35rem;color:var(--atlas-gold-bright);text-shadow:0 0 16px #ebb55e80;display:block;margin-bottom:.8rem}
+.atlas-page .page-hero .eyebrow{color:var(--atlas-gold-bright);letter-spacing:.12em;font-weight:600}
+.atlas-page .page-hero h1{color:#fff4df;font-family:Georgia,"Noto Serif SC",serif;font-weight:500;font-size:clamp(1.75rem,3.4vw,3.5rem);line-height:1.35;text-shadow:0 3px 16px #0009;max-width:25ch}
+.atlas-page .page-hero p,.atlas-page .page-hero .muted{color:#fbefd8!important;font-size:clamp(1rem,1.35vw,1.25rem);line-height:1.85;text-shadow:0 2px 8px #000c;max-width:70ch}
+.atlas-page .atlas-nav a{color:var(--atlas-ivory);border:1px solid #e4b967;background:linear-gradient(135deg,#173752,#0a203c);box-shadow:inset 0 0 0 2px #e5b96014,0 3px 10px #0005}
+.atlas-page .atlas-nav a:focus-visible{outline-color:var(--atlas-gold-bright)}
+/* The existing full-resolution parchment image remains connected. Contrast
+   comes from a translucent ivory paper layer, not opaque text shadows. */
+.atlas-page.atlas-deep .atlas-deep-section{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(90deg,rgba(255,244,221,.96),rgba(255,243,216,.93) 72%,rgba(248,225,186,.87)),url("research-assets/research-hd-parchment.webp") center/cover no-repeat!important;
+  border:3px double #d3a251!important;border-radius:7px!important;
+  outline:1px solid #fbd78c;outline-offset:-9px;
+  box-shadow:0 16px 28px #0005,inset 0 0 0 7px #fff5da64,0 0 0 1px #af762b;
+  margin:1.5rem 0 2rem;padding:clamp(2rem,4.1vw,4.2rem) clamp(1.4rem,6.8vw,6rem)!important;
+  min-height:220px;
+}
+.atlas-page.atlas-deep .atlas-deep-section:before{
+  content:"";position:absolute;inset:auto 0 0 auto;width:min(33%,340px);height:70%;pointer-events:none;
+  background:url("research-assets/library-studies.webp") center/cover no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 75%);mask-image:linear-gradient(90deg,transparent 0%,#000 75%);
+  opacity:.12;z-index:-1;
+}
+.atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+2):before{background-image:url("research-assets/library-comparisons.webp")}
+.atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+3):before{background-image:url("research-assets/library-syntheses.webp")}
+.atlas-page.atlas-deep .atlas-deep-section:nth-of-type(4n+4):before{background-image:url("research-assets/library-verification.webp")}
+.atlas-page.atlas-deep .atlas-deep-section:after{
+  content:"✦";position:absolute;right:clamp(17px,3vw,45px);top:19px;font-size:1.45rem;color:#bb8535;opacity:.75;pointer-events:none;
+}
+.atlas-page.atlas-deep .atlas-deep-section .eyebrow{color:#775021!important;font-weight:700;letter-spacing:.11em;font-size:.85rem}
+.atlas-page.atlas-deep .atlas-deep-section h2{font:500 clamp(1.55rem,2.7vw,2.6rem)/1.38 Georgia,"Noto Serif SC",serif!important;color:#382317!important;max-width:28ch;margin:.8rem 0 1.2rem;padding-bottom:.65rem;border-bottom:1px solid #b98c50}
+.atlas-page.atlas-deep .atlas-deep-section p{color:#32231c!important;font:400 clamp(1.05rem,1.33vw,1.26rem)/1.98 Georgia,"Noto Serif SC",serif!important;max-width:71ch;text-shadow:none!important;letter-spacing:.008em}
+.atlas-page.atlas-deep .atlas-deep-section p+p{margin-top:1rem}
+/* The verification plate becomes an illustrated lighter exhibit label. */
+.atlas-page.atlas-deep .atlas-verification-plate{
+  background:linear-gradient(90deg,#fff1d9f9 0%,#ffedd0f3 64%,#f9e5beec 100%),url("research-assets/research-hd-parchment.webp") center/cover!important;
+  color:var(--atlas-ink)!important;border:3px double #daaa59!important;
+  border-radius:7px!important;padding:clamp(1.65rem,3.8vw,3rem)!important;
+  box-shadow:inset 0 0 0 8px #b8822e13,0 14px 24px #0005;
+  position:relative;overflow:hidden;isolation:isolate
+}
+.atlas-page.atlas-deep .atlas-verification-plate:after{
+  content:"";position:absolute;right:-1.5rem;bottom:-1.4rem;width:36%;height:90%;background:url("research-assets/library-verification.webp") center/cover no-repeat;opacity:.20;pointer-events:none;-webkit-mask-image:linear-gradient(90deg,transparent,#000);mask-image:linear-gradient(90deg,transparent,#000);z-index:-1
+}
+.atlas-page.atlas-deep .atlas-verification-plate h2,.atlas-page.atlas-deep .atlas-verification-plate p,.atlas-page.atlas-deep .atlas-verification-plate a{color:#422919!important;position:relative}
+.atlas-page.atlas-deep .atlas-verification-plate h2{font-size:clamp(1.65rem,2.7vw,2.7rem);margin:.8rem 0 1rem}
+.atlas-page.atlas-deep .atlas-verification-plate .eyebrow{color:#996923!important;font-weight:700;letter-spacing:.1em}
+.atlas-page.atlas-deep .atlas-verification-plate a{display:inline-block;border-bottom:2px solid #ba7d30;text-decoration:none;font-weight:650;padding:.35rem 0}
+.atlas-page.atlas-deep .atlas-verification-plate a:hover{color:#945515!important}
+/* The research connections now have real artwork and framed inner groups. */
+.atlas-page.atlas-deep .atlas-connections-gallery{
+  background:linear-gradient(135deg,rgba(15,47,72,.97),rgba(12,34,58,.96)),url("research-assets/research-hd-background.webp") center/cover!important;
+  border:2px solid #e1ae5b!important;outline:1px solid #f8d593;outline-offset:-8px;
+  border-radius:7px!important;box-shadow:0 13px 31px #0006,inset 0 0 0 5px #f1ba5820;
+  padding:clamp(1.5rem,3.3vw,3rem)!important;position:relative;overflow:hidden
+}
+.atlas-page.atlas-deep .atlas-connections-gallery:before{
+  content:"";display:block;height:clamp(130px,19vw,230px);margin:-.25rem -.25rem 1.6rem;
+  background:linear-gradient(0deg,#0e2c4a66,transparent 70%),url("research-assets/library-syntheses.webp") center/cover no-repeat;
+  border:2px solid #d7aa65;box-shadow:inset 0 0 0 5px #081a2d7f,0 8px 20px #0006
+}
+.atlas-page.atlas-deep .atlas-connections-gallery>h2{font:500 clamp(1.65rem,3vw,2.7rem) Georgia,"Noto Serif SC",serif;color:#fff0d3;padding-bottom:.8rem;border-bottom:2px solid #e4b466;margin:0 0 1.35rem}
+.atlas-page.atlas-deep .atlas-connections-gallery>h3{
+  color:#fff1d7;font:500 clamp(1.12rem,2.1vw,1.6rem) Georgia,"Noto Serif SC",serif;
+  border-left:4px solid #f4c77d;padding:.55rem 1rem;margin:1.35rem 0 .7rem;
+  background:linear-gradient(90deg,#e6bd7440,transparent)
+}
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-reason-grid{gap:.75rem}
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-reason-grid a{
+  border:1px solid #d9ad6a;background:linear-gradient(120deg,#fff0d7,#f3dfb9);color:#3a2a24!important;
+  padding:1rem 1.15rem;box-shadow:inset 0 0 0 3px #cda05d20;line-height:1.7;border-radius:4px
+}
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-reason-grid a:before{content:"✧";color:#aa792e;margin-right:.55rem}
+.atlas-page.atlas-deep .atlas-connections-gallery p{color:#fff0d8!important}
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-study-list{margin:1rem 0}
+/* Archive/source cards: each one connects to a distinct existing painting.
+   Keep labels atop dark opaque blue; artwork is a dedicated header region. */
+.atlas-page:not(.atlas-designed) .atlas-study-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.atlas-page:not(.atlas-designed) .atlas-study-link{
+  background:linear-gradient(130deg,#193f5c,#102a47)!important;
+  border:2px solid #dca95d!important;border-radius:6px!important;position:relative;overflow:hidden;
+  box-shadow:inset 0 0 0 4px #e3b36520,0 12px 27px #0005;
+  padding:0 1.3rem 1.4rem!important;min-height:260px;
+}
+.atlas-page:not(.atlas-designed) .atlas-study-link:before{
+  content:""!important;display:block!important;height:105px!important;
+  margin:0 -1.3rem 1rem!important;padding:0!important;
+  border-bottom:2px solid #e6ba71!important;
+  background:linear-gradient(90deg,#091c36aa,#0b2d4b22),url("research-assets/library-studies.webp") center/cover no-repeat!important;
+}
+.atlas-page:not(.atlas-designed) .atlas-study-link:nth-child(4n+2):before{background-image:linear-gradient(90deg,#091c36aa,#0b2d4b22),url("research-assets/library-comparisons.webp")!important}
+.atlas-page:not(.atlas-designed) .atlas-study-link:nth-child(4n+3):before{background-image:linear-gradient(90deg,#091c36aa,#0b2d4b22),url("research-assets/library-syntheses.webp")!important}
+.atlas-page:not(.atlas-designed) .atlas-study-link:nth-child(4n+4):before{background-image:linear-gradient(90deg,#091c36aa,#0b2d4b22),url("research-assets/library-verification.webp")!important}
+.atlas-page:not(.atlas-designed) .atlas-study-link:after{content:"✧";position:absolute;top:115px;right:1.1rem;font-size:1.2rem;color:#f7ce85;pointer-events:none}
+.atlas-page:not(.atlas-designed) .atlas-study-link span{color:#f4d6a1!important;opacity:1}
+.atlas-page:not(.atlas-designed) .atlas-study-link strong{color:#fff5e4!important;font-size:clamp(1.04rem,1.5vw,1.36rem);line-height:1.48;font-weight:550}
+.atlas-page:not(.atlas-designed) .atlas-study-link small{color:#f3e6d3!important;font-size:.9rem;opacity:1;line-height:1.65}
+.atlas-page:not(.atlas-designed) .atlas-study-link:hover{border-color:#ffdd97!important;transform:translateY(-3px)}
+/* More ivory and brighter museum-gold on plain later-stage research panels. */
+.atlas-page:not(.atlas-designed):not(.atlas-deep)>.atlas-panel,
+.atlas-page.atlas-deep>.atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate):not(.atlas-connections-gallery){
+  border:2px solid #d7a85e!important;border-radius:6px!important;
+  background:linear-gradient(125deg,rgba(27,61,83,.96),rgba(11,33,58,.95)),url("research-assets/research-hd-background.webp") center/cover!important;
+  box-shadow:0 12px 25px #0005,inset 0 0 0 5px #f2c47716;
+  padding:clamp(1.3rem,3vw,2.8rem);position:relative
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) h2,
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) h3{color:#fff0d1}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) p{color:#f5e9d5;line-height:1.85}
+.atlas-page .atlas-panel .eyebrow{color:#edc784}
+.atlas-page .atlas-evidence-table{border-color:#e0b46b}
+.atlas-page .atlas-evidence-table th{background:#d7b478;color:#2e231d}
+.atlas-page .atlas-evidence-table td{background:rgba(10,35,57,.8);color:#fff0db}
+.atlas-page .atlas-evidence-table a{color:#ffe09b}
+.atlas-page .atlas-study-list a:focus-visible,.atlas-page .atlas-panel a:focus-visible{outline:3px solid #ffe09b;outline-offset:3px}
+/* Preserve the already integrated fourteen unique thematic images. */
+.atlas-library .atlas-essay-wing{border:2px solid #efc16d;box-shadow:0 18px 36px #0007,inset 0 0 0 6px #ffdc9d1b}
+.atlas-library .atlas-essay-wing>.atlas-section-head h2{color:#fff0d5}
+.atlas-library .atlas-card-label{background:linear-gradient(125deg,#244b67,#0e2945);border-top:1px solid #f8ce83}
+.atlas-library .atlas-card-label strong{color:#fff2d9}
+.atlas-library .atlas-mini-grid .atlas-illustrated-card{border-color:#e3b46e;box-shadow:0 11px 22px #0007,inset 0 0 0 3px #ffdf9529}
+@media(max-width:760px){
+ .atlas-page:not(.atlas-designed) .atlas-study-list{grid-template-columns:minmax(0,1fr)}
+ .atlas-page.atlas-deep .atlas-deep-section{padding:2.05rem 1.3rem!important}
+ .atlas-page.atlas-deep .atlas-deep-section:before{width:28%;opacity:.07}
+ .atlas-page.atlas-deep .atlas-connections-gallery:before{height:130px}
+ .atlas-page .page-hero{padding:1.5rem 1.1rem}
+ .atlas-page.atlas-deep .atlas-verification-plate:after{opacity:.09;width:50%}
+}
+@media(prefers-reduced-motion:reduce){.atlas-page:not(.atlas-designed) .atlas-study-link{transition:none}}
