@@ -281,3 +281,127 @@
   .atlas-page.atlas-deep .atlas-research-dossier p{font-size:1.03rem!important;line-height:1.85!important;}
 }
 @media(prefers-reduced-motion:reduce){.atlas-page.atlas-deep .atlas-research-dossier{transition:none}}
+
+/* 2026-11-22 · Research library text contrast audit (all research rooms)
+   Navy surfaces: ivory paragraphs, gold headings/links. Parchment surfaces:
+   dark ink. Avoid inherited muted opacity reducing readability. */
+.atlas-page{
+  --atlas-text-primary:#fff1dd;
+  --atlas-text-secondary:#efdfc5;
+  --atlas-text-accent:#ffdc91;
+  --atlas-text-ink:#35251b;
+}
+/* Common dark panels, including methods, synthesis, comparison and audit. */
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate):not(.atlas-featured),
+.atlas-page .atlas-catalog-aside,
+.atlas-library .atlas-essay-wing,
+.atlas-page.atlas-deep .atlas-connections-gallery{
+  color:var(--atlas-text-primary);
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) :is(p,li,dd,dt,blockquote),
+.atlas-page .atlas-catalog-aside :is(p,small,span),
+.atlas-page.atlas-deep .atlas-connections-gallery :is(p,li){
+  color:var(--atlas-text-secondary)!important;
+  opacity:1;
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) :is(h2,h3,h4,strong),
+.atlas-page.atlas-deep .atlas-connections-gallery :is(h2,h3,h4),
+.atlas-page .atlas-catalog-aside h2{
+  color:var(--atlas-text-primary)!important;
+  opacity:1;
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) .eyebrow,
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) .small,
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) .muted,
+.atlas-page .atlas-library-method .small{
+  color:#eac58b!important;
+  opacity:1!important;
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) a:not(.atlas-study-link):not(.btn),
+.atlas-page .atlas-catalog-aside a{
+  color:var(--atlas-text-accent)!important;
+  text-decoration-color:#deb66b;
+}
+.atlas-page .atlas-panel:not(.atlas-deep-section):not(.atlas-verification-plate) a:hover,
+.atlas-page .atlas-catalog-aside a:hover{
+  color:#fff4d9!important;
+}
+/* Numbered research dossier chapters retain an opaque, clear ivory foreground. */
+.atlas-page.atlas-deep .atlas-research-dossier :is(p,li,blockquote,small,.small,.muted),
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier :is(p,li,blockquote,small,.small,.muted){
+  color:#f8edda!important;
+  opacity:1!important;
+}
+.atlas-page.atlas-deep .atlas-research-dossier :is(strong,b,h3,h4),
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier :is(strong,b,h3,h4){
+  color:#ffe9bf!important;
+}
+.atlas-page.atlas-deep .atlas-research-dossier a{
+  color:#ffe0a0!important;
+  text-underline-offset:.16em;
+}
+/* All research bibliography cards, including cards inside dossiers and links
+   between sections; preserve the existing illustration headers. */
+.atlas-page:not(.atlas-designed) .atlas-study-link{
+  color:#f6e7d0!important;
+}
+.atlas-page:not(.atlas-designed) .atlas-study-link :is(span,small,.muted){
+  color:#f2dfbd!important;
+  opacity:1!important;
+}
+.atlas-page:not(.atlas-designed) .atlas-study-link strong{
+  color:#fff5e7!important;
+  opacity:1!important;
+}
+.atlas-library .atlas-study-link :is(span,strong,small){
+  opacity:1!important;
+}
+/* Tables: the golden header uses dark ink; dark rows use ivory. */
+.atlas-page .atlas-evidence-table th,
+.atlas-page .atlas-evidence-table th :is(strong,span,a){
+  color:#28251f!important;
+  opacity:1!important;
+}
+.atlas-page .atlas-evidence-table td,
+.atlas-page .atlas-evidence-table td :is(p,small,strong,span){
+  color:#f9eddb!important;
+  opacity:1!important;
+}
+.atlas-page .atlas-evidence-table td a{
+  color:#ffe0a0!important;
+}
+/* Keep lighter parchment blocks explicitly dark on light; this prevents the
+   general dark-panel rules from turning labels pale against ivory artwork. */
+.atlas-page.atlas-deep .atlas-deep-section:not(.atlas-research-dossier){
+  color:var(--atlas-text-ink);
+}
+.atlas-page.atlas-deep .atlas-deep-section:not(.atlas-research-dossier) :is(p,h2,h3,h4,strong,small,.muted){
+  color:#38271c!important;
+  opacity:1!important;
+}
+.atlas-library .atlas-featured :is(p,h2,h3,small,strong),
+.atlas-library .atlas-featured-copy :is(p,h2,h3,small,strong){
+  color:#35291f!important;
+  opacity:1!important;
+}
+.atlas-library .atlas-featured .atlas-ribbon{color:#70471e!important}
+.atlas-library .atlas-featured a{color:#593a20!important}
+.atlas-page.atlas-deep .atlas-verification-plate :is(p,small,.muted,h2,h3,strong){
+  color:#f9ebd6!important;
+  opacity:1!important;
+}
+.atlas-page.atlas-deep .atlas-verification-plate a{color:#ffe0a0!important}
+/* Study cards nested in connection panels must override inherited panel
+   text colors, not their own accessible card foreground. */
+.atlas-page.atlas-deep .atlas-connections-gallery .atlas-study-link :is(strong,span,small){
+  color:#f9eddb!important;
+}
+.atlas-page .atlas-citation,
+.atlas-page .atlas-panel .atlas-citation{color:#f4e6d0!important;opacity:1!important}
+.atlas-page .atlas-search-wrap input::placeholder{color:#e1d1b9;opacity:1}
+.atlas-page .atlas-search-wrap input{color:#fff3df}
+.atlas-page :is(a,button,input):focus-visible{outline:3px solid #ffe6ac;outline-offset:3px}
+@media(max-width:720px){
+  .atlas-page .atlas-panel:not(.atlas-deep-section) :is(p,li,small),
+  .atlas-page .atlas-study-link small{opacity:1!important}
+}
