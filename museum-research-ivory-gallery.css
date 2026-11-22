@@ -682,3 +682,49 @@
  }
  .atlas-library #atlas-results .atlas-study-link::before{margin-inline:-.8rem!important}
 }
+
+/* v11 · Smaller catalogue cards, keeping text above the gilded footer.
+   English publication names are one-line previews; full bibliographic text
+   remains available inside every research dossier. No image files touched. */
+.atlas-library #atlas-results .atlas-study-link{
+  height:352px!important;
+  min-height:352px!important;
+  max-height:352px!important;
+  padding-bottom:72px!important;
+  gap:.27rem!important;
+}
+.atlas-library #atlas-results .atlas-study-link::before{
+  margin-bottom:.32rem!important;
+}
+.atlas-library #atlas-results .atlas-study-link>span{
+  font-size:clamp(.75rem,.86vw,.89rem)!important;
+  line-height:1.38!important;
+}
+.atlas-library #atlas-results .atlas-study-link>strong{
+  font-size:clamp(.91rem,1vw,1.03rem)!important;
+  line-height:1.38!important;
+}
+.atlas-library #atlas-results .atlas-study-link>small{
+  font-size:clamp(.73rem,.82vw,.84rem)!important;
+  line-height:1.38!important;
+}
+.atlas-library #atlas-results .atlas-study-link>small:last-child{
+  font-size:clamp(.73rem,.8vw,.83rem)!important;
+  -webkit-line-clamp:1!important;
+  line-clamp:1!important;
+  line-height:1.45!important;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+@media(max-width:1020px){
+  .atlas-library #atlas-results .atlas-study-link{
+    height:345px!important;min-height:345px!important;max-height:345px!important;
+    padding-bottom:68px!important;
+  }
+}
+@media(max-width:700px){
+  .atlas-library #atlas-results .atlas-study-link{
+    height:335px!important;min-height:335px!important;max-height:335px!important;
+    padding-bottom:68px!important;
+  }
+}
