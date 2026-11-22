@@ -1205,6 +1205,7 @@ function editStoryPage(id){
  '<p class="muted">Continue your writing here. Your words stay private until you explicitly decide to share them.</p></section>'+
  '<section class="choice-panel story-editor-panel"><form id="story-edit-form" data-id="'+esc(st.id)+'">'+
  '<div class="form-row"><label for="edit-category">Story gallery</label><select id="edit-category" class="field">'+storyCategoryOptions(st.scenario)+'</select></div>'+
+ '<div class="form-row"><label for="edit-writing-language">Original writing language</label><select id="edit-writing-language" class="field"><option value="en" '+((st.writingLanguage||museumLang)==='en'?'selected':'')+'>English</option><option value="zh-Hans" '+((st.writingLanguage||museumLang)==='zh-Hans'?'selected':'')+'>简体中文</option><option value="zh-Hant" '+((st.writingLanguage||museumLang)==='zh-Hant'?'selected':'')+'>繁體中文</option></select><p class="small muted">Choose the language you actually wrote in. Your original text will always be preserved.</p></div>'+
  '<div class="form-row"><label for="edit-title">Story title</label><input id="edit-title" class="field" maxlength="120" value="'+esc(st.title||'')+'" placeholder="Give your story a title…"></div>'+
  '<div class="form-row"><label for="edit-story">Your story</label><textarea id="edit-story" class="field" rows="9" maxlength="4000">'+esc(st.story||'')+'</textarea></div>'+
  '<div class="form-row"><label for="edit-why">Why you chose silence or speaking</label><textarea id="edit-why" class="field" rows="5" maxlength="2000">'+esc(st.why||'')+'</textarea></div>'+
@@ -1215,6 +1216,7 @@ function editStoryPage(id){
  '<label class="choice-option"><input type="radio" name="publication-mode" value="named" '+(named?'checked':'')+'><span><strong>Publish with a name</strong> · Display a name I choose</span></label>'+
  '<div class="form-row" id="display-name-row" '+(!named?'hidden':'')+'><label for="edit-display-name">Public display name (not your account name)</label><input id="edit-display-name" class="field" maxlength="80" placeholder="What name should readers see?" value="'+esc(st.displayName||'')+'"></div>'+
  '<label class="choice-option"><input type="checkbox" id="publication-consent"><span><strong>I understand that anyone visiting this website can read my published story.</strong></span></label>'+
+ '<label class="choice-option"><input type="checkbox" id="translation-consent"><span>I agree to send my story, title and reason to an automated translation provider when I publish. The museum keeps my original wording.</span></label>'+
  '<p class="small muted">You must check this box each time you publish. Your email and Google profile name are never automatically displayed.</p>'+
  '<div class="actions"><button type="button" class="btn btn-outline" id="save-private-story">Save privately</button>'+
  '<button type="button" class="btn" id="publish-story" '+(!authUser?'disabled':'')+'>'+(published?'Update public story':'Publish for everyone')+' ↗</button>'+
@@ -1229,6 +1231,7 @@ function bindStoryEditor(){
  const read=()=>({
   ...findLocalStory(id),id,scenario:$('#edit-category').value,title:$('#edit-title').value,
   story:$('#edit-story').value,why:$('#edit-why').value,
+  writingLanguage:$('#edit-writing-language').value,
   publicationMode:document.querySelector('input[name="publication-mode"]:checked')?.value||'anonymous',
   displayName:$('#edit-display-name').value
  });
@@ -1238,7 +1241,7 @@ function bindStoryEditor(){
   try{await syncCloudStory(st);feedback('Saved privately to your account cloud.');return true}
   catch(e){feedback('Saved on this device; cloud backup failed: '+String(e.message||e));return false}
  };
- for(const input of form.querySelectorAll('#edit-category,#edit-title,#edit-story,#edit-why,#edit-display-name')){
+ for(const input of form.querySelectorAll('#edit-category,#edit-writing-language,#edit-title,#edit-story,#edit-why,#edit-display-name')){
   input.addEventListener('input',()=>{
    const updated=read();updated.updatedAt=Date.now();updated.synced=false;
    // Editing a public story never silently changes the currently published cloud copy.
@@ -1260,12 +1263,28 @@ function bindStoryEditor(){
   if(!validStoryCategory(st.scenario)||!st.title||!st.story||!st.why){feedback('Complete the title, story and reason before publishing.');return}
   if(st.publicationMode==='named'&&!st.displayName.trim()){feedback('Enter the name you want everyone to see.');return}
   if(!$('#publication-consent').checked){feedback('Check the consent box before publishing.');return}
+  if(!$('#translation-consent').checked){feedback('Agree to automated translation before publishing, or keep this as a private draft.');return}
   if(!museumConfirm('Publish your story so anyone visiting this website can read it?'))return;
   st.displayName=st.publicationMode==='named'?st.displayName.trim():'';
   st.publicConsent=true;st.status='published';
   const button=$('#publish-story');button.disabled=true;
-  try{await syncCloudStory(st);await loadPublicStories();if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id))){throw new Error('The story was saved, but the public archive did not confirm its visibility. Check the Story Cloud Diagnostics page before retrying.')}location.hash='#/my-stories';render(true)}
-  catch(e){feedback('Could not publish; your edits remain on this device. '+String(e.message||e));button.disabled=false}
+  try{
+   if(!storyTranslationBackendReady){
+    throw Error('Automatic translation has not been activated in the museum database. Your draft is safe. Ask the curator to finish the translation service setup.');
+   }
+   const {data,error}=await authClient.functions.invoke('publish-translated-story',{
+    body:{id:st.id,scenario:st.scenario,title:st.title,story:st.story,why:st.why,
+      publicationMode:st.publicationMode,displayName:st.displayName,
+      sourceLanguage:st.writingLanguage||museumLang,translationConsent:true}
+   });
+   if(error||!data?.ok)throw Error(data?.error||error?.message||'The translation could not be completed.');
+   st.ownerId=authUser.id;st.synced=true;addLocalStory(st);
+   await loadPublicStories();
+   if(storyCloudStatus!=='ready'||!publicStories.some(row=>String(row.id)===String(st.id)&&row.translation_status==='ready')){
+    throw Error('The translated public archive has not confirmed this story. Please check your account before retrying.');
+   }
+   location.hash='#/my-stories';render(true);
+  }catch(e){feedback('Could not publish a three-language story. Your writing is still on this device. '+String(e.message||e));button.disabled=false}
  };
  const erase=$('.delete-story-editor');if(erase)erase.onclick=()=>deleteStoryFromLibrary(id);
  const withdraw=$('#unpublish-story');
