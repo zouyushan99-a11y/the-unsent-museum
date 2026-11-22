@@ -32,3 +32,8 @@ html:lang(zh) #app :is(.museum-hero, .page-hero) h1 {
   font-family: var(--museum-zh-display);
   font-weight: 400;
 }
+
+html:lang(zh) #app .site-header .nav a,
+html:lang(zh) #app .site-header .museum-language-switch select {
+  font-family: var(--museum-zh-serif);
+}
