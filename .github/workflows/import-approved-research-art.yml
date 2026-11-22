@@ -22,8 +22,8 @@ jobs:
           from pathlib import Path
           def acquire(url,width,height):
               attempts=[
-                  re.sub(r'/height:\\d+/',f'/height:{height}/',re.sub(r'/width:\\d+\\?',f'/width:{width}?',url)).replace('x-canva-quality=thumbnail','x-canva-quality=original'),
-                  re.sub(r'/height:\\d+/',f'/height:{height}/',re.sub(r'/width:\\d+\\?',f'/width:{width}?',url)),
+                  re.sub(r'/height:\d+/',f'/height:{height}/',re.sub(r'/width:\d+\\?',f'/width:{width}?',url)).replace('x-canva-quality=thumbnail','x-canva-quality=original'),
+                  re.sub(r'/height:\d+/',f'/height:{height}/',re.sub(r'/width:\d+\\?',f'/width:{width}?',url)),
                   url]
               errors=[]
               for attempt in attempts:
