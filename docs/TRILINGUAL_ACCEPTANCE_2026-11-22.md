@@ -44,3 +44,7 @@ The live public diagnostics returned one shared answer, one opted-in star attrib
 ## Repeatable check
 
 With Node.js 24 and dependencies installed, run `npm test`. The suite checks catalogue counts, all 366 route/language combinations, narrative/analysis/question/source structure, unhandled English fragments, form preservation, feedback error recovery and initial template ordering. It uses a DOM and mocked canvas/network boundaries, so it supplements rather than replaces live browser tests.
+
+## Final public-story data check
+
+A live public story had identical stored Simplified and Traditional translated variants despite being marked ready. The frontend now normalizes only the translated Traditional display copy; the author’s original and stored translations are untouched. The underlying provider output still warrants a separate translation-quality review. One automated multi-scene interaction batch timed out and is not counted as a completed end-to-end interaction test.
