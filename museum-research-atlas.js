@@ -94,10 +94,20 @@ return '<main class="container atlas-page">'+nav()+heading(T(G[g]?.[0]||'Researc
 }
 const curated12=['R01','R02','R03','R09','R15','R16','R21','R22','R26']; 
 function deepStudy(id,x){
-const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id];if(!d)return null;
+const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id]||window.MUSEUM_RESEARCH_THIRD_A?.[id]||window.MUSEUM_RESEARCH_THIRD_B?.[id];if(!d)return null;
 const chinese=window.museumLangPublic?.()!=='en',content=chinese?d.zh:d.en;
 const label=(en,zh)=>E(T(en,zh));
 const traceNotes={
+'R04':['Official publisher record and abstract checked; the full 2004 review was not independently accessed, so each cited primary experiment is not verified here.','已核对出版方记录和正式摘要；尚未独立审阅2004年综述全文，因此不能宣称已验证所有被引用的原始实验。'],
+'R05':['Original theoretical review read, including the two-part belongingness definition; not a new experiment.','已审阅理论综述正文，包括归属需要的两个条件；并非新实验。'],
+'R06':['Original theoretical integration read, including autonomy, competence and relatedness; not a new randomized trial.','已审阅原始理论论文，包含自主、胜任与关系三种需要；并非新随机试验。'],
+'R12':['Original 2014 review read including evidence gaps in Table 2; its many cited primary studies were not each re-audited.','已审阅2014年综述全文及表2指出的证据空白；被引用的原始论文尚未全部逐项重新审计。'],
+'R14':['Original publication metadata and conceptual account checked; do not assign a new experimental sample to this theory paper.','已核对1974年原始出版记录和理论论述；不得为理论文章虚构新实验样本。'],
+'R16':['Full journal research article checked: 67 couples, 14-night protocol, 1,768 diaries and described outcome measures.','已核对论文正文：67对伴侣、14晚记录、1768份日记以及测量指标。'],
+'R19':['Full meta-analysis inspected including separate effect directions and original Tables 1 and 3; study effects are heterogeneous.','已核对元分析全文、不同方向的效应和表1及表3；研究结果存在异质性。'],
+'R23':['Qualitative article read including interview accounts and the concept of imagined networked audiences.','已核对定性研究正文、受访者叙述以及网络化想象受众概念。'],
+'R25':['Full theoretical article read including impersonal, interpersonal and hyperpersonal models; not a new experiment.','已核对理论文章全文及非人际、人际和超人际模型；并非新实验。'],
+'R26':['Original randomized writing experiment checked: 46 undergraduates, four conditions, four evenings, follow-up health records.','已核对原始随机写作实验：46名学生、四种条件、四晚写作和后续医疗记录。'],
 'R01':['Original study results and participant counts checked against the research article; predictions are not actual retaliation rates.','研究对象数量与主要结果已据论文核对；预期反应并非实际报复概率。'],
 'R02':['Published experiments and two different outcomes reviewed; behavior p = .053 does not establish an intervention effect.','已核对实验与两种不同结果；行为指标p = .053不能证明干预有效。'],
 'R03':['Study designs and sample descriptions checked against accessible article material; not a longitudinal measurement of relationship damage.','研究设计和样本说明据可获取正文核对；不是长期追踪关系受损。'],
@@ -111,7 +121,7 @@ const traceNotes={
 };
 const note=traceNotes[id];
 
-const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):(d.stage==='abstract-verified'||d.stage==='publisher-preview-and-abstract')?T('Publisher first-page preview and abstract verified · remaining methods and statistics unavailable','已核对出版方首页预览及正式摘要 · 其余方法和统计结果仍不可获取'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
+const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):(d.stage==='abstract-verified'||d.stage==='publisher-preview-and-abstract')?T('Publisher first-page preview and abstract verified · remaining methods and statistics unavailable','已核对出版方首页预览及正式摘要 · 其余方法和统计结果仍不可获取'):d.stage==='review-publisher-plus-abstract'?T('Scholarly review supported by official abstract and bibliographic record · full-text audit incomplete','学术综述：已核对正式摘要与书目 · 仍未完成全文审校'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
 const auditPanel=note?'<section class="atlas-panel"><span class="eyebrow">'+label('SOURCE AUDIT · 22 NOVEMBER 2026','来源核对 · 2026年11月22日')+'</span><h2>'+label('What has been verified?','哪些部分已经核实？')+'</h2><p>'+E(T(note[0],note[1]))+'</p><a href="#/research/audit">'+label('Open the research verification register ↗','查看研究核实记录 ↗')+'</a></section>':'';
 const sections=content.map((s,i)=>'<section class="atlas-panel atlas-deep-section"><span class="eyebrow">'+String(i+1).padStart(2,'0')+' / '+label('RESEARCH DOSSIER','研究档案')+'</span><h2>'+E(s[0])+'</h2><p>'+E(s[1])+'</p></section>').join('');
 const linkHistory=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id)).map(([k])=>'<a href="#/'+(['franz-kafka','anne-lister'].includes(k)?'history':'collectives')+'/'+E(k)+'">'+E(k.replaceAll('-',' '))+' ↗</a>').join('');
