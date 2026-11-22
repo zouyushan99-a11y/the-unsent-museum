@@ -1,5 +1,7 @@
 const fs=require('fs'),path=require('path'),{JSDOM}=require('jsdom');
 const dir=path.resolve(__dirname,'..');
+const entry=fs.readFileSync(dir+'/index.html','utf8');
+if(entry.indexOf('src="museum-feedback.js')>entry.indexOf('src="app.js'))throw Error('About/Feedback templates must load before app initial render');
 const dom=new JSDOM('<div id="app"></div>',{url:'https://example.org/',runScripts:'outside-only',pretendToBeVisual:true});
 const w=dom.window;w.eval=code=>require('vm').runInContext(code,dom.getInternalVMContext());w.OpenCC=require('opencc-js');w.testClient={};w.supabase={createClient:()=>w.testClient};w.scrollTo=()=>{};w.HTMLCanvasElement.prototype.getContext=()=>new Proxy({measureText:()=>({width:10}),createRadialGradient:()=>({addColorStop(){}})}, {get:(t,k)=>t[k]||(()=>{})});w.ResizeObserver=undefined;
 for(const m of fs.readFileSync(dir+'/index.html','utf8').matchAll(/<script defer src="([^?" ]+)/g)){
