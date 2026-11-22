@@ -491,3 +491,39 @@
     transition:none;
   }
 }
+
+
+/* 2026-11-22 · Topic-entry readability refinement
+   Keep the independent artwork fully visible without crowding the heading,
+   especially for longer Chinese titles on compact screens. */
+.atlas-page:has(>.atlas-topic-detail-art){
+  display:flow-root;
+}
+.atlas-page:has(>.atlas-topic-detail-art)>.page-hero{
+  min-width:0;
+}
+.atlas-page:has(>.atlas-topic-detail-art)>.page-hero h1,
+.atlas-page:has(>.atlas-topic-detail-art)>.page-hero p{
+  overflow-wrap:break-word;
+  text-wrap:pretty;
+}
+@media(max-width:760px){
+  .atlas-page>.atlas-topic-detail-art{
+    float:none;
+    width:min(100%,320px);
+    margin:1.35rem auto 1.5rem;
+    padding:7px;
+    box-sizing:border-box;
+  }
+  .atlas-page:has(>.atlas-topic-detail-art)>.page-hero{
+    clear:both;
+    min-height:0;
+    padding-top:1.25rem;
+  }
+}
+@media(min-width:761px) and (max-width:1020px){
+  .atlas-page>.atlas-topic-detail-art{
+    width:clamp(180px,23vw,225px);
+    margin-left:1.4rem;
+  }
+}
