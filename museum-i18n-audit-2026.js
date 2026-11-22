@@ -243,3 +243,20 @@ Object.assign(window.MUSEUM_I18N.zh,{
  "CURATOR · PUBLIC STORIES":"策展人 · 公开故事",
  "Story Moderation.":"故事管理。"
 });
+
+// New cross-generational interactive-gallery wording; automatically converted to Traditional Chinese by the site's OpenCC setting.
+Object.assign(window.MUSEUM_I18N.zh,{
+  "Four kinds of unspoken words. Choose a gallery to enter a moment of choice, consider your reasons, and watch the stars your decisions leave behind.": "四种尚未说出口的话语。选择一间展厅，进入一个需要作出决定的瞬间，思考自己的理由，并看见那些选择在星空中留下的光芒。",
+  "The No We Never Said": "那些没能说出口的“不”",
+  "The Silent Witness": "沉默的见证者",
+  "The Feelings We Never Voiced": "那些未曾表达的心意",
+  "Sometimes, silence sounds exactly like agreement.": "有时候，沉默听起来与同意毫无区别。",
+  "Not every silence concerns only ourselves.": "并不是每一种沉默，都只关乎我们自己。",
+  "Some words are hard to say precisely because they matter.": "有些话之所以难以启齿，恰恰因为它们很重要。",
+  "Not everything written is meant to be delivered.": "并不是每一句写下的话，都注定要送达。",
+  "Curatorial note: These galleries were reorganized in November 2026. Earlier votes and stories may refer to the previous scenarios; they are preserved rather than rewritten.": "策展说明：本馆于2026年11月重新规划互动展厅。部分较早的投票与故事对应旧版情境；原始记录予以保留，不会改写。",
+  "Research context: this study was selected for an earlier exhibition theme. It is related background, not direct evidence about the new interactive scene.": "研究资料说明：这项研究最初用于旧版展厅主题，可供了解相关背景，但不能直接证明新版互动情境的原因。",
+  "Between Friends": "朋友之间",
+  "In the Classroom": "课堂之中",
+  "At Home": "家庭之中"
+});
