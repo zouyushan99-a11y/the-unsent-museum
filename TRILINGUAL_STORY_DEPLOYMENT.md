@@ -18,7 +18,7 @@ supabase link --project-ref bmsumzkxyoprpoavgslr
 supabase functions deploy publish-translated-story --project-ref bmsumzkxyoprpoavgslr
 ```
 
-If the database migration has not been applied, the site can still **read existing legacy stories** through the original RPC, but **new trilingual publication is blocked** with a clear error rather than silently publishing only one language. Drafts still save locally and can still sync through the original Supabase table.
+If the database migration has not been applied, the site can still **read existing legacy stories** through the original RPC, but **new trilingual publication is not available yet**. Authors may still choose the legacy **original-language-only** publishing path after a second, explicit warning. No automatic translation is claimed until the backend is configured. Drafts still save locally and can still sync through the original Supabase table.
 
 ## Data and privacy rules
 
@@ -29,7 +29,7 @@ If the database migration has not been applied, the site can still **read existi
 - Visitors get their chosen language from the `get_public_museum_stories_i18n` RPC; content is marked either **author's original**, **machine-translated**, or **original only (translation unavailable)**.
 - Legacy previously published stories stay in their original language until their author updates and republishes them through the new translated process. This is intentional: do not fabricate translations or guess which language their earlier draft used.
 - Machine translation may miss nuance or use unexpected wording; readers must see that translations are generated and that the original has been preserved.
-- Current text limits remain 120-character titles, 4,000-character stories, and 2,000-character reasons. Service latency, usage cost and abuse limits should be monitored for public use.
+- Current text limits remain 120-character titles, 4,000-character stories, and 2,000-character reasons. The server-side migration enforces a minimum 12-second gap and a maximum of 20 translation attempts per author per day; usage and cost should still be monitored.
 - Do not allow client-side updates to the server-managed translation columns; the migration explicitly excludes them from authenticated user insert/update grants.
 
 ## Verification checklist
