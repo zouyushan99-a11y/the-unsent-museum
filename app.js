@@ -15,7 +15,7 @@ let museumLang=(()=>{
 let museumTWConverter=null;
 function museumConvert(text){
  if(museumLang!=='zh-Hant')return String(text??'');
- try{if(!museumTWConverter&&window.OpenCC?.Converter)museumTWConverter=window.OpenCC.Converter({from:'cn',to:'hk'});return museumTWConverter?museumTWConverter(String(text??'')):String(text??'')}
+ try{if(!museumTWConverter&&window.OpenCC?.Converter)museumTWConverter=window.OpenCC.Converter({from:'cn',to:'hk'});return museumTWConverter?museumTWConverter(String(text??'')).replace(/登錄/g,'登入').replace(/反饋/g,'回饋').replace(/賬户|帳户|賬戶/g,'帳戶').replace(/數據庫/g,'資料庫').replace(/信息/g,'資訊').replace(/郵箱/g,'電郵地址').replace(/鏈接/g,'連結').replace(/默認/g,'預設'):String(text??'')}
  catch(e){return String(text??'')}
 }
 function museumZh(text){return museumLang==='en'?String(text??''):museumConvert(window.MUSEUM_I18N?.zh?.[String(text??'')]??String(text??''))}
@@ -37,6 +37,7 @@ function museumDisplaySystemMessage(value){
 }
 
 window.museumLangPublic=()=>museumLang;
+window.museumConvertPublic=museumConvert;
 function museumLangControl(){
  const isZh=museumLang!=='en';
  const label=isZh?'界面语言':'Language';
@@ -66,8 +67,8 @@ function museumHistoryLocalized(essay,id){
  ];
  const old=essay.moment||{};
  return {...essay,title:tr(x.title),subtitle:tr(x.subtitle),period:tr(label.period||essay.period),readingTime:tr('完整中文故事'),story,analysis,question:tr(x.question),
-  images:(essay.images||[]).map(pic=>({...pic,caption:tr(label.image||'与此人物或事件有关的真实历史图像，请通过来源链接核查。'),kind:tr('馆藏图像'),credit:tr(label.source||'历史馆藏资料')})),
-  sources:(essay.sources||[]).map((s,i)=>[tr((label.source||'原始资料机构')+' · 文献 '+(i+1)),s[1]]),
+  images:(essay.images||[]).map(pic=>({...pic,caption:museumZh(pic.caption),kind:museumZh(pic.kind),credit:pic.credit})),
+  sources:essay.sources||[],
   object:{...(essay.object||{}),name:tr(label.object||x.title),kind:tr(label.kind||'历史文献'),evidence:tr(x.proof)},
   moment:{...old,addressed:tr('请结合上方历史故事与原始资料判断。'),intended:tr(x.act),withheld:tr(x.act),why:tr(x.cause),certainty:tr(x.proof)},
   note:tr('本展品中文版依据同一批历史资料重新组织叙述，并非逐字翻译，篇幅与英文稿可能不同。历史事件与主观动机分别呈现；如需核查，请使用下方的原始资料链接。'),
@@ -75,12 +76,20 @@ function museumHistoryLocalized(essay,id){
 }
 function museumTranslateInterfaceValue(value,dict){
  const original=String(value??''),key=original.trim();
+ if(museumLang==='en')return original;
  if(!key)return original;
  let translation=dict[key];
  if(!translation){
   const numerals={I:'一',II:'二',III:'三',IV:'四',V:'五',VI:'六',VII:'七',VIII:'八',IX:'九',X:'十'};
   const gallery=n=>'第'+(numerals[n]||n)+'展厅';
   const dynamic=[
+   [/^Shared museum database · ([0-9]+) visitor response\(s\)$/,(_,n)=>'共享博物馆数据库 · '+n+' 份访客回答'],
+   [/^([0-9]+) shared answers returned$/,(_,n)=>'已读取 '+n+' 份共享回答'],
+   [/^([0-9]+) stars with opted-in public names$/,(_,n)=>n+' 颗星星选择了公开署名'],
+   [/^([0-9]+) public stories returned$/,(_,n)=>'已读取 '+n+' 篇公开故事'],
+   [/^([0-9]+) own stories accessible$/,(_,n)=>'可访问自己的 '+n+' 篇故事'],
+   [/^([0-9]+) published stor(?:y|ies)$/,(_,n)=>n+' 篇已发布的故事'],
+   [/^(.+)\.$/,(_,label)=>dict[label]?dict[label]+'。':label+'.'],
    [/^([0-9]+)\s+response\(s\)\s*·.*/i,(_,n)=>n+' 份回答 · 可多选，因此比例合计可能超过百分之百。'],
    [/^RESEARCH\s*·\s*GALLERY\s+([IVX0-9]+)/i,(_,n)=>'研究资料 · '+gallery(n)],
    [/^GALLERY\s+([IVX0-9]+)/i,(_,n)=>gallery(n)],
@@ -97,7 +106,7 @@ function museumTranslateInterfaceValue(value,dict){
   ];
   for(const [re,fn] of dynamic){if(re.test(key)){translation=key.replace(re,fn);break;}}
  }
- if(!translation)return original;
+ if(!translation)return museumConvert(original);
  return original.replace(key,museumConvert(translation));
 }
 function museumLocalizeText(root){
@@ -131,7 +140,7 @@ function museumObserveLocalizedUpdates(root){
    const roots=new Set();
    for(const record of records){
     if(record.type==='characterData')roots.add(record.target.parentElement);
-    else for(const child of record.addedNodes)if(child.nodeType===1)roots.add(child);
+    else for(const child of record.addedNodes){if(child.nodeType===1)roots.add(child);else if(child.nodeType===3)roots.add(record.target);}
    }
    museumI18nObserver.disconnect();
    for(const el of roots)if(el&&root.contains(el)&&!el.closest('[data-visitor-story],[data-original-language]'))museumLocalizeText(el);
@@ -144,8 +153,15 @@ function museumBindLanguage(){
  el.value=museumLang;
  el.addEventListener('change',()=>{
   const v=el.value;if(!['en','zh-Hant','zh-Hans'].includes(v))return;
+  // A display-language change must not discard an unfinished form.
+  const fields=[...document.querySelectorAll('#app form input[id],#app form textarea[id],#app form select[id]')].map(x=>({id:x.id,value:x.value,checked:x.checked}));
+  const search=document.getElementById('history-search')?.value;
+  const activeTab=document.querySelector('[data-silence-tab][aria-pressed="true"]')?.dataset.silenceTab;
   museumLang=v;try{localStorage.setItem(MUSEUM_LANGUAGE_KEY,v)}catch{}
   document.documentElement.lang=v;render(false);
+  for(const field of fields){const target=document.getElementById(field.id);if(target){target.value=field.value;if('checked' in target)target.checked=field.checked;}}
+  if(activeTab)document.querySelector('[data-silence-tab="'+activeTab+'"]')?.click();
+  if(search){const target=document.getElementById('history-search');if(target){target.value=search;target.dispatchEvent(new Event('input'));}}
  });
 }
 
@@ -241,13 +257,13 @@ function curatorFeedbackSection(){
   const tag=labels[item.category]||labels.other;
   const date=item.created_at&& !Number.isNaN(Date.parse(item.created_at))?new Date(item.created_at).toLocaleString(museumLang==='zh-Hant'?'zh-HK':museumLang==='zh-Hans'?'zh-CN':'en-GB'):'';
   return '<article class="museum-feedback-inbox-item'+(item.reviewed?' is-reviewed':'')+'"><div class="museum-feedback-inbox-top"><span class="eyebrow">'+t(tag[0],tag[1])+'</span><span class="small muted">'+esc(date)+'</span></div>'+
-   (item.page_reference?'<p class="small"><strong>'+t('Page: ','相关页面：')+'</strong>'+esc(item.page_reference)+'</p>':'')+
-   '<p class="museum-feedback-inbox-message">'+esc(item.message)+'</p>'+
+   (item.page_reference?'<p class="small"><strong>'+t('Page: ','相关页面：')+'</strong><span data-visitor-story>'+esc(item.page_reference)+'</span>'+'</p>':'')+
+   '<p class="museum-feedback-inbox-message" data-visitor-story>'+esc(item.message)+'</p>'+
    '<button type="button" class="btn btn-outline curator-feedback-toggle" data-feedback-id="'+esc(item.id)+'" data-reviewed="'+String(Boolean(item.reviewed))+'">'+(item.reviewed?t('Mark as unread','标为未处理'):t('Mark as reviewed','标为已处理'))+'</button></article>';
  }).join('');
  return '<section class="section-compact museum-feedback-inbox" id="curator-feedback"><div class="collective-section-heading"><span>'+t('PRIVATE CURATOR INBOX','策展人私人收件箱')+'</span><h2>'+t('Visitor Feedback','访客反馈')+'</h2><p>'+t('Only authorized curators can view these submissions. Visitor messages are not public.','仅获得授权的策展人可以查看这些反馈，访客留言不会公开。')+'</p></div>'+
  '<div class="museum-feedback-inbox-toolbar"><strong>'+t('Unreviewed: ','未处理：')+pending+'</strong><button type="button" id="refresh-curator-feedback" class="btn btn-outline">'+t('Refresh feedback ↗','刷新反馈 ↗')+'</button></div>'+
- (curatorFeedbackError?'<p class="auth-feedback" role="alert">'+t('Feedback inbox unavailable. Run the feedback SQL setup in Supabase. Details: ','反馈收件箱暂不可用。请先在 Supabase 执行反馈数据库配置。详情：')+esc(curatorFeedbackError)+'</p>':'')+
+ (curatorFeedbackError?'<p class="auth-feedback" role="alert">'+t('Feedback inbox unavailable. Run the feedback SQL setup in Supabase. Details: ','反馈收件箱暂不可用。请先在 Supabase 执行反馈数据库配置。详情：')+'<span data-original-language>'+esc(curatorFeedbackError)+'</span></p>':'')+
  (curatorFeedbackLoading?'<p class="muted">'+t('Loading feedback…','正在加载反馈……')+'</p>':'')+
  (rows?'<div class="museum-feedback-inbox-list">'+rows+'</div>':(!curatorFeedbackError&&!curatorFeedbackLoading?'<p class="muted">'+t('No feedback received yet.','暂时还没有收到反馈。')+'</p>':''))+
  '</section>';
@@ -645,12 +661,12 @@ function historyPage(id){
    '<div class="history-library-search"><label for="history-search">Find a historical account</label><input id="history-search" type="search" placeholder="Search names, places, themes…" autocomplete="off" /><span id="history-search-status" aria-live="polite"></span></div>'+
    '<div class="history-grid history-chronology-grid" aria-label="Historical stories, ordered chronologically">'+[...HISTORICAL_SILENCES].sort((a,b)=>({withheld:0,protective:1,suppressed:2}[a.silenceClass]-{withheld:0,protective:1,suppressed:2}[b.silenceClass])||(a.sortYear-b.sortYear)||a.name.localeCompare(b.name)).map(x=>{
       const d=museumHistoryLocalized(details[x.id],x.id);
-      return '<a class="history-card '+(selected?.id===x.id?'is-current':'')+'" data-archive-year="'+x.sortYear+'" data-silence-class="'+esc(x.silenceClass)+'" data-history-search="'+esc((x.name+' '+(window.MUSEUM_I18N?.zh?.[x.name]||'')+' '+x.tag+' '+x.kind+' '+x.year+' '+(d?.title||'')).toLowerCase())+'" href="#/history/'+encodeURIComponent(x.id)+'"><span class="history-date">'+esc(d?.period||x.year)+'</span><span class="history-symbol" aria-hidden="true">✧</span><h2>'+esc(d?.title||x.name)+'</h2><p>'+esc(museumZh(x.name))+'</p><span class="history-open">Read the story ↗</span></a>';
+      return '<a class="history-card '+(selected?.id===x.id?'is-current':'')+'" data-archive-year="'+x.sortYear+'" data-silence-class="'+esc(x.silenceClass)+'" data-history-search="'+esc((x.name+' '+(window.MUSEUM_I18N?.zh?.[x.name]||'')+' '+x.tag+' '+x.kind+' '+x.year+' '+(d?.title||'')+' '+museumConvert(window.MUSEUM_I18N?.zh?.[x.name]||'')).toLowerCase())+'" href="#/history/'+encodeURIComponent(x.id)+'"><span class="history-date">'+esc(d?.period||x.year)+'</span><span class="history-symbol" aria-hidden="true">✧</span><h2>'+esc(d?.title||x.name)+'</h2><p>'+esc(museumZh(x.name))+'</p><span class="history-open">Read the story ↗</span></a>';
    }).join('')+'</div></section>';
  let content='';
  const essay=selected&&museumHistoryLocalized(details[selected.id],selected.id);
  if(essay){
-  const documentaryFigure=pic=>'<figure class="history-archive-figure"><a class="history-photo-link" href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer" title="Open the original archive record"><img loading="lazy" decoding="async" src="'+esc(pic.src)+'" alt="'+esc(pic.caption)+'"></a><p class="history-photo-fallback" hidden>Image unavailable here. <a href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer">Open the original archive photograph ↗</a></p><figcaption><strong>'+esc(pic.kind)+'</strong> · '+esc(pic.caption)+'<span class="history-photo-credit"><a href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer">View original source & rights ↗</a> · '+esc(pic.credit)+'</span></figcaption></figure>';
+  const documentaryFigure=pic=>'<figure class="history-archive-figure"><a class="history-photo-link" href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer" title="Open the original archive record"><img loading="lazy" decoding="async" src="'+esc(pic.src)+'" alt="'+esc(pic.caption)+'"></a><p class="history-photo-fallback" hidden>Image unavailable here. <a href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer">Open the original archive photograph ↗</a></p><figcaption><strong>'+esc(pic.kind)+'</strong> · '+esc(pic.caption)+'<span class="history-photo-credit"><a href="'+esc(pic.page)+'" target="_blank" rel="noopener noreferrer">View original source & rights ↗</a> · '+(museumLang==='en'?esc(pic.credit):museumConvert('来源署名（原文）：')+'<span data-original-language>'+esc(pic.credit)+'</span>')+'</span></figcaption></figure>';
   const chapters=essay.story.map((p,i)=>{
    const paragraph='<p class="history-prose-paragraph">'+esc(p)+'</p>';
    const figures=(essay.images||[]).filter(pic=>pic.at===i+1).map(documentaryFigure).join('');
@@ -666,7 +682,7 @@ function historyPage(id){
    curated.paragraphs.map(p=>'<p class="history-curator-paragraph">'+esc(p)+'</p>').join('')+'</div>'+
    '<div class="history-curator-questions"><h3>'+questionLabel+'</h3><ol>'+curated.questions.map(q=>'<li>'+esc(q)+'</li>').join('')+'</ol></div>':
    '<p class="history-curator-intro">'+(museumLang==='en'?'This interpretation is being verified against the archive.':museumConvert('本档案的策展分析正在核对史料。'))+'</p>';
-  const sources=essay.sources.map((pair,i)=>'<li><a href="'+esc(pair[1])+'" target="_blank" rel="noopener noreferrer">'+esc(pair[0])+' ↗</a></li>').join('');
+  const sources=essay.sources.map((pair,i)=>'<li><a href="'+esc(pair[1])+'" target="_blank" rel="noopener noreferrer">'+(museumLang==='en'?esc(pair[0]):museumConvert('原文文献：')+'<span data-original-language>'+esc(pair[0])+'</span>')+' ↗</a></li>').join('');
   const moment=essay.moment||{};
   const item=essay.object||{};
   const evidenceLink=item.url?'<a href="'+esc(item.url)+'" target="_blank" rel="noopener noreferrer">Examine the original record ↗</a>':'';
@@ -680,7 +696,7 @@ function historyPage(id){
     '<div><h3>Why did it happen?</h3><p>'+esc(moment.why||'The evidence does not determine a single cause.')+'</p></div>'+
     '<div class="history-moment-certainty"><h3>What do the records actually establish?</h3><p>'+esc(moment.certainty||'The interpretation is qualified in the research notes.')+'</p></div>'+
   '</div><div class="history-reason-tags">'+tags+'</div></div>';
-  content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">HISTORICAL NONFICTION · '+esc(museumLang==='en'?selected.kind:(window.MUSEUM_HISTORY_LABELS?.[selected.id]?.kind||'历史展品'))+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(museumZh(selected.name))+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Sources & Reflection</button></nav></header>'+
+  content='<article class="history-longform"><header class="history-longform-header"><div class="eyebrow">'+museumZh('HISTORICAL NONFICTION')+' · '+esc(museumLang==='en'?selected.kind:(window.MUSEUM_HISTORY_LABELS?.[selected.id]?.kind||'历史展品'))+'</div><h2>'+esc(essay.title)+'</h2><p class="history-longform-subtitle">'+esc(essay.subtitle)+'</p><p class="history-longform-meta">'+esc(museumZh(selected.name))+' · '+esc(essay.period)+' · '+esc(essay.readingTime)+'</p><nav class="history-toc" aria-label="Story sections"><button type="button" data-history-jump="history-story">I · The Story</button><button type="button" data-history-jump="history-anatomy">II · An Anatomy of Silence</button><button type="button" data-history-jump="history-evidence">III · Sources & Reflection</button></nav></header>'+
    '<section id="history-story" class="history-story-section"><div class="history-section-title"><span>PART I · HISTORICAL NONFICTION</span><h2>The Story</h2></div><div class="history-prose">'+openingImages+chapters+'</div></section>'+
    '<section id="history-anatomy" class="history-analysis-section"><div class="history-section-title"><span>PART II · INTERPRETATION</span><h2>An Anatomy of Silence</h2><p>Why this happened · A curator’s reading · Three questions to consider</p></div>'+anatomy+'</section>'+
    '<section id="history-evidence" class="history-evidence-section"><div class="history-section-title"><span>PART III · METHOD & REFERENCES</span><h2>Author’s Note & Sources</h2></div><p>'+esc(essay.note)+'</p><ol>'+sources+'</ol><p class="history-evidence-warning">The narrative uses historical evidence; the analysis is a curatorial interpretation. Sources are provided for readers to check the record independently.</p></section></article>';
@@ -869,7 +885,7 @@ function researchPage(id){
 
 function gallery(id){const s=scenario(id);if(!s)return others();return `<main class="container"><section class="page-hero"><div class="eyebrow">${museumLang==='en'?'Gallery '+s.num+' · '+esc(s.cn):museumConvert('第'+({I:'一',II:'二',III:'三',IV:'四'}[s.num]||s.num)+'展厅')}</div><h1>${esc(s.title)}.</h1><p class="muted">${esc(s.subtitle)}</p><p class="muted">Choose your own way into this room.</p></section><section class="section-compact" style="padding-top:15px"><div class="gallery-gateways"><a class="gateway-card" href="#/experience/${id}"><span class="gateway-icon">◈</span><span class="eyebrow">PATH 01 · INTERACTIVE STORY</span><h2>Experience the Moment</h2><p>Enter an illustrative scene, decide whether you would remain silent, choose your reasons and leave your own story if you wish.</p><span class="link-arrow">Start the experience ↗</span></a><a class="gateway-card" href="#/archive/${id}"><span class="gateway-icon">✉</span><span class="eyebrow">PATH 02 · ANONYMOUS STORIES</span><h2>Read Other Voices</h2><p>${museumLang==='en'?'Read stories that visitors have deliberately published in the '+esc(s.title)+' collection. No questionnaire required.':museumConvert('这里收藏着作者亲自选择公开的故事。你可以直接阅读，无须先完成互动情境。')}</p><span class="link-arrow">Enter this story collection ↗</span></a></div><div class="category-nav"><a class="pill" href="#/research/${id}">✧ Behind the Silence · Research</a><a class="pill" href="#/lookout/${id}">✧ This room's Lookout</a><a class="pill" href="#/archive">All stories from every gallery</a><a class="pill" href="#/galleries">All galleries</a></div><div class="note"><strong>Prototype note:</strong> The interactive scene is illustrative, not the curator's documented memory. The story collections show only deliberately published stories. Unfinished private drafts are never displayed.</div></section></main>`}
 function others(){return `<main class="container"><section class="page-hero"><div class="eyebrow">Gallery V · Others</div><h1>Stories beyond categories.</h1><p class="muted">Not every silence fits a label. Explore stories from other situations, or write a new one for this open collection.</p></section><section class="section-compact" style="padding-top:12px"><div class="gallery-gateways"><a class="gateway-card" href="#/archive/others"><span class="gateway-icon">✉</span><span class="eyebrow">THE OPEN ARCHIVE</span><h2>Read Other Stories</h2><p>Browse stories and explanations from situations outside our four featured galleries.</p><span class="link-arrow">Read the collection ↗</span></a><a class="gateway-card" href="#/contribute/others"><span class="gateway-icon">✍</span><span class="eyebrow">YOUR VOICE</span><h2>Leave a Story</h2><p>Write about a different situation. Your unfinished story stays private. You can decide later whether to publish it to the shared archive.</p><span class="link-arrow">Write your story ↗</span></a></div><div class="actions"><a href="#/archive" class="btn btn-outline">Browse every gallery's stories ↗</a></div></section></main>`}
-function archive(id){const s=scenario(id);if(id&&id!=='others'&&!s)return archive();const title=id?(s?s.title:'Others'):'The Complete Archive';return `<main class="container"><section class="page-hero"><div class="eyebrow">${id?'The Galleries / Story collection':'The Galleries / All collections'}</div><h1>${esc(title)}.</h1><p class="muted">${id?'Stories and reasons from this gallery.':'A single place for all the museum’s anonymous stories and the reasons behind them.'}</p><p class="privacy-caption">Public archive: stories appear here only after their authors explicitly publish them. Private and unfinished drafts are never included. Please avoid identifying other people.</p>${storyViewSwitch(id,false)}<div class="category-nav"><a class="pill ${!id?'active':''}" href="#/archive">All stories</a>${SCENARIOS.map(x=>`<a class="pill ${id===x.id?'active':''}" href="#/archive/${x.id}">${esc(scenario(x.id).title)}</a>`).join('')}<a class="pill ${id==='others'?'active':''}" href="#/archive/others">Others</a></div></section><section class="section-compact" style="padding-top:10px"><div class="archive-topbar"><div><span class="eyebrow">THE SHELVES</span><h2>${visibleStories(id).length} published ${visibleStories(id).length===1?'story':'stories'}</h2></div><div class="actions"><a class="btn btn-outline" href="${id&&id!=='others'?`#/experience/${id}`:'#/contribute/others'}">${id&&id!=='others'?'Experience this scene':'Write a story'} ↗</a><a class="btn btn-outline" href="#/my-stories">Manage my drafts</a></div></div>${storyCloudStatus==='error'?'<p class="auth-feedback" role="alert">Public archive not connected yet: '+esc(storyCloudError)+'. The story database setup must be completed first.</p>':''}${storyShelf(id)}<div class="actions"><a class="btn btn-outline" href="${id?`#/gallery/${id}`:'#/galleries'}">← ${id?'Back to this gallery':'Back to galleries'}</a><a class="btn btn-outline" href="#/lookout">Visit the Lookout ✧</a></div></section></main>`}
+function archive(id){const s=scenario(id);if(id&&id!=='others'&&!s)return archive();const title=id?(s?s.title:'Others'):'The Complete Archive';return `<main class="container"><section class="page-hero"><div class="eyebrow">${id?'The Galleries / Story collection':'The Galleries / All collections'}</div><h1>${esc(title)}.</h1><p class="muted">${id?'Stories and reasons from this gallery.':'A single place for all the museum’s anonymous stories and the reasons behind them.'}</p><p class="small muted">Stories retain the language chosen by their authors.</p><p class="privacy-caption">Public archive: stories appear here only after their authors explicitly publish them. Private and unfinished drafts are never included. Please avoid identifying other people.</p>${storyViewSwitch(id,false)}<div class="category-nav"><a class="pill ${!id?'active':''}" href="#/archive">All stories</a>${SCENARIOS.map(x=>`<a class="pill ${id===x.id?'active':''}" href="#/archive/${x.id}">${esc(scenario(x.id).title)}</a>`).join('')}<a class="pill ${id==='others'?'active':''}" href="#/archive/others">Others</a></div></section><section class="section-compact" style="padding-top:10px"><div class="archive-topbar"><div><span class="eyebrow">THE SHELVES</span><h2>${visibleStories(id).length} published ${visibleStories(id).length===1?'story':'stories'}</h2></div><div class="actions"><a class="btn btn-outline" href="${id&&id!=='others'?`#/experience/${id}`:'#/contribute/others'}">${id&&id!=='others'?'Experience this scene':'Write a story'} ↗</a><a class="btn btn-outline" href="#/my-stories">Manage my drafts</a></div></div>${storyCloudStatus==='error'?'<p class="auth-feedback" role="alert">Public archive not connected yet: '+esc(storyCloudError)+'. The story database setup must be completed first.</p>':''}${storyShelf(id)}<div class="actions"><a class="btn btn-outline" href="${id?`#/gallery/${id}`:'#/galleries'}">← ${id?'Back to this gallery':'Back to galleries'}</a><a class="btn btn-outline" href="#/lookout">Visit the Lookout ✧</a></div></section></main>`}
 function contributeOthers(){const previous=compositionDraftId?findLocalStory(compositionDraftId):null;return `<main class="container"><section class="page-hero"><div class="eyebrow">Gallery V · Your untold story</div><h1>Leave your story.</h1><p class="muted">Write at your own pace. Unfinished writing is saved privately on this device; signed-in visitors can also back it up to their accounts after story-cloud setup.</p></section><section class="choice-panel" style="margin-top:0"><form id="other-form"><div class="form-row"><label for="other-category">Which gallery does your story belong to?</label><select id="other-category" class="field" required>${storyCategoryOptions(previous?.scenario||'others')}</select><p class="small muted">Choose the most fitting gallery. You can change this later in Your Story Drafts.</p></div><div class="form-row"><label for="other-title">Story Title</label><input type="text" required maxlength="120" id="other-title" class="field" placeholder="Give your story a title…" value="${esc(previous?.title||'')}"></div><div class="form-row"><label for="other-story">Your Story</label><textarea required id="other-story" class="field" rows="7" maxlength="4000" placeholder="Describe a real experience. Please do not include identifying details about other people.">${esc(previous?.story||'')}</textarea></div><div class="form-row"><label for="other-why">Your Reason</label><textarea required id="other-why" class="field" rows="4" maxlength="2000" placeholder="Why did you choose to remain silent or speak up?">${esc(previous?.why||'')}</textarea></div><label class="choice-option"><input required id="other-consent" type="checkbox"/><span>I understand this starts as a private draft, and will not appear publicly unless I deliberately publish it later.</span></label><p class="draft-save-status small muted" role="status">Typing is saved as a private draft on this device; signed-in drafts also sync to the cloud.</p><div class="toolbar"><a class="btn btn-outline" href="#/gallery/others">← Back</a><button type="submit" class="btn">Save draft &amp; choose visibility ↗</button></div><p class="privacy-caption">After saving, choose anonymous or named publication. Published stories can be read by anyone visiting the website; never identify others without permission.</p></form></section></main>`}
 function bindOtherForm(){
  const form=$('#other-form');if(!form)return;
@@ -1379,7 +1395,7 @@ async function runMuseumDiagnostics(){
   try{const n=await fn();rows.push({label,ok:true,info:n})}
   catch(e){rows.push({label,ok:false,info:String(e.message||e)})}
  };
- if(!authClient){container.innerHTML='<p role="alert">Supabase client library could not load.</p>';return}
+ if(!authClient){container.innerHTML='<p role="alert">'+museumZh('Supabase client library could not load.')+'</p>';return}
  await check('Shared choice and reason stars (public RPC)',async()=>{
   const {data,error}=await authClient.rpc('get_museum_stars');if(error)throw error;
   if(!Array.isArray(data))throw Error('Unexpected data shape');
@@ -1406,7 +1422,7 @@ async function runMuseumDiagnostics(){
   return data===true?'This account has curator permissions.':'This account is not a curator.';
  });
  container.innerHTML=rows.map(row=>'<div class="system-check-line"><strong class="'+(row.ok===true?'check-ok':row.ok===false?'check-fail':'')+'">'+
- (row.ok===true?'✓':row.ok===false?'!':'–')+' '+esc(row.label)+'</strong><p>'+esc(row.info)+'</p></div>').join('');
+ (row.ok===true?'✓':row.ok===false?'!':'–')+' '+esc(museumZh(row.label))+'</strong><p>'+(row.ok===false?esc(museumZh('Technical details (original):'))+' <span data-original-language>'+esc(row.info)+'</span>':esc(museumTranslateInterfaceValue(row.info,window.MUSEUM_I18N?.zh||{})))+'</p></div>').join('');
 }
 function privacy(){return '<main class="container"><section class="page-hero"><div class="eyebrow">Participation & privacy</div><h1>Your words remain yours.</h1></section><section class="section-compact narrow about-copy">'+
 '<h3>Private writing and cloud backup</h3><p>Story drafts are saved in this browser while you type. Signed-in visitors can also sync drafts to their private account storage once the Supabase story database has been set up. Until cloud backup is confirmed, drafts may remain on this device only. Anyone with access to this browser profile might be able to see its locally saved drafts.</p>'+
@@ -1440,7 +1456,7 @@ function drawAllSkies(){const r=route();drawSky($('#main-sky'),results(r.id));dr
 // Redraw canvases at their actual displayed size after phone rotation, iPad split view, and layout changes.
 let skyResizeFrame=0;
 function redrawVisibleSkies(){if(skyResizeFrame)return;skyResizeFrame=requestAnimationFrame(()=>{skyResizeFrame=0;if($('#main-sky'))drawAllSkies();if($('#home-sky'))drawSky($('#home-sky'),sharedAnswers);if($('#story-sky-canvas'))drawStorySky();const immersive=$('#immersive-sky-canvas');if(immersive){const r=route();const arr=results(r.id==='all'?undefined:r.id);if(r.kind==='reasons')drawReasonSky(immersive,arr);else drawSky(immersive,arr)}})}
-window.addEventListener('hashchange',()=>{try{render(true)}catch(e){console.error('Museum navigation error:',e);const app=$('#app');if(app){app.innerHTML='<main class="container" style="padding:70px 0"><h1>We could not open this room.</h1><p class="muted">Please try the link again. The stars and your answers have not been deleted.</p><p class="note">'+esc(String(e.message||e))+'</p><a class="btn" href="https://zouyushan99-a11y.github.io/the-unsent-museum/?v=lookout-repair2#/lookout">Open the Lookout ↗</a></main>'}}});
+window.addEventListener('hashchange',()=>{try{render(true)}catch(e){console.error('Museum navigation error:',e);const app=$('#app');if(app){app.innerHTML='<main class="container" style="padding:70px 0"><h1>We could not open this room.</h1><p class="muted">Please try the link again. The stars and your answers have not been deleted.</p><p class="note">'+museumZh('Technical details (original):')+' <span data-original-language>'+esc(String(e.message||e))+'</span></p><a class="btn" href="https://zouyushan99-a11y.github.io/the-unsent-museum/?v=lookout-repair2#/lookout">Open the Lookout ↗</a></main>';museumLocalizeText(app)}}});
 window.addEventListener('resize',redrawVisibleSkies,{passive:true});
 window.addEventListener('orientationchange',redrawVisibleSkies,{passive:true});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',redrawVisibleSkies,{passive:true});
