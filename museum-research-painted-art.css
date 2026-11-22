@@ -87,7 +87,7 @@
    Only the research-library portals are affected. */
 .atlas-library .atlas-portal-grid{
   align-items:stretch;
-  column-gap:clamp(.55rem,1.35vw,1.2rem);
+  column-gap:clamp(.9rem,1.9vw,1.65rem);
   row-gap:1.25rem;
 }
 .atlas-library .atlas-portal{
@@ -119,6 +119,9 @@
   );
   border-radius:0;
   image-rendering:auto;
+  /* Gently enlarge the existing high-resolution illustration without changing it. */
+  transform:scale(1.055);
+  transform-origin:center 70%;
   filter:drop-shadow(0 7px 11px rgba(0,0,0,.35));
 }
 .atlas-library .atlas-portal-text{
