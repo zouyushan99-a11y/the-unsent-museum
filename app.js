@@ -844,7 +844,7 @@ function researchPage(id){
  const galleryData=scenario(id);if(!galleryData||!SILENCE_RESEARCH[id])return galleries();
  return `<main class="container research-page"><div class="page-hero"><div class="eyebrow">${museumLang==='en'?'Gallery '+galleryData.num+' · Research':museumConvert('第'+({I:'一',II:'二',III:'三',IV:'四'}[galleryData.num]||galleryData.num)+'展厅 · 研究')}</div>
  <h1>Behind the Silence.</h1><p class="muted">Explore what published research can tell us about the reasons behind unspoken words.</p>
- <div class="category-nav"><a class="pill" href="#/experience/${encodeURIComponent(id)}">Experience the Moment</a><a class="pill" href="#/gallery/${encodeURIComponent(id)}">← Back to the gallery</a><a class="pill" href="#/lookout/${encodeURIComponent(id)}">✧ The Lookout</a></div></div>
+ <div class="category-nav"><a class="pill" href="#/research">${museumLang==='en'?'← Back to Research Library':museumConvert('← 返回研究资料馆')}</a><a class="pill" href="#/experience/${encodeURIComponent(id)}">Experience the Moment</a><a class="pill" href="#/gallery/${encodeURIComponent(id)}">← Back to the gallery</a><a class="pill" href="#/lookout/${encodeURIComponent(id)}">✧ The Lookout</a></div></div>
  ${behindSilence(id)}${window.museumResearchExpansion?.(id,museumLang)||''}</main>`
 }
 
