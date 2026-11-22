@@ -87,9 +87,9 @@ return '<main class="container atlas-page">'+nav()+heading(T('Why might this rea
 }
 function catalog(){
 const entrances=[
-['research-arch-books.svg','All Studies','研究目录','36','#/research#library'],
-['research-arch-comparison.svg','Comparative Research','跨研究比较','08','#/research#comparisons'],
-['research-arch-synthesis.svg','Research Synthesis','综合研究专题','06','#/research#syntheses'],
+['research-arch-books.svg','All Studies','研究目录','36','#/research" data-atlas-scroll="library'],
+['research-arch-comparison.svg','Comparative Research','跨研究比较','08','#/research" data-atlas-scroll="comparisons'],
+['research-arch-synthesis.svg','Research Synthesis','综合研究专题','06','#/research" data-atlas-scroll="syntheses'],
 ['research-arch-verification.svg','Source Verification','来源核实馆','36','#/research/audit'],
 ['research-arch-method.svg','Methods & Perspectives','研究方法与视角','', '#/research/method']
 ];
@@ -339,6 +339,7 @@ if(route.type==='gallery'&&G[route.id]){
  }
 }
 if(route.type==='research-index' && window.location?.hash?.includes('#library')){document.getElementById('library')?.scrollIntoView({block:'start'});}
+if(route.type==='research-index'){document.querySelectorAll('[data-atlas-scroll]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();document.getElementById(el.getAttribute('data-atlas-scroll'))?.scrollIntoView({behavior:window.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));}
 if(route.type==='research-index'){
  const inp=document.getElementById('atlas-search');const results=document.getElementById('atlas-results');const count=document.getElementById('atlas-count');
  if(inp&&results)inp.addEventListener('input',()=>{const q=inp.value.trim().toLowerCase(),filtered=C.filter(x=>(x.id+' '+x.title+' '+x.author+' '+x.subject+' '+x.zhSubject).toLowerCase().includes(q));results.innerHTML=studies(filtered.map(x=>x.id))||'<p>'+E(T('No matching sources.','没有匹配的文献。'))+'</p>';if(count)count.textContent=filtered.length+' / 36';});
