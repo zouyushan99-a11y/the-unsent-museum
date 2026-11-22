@@ -34,11 +34,31 @@ html:lang(zh) #app .site-header .museum-language-switch select {
   font-family: var(--museum-zh-serif);
 }
 
+/* Two lines of upright Song type, with a smaller museum signature. */
 html:lang(zh) #app .museum-home .museum-hero-copy h1 {
-  line-height: 1.32;
-  letter-spacing: .075em;
+  line-height: 1.22;
+  letter-spacing: .12em;
+  text-align: center;
+}
+html:lang(zh) #app .museum-home .museum-hero-copy h1 span {
+  padding-inline-start: .12em;
 }
 html:lang(zh) #app .museum-home .museum-hero-copy h1 em {
   font: inherit;
-  letter-spacing: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .64em;
+  margin-block-start: .42em;
+  font-size: .58em;
+  line-height: 1.35;
+  letter-spacing: .28em;
+}
+html:lang(zh) #app .museum-home .museum-hero-copy h1 em::before,
+html:lang(zh) #app .museum-home .museum-hero-copy h1 em::after {
+  content: "";
+  flex: 0 1 1.25em;
+  block-size: 1px;
+  background-color: currentColor;
+  opacity: .55;
 }
