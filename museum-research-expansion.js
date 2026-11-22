@@ -148,7 +148,7 @@ const DATA={
         ],
         "finding": [
           "Rowe's work investigated how the amount of time teachers allow after a question and after student responses relates to classroom language, thinking and participation.",
-          "Rowe 的研究探讨了教师提问之后、以及学生回答之后所留出的等待时间，如何与课堂语言表达、思考和参与方式相联系。"
+          "研究者 Rowe 的研究探讨了教师提问之后、以及学生回答之后所留出的等待时间，如何与课堂语言表达、思考和参与方式相联系。"
         ],
         "meaning": [
           "A pause may be thinking time, not an absence of thought. The classroom timetable, not just an individual student's confidence, helps determine whose voice is heard.",
@@ -200,7 +200,7 @@ const DATA={
       {
         "year": "2006",
         "authors": "Smetana and colleagues",
-      "authorsZh": "Smetana 等人",
+      "authorsZh": "研究者 Smetana 等人",
         "paper": "Disclosure and Secrecy in Adolescent–Parent Relationships",
         "url": "https://doi.org/10.1111/j.1467-8624.2006.00865.x",
         "type": [
@@ -376,16 +376,16 @@ window.MUSEUM_RESEARCH_ADDITIONS=DATA;
 window.museumResearchExpansion=function(id,language){
  const d=DATA[id];if(!d)return '';
  const chinese=language!=='en';
- const converter=language==='zh-Hant'&&window.OpenCC?.Converter?window.OpenCC.Converter({from:'cn',to:'hk'}):null;
+ const converter=language==='zh-Hant'?window.museumConvertPublic:null;
  const txt=(en,zh)=>esc(chinese?(converter?converter(zh):zh):en);
  const pair=v=>txt(v[0],v[1]);
  const cards=d.studies.map((study,n)=>{
   return '<article class="research-dossier"><div class="research-dossier-overline"><span>0'+(n+1)+'</span><span>'+esc(study.year)+'</span><span>'+pair(study.type)+'</span></div>'+
   '<h3>'+pair(study.title)+'</h3>'+
-  '<p class="research-dossier-author">'+(chinese&&study.authorsZh?txt(study.authors,study.authorsZh):esc(study.authors))+'</p>'+
+  '<p class="research-dossier-author">'+(chinese&&study.authorsZh?txt(study.authors,study.authorsZh):(chinese?txt('Authors (original): ','作者（原文）：'):'')+'<span data-original-language>'+esc(study.authors)+'</span>')+'</p>'+
   '<div class="research-dossier-finding"><strong>'+txt('WHAT THE RESEARCH FOUND','研究实际发现')+'</strong><p>'+pair(study.finding)+'</p></div>'+
   '<div class="research-dossier-interpretation"><strong>'+txt('WHAT IT ADDS TO THE MUSEUM','对于沉默的进一步理解')+'</strong><p>'+pair(study.meaning)+'</p></div>'+
-  '<details class="research-dossier-evidence"><summary>'+txt('Evidence limits & original publication','证据边界与原始文献')+'</summary><p>'+pair(study.limit)+'</p><p class="research-dossier-paper">'+esc(study.paper)+'</p><a target="_blank" rel="noopener noreferrer" href="'+esc(study.url)+'">'+txt('Read the research ↗','查阅原始研究 ↗')+'</a></details></article>';
+  '<details class="research-dossier-evidence"><summary>'+txt('Evidence limits & original publication','证据边界与原始文献')+'</summary><p>'+pair(study.limit)+'</p><p class="research-dossier-paper" data-original-language>'+esc(study.paper)+'</p><a target="_blank" rel="noopener noreferrer" href="'+esc(study.url)+'">'+txt('Read the research ↗','查阅原始研究 ↗')+'</a></details></article>';
  }).join('');
  return '<section class="research-expansion section-compact" aria-label="'+txt('Extended research','延伸研究')+'">'+
  '<div class="research-expansion-header"><span class="eyebrow">'+txt('BEYOND ONE EXPLANATION · THREE MORE STUDIES','超越单一解释 · 三项延伸研究')+'</span>'+
