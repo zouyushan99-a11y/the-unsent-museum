@@ -829,18 +829,16 @@ const SILENCE_RESEARCH_ZH={
   }
 };
 function behindSilence(id){
- const original=SILENCE_RESEARCH[id];if(!original)return '';
- const translated=SILENCE_RESEARCH_ZH[id];
- const item=museumLang==='en'||!translated?original:{
-  ...original,
-  ...Object.fromEntries(Object.entries(translated).map(([key,value])=>[
-   key,
-   key==='reasons'?value.map(pair=>pair.map(museumConvert)):
-   typeof value==='string'?museumConvert(value):value
-  ]))
- };
+ const research=window.MUSEUM_RESEARCH_2026?.[id];if(!research)return '';
+ const selected=museumLang==='en'?research.en:research.zh;
+ const item={...selected,study:museumLang==='en'?research.study:museumConvert(research.studyZh),
+  sourceTitle:museumLang==='en'?research.sourceTitle:museumConvert(research.sourceTitleZh),url:research.url};
+ if(museumLang==='zh-Hant')for(const key of ['title','question','finding','reflection','scope']){
+  item[key]=museumConvert(item[key]);
+ }
+ if(museumLang==='zh-Hant')item.reasons=item.reasons.map(pair=>pair.map(museumConvert));
  return `<section class="behind-silence" id="behind-the-silence" aria-labelledby="behind-title">
-  <div class="behind-heading"><span class="eyebrow">BEHIND THE SILENCE</span><h2 id="behind-title">${esc(item.title)}</h2><p class="small muted">${museumLang==='en'?'Research context: this study was selected for an earlier exhibition theme. It is related background, not direct evidence about the new interactive scene.':museumConvert('研究资料说明：这项研究最初用于旧版展厅主题，可供了解相关背景，但不能直接证明新版互动情境的原因。')}</p>
+  <div class="behind-heading"><span class="eyebrow">BEHIND THE SILENCE</span><h2 id="behind-title">${esc(item.title)}</h2>
     <p class="muted">A closer look at the reasons people sometimes choose silence, through published research.</p></div>
   <div class="behind-first">
     <div class="behind-overline">THE QUESTION</div><p>${esc(item.question)}</p>
@@ -857,7 +855,7 @@ function behindSilence(id){
  </section>`
 }
 function researchPage(id){
- const galleryData=scenario(id);if(!galleryData||!SILENCE_RESEARCH[id])return galleries();
+ const galleryData=scenario(id);if(!galleryData||!window.MUSEUM_RESEARCH_2026?.[id])return galleries();
  return `<main class="container research-page"><div class="page-hero"><div class="eyebrow">${museumLang==='en'?'Gallery '+galleryData.num+' · Research':museumConvert('第'+({I:'一',II:'二',III:'三',IV:'四'}[galleryData.num]||galleryData.num)+'展厅 · 研究')}</div>
  <h1>Behind the Silence.</h1><p class="muted">Explore what published research can tell us about the reasons behind unspoken words.</p>
  <div class="category-nav"><a class="pill" href="#/research">${museumLang==='en'?'← Back to Research Library':museumConvert('← 返回研究资料馆')}</a><a class="pill" href="#/experience/${encodeURIComponent(id)}">Experience the Moment</a><a class="pill" href="#/gallery/${encodeURIComponent(id)}">← Back to the gallery</a><a class="pill" href="#/lookout/${encodeURIComponent(id)}">✧ The Lookout</a></div></div>
