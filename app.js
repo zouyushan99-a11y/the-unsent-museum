@@ -1497,8 +1497,8 @@ const MUSEUM_RESEARCH_ASSETS = {
   css: [
     'museum-research-expansion.css?v=research-mobile-trilang2',
     'museum-research-atlas.css?v=research-art-20261122-2',
-    'museum-research-painted-art.css?v=research-topics-art-20261122-2',
-    'museum-research-ivory-gallery.css?v=parchment-catalog-8'
+    'museum-research-painted-art.css?v=starry-ink-arches-v9',
+    'museum-research-ivory-gallery.css?v=readable-catalog-v9'
   ],
   js: [
     'museum-research-five.js?v=research-five-audit-20261122-3',
