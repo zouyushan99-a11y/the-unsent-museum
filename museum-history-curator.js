@@ -106,7 +106,7 @@
   const zh=lang!=='en', idx=Object.keys(ANGLES).indexOf(id),type=power[category]?category:'withheld';
   const z=window.MUSEUM_HISTORY_ZH?.[id]||{};
   const chosen=(z.cause||'').trim(),proof=(z.proof||'').trim(),event=(z.act||'').trim();
-  const translate=v=>lang==='zh-Hant'&&window.OpenCC?.Converter?window.OpenCC.Converter({from:'cn',to:'hk'})(v):v;
+  const translate=v=>window.museumConvertPublic?.(v)??v;
   const setting=(z.setting||'').trim(),after=(z.after||'').trim();
   const situate={
    withheld:'我的判断是，这里的选择既有个人主动权，也有必须付出的现实代价。把“不公开”仅解释为恐惧，会忽略当事人如何安排读者、身份及时间；把它完全解释为自主，则又会把社会的不平等推到视野之外。',
