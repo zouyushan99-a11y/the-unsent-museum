@@ -69,7 +69,7 @@ const comparisons=[["Why Is Saying No Difficult?","为什么拒绝如此困难�
 const T=(en,zh)=>window.museumLangPublic?.()==='en'?en:(window.museumConvertPublic?.(zh)||zh);
 const E=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const heading=(name,sub)=>'<section class="page-hero"><div class="eyebrow">'+E(T('THE UNSENT MUSEUM · RESEARCH LIBRARY','未寄之言博物馆 · 研究资料馆'))+'</div><h1>'+E(name)+'</h1><p class="muted">'+E(sub)+'</p></section>';
-const nav=()=>'<nav class="atlas-nav" aria-label="Research navigation"><a href="#/research">'+E(T('Research library','研究馆首页'))+'</a><a href="#/research/method">'+E(T('Curatorial method','策展方法'))+'</a><a href="#/history">'+E(T('Historical archives','历史档案'))+'</a></nav>';
+const nav=()=>'<nav class="atlas-nav" aria-label="Research navigation"><a href="#/research">'+E(T('Research library','研究馆首页'))+'</a><a href="#/research/audit">'+E(T('Source verification','来源核实'))+'</a><a href="#/research/method">'+E(T('Curatorial method','策展方法'))+'</a><a href="#/history">'+E(T('Historical archives','历史档案'))+'</a></nav>';
 const go=(id)=>'#/research/study/'+id;
 const linkStudy=(x)=>'<a class="atlas-study-link" href="'+go(x.id)+'"><span>'+x.id+' · '+E(x.author)+' ('+E(x.year)+')</span><strong>'+E(x.title)+'</strong><small>'+E(T(x.subject,x.zhSubject))+'</small></a>';
 const studies=(ids)=>'<div class="atlas-study-list">'+ids.map(id=>C.find(x=>x.id===id)).filter(Boolean).map(linkStudy).join('')+'</div>';
@@ -97,14 +97,29 @@ function deepStudy(id,x){
 const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id];if(!d)return null;
 const chinese=window.museumLangPublic?.()!=='en',content=chinese?d.zh:d.en;
 const label=(en,zh)=>E(T(en,zh));
-const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):d.stage==='abstract-verified'?T('Abstract-verified analysis · complete methods and statistics await full-text review','基于摘要核实的解读 · 完整方法和统计数字仍待全文审阅'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
+const traceNotes={
+'R01':['Original study results and participant counts checked against the research article; predictions are not actual retaliation rates.','研究对象数量与主要结果已据论文核对；预期反应并非实际报复概率。'],
+'R02':['Published experiments and two different outcomes reviewed; behavior p = .053 does not establish an intervention effect.','已核对实验与两种不同结果；行为指标p = .053不能证明干预有效。'],
+'R03':['Study designs and sample descriptions checked against accessible article material; not a longitudinal measurement of relationship damage.','研究设计和样本说明据可获取正文核对；不是长期追踪关系受损。'],
+'R08':['Original Table 1 cross-checked: 85%, 62% and 31% refer to reporting within a specific emergency experiment.','已核对原文表1；85%、62%与31%仅适用于特定紧急情境实验的报告行为。'],
+'R09':['Meta-analytic summary and effect sizes cross-checked; Hedges g is not a percentage-point change.','元分析与效应量已核对；Hedges g不是百分比变化。'],
+'R10':['Field study of 51 teams; observational associations must not be represented as randomized causal evidence.','51支团队的实地研究；观察到的关联不能冒称随机实验的因果证据。'],
+'R11':['Full conceptual article: theoretical propositions, not a new experimental sample.','已核对理论论文；提出的是理论命题，非重新招募的实验样本。'],
+'R15':['The 2013 five-page paper is accessible only as an abstract and authorized page-one preview in this audit. Participant N, scales and coefficients must remain unreported; values from later related studies cannot be substituted.','目前只能取得2013年论文的正式摘要与授权第一页预览；样本量、量表和统计系数不能编造，也不能借用后来另一篇研究的数字。'],
+'R22':['Platform sample and denominators checked; 71% refers to users and 33% / 13% to attempted posts/comments.','已核对样本与分母；71%是用户比例，33%／13%是潜在帖子／评论比例。'],
+'R29':['Original Chapter 1 passage and scholarly five-chapter table of contents verified; this does not constitute a page-by-page reading of the whole book.','已核对第一章原文及全书五章学术目录；不代表完成整本书逐页阅读。']
+};
+const note=traceNotes[id];
+
+const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):(d.stage==='abstract-verified'||d.stage==='publisher-preview-and-abstract')?T('Publisher first-page preview and abstract verified · remaining methods and statistics unavailable','已核对出版方首页预览及正式摘要 · 其余方法和统计结果仍不可获取'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
+const auditPanel=note?'<section class="atlas-panel"><span class="eyebrow">'+label('SOURCE AUDIT · 22 NOVEMBER 2026','来源核对 · 2026年11月22日')+'</span><h2>'+label('What has been verified?','哪些部分已经核实？')+'</h2><p>'+E(T(note[0],note[1]))+'</p><a href="#/research/audit">'+label('Open the research verification register ↗','查看研究核实记录 ↗')+'</a></section>':'';
 const sections=content.map((s,i)=>'<section class="atlas-panel atlas-deep-section"><span class="eyebrow">'+String(i+1).padStart(2,'0')+' / '+label('RESEARCH DOSSIER','研究档案')+'</span><h2>'+E(s[0])+'</h2><p>'+E(s[1])+'</p></section>').join('');
 const linkHistory=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id)).map(([k])=>'<a href="#/'+(['franz-kafka','anne-lister'].includes(k)?'history':'collectives')+'/'+E(k)+'">'+E(k.replaceAll('-',' '))+' ↗</a>').join('');
 const matching=Object.entries(reasonMap).flatMap(([g,arr])=>arr.flatMap((ids,i)=>ids.some(n=>'R'+String(n).padStart(2,'0')===id)?['<a href="#/research/reason/'+g+'/'+i+'">'+E(T(G[g][0]+' · Reason '+(i+1),G[g][1]+' · '+reasonName(g,i)))+'</a>']:[])).join('');
 const related=C.filter(y=>y.gallery===x.gallery&&y.id!==id).slice(0,5);
 return '<main class="container atlas-page atlas-deep">'+nav()+heading(x.title,x.id+' · '+E(x.author)+' ('+E(x.year)+') · '+E(T(G[x.gallery][0],G[x.gallery][1])))+
 '<div class="atlas-panel"><span class="eyebrow">'+label('VERIFICATION AND EVIDENCE','核对范围与证据')+'</span><p>'+E(type)+'</p><p>'+label('The article is interpreted from available source materials; interpretations and historical analogies are explicitly distinguished from author findings.','以下解读依据可获取的原文材料；策展推论与历史类比均与作者的原始结论区分。')+'</p></div>'+
-sections+
+sections+auditPanel+
 '<section class="atlas-panel"><h2>'+label('Research Connections','研究关联')+'</h2><h3>'+label('Relevant reasons','相关理由')+'</h3><div class="atlas-reason-grid">'+matching+'</div><h3>'+label('Historical archives','历史档案')+'</h3><div class="atlas-reason-grid">'+(linkHistory||'<p>'+label('No directly curated historical case association yet.','尚未建立直接关联的历史档案。')+'</p>')+'</div><h3>'+label('Further studies','延伸研究')+'</h3>'+studies(related.map(y=>y.id))+'</section>'+
 '<section class="atlas-panel"><h2>'+label('Original publication and traceability','原始文献与证据追溯')+'</h2><p class="atlas-citation">'+E(d.citation)+'</p><div class="actions"><a class="btn btn-outline" target="_blank" rel="noopener noreferrer" href="'+E(d.source)+'">'+label('Publisher / DOI ↗','出版来源／DOI ↗')+'</a><a class="btn btn-outline" target="_blank" rel="noopener noreferrer" href="'+E(d.alt)+'">'+label('Accessible research text ↗','查阅可获取的研究文本 ↗')+'</a></div><p class="small muted">'+label('Numerical findings and procedures are attributed to the source; this is a museum research interpretation, not a reproduction of the paper.','研究数据和步骤均需追溯原始资料；本文为博物馆研究解读，并非论文的全文复制。')+'</p></section></main>';
 }
@@ -184,6 +199,25 @@ return '<main class="container atlas-page">'+nav()+heading(T(c[0],c[1]),T('A str
 '<section class="atlas-panel"><span class="eyebrow">'+E(T('SIMILARITY AND DIFFERENCE','共性与差异'))+'</span><p>'+E(T(c[3],c[4]))+'</p><p>'+E(T('Common subject matter alone does not demonstrate agreement; claims of convergence or contradiction require comparable measurements and fully reviewed results.','研究主题相近并不证明结论一致。是否相互支持或矛盾，必须在核实具体研究结果与测量指标后判断。'))+'</p></section>'+
 '<section class="atlas-panel"><span class="eyebrow">'+E(T('SYNTHESIS STATUS','综合结论状态'))+'</span><p>'+E(T('This is an evidence comparison framework; findings that have not been fully verified are intentionally left open.','这是证据比较框架；尚未完成原文核实的研究结论不会被冒充为已完成的综合发现。'))+'</p>'+studies(c[2])+'</section></main>';
 }
+
+function auditRegister(){
+const all=['R01','R02','R03','R08','R09','R10','R11','R15','R22','R29'];
+const notes={
+'R01':['Source PDF and abstract','论文PDF与摘要','Key study counts and selected contrasts','研究数量及主要比较数据'],
+'R02':['Open-access research article','开放获取原始论文','Freedom outcome vs inconclusive behavioral outcome','自由感与尚不确定的行为结果'],
+'R03':['Accessible article and official record','可获取论文与正式记录','Invitation-decline research and sample descriptions','拒绝邀请研究及样本说明'],
+'R08':['Original experimental paper, Table 1','原始实验论文表1','Group sizes, reporting rates, observation context','组别、报告比例及实验情境'],
+'R09':['Meta-analysis article, tables','元分析正文与表格','105 effects, overall standardized effect, moderators','105个效应量、总体效应与调节因素'],
+'R10':['Original journal article','期刊原始论文','51 teams, measures, regression-based associations','51支团队、测量与回归关联'],
+'R11':['Original theory article','理论论文原文','Model and propositions, not newly sampled results','理论模型与命题，非新样本结果'],
+'R15':['Official abstract and authorized first-page preview','正式摘要及授权第一页预览','Research question and general six-month finding; complete methods, sample N and coefficients remain unavailable','研究问题及六个月一般性发现已核对；完整方法、样本量和统计系数仍缺失'],
+'R22':['Original proceedings article','会议论文原文','3,941,161 users, observation and measurement denominators','3941161名用户、观察方法与比例分母'],
+'R29':['First chapter excerpt and academic table of contents','第一章节选与学术目录','Four moments and verified book structure; other chapter texts not fully audited','四个环节与全书结构已核对；其他章节未逐页核实']
+};
+return '<main class="container atlas-page">'+nav()+heading(T('Research Verification Register','研究来源核实记录'),T('An honest distinction between source review, partial access, and the work still required.','明确区分已经审阅的资料、仅能部分获取的文献和剩余的核实工作。'))+
+'<section class="atlas-panel"><h2>'+E(T('What does verified mean here?','本馆如何定义“核实”？'))+'</h2><p>'+E(T('This register reports which original-source materials were checked. A long article page is not automatically a completed scholarly peer review. Original authors’ data, museum interpretation and missing evidence remain separate.','这里记录已核对哪些原始材料。研究页面写得长，并不自动代表已经完成严格学术审查；作者数据、本馆解读与缺失证据必须分开。'))+'</p></section>'+
+'<div class="atlas-study-list">'+all.map(id=>{const x=C.find(s=>s.id===id),n=notes[id];return '<article class="atlas-panel"><h2><a href="'+go(id)+'">'+id+' · '+E(x.author)+'</a></h2><p><strong>'+E(T('Available source: ','已获取来源：'))+'</strong>'+E(T(n[0],n[1]))+'</p><p><strong>'+E(T('Verified scope: ','已核实范围：'))+'</strong>'+E(T(n[2],n[3]))+'</p><p class="small muted">'+E(id==='R15'?T('Partial access — NOT complete full-text verification.','仅能部分获取——尚未完成全文核实。'):id==='R29'?T('Chapter-based verification — NOT full-book page-by-page verification.','按章节核实——尚未完成整本书逐页核实。'):T('Original-source details recorded in the dossier; further source checks remain possible.','论文的原文核查内容见档案，仍可继续补充核对。'))+'</p></article>'}).join('')+'</div></main>';
+}
 function method(){
 const items=[
 ['The question and the corpus','问题与文献范围','We explore chosen withholding, pressured silence, enforced suppression, and gaps in recorded history. The initial 36 works were curated across four scenes and historical methods; this is not an exhaustive search.','本馆研究主动保留、受压力影响的沉默、被迫噤声及历史记录缺席。首批36项作品依据四个展厅与历史方法论选择，并非穷尽式检索。'],
@@ -204,6 +238,7 @@ if(bits[0]==='group')return shelf(bits[1]);
 if(bits[0]==='synthesis')return synthesis(bits[1]);
 if(bits[0]==='compare')return compare(bits[1]);
 if(bits[0]==='reason')return reason(bits[1],Number(bits[2]));
+if(bits[0]==='audit')return auditRegister();
 if(bits[0]==='method')return method();
 if(G[id])return shelf(id);
 return catalog();
