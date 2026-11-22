@@ -61,7 +61,9 @@
 "The translation could not be completed.":"翻译尚未完成。",
 "Only published stories with completed translations are shown in the visitor's selected language.":"仅当译文完成后，公开故事才会按照访客选择的语言展示。",
 "Automatic translation of published stories":"公开故事的自动翻译",
-"When you choose to publish and explicitly agree to automated translation, your story title, text, and reason are sent to a third-party AI translation service. The museum stores your original words as written and machine-generated English, Simplified Chinese, and Traditional Chinese versions. Readers see the version that matches their website language, with a label distinguishing machine translation from the original. Translation may contain errors. Private drafts are not sent for translation, and publication is not completed unless all three versions are generated and stored.":"当你选择发布故事并明确同意自动翻译时，故事标题、正文和理由会发送至第三方人工智能翻译服务。博物馆会完整保留你的原文，并保存机器生成的英语、简体中文、繁体中文版本。读者看到与网站语言对应的版本，同时会有标记区分原文和机器译文。机器翻译可能存在错误。私人草稿不会送去翻译；只有三种语言的版本都生成并成功保存后，故事才会完成发布。"
+"When you choose to publish and explicitly agree to automated translation, your story title, text, and reason are sent to a third-party AI translation service. The museum stores your original words as written and machine-generated English, Simplified Chinese, and Traditional Chinese versions. Readers see the version that matches their website language, with a label distinguishing machine translation from the original. Translation may contain errors. Private drafts are not sent for translation, and publication is not completed unless all three versions are generated and stored.":"当你选择发布故事并明确同意自动翻译时，故事标题、正文和理由会发送至第三方人工智能翻译服务。博物馆会完整保留你的原文，并保存机器生成的英语、简体中文、繁体中文版本。读者看到与网站语言对应的版本，同时会有标记区分原文和机器译文。机器翻译可能存在错误。私人草稿不会送去翻译；只有三种语言的版本都生成并成功保存后，故事才会完成发布。",
+"Automatic translation is not ready yet. Publish ONLY your original wording? Visitors in other languages may not understand it.":"自动翻译尚未启用。是否仍然只发布原文？使用其他语言的访客可能无法读懂这篇故事。",
+"The original-language publication could not be verified.":"尚未确认原文版本已成功发布。"
 });})();
 /* Browser acceptance corrections: retain original research titles for traceability. */
 Object.assign(window.MUSEUM_I18N.zh,{
