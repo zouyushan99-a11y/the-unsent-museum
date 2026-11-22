@@ -93,8 +93,24 @@ function shelf(g){
 return '<main class="container atlas-page">'+nav()+heading(T(G[g]?.[0]||'Research',G[g]?.[1]||'研究'),T('Open every source for its research question, approach, findings, limitations and related objects.','打开每项文献，查看研究问题、方法、结果、局限与关联展品。'))+studies(C.filter(x=>x.gallery===g).map(x=>x.id))+(g!=='cross'?'<section class="atlas-panel"><h2>'+E(T('Original detailed research room','原有详细研究档案'))+'</h2><p>'+E(T('The museum’s earlier three-study research interpretation is preserved here, including published findings, curatorial readings and limitations.','网站原有的三项研究深入解读继续保留，包含研究发现、策展解读与研究局限。'))+'</p><a class="btn btn-outline" href="#/research/original/'+g+'">'+E(T('Read the original research room ↗','阅读原有研究档案 ↗'))+'</a></section><section class="atlas-panel"><h2>'+E(T('The seven reasons in this gallery','本展厅的七种沉默理由'))+'</h2><div class="atlas-reason-grid">'+reasonMap[g].map((_,i)=>'<a href="#/research/reason/'+g+'/'+i+'">'+(i+1)+'. '+E(reasonName(g,i))+'</a>').join('')+'</div></section>':'')+'</main>';
 }
 const curated12=['R01','R02','R03','R09','R15','R16','R21','R22','R26']; 
+function deepStudy(id,x){
+const d=window.MUSEUM_RESEARCH_FIVE?.[id];if(!d)return null;
+const chinese=window.museumLangPublic?.()!=='en',content=chinese?d.zh:d.en;
+const label=(en,zh)=>E(T(en,zh));
+const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):T('Source-based detailed reading','基于原始文献的深入解读');
+const sections=content.map((s,i)=>'<section class="atlas-panel atlas-deep-section"><span class="eyebrow">'+String(i+1).padStart(2,'0')+' / '+label('RESEARCH DOSSIER','研究档案')+'</span><h2>'+E(s[0])+'</h2><p>'+E(s[1])+'</p></section>').join('');
+const linkHistory=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id)).map(([k])=>'<a href="#/'+(['franz-kafka','anne-lister'].includes(k)?'history':'collectives')+'/'+E(k)+'">'+E(k.replaceAll('-',' '))+' ↗</a>').join('');
+const matching=Object.entries(reasonMap).flatMap(([g,arr])=>arr.flatMap((ids,i)=>ids.some(n=>'R'+String(n).padStart(2,'0')===id)?['<a href="#/research/reason/'+g+'/'+i+'">'+E(T(G[g][0]+' · Reason '+(i+1),G[g][1]+' · '+reasonName(g,i)))+'</a>']:[])).join('');
+const related=C.filter(y=>y.gallery===x.gallery&&y.id!==id).slice(0,5);
+return '<main class="container atlas-page atlas-deep">'+nav()+heading(x.title,x.id+' · '+E(x.author)+' ('+E(x.year)+') · '+E(T(G[x.gallery][0],G[x.gallery][1])))+
+'<div class="atlas-panel"><span class="eyebrow">'+label('VERIFICATION AND EVIDENCE','核对范围与证据')+'</span><p>'+E(type)+'</p><p>'+label('The article is interpreted from available source materials; interpretations and historical analogies are explicitly distinguished from author findings.','以下解读依据可获取的原文材料；策展推论与历史类比均与作者的原始结论区分。')+'</p></div>'+
+sections+
+'<section class="atlas-panel"><h2>'+label('Research Connections','研究关联')+'</h2><h3>'+label('Relevant reasons','相关理由')+'</h3><div class="atlas-reason-grid">'+matching+'</div><h3>'+label('Historical archives','历史档案')+'</h3><div class="atlas-reason-grid">'+(linkHistory||'<p>'+label('No directly curated historical case association yet.','尚未建立直接关联的历史档案。')+'</p>')+'</div><h3>'+label('Further studies','延伸研究')+'</h3>'+studies(related.map(y=>y.id))+'</section>'+
+'<section class="atlas-panel"><h2>'+label('Original publication and traceability','原始文献与证据追溯')+'</h2><p class="atlas-citation">'+E(d.citation)+'</p><div class="actions"><a class="btn btn-outline" target="_blank" rel="noopener noreferrer" href="'+E(d.source)+'">'+label('Publisher / DOI ↗','出版来源／DOI ↗')+'</a><a class="btn btn-outline" target="_blank" rel="noopener noreferrer" href="'+E(d.alt)+'">'+label('Accessible research text ↗','查阅可获取的研究文本 ↗')+'</a></div><p class="small muted">'+label('Numerical findings and procedures are attributed to the source; this is a museum research interpretation, not a reproduction of the paper.','研究数据和步骤均需追溯原始资料；本文为博物馆研究解读，并非论文的全文复制。')+'</p></section></main>';
+}
 function study(id){
 const x=C.find(y=>y.id===id);if(!x)return catalog();
+const deep=deepStudy(id,x);if(deep)return deep;
 const linked=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id));
 const others=C.filter(y=>y.gallery===x.gallery&&y.id!==id).slice(0,4);
 const group=G[x.gallery];
