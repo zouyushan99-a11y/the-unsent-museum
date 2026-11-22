@@ -2,7 +2,7 @@
 
 ## Current state
 
-The GitHub Pages client, database migration and Supabase Edge Function are deployed (22 November 2026). The server uses DeepL API Developer; the real end-to-end publishing flow still requires a signed-in author's live test to verify the DeepL secret and API translation output.
+The GitHub Pages client, database migration and Supabase Edge Function are deployed (22 November 2026). The server uses DeepL API Developer; the author has confirmed a successful DeepL-published story. After the adapter refactor, another signed-in author's test is still recommended.
 
 ### One-time setup
 
@@ -51,3 +51,27 @@ If the database migration has not been applied, the site can still **read existi
 - The title, story, and reason are translated as separate items per target language. Machine translation is not an editorial review: nuanced prose should be checked by a human when possible.
 - If DeepL rejects the configured key, hits its one-time usage limit, or returns an invalid response, publication fails closed and the local draft remains intact.
 - Database translation/read permissions are granted to Supabase's server-only `service_role`, not to anonymous site visitors. Do not add the API key to GitHub Pages code.
+
+## Replaceable translation provider module (November 2026)
+
+The public website and database use a **stable contract**: the Edge Function `publish-translated-story` requests `StoryTranslations` with `en`, `zh-Hans`, `zh-Hant`, each containing `title`, `story`, `why`. The browser and database schema are independent of the provider.
+
+The implementation is split into:
+
+- `supabase/functions/publish-translated-story/index.ts`: authentication, authorship, quota, publication, consent and database persistence. It does not call a provider directly.
+- `supabase/functions/publish-translated-story/translation-providers.ts`: provider adapters, language mapping, response validation and provider selection.
+
+**Active provider**: `TRANSLATION_PROVIDER` secret (Supabase Edge Functions > Secrets), values `deepl` (default) or `openai`. If absent, DeepL remains the default, preserving the previously working setup. Invalid values fail closed rather than silently selecting a paid provider. **There is no automatic fallback**: an error from DeepL does not silently trigger another provider, protecting against unexpected charges and third-party data sharing.
+
+**Configuration**:
+
+| Supabase secret | Purpose |
+| --- | --- |
+| `TRANSLATION_PROVIDER=deepl` | Optional default. Current active provider, backed by `DEEPL_API_KEY`. |
+| `TRANSLATION_PROVIDER=openai` | Explicitly opts into the alternative adapter. Requires an eligible API account, `OPENAI_API_KEY`, API billing, and an allowed region; should not be used without confirming those conditions. |
+| `DEEPL_API_KEY` | DeepL secret, already configured in production. |
+| `OPENAI_API_KEY` | Only needed for the optional OpenAI provider. Never embed it in client code. |
+
+To switch *to a configured and legitimately accessible provider*, update `TRANSLATION_PROVIDER` in Supabase Secrets. To add a new provider, implement the `TranslationAdapter` interface in `translation-providers.ts`, add its server-only credential environment variable and registry selection, update the documentation and redeploy **both** function files. Verify translation quality and privacy disclosures before enabling. The frontend requires no change. The author text is always kept as the original, and publication remains atomic after all translations succeed.
+
+**Verification after refactor:** function v5 deployed ACTIVE with JWT verification enabled. Database and publish flow were not modified. Verify a real new publication, three language switch and original preservation; a successful deployment alone does not prove successful provider calls.
