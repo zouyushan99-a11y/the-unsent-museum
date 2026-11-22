@@ -221,8 +221,18 @@ return '<main class="container atlas-page">'+nav()+heading(T(c[0],c[1]),T('A str
 }
 
 function auditRegister(){
-const all=['R01','R02','R03','R08','R09','R10','R11','R15','R22','R29'];
+const all=['R01','R02','R03','R04','R05','R06','R08','R09','R10','R11','R12','R14','R15','R16','R19','R22','R23','R25','R26','R29'];
 const notes={
+'R04':['Official publisher abstract and bibliographic record; full review text unavailable','正式出版摘要与书目；未取得综述全文','Three social motivations and review scope; underlying primary studies NOT independently audited','三类社会动机与综述范围；尚未逐项核对原始实验'],
+'R05':['Original theoretical synthesis PDF','理论综述正文','Belongingness criteria and diversity of supporting literature; no new trial','归属需要判断标准及不同类型证据；不是新实验'],
+'R06':['Original theory article PDF','理论论文正文','Autonomy, competence, relatedness, goal content and motivation processes','自主、胜任、关系需要，以及目标与动机过程'],
+'R12':['Original 2014 review PDF','2014年原始综述正文','Definitions, literature synthesis, research gaps and Table 2','定义、文献综合、研究不足及表2'],
+'R14':['Original 1974 journal record and theory source','1974年原始期刊记录与理论来源','Public opinion and fear-of-isolation mechanism; no new experiment claimed','舆论环境与孤立恐惧机制；不宣称新实验'],
+'R16':['Full journal article and methods tables','期刊正文与方法表格','67 couples, 14-day daily diaries, 1768 completed records','67对伴侣、14天日记、1768份记录'],
+'R19':['Full meta-analysis with original Tables 1 and 3','元分析全文及表1、表3','Three disclosure-liking directions; 94 and 31 effect sizes in two analyses','披露与好感的三个方向；其中两组分析有94及31个效应量'],
+'R23':['Full original qualitative article','定性研究原始论文全文','226 responses from 181 Twitter users, purposive discussion of imagined audiences','181名Twitter用户的226份回应、想象受众的定性分析'],
+'R25':['Full 1996 theoretical review PDF','1996年理论论文全文','Impersonal/interpersonal/hyperpersonal model; original experiments cited but not newly performed','非人际、人际、超人际模型；并非重新开展所引实验'],
+'R26':['Original four-condition experiment PDF','四组写作实验原文','46 students, four 15-minute sessions, physiological and health-center outcomes','46名学生、四次15分钟写作、生理及医疗记录'],
 'R01':['Source PDF and abstract','论文PDF与摘要','Key study counts and selected contrasts','研究数量及主要比较数据'],
 'R02':['Open-access research article','开放获取原始论文','Freedom outcome vs inconclusive behavioral outcome','自由感与尚不确定的行为结果'],
 'R03':['Accessible article and official record','可获取论文与正式记录','Invitation-decline research and sample descriptions','拒绝邀请研究及样本说明'],
@@ -236,7 +246,7 @@ const notes={
 };
 return '<main class="container atlas-page">'+nav()+heading(T('Research Verification Register','研究来源核实记录'),T('An honest distinction between source review, partial access, and the work still required.','明确区分已经审阅的资料、仅能部分获取的文献和剩余的核实工作。'))+
 '<section class="atlas-panel"><h2>'+E(T('What does verified mean here?','本馆如何定义“核实”？'))+'</h2><p>'+E(T('This register reports which original-source materials were checked. A long article page is not automatically a completed scholarly peer review. Original authors’ data, museum interpretation and missing evidence remain separate.','这里记录已核对哪些原始材料。研究页面写得长，并不自动代表已经完成严格学术审查；作者数据、本馆解读与缺失证据必须分开。'))+'</p></section>'+
-'<div class="atlas-study-list">'+all.map(id=>{const x=C.find(s=>s.id===id),n=notes[id];return '<article class="atlas-panel"><h2><a href="'+go(id)+'">'+id+' · '+E(x.author)+'</a></h2><p><strong>'+E(T('Available source: ','已获取来源：'))+'</strong>'+E(T(n[0],n[1]))+'</p><p><strong>'+E(T('Verified scope: ','已核实范围：'))+'</strong>'+E(T(n[2],n[3]))+'</p><p class="small muted">'+E(id==='R15'?T('Partial access — NOT complete full-text verification.','仅能部分获取——尚未完成全文核实。'):id==='R29'?T('Chapter-based verification — NOT full-book page-by-page verification.','按章节核实——尚未完成整本书逐页核实。'):T('Original-source details recorded in the dossier; further source checks remain possible.','论文的原文核查内容见档案，仍可继续补充核对。'))+'</p></article>'}).join('')+'</div></main>';
+'<div class="atlas-study-list">'+all.map(id=>{const x=C.find(s=>s.id===id),n=notes[id];return '<article class="atlas-panel"><h2><a href="'+go(id)+'">'+id+' · '+E(x.author)+'</a></h2><p><strong>'+E(T('Available source: ','已获取来源：'))+'</strong>'+E(T(n[0],n[1]))+'</p><p><strong>'+E(T('Verified scope: ','已核实范围：'))+'</strong>'+E(T(n[2],n[3]))+'</p><p class="small muted">'+E(id==='R15'?T('Partial access — NOT complete full-text verification.','仅能部分获取——尚未完成全文核实。'):id==='R29'?T('Chapter-based verification — NOT full-book page-by-page verification.','按章节核实——尚未完成整本书逐页核实。'):['R04','R14'].includes(id)?T('Publisher or primary bibliographic / conceptual sources checked; full independent article audit remains limited.','已核对出版或概念性原始资料；完整独立全文审校仍有限。'):T('Original-source details recorded in the dossier; further source checks remain possible.','论文的原文核查内容见档案，仍可继续补充核对。'))+'</p></article>'}).join('')+'</div></main>';
 }
 function method(){
 const items=[
