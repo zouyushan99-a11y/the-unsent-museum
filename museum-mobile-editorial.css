@@ -290,3 +290,11 @@
  html:lang(zh) #app .history-longform-subtitle,html:lang(zh) #app .collective-subtitle,
  html:lang(zh) #app .museum-hero-copy .hero-intro,html:lang(zh) #app .museum-hero-copy p{font-style:normal}
 }
+@media (max-width:1180px), (max-width:1366px) and (pointer:coarse){
+ html,body{min-width:0}
+ #app .page-hero h1,#app .collective-hero h1,#app .sky-heading h1,
+ #app .history-longform-header h2,#app .collective-article>header h2{text-wrap:balance}
+}
+@media(min-width:601px) and (max-width:1180px){
+ #app .page-hero h1,#app .collective-hero h1,#app .sky-heading h1{font-size:clamp(2.25rem,4.6vw,3.125rem)}
+}
