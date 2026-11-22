@@ -321,9 +321,24 @@ async function loadCloudStories(){
      ownerId:authUser.id,synced:true,time:Date.parse(row.updated_at)||Date.now()});
  }
 }
+let storyTranslationBackendReady=false;
+function localizeVisitorStory(st){
+ const language=museumLang==='zh-Hant'?'zh-Hant':museumLang==='zh-Hans'?'zh-Hans':'en';
+ const variants=st?.translations,translated=st?.translation_status==='ready'&&variants&&typeof variants==='object'&&variants[language];
+ const original=st?.original_language===language;
+ // Never show an English label over untranslated Chinese prose.
+ return {...st,title:translated?.title||st.title,story:translated?.story||st.story,
+  why:translated?.why||st.why,visitorTranslationStatus:translated?(original?'original':'translated'):'unavailable'};
+}
 async function loadPublicStories(){
  if(!authClient){storyCloudStatus='error';storyCloudError='The story service could not load.';return}
- const {data,error}=await authClient.rpc('get_public_museum_stories');
+ let {data,error}=await authClient.rpc('get_public_museum_stories_i18n');
+ if(error){
+  // Legacy SQL installations still read stories; they must not claim translation support.
+  storyTranslationBackendReady=false;
+  const legacy=await authClient.rpc('get_public_museum_stories');
+  data=legacy.data;error=legacy.error;
+ }else storyTranslationBackendReady=true;
  if(error){storyCloudStatus='error';storyCloudError=error.message;publicStories=[];return}
  publicStories=Array.isArray(data)?data.filter(st=>st&&validStoryCategory(st.scenario)):[];
  storyCloudStatus='ready';storyCloudError='';
@@ -681,8 +696,8 @@ function galleries(){return `<main class="container"><section class="page-hero">
 function scenario(id){const s=SCENARIOS.find(x=>x.id===id);if(!s||museumLang==='en')return s;const l=window.MUSEUM_I18N?.scenarios?.[id];if(!l)return s;return {...s,...Object.fromEntries(Object.entries(l).map(([key,val])=>[key,Array.isArray(val)?val.map(museumConvert):museumConvert(val)]))}}
 function storyCategoryOptions(selected){return [...SCENARIOS.map(s=>({id:s.id,label:scenario(s.id).title})),{id:'others',label:'Others · Beyond these categories'}].map(o=>`<option value="${esc(o.id)}" ${selected===o.id?'selected':''}>${esc(o.label)}</option>`).join('')}
 function validStoryCategory(value){return value==='others'||Boolean(scenario(value))}
-function visibleStories(id){return publicStories.filter(st=>!id||st.scenario===id).sort((a,b)=>Date.parse(b.updated_at||0)-Date.parse(a.updated_at||0))}
-function storyById(id){return publicStories.find(st=>String(st.id)===String(id))||null}
+function visibleStories(id){return publicStories.filter(st=>!id||st.scenario===id).sort((a,b)=>Date.parse(b.updated_at||0)-Date.parse(a.updated_at||0)).map(localizeVisitorStory)}
+function storyById(id){const st=publicStories.find(st=>String(st.id)===String(id));return st?localizeVisitorStory(st):null}
 function publicStoryReader(id){
  const st=storyById(id);
  if(st)return `<main class="container"><section class="page-hero story-reader-hero"><div class="eyebrow">${museumLang==='en'?'A STORY FROM THE UNSENT MUSEUM · ':'未寄之言博物馆 · '}${esc(scenario(st.scenario)?.title||museumZh('Others'))}</div><h1>${esc(st.title||'An Unsent Story')}</h1><p class="muted">${museumLang==='en'?'By ':'作者：'}${esc(st.author_name||museumZh('Anonymous'))}</p></section><article class="story-reader"><div class="eyebrow">THE STORY</div><p class="archive-prose">${esc(st.story)}</p><div class="divider"></div><div class="eyebrow">WHY THEY MADE THIS CHOICE</div><p class="archive-prose">${esc(st.why)}</p><div class="actions"><a class="btn btn-outline" href="#/story-sky/${encodeURIComponent(st.scenario)}">✧ Return to this gallery's Story Sky</a><a class="btn btn-outline" href="#/archive/${encodeURIComponent(st.scenario)}">Browse stories as text</a>${authUser&&findLocalStory(st.id)?.ownerId===authUser.id?`<button type="button" class="btn btn-outline delete-story" data-id="${esc(st.id)}">Delete my published story</button>`:""}</div></article></main>`;
