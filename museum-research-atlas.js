@@ -31,16 +31,16 @@ const raws=[
 ['Marwick & boyd','2014','Networked Privacy: How Teenagers Negotiate Context in Social Media','https://doi.org/10.1177/1461444814543995','before-sending','Privacy negotiations in social media','社交媒体隐私协商'],
 ['Walther','1996','Computer-Mediated Communication: Impersonal, Interpersonal, and Hyperpersonal Interaction','https://doi.org/10.1177/009365096023001001','before-sending','Communication shaped by digital media','数字媒介对沟通的影响'],
 ['Pennebaker & Beall','1986','Confronting a Traumatic Event: Toward an Understanding of Inhibition and Disease','https://doi.org/10.1037/0021-843X.95.3.274','before-sending','Expressive writing about difficult experiences','关于艰难经历的表达性写作'],
-['Petronio','2002','Boundaries of Privacy: Dialectics of Disclosure','https://www.sunypress.edu/p-3502-boundaries-of-privacy.aspx','before-sending','Managing boundaries around disclosure','披露与隐私边界'],
+['Petronio','2002','Boundaries of Privacy: Dialectics of Disclosure','https://www.jstor.org/stable/jj.18255126','before-sending','Managing boundaries around disclosure','披露与隐私边界'],
 ['Gross','1998','The Emerging Field of Emotion Regulation: An Integrative Review','https://doi.org/10.1037/1089-2680.2.3.271','before-sending','Emotion regulation and reassessment','情绪调节'],
 ['Michel-Rolph Trouillot','1995','Silencing the Past: Power and the Production of History','https://www.beacon.org/Silencing-the-Past-P1109.aspx','cross','Power in producing historical records','历史记录生产中的权力'],
 ['James C. Scott','1990','Domination and the Arts of Resistance: Hidden Transcripts','https://yalebooks.yale.edu/book/9780300056693/domination-and-the-arts-of-resistance/','cross','Public and hidden transcripts','公开与隐藏的话语'],
 ['Saidiya Hartman','2008','Venus in Two Acts','https://doi.org/10.1215/-12-2-1','cross','Writing histories with fragmentary archives','如何书写残缺档案中的生命'],
 ['Ann Laura Stoler','2009','Along the Archival Grain: Epistemic Anxieties and Colonial Common Sense','https://press.princeton.edu/books/paperback/9780691146362/along-the-archival-grain','cross','Colonial archives as constructed records','殖民档案的形成'],
 ['Gayatri Chakravorty Spivak','1988','Can the Subaltern Speak?','https://www.jstor.org/stable/466624','cross','Representation and subaltern voices','从属群体的代表与发声'],
-['Alessandro Portelli','1991','The Death of Luigi Trastulli and Other Stories: Form and Meaning in Oral History','https://sunypress.edu/Books/T/The-Death-of-Luigi-Trastulli-and-Other-Stories','cross','Oral testimony, meaning, and memory','口述证词与记忆'],
+['Alessandro Portelli','1991','The Death of Luigi Trastulli and Other Stories: Form and Meaning in Oral History','https://utpdistribution.com/9780791404300/the-death-of-luigi-trastulli-and-other-stories/','cross','Oral testimony, meaning, and memory','口述证词与记忆'],
 ['Schweiger & Tomiak','2022','Researching Silence: A Methodological Inquiry','https://doi.org/10.1177/03058298221083999','cross','Methods for studying silence','如何研究沉默'],
-['Open Encyclopedia of Anthropology','2023','Silence','https://www.anthroencyclopedia.com/entry/silence','cross','Anthropological approaches to silence','沉默的人类学研究']
+['Dragojlovic & Samuels','2023','Silence','https://doi.org/10.29164/23silence','cross','Anthropological approaches to silence','沉默的人类学研究']
 ];
 const C=raws.map((r,i)=>({id:'R'+String(i+1).padStart(2,'0'),author:r[0],year:r[1],title:r[2],url:r[3],gallery:r[4],subject:r[5],zhSubject:r[6]}));
 const reasonMap={
@@ -94,7 +94,7 @@ return '<main class="container atlas-page">'+nav()+heading(T(G[g]?.[0]||'Researc
 }
 const curated12=['R01','R02','R03','R09','R15','R16','R21','R22','R26']; 
 function deepStudy(id,x){
-const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id]||window.MUSEUM_RESEARCH_THIRD_A?.[id]||window.MUSEUM_RESEARCH_THIRD_B?.[id];if(!d)return null;
+const d=window.MUSEUM_RESEARCH_FIVE?.[id]||window.MUSEUM_RESEARCH_SECOND?.[id]||window.MUSEUM_RESEARCH_THIRD_A?.[id]||window.MUSEUM_RESEARCH_THIRD_B?.[id]||window.MUSEUM_RESEARCH_FINAL_A?.[id]||window.MUSEUM_RESEARCH_FINAL_B?.[id];if(!d)return null;
 const chinese=window.museumLangPublic?.()!=='en',content=chinese?d.zh:d.en;
 const label=(en,zh)=>E(T(en,zh));
 const traceNotes={
@@ -121,7 +121,7 @@ const traceNotes={
 };
 const note=traceNotes[id];
 
-const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):(d.stage==='abstract-verified'||d.stage==='publisher-preview-and-abstract')?T('Publisher first-page preview and abstract verified · remaining methods and statistics unavailable','已核对出版方首页预览及正式摘要 · 其余方法和统计结果仍不可获取'):d.stage==='review-publisher-plus-abstract'?T('Scholarly review supported by official abstract and bibliographic record · full-text audit incomplete','学术综述：已核对正式摘要与书目 · 仍未完成全文审校'):d.stage==='original-article-conceptual'?T('Original short article and publisher note verified · longer German survey study not audited','已核对原始短文出版说明 · 较长德文调查原作未完成审校'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
+const type=d.stage==='chapter-excerpt'?T('Verified chapter excerpt + publisher/academic descriptions','已核对章节选段与出版／学术资料'):(d.stage==='abstract-verified'||d.stage==='publisher-preview-and-abstract')?T('Publisher first-page preview and abstract verified · remaining methods and statistics unavailable','已核对出版方首页预览及正式摘要 · 其余方法和统计结果仍不可获取'):['publisher-abstract','publisher-review','publisher-review-source','article-abstract-institutional','original-abstract-institutional'].includes(d.stage)?T('Publisher abstract / institution record reviewed; original full-method tables not independently audited','已核对正式摘要或机构记录；原始完整方法及统计表尚未独立审阅'):['book-preview','publisher-book-description','publisher-chapter-preview','book-institutional-preview'].includes(d.stage)?T('Book publisher / catalog or chapter preview reviewed; not a full-book page-by-page audit','已核对著作出版记录、目录或章节预览；不代表整本书逐页审阅'):d.stage==='review-publisher-plus-abstract'?T('Scholarly review supported by official abstract and bibliographic record · full-text audit incomplete','学术综述：已核对正式摘要与书目 · 仍未完成全文审校'):d.stage==='original-article-conceptual'?T('Original short article and publisher note verified · longer German survey study not audited','已核对原始短文出版说明 · 较长德文调查原作未完成审校'):d.stage==='full-text-theory'?T('Full-text conceptual / theoretical analysis · not an empirical experiment','已阅读理论论文全文 · 并非实证实验'):T('Source-based detailed reading','基于原始文献的深入解读');
 const auditPanel=note?'<section class="atlas-panel"><span class="eyebrow">'+label('SOURCE AUDIT · 22 NOVEMBER 2026','来源核对 · 2026年11月22日')+'</span><h2>'+label('What has been verified?','哪些部分已经核实？')+'</h2><p>'+E(T(note[0],note[1]))+'</p><a href="#/research/audit">'+label('Open the research verification register ↗','查看研究核实记录 ↗')+'</a></section>':'';
 const sections=content.map((s,i)=>'<section class="atlas-panel atlas-deep-section"><span class="eyebrow">'+String(i+1).padStart(2,'0')+' / '+label('RESEARCH DOSSIER','研究档案')+'</span><h2>'+E(s[0])+'</h2><p>'+E(s[1])+'</p></section>').join('');
 const linkHistory=Object.entries(historyLinks).filter(([k,v])=>v.ids.includes(id)).map(([k])=>'<a href="#/'+(['franz-kafka','anne-lister'].includes(k)?'history':'collectives')+'/'+E(k)+'">'+E(k.replaceAll('-',' '))+' ↗</a>').join('');
