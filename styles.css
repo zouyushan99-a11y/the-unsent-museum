@@ -2029,3 +2029,22 @@ body::before{display:none!important}
 html:lang(zh) .history-curator-paragraph{font-family:var(--museum-zh-serif,Georgia,serif);line-height:2.16;letter-spacing:.02em}
 html:lang(zh) .history-curator-questions li{font-family:var(--museum-zh-serif,Georgia,serif);line-height:1.95}
 @media(max-width:700px){.history-curator-analysis{margin:22px auto 0;padding:24px 19px}.history-curator-questions{margin:25px auto 0;padding:23px 16px}.history-curator-questions ol{gap:16px}.history-curator-paragraph{font-size:1rem}}
+
+
+/* Translated visitor prose: retain original paragraph breaks and source notice. */
+.story-reader .archive-prose,.archive-item .archive-prose{
+ white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;
+}
+.visitor-translation-note{
+ display:block;width:fit-content;max-width:100%;
+ margin:9px 0 16px;padding:6px 11px;
+ border:1px solid rgba(214,181,113,.34);border-radius:8px;
+ background:rgba(14,32,49,.68);color:#e5c993;line-height:1.5;
+}
+#edit-writing-language{width:100%;max-width:100%}
+.story-editor-panel #translation-consent{flex:0 0 auto}
+@media(max-width:700px){
+ .visitor-translation-note{font-size:.78rem}
+ .story-editor-panel .choice-option{min-width:0}
+ .story-editor-panel .choice-option span{overflow-wrap:anywhere}
+}
