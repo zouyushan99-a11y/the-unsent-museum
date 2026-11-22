@@ -483,3 +483,81 @@
 .atlas-page .atlas-research-dossier a:focus-visible{
   outline-color:var(--atlas-home-gold-hover)!important;
 }
+
+/* Study catalogue parchment legibility v8.
+   Fix: previous dark-card overrides made parchment labels pale; long English
+   publication titles ran into the ornamental footer. Original image untouched. */
+.atlas-library #atlas-results .atlas-study-list{
+  align-items:stretch;
+}
+.atlas-library #atlas-results .atlas-study-link{
+  color:#342419!important;
+  background-color:#e8c99b;
+  /* Keep the original image and its gold ornament, never replace/repaint it. */
+  background-image:url("research-assets/research-hd-parchment.webp")!important;
+  background-position:center center;
+  background-size:cover;
+  min-height:0!important;
+  height:auto!important;
+  padding:0 1rem clamp(100px,8.8vw,125px)!important;
+  gap:.65rem;
+  justify-content:flex-start;
+}
+.atlas-library #atlas-results .atlas-study-link::before{
+  flex:0 0 auto;
+}
+.atlas-library #atlas-results .atlas-study-link>span,
+.atlas-library #atlas-results .atlas-study-link>strong,
+.atlas-library #atlas-results .atlas-study-link>small{
+  display:block;
+  position:relative;
+  z-index:1;
+  flex:0 0 auto;
+  opacity:1!important;
+  text-shadow:0 1px 0 rgba(255,246,223,.45);
+}
+.atlas-library #atlas-results .atlas-study-link>span{
+  color:#56351f!important;
+  font-size:clamp(.83rem,1.03vw,1.05rem);
+  font-weight:700;
+  line-height:1.6;
+  letter-spacing:.025em;
+}
+.atlas-library #atlas-results .atlas-study-link>strong{
+  color:#302019!important;
+  font-weight:600;
+  font-size:clamp(1.02rem,1.18vw,1.2rem);
+  line-height:1.62;
+  margin:.1rem 0 .35rem;
+  overflow-wrap:anywhere;
+}
+.atlas-library #atlas-results .atlas-study-link>small{
+  color:#4d3424!important;
+  font-size:clamp(.88rem,.95vw,1rem);
+  line-height:1.65;
+  font-weight:500;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  hyphens:auto;
+}
+.atlas-library #atlas-results .atlas-study-link>small:last-child{
+  color:#3b291c!important;
+  margin-top:.1rem;
+  line-height:1.7;
+  /* Longer English source names are fully displayed, never clipped. */
+}
+.atlas-library #atlas-results .atlas-study-link:hover{
+  border-color:#ffda6d!important;
+}
+/* Responsive catalog cards must continue to grow with full title content. */
+@media(max-width:1020px){
+ .atlas-library #atlas-results .atlas-study-link{
+   padding-bottom:95px!important;
+ }
+}
+@media(max-width:700px){
+ .atlas-library #atlas-results .atlas-study-link{
+   padding:0 .85rem 95px!important;
+ }
+ .atlas-library #atlas-results .atlas-study-link>small{font-size:.9rem;}
+}
