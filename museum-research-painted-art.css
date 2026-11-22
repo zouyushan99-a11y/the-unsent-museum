@@ -1,36 +1,82 @@
-/* Generated artwork override for the approved research library design.
-   Original painted WebP resources, not procedural substitute illustrations.
-   See accompanying research-assets package. */
+/* Native-resolution original art for the research library (2026-11-22).
+   The previous images were extracted as ~200px crops and then enlarged.
+   All references below use original-size WebP files committed to research-assets/. */
 .atlas-page.atlas-designed::before,
 .atlas-page.atlas-deep::before,
 .atlas-page:has(.atlas-evidence-table)::before,
-.atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
-  background-image:linear-gradient(180deg,rgba(4,14,29,.06),rgba(4,14,29,.42) 55%,rgba(4,14,29,.72)),
-    url("research-assets/painted-research-background.webp"),
-    url("research-assets/research-celestial-wall.svg");
-  background-size:cover,cover,1600px auto;
-  background-position:center top,center top,center top;
-  background-repeat:repeat-y,repeat-y,repeat-y;
+.atlas-page:has(.atlas-study-list):not(.atlas-designed)::before {
+  background-image:
+    linear-gradient(180deg,rgba(4,14,29,.06),rgba(4,14,29,.42) 55%,rgba(4,14,29,.72)),
+    url("research-assets/research-hd-background.webp");
+  /* Never use "cover" on an entire tall page: it scales an image to
+     the full page height and causes exactly the blur this fixes. */
+  background-size:100% 100%, 1672px auto;
+  background-position:center top,center top;
+  background-repeat:no-repeat,repeat-y;
 }
-.atlas-library .atlas-portal{overflow:hidden;isolation:isolate}
+/* Remove the obsolete ~200 x 194px CSS artwork crop that was sitting
+   in front of the real arch images. Each <img> now contains the native
+   1122 x 1402px illustrated arch at full source resolution. */
 .atlas-library .atlas-portal::before{
-  content:"";position:absolute;z-index:1;top:15%;left:7%;width:86%;height:59%;
-  background-position:center;background-size:cover;background-repeat:no-repeat;
-  clip-path:polygon(0 25%,3% 15%,11% 7%,24% 1%,50% 0,76% 1%,89% 7%,97% 15%,100% 25%,100% 100%,0 100%);
-  pointer-events:none;
+  content:none !important;
+  display:none !important;
 }
-.atlas-library .atlas-portal:nth-child(1)::before{background-image:url("research-assets/painted-research-arch-1.webp")}
-.atlas-library .atlas-portal:nth-child(2)::before{background-image:url("research-assets/painted-research-arch-2.webp")}
-.atlas-library .atlas-portal:nth-child(3)::before{background-image:url("research-assets/painted-research-arch-3.webp")}
-.atlas-library .atlas-portal:nth-child(4)::before{background-image:url("research-assets/painted-research-arch-4.webp")}
-.atlas-library .atlas-portal:nth-child(5)::before{background-image:url("research-assets/painted-research-arch-5.webp")}
-.atlas-library .atlas-portal-text{z-index:2;background:linear-gradient(0deg,rgba(2,13,27,.98),rgba(6,20,37,.85) 72%,transparent);inset:auto 5% 4.3% 5%;min-height:26%;padding-top:1rem}
-.atlas-library .atlas-featured{background-image:url("research-assets/painted-research-parchment.webp"),url("research-assets/research-parchment.svg");background-size:cover}
-.atlas-library .atlas-study-link:before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-1.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+2):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-2.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+3):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-3.webp")}
-.atlas-library .atlas-study-link:nth-child(4n+4):before{background-image:linear-gradient(90deg,rgba(7,24,41,.18),rgba(13,41,65,.08)),url("research-assets/painted-research-card-4.webp")}
+.atlas-library .atlas-portal{
+  overflow:hidden;
+  isolation:isolate;
+}
+.atlas-library .atlas-portal img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  image-rendering:auto;
+}
+.atlas-library .atlas-portal-text{
+  z-index:2;
+  background:linear-gradient(0deg,rgba(2,13,27,.97),rgba(6,20,37,.83) 72%,transparent);
+  inset:auto 5% 4.3% 5%;
+  min-height:25%;
+  padding-top:1rem;
+}
+.atlas-library .atlas-featured{
+  background-image:url("research-assets/research-hd-parchment.webp");
+  background-size:cover;
+}
+.atlas-library .atlas-featured-art{
+  background-image:linear-gradient(130deg,rgba(16,35,59,.06),rgba(18,64,93,.09)),url("research-assets/research-hd-background.webp");
+  background-size:auto,900px auto;
+}
+.atlas-library .atlas-study-link{
+  background-image:url("research-assets/research-hd-parchment.webp");
+  background-size:cover;
+}
+.atlas-library .atlas-study-link::before{
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-1.webp");
+  background-size:cover;
+}
+.atlas-library .atlas-study-link:nth-child(4n+2)::before{
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-2.webp");
+}
+.atlas-library .atlas-study-link:nth-child(4n+3)::before{
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-3.webp");
+}
+.atlas-library .atlas-study-link:nth-child(4n+4)::before{
+  background-image:linear-gradient(90deg,rgba(7,24,41,.1),rgba(13,41,65,.05)),url("research-assets/research-hd-card-4.webp");
+}
+.atlas-page.atlas-deep .atlas-deep-section{
+  background-image:url("research-assets/research-hd-parchment.webp");
+  background-size:cover;
+}
+@media(min-width:1800px){
+  .atlas-page.atlas-designed::before,
+  .atlas-page.atlas-deep::before,
+  .atlas-page:has(.atlas-evidence-table)::before,
+  .atlas-page:has(.atlas-study-list):not(.atlas-designed)::before {
+    background-size:100% 100%, 100% auto;
+  }
+}
 @media(max-width:700px){
- .atlas-library .atlas-portal::before{top:16%;height:56%}
- .atlas-library .atlas-portal-text{padding-top:.5rem}
+  .atlas-library .atlas-portal-text{padding-top:.5rem}
 }
