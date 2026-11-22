@@ -527,3 +527,39 @@
     margin-left:1.4rem;
   }
 }
+
+/* v9 · Starry-night graphite-blue background adjustment.
+   Reuse the existing background painting unchanged: less saturated blue,
+   ink-black night shadows, and a more visible celestial/floral engraving.
+   Fixed in the viewport so there is no vertical image tiling. */
+.atlas-page::before,
+.atlas-page.atlas-designed::before,
+.atlas-page.atlas-deep::before,
+.atlas-page:has(.atlas-evidence-table)::before,
+.atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
+  background-image:
+    linear-gradient(180deg,
+      rgba(4,6,13,.66) 0%,
+      rgba(5,8,17,.53) 28%,
+      rgba(5,9,19,.46) 58%,
+      rgba(4,7,15,.63) 100%),
+    radial-gradient(ellipse at 74% 25%,rgba(38,62,89,.15),transparent 65%),
+    url("research-assets/research-hd-background.webp")!important;
+  background-position:center,center,center center!important;
+  background-size:100% 100%,100% 100%,cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
+  filter:brightness(1.12) saturate(.76)!important;
+}
+.atlas-library .atlas-museum-hero{
+  background-color:rgba(4,7,14,.14);
+}
+@media(max-width:700px){
+ .atlas-page::before,
+ .atlas-page.atlas-designed::before,
+ .atlas-page.atlas-deep::before,
+ .atlas-page:has(.atlas-evidence-table)::before,
+ .atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
+   background-attachment:scroll!important;
+ }
+}
