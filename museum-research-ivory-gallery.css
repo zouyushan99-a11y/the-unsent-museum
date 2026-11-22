@@ -405,3 +405,81 @@
   .atlas-page .atlas-panel:not(.atlas-deep-section) :is(p,li,small),
   .atlas-page .atlas-study-link small{opacity:1!important}
 }
+
+/* Homepage-gold alignment, 2026-11-22.
+   The museum homepage defines --gold:#EEC65B and hover #ffda6d.
+   This pass changes ONLY CSS borders, outlines, rules and ornamental glyphs.
+   All existing images, parchment backgrounds, gradients, text and layout stay untouched. */
+.atlas-page{
+  --atlas-home-gold:var(--gold,#EEC65B);
+  --atlas-home-gold-hover:#ffda6d;
+}
+.atlas-page .atlas-nav a,
+.atlas-page .page-hero,
+.atlas-page .atlas-panel,
+.atlas-page .atlas-category,
+.atlas-page .atlas-study-link,
+.atlas-page .atlas-reason-grid a,
+.atlas-page .atlas-evidence-table,
+.atlas-page .atlas-evidence-table :is(th,td),
+.atlas-page .atlas-topic-detail-art,
+.atlas-page .atlas-catalog-aside,
+.atlas-page .atlas-featured,
+.atlas-page .atlas-portal,
+.atlas-page .atlas-essay-wing,
+.atlas-page .atlas-illustrated-card,
+.atlas-page .atlas-verification-plate,
+.atlas-page .atlas-connections-gallery,
+.atlas-page.atlas-deep .atlas-deep-section,
+.atlas-page.atlas-deep .atlas-research-dossier,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier{
+  border-color:var(--atlas-home-gold)!important;
+}
+.atlas-page .atlas-panel,
+.atlas-page .atlas-featured,
+.atlas-page .atlas-essay-wing,
+.atlas-page .atlas-connections-gallery,
+.atlas-page .atlas-verification-plate,
+.atlas-page.atlas-deep .atlas-deep-section,
+.atlas-page.atlas-deep .atlas-research-dossier,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier{
+  outline-color:var(--atlas-home-gold)!important;
+}
+.atlas-page .atlas-study-link:hover,
+.atlas-page .atlas-illustrated-card:hover,
+.atlas-page .atlas-reason-grid a:hover,
+.atlas-page .atlas-nav a:hover,
+.atlas-page .atlas-portal:hover{
+  border-color:var(--atlas-home-gold-hover)!important;
+}
+.atlas-page .atlas-research-dossier :is(h2,h3),
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier :is(h2,h3),
+.atlas-page .atlas-panel>h2,
+.atlas-page .atlas-section-head,
+.atlas-page .atlas-essay-wing>.atlas-section-head,
+.atlas-page .page-hero,
+.atlas-page .atlas-card-picture,
+.atlas-page .atlas-card-label{
+  border-bottom-color:var(--atlas-home-gold)!important;
+}
+.atlas-page .atlas-section-head::after,
+.atlas-page .atlas-divider-gold,
+.atlas-page .atlas-mini-star,
+.atlas-page .atlas-roman,
+.atlas-page .atlas-card-number,
+.atlas-page .atlas-theme-dot,
+.atlas-page .atlas-study-link::after,
+.atlas-page.atlas-deep .atlas-deep-section::after,
+.atlas-page.atlas-deep .atlas-research-dossier::after{
+  color:var(--atlas-home-gold)!important;
+}
+/* A fine inner gilded stroke on navy research panels; no fill changes. */
+.atlas-page.atlas-deep .atlas-research-dossier,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier{
+  box-shadow:0 15px 32px #0007,inset 0 0 0 5px rgba(238,198,91,.16)!important;
+}
+.atlas-page .atlas-study-link:focus-visible,
+.atlas-page .atlas-nav a:focus-visible,
+.atlas-page .atlas-research-dossier a:focus-visible{
+  outline-color:var(--atlas-home-gold-hover)!important;
+}
