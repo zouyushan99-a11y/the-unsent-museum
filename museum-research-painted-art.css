@@ -204,3 +204,116 @@
   border-bottom:2px solid #ba9057;
   flex:none;
 }
+
+
+/* 2026-11-22 | Research museum night-sky continuity and legibility
+ * One stationary backdrop for the whole reading viewport.
+ * No repeated bitmap seams and no upscaling to the document height.
+ * Vintage cobalt, ultramarine, teal and restrained antique-gold atmosphere.
+ */
+.atlas-page{
+  position:relative;
+  isolation:isolate;
+}
+.atlas-page.atlas-designed::before,
+.atlas-page.atlas-deep::before,
+.atlas-page:has(.atlas-evidence-table)::before,
+.atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  z-index:-1;
+  pointer-events:none;
+  background-image:
+    linear-gradient(180deg,
+      rgba(1,9,24,.89) 0%,
+      rgba(3,14,34,.83) 16%,
+      rgba(3,19,43,.73) 42%,
+      rgba(4,20,37,.79) 73%,
+      rgba(2,10,26,.91) 100%),
+    radial-gradient(ellipse at 79% 27%,
+      rgba(17,83,94,.35) 0%,
+      rgba(15,46,104,.19) 36%,
+      transparent 70%),
+    radial-gradient(ellipse at 17% 78%,
+      rgba(35,60,138,.35) 0%,
+      transparent 64%),
+    url("research-assets/research-hd-background.webp");
+  background-position:center,center,center,center center;
+  background-size:100% 100%,100% 100%,100% 100%,cover;
+  background-repeat:no-repeat,no-repeat,no-repeat,no-repeat;
+  background-attachment:fixed,fixed,fixed,fixed;
+  filter:none;
+}
+@media(min-width:1800px){
+  .atlas-page.atlas-designed::before,
+  .atlas-page.atlas-deep::before,
+  .atlas-page:has(.atlas-evidence-table)::before,
+  .atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
+    background-size:100% 100%,100% 100%,100% 100%,cover;
+  }
+}
+/* Bright parchment and animated night motifs remain in the artworks
+   themselves; the reading surface is always darker than the title ink. */
+.atlas-library .atlas-museum-hero{
+  position:relative;
+  background:radial-gradient(ellipse at center,
+    rgba(3,15,33,.79) 0%,
+    rgba(3,15,33,.70) 55%,
+    rgba(3,15,33,0) 88%);
+  padding:clamp(1.6rem,4vw,3.25rem) clamp(1.1rem,4vw,3.3rem);
+  border-radius:12px;
+}
+.atlas-library .atlas-museum-hero h1{
+  color:#f6d795;
+  text-shadow:0 2px 14px rgba(1,7,22,.95),0 0 35px rgba(5,14,35,.72);
+}
+.atlas-library .atlas-museum-hero .eyebrow,
+.atlas-library .atlas-hero-secondary,
+.atlas-library .atlas-divider-gold{
+  color:#e2c088;
+  text-shadow:0 2px 10px rgba(0,5,16,.93);
+}
+.atlas-library .atlas-hero-description{
+  color:#f4e8d4;
+  text-shadow:0 2px 10px rgba(0,5,16,.95);
+  font-weight:500;
+}
+.atlas-page .atlas-nav a{
+  background:rgba(4,17,36,.88);
+  border-color:rgba(216,181,113,.68);
+  color:#f0d6a8;
+  box-shadow:0 2px 12px rgba(0,6,20,.4);
+}
+.atlas-page .atlas-nav a:hover,
+.atlas-page .atlas-nav a:focus-visible{
+  background:rgba(14,47,78,.95);
+  color:#ffe4b0;
+}
+.atlas-library .atlas-catalog-aside,
+.atlas-library .atlas-essay-wing,
+.atlas-library .atlas-library-method{
+  background:linear-gradient(135deg,rgba(4,20,40,.95),rgba(9,32,51,.91));
+  border-color:#ad8750;
+}
+.atlas-library .atlas-section-head h2,
+.atlas-library .atlas-catalog-aside h2{
+  color:#f1d092;
+  text-shadow:0 1px 9px rgba(1,10,23,.82);
+}
+/* Keep visual features from the paintings, but do not tile or stretch
+   any other giant page-wide backdrop. */
+@media(max-width:700px){
+  .atlas-library .atlas-museum-hero{
+    background:linear-gradient(180deg,rgba(3,13,31,.84),rgba(4,18,35,.62));
+    padding:1.3rem .95rem 1.55rem;
+  }
+  .atlas-page.atlas-designed::before,
+  .atlas-page.atlas-deep::before,
+  .atlas-page:has(.atlas-evidence-table)::before,
+  .atlas-page:has(.atlas-study-list):not(.atlas-designed)::before{
+    background-attachment:scroll,scroll,scroll,scroll;
+    background-size:100% 100%,100% 100%,100% 100%,auto 100%;
+  }
+}
