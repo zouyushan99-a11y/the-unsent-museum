@@ -185,3 +185,99 @@
  .atlas-page.atlas-deep .atlas-deep-section:before{opacity:.16}
  .atlas-page.atlas-deep .atlas-deep-section ~ .atlas-deep-section:before{opacity:.19}
 }
+
+/* Research dossier component v5 — one visual system for EVERY numbered
+   research question, design, setting, procedure, finding, limitation and synthesis.
+   Keep the illustrated full-resolution art and live selectable multilingual text. */
+.atlas-page.atlas-deep .atlas-research-dossier,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  box-sizing:border-box;
+  background:
+    linear-gradient(100deg,rgba(15,47,75,.93) 0%,rgba(11,37,64,.86) 61%,rgba(7,25,48,.76) 100%),
+    url("research-assets/research-hd-background.webp") center/cover no-repeat !important;
+  border:2px solid #e5b56d !important;
+  border-radius:8px !important;
+  outline:1px solid rgba(255,213,139,.9);
+  outline-offset:-9px;
+  box-shadow:0 15px 32px #0007,inset 0 0 0 5px rgba(255,210,128,.095) !important;
+  margin:1.35rem 0 1.65rem;
+  padding:clamp(1.7rem,3.4vw,3.1rem) clamp(1.45rem,5.3vw,4.5rem) !important;
+  min-height:0;
+}
+.atlas-page.atlas-deep .atlas-research-dossier::before,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier::before{
+  content:"";
+  display:block;
+  position:absolute;
+  right:0;bottom:0;top:auto;
+  width:min(35%,370px);
+  height:86%;
+  z-index:-1;
+  pointer-events:none;
+  background: url("research-assets/library-studies.webp") center/cover no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 76%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 76%);
+  opacity:.24;
+  mix-blend-mode:screen;
+}
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="2"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="6"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="10"]::before{
+  background-image:url("research-assets/library-comparisons.webp");
+}
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="3"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="7"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="11"]::before{
+  background-image:url("research-assets/library-verification.webp");
+}
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="4"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="8"]::before,
+.atlas-page.atlas-deep .atlas-research-dossier[data-dossier-section="12"]::before{
+  background-image:url("research-assets/library-syntheses.webp");
+}
+.atlas-page.atlas-deep .atlas-research-dossier::after{
+  content:"✦";position:absolute;right:clamp(18px,3vw,44px);top:17px;
+  font-size:1.35rem;color:#edc478;opacity:.95;pointer-events:none;
+}
+.atlas-page.atlas-deep .atlas-research-dossier .eyebrow,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier .eyebrow{
+  color:#edc783 !important;font-size:.85rem;font-weight:700;letter-spacing:.1em;
+}
+.atlas-page.atlas-deep .atlas-research-dossier h2,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier h2{
+  font:500 clamp(1.5rem,2.6vw,2.55rem)/1.42 Georgia,"Noto Serif SC",serif !important;
+  color:#fff0d5 !important;
+  margin:.7rem 0 1.15rem;
+  padding-bottom:.7rem;
+  max-width:32ch;
+  border-bottom:1px solid rgba(230,180,100,.75);
+  text-shadow:0 2px 10px rgba(0,7,22,.45);
+}
+.atlas-page.atlas-deep .atlas-research-dossier p,
+.atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier p{
+  font:400 clamp(1rem,1.27vw,1.19rem)/1.95 Georgia,"Noto Serif SC",serif !important;
+  color:#f5e9d6 !important;
+  max-width:70ch;
+  text-shadow:0 1px 5px rgba(0,5,16,.33) !important;
+  letter-spacing:.01em;
+}
+.atlas-page.atlas-deep .atlas-research-dossier > :is(h2,p,.eyebrow){position:relative;z-index:1;}
+/* Clarify ancillary study sections without changing their scientific content. */
+.atlas-page.atlas-deep > .atlas-panel:not(.atlas-research-dossier):not(.atlas-verification-plate):not(.atlas-connections-gallery){
+  border-color:#d9aa60 !important;
+  box-shadow:inset 0 0 0 4px rgba(229,181,109,.09),0 12px 28px #0004 !important;
+}
+.atlas-page.atlas-deep > .atlas-panel:not(.atlas-research-dossier) a{overflow-wrap:anywhere;}
+@media(max-width:760px){
+  .atlas-page.atlas-deep .atlas-research-dossier,
+  .atlas-page.atlas-deep .atlas-research-dossier ~ .atlas-research-dossier{
+    padding:1.75rem 1.35rem !important;
+  }
+  .atlas-page.atlas-deep .atlas-research-dossier::before{width:40%;height:65%;opacity:.14;}
+  .atlas-page.atlas-deep .atlas-research-dossier h2{max-width:100%;font-size:clamp(1.4rem,6vw,1.95rem)!important;}
+  .atlas-page.atlas-deep .atlas-research-dossier p{font-size:1.03rem!important;line-height:1.85!important;}
+}
+@media(prefers-reduced-motion:reduce){.atlas-page.atlas-deep .atlas-research-dossier{transition:none}}
