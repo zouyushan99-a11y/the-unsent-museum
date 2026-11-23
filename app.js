@@ -665,7 +665,7 @@ function bindAuth(){
 const google=$('#google-signin');if(google)google.onclick=async()=>{
 if(!authClient){authMessage='Authentication service failed to load.';render(false);return}
 google.disabled=true;google.textContent=museumZh('Opening Google…');
-try{const {error}=await authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}});if(error){authMessage=error.message;render(false)}}
+try{const {error}=await museumNetworkLimit(authClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:AUTH_REDIRECT}}),15000);if(error){authMessage=error.message;render(false)}}
 catch(e){authMessage=String(e.message||e);render(false)}
 };
 document.querySelectorAll('[data-auth-mode]').forEach(btn=>btn.onclick=()=>{emailAuthMode=btn.dataset.authMode;authMessage='';render(false)});
@@ -675,7 +675,7 @@ const resetRequest=$('#forgot-password-form');
 if(resetRequest)resetRequest.onsubmit=async ev=>{
 ev.preventDefault();const email=$('#recovery-email')?.value.trim();if(!email||!authClient)return;
 const submit=resetRequest.querySelector('button[type=submit]');if(submit)submit.disabled=true;
-try{const {error}=await authClient.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT});
+try{const {error}=await museumNetworkLimit(authClient.auth.resetPasswordForEmail(email,{redirectTo:AUTH_REDIRECT}),15000);
 authMessage=error?'Could not send reset link: '+error.message:'If this email has a museum account, you will receive a password reset link. Check your inbox and spam folder.'}
 catch(e){authMessage='Could not send reset link: '+String(e.message||e)}
 render(false);
@@ -687,7 +687,7 @@ const password=$('#new-password')?.value||'',confirmPassword=$('#confirm-passwor
 if(password.length<10){authMessage='Please use at least 10 characters.';render(false);return}
 if(password!==confirmPassword){authMessage='The passwords do not match.';render(false);return}
 authPasswordBusy=true;const submit=update.querySelector('button[type=submit]');if(submit)submit.disabled=true;
-try{const {error}=await authClient.auth.updateUser({password});
+try{const {error}=await museumNetworkLimit(authClient.auth.updateUser({password}),15000);
 if(error){authMessage='Password could not be updated: '+error.message}
 else{authRecovery=false;authMessage='Your museum password has been saved. You can now sign in using your email and this password, or continue with Google.'}}
 catch(e){authMessage='Password could not be updated: '+String(e.message||e)}
@@ -701,16 +701,24 @@ if(!email||!password||password.length<8)return;
 const submit=$('#email-auth-submit');if(submit){submit.disabled=true;submit.textContent=museumZh('Please wait…')}
 try{
 if(emailAuthMode==='signup'){
-const {data,error}=await authClient.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}});
+const {data,error}=await museumNetworkLimit(authClient.auth.signUp({email,password,options:{emailRedirectTo:AUTH_REDIRECT}}),15000);
 if(error)authMessage=error.message;
 else if(data?.session){authMessage='Account created. You are signed in.';authUser=data.user||null}
 else authMessage='Registration received. Please check your inbox if email verification is required by the museum’s Supabase settings.';
 }else{
-const {data,error}=await authClient.auth.signInWithPassword({email,password});
+const {data,error}=await museumNetworkLimit(authClient.auth.signInWithPassword({email,password}),15000);
 if(error)authMessage=error.message;
 else {authMessage='Signed in successfully.';authUser=data?.user||null}
 }
-}catch(e){authMessage=String(e.message||e)}
+}catch(e){
+ const details=String(e.message||e);
+ authMessage=/timed out/i.test(details)?
+   museumReasonText(
+     'The login server did not respond in time. Please check your connection; if you were registering, check your email before trying again.',
+     '登录服务器响应超时。请检查网络；如果刚才在注册，请先查看邮箱是否收到验证邮件，再决定是否重试。',
+     '登入伺服器回應逾時。請檢查網絡；如果剛才在註冊，請先查看電郵是否收到驗證郵件，再決定是否重試。'
+   ):details;
+}
 render(false)
 };
 const signout=$('#auth-signout');if(signout)signout.onclick=async()=>{if(!authClient)return;const {error}=await authClient.auth.signOut();authMessage=error?error.message:'You have signed out.';if(!error)authUser=null;render(false)};
@@ -722,7 +730,7 @@ const next=session?.user||null;
 if(event==='PASSWORD_RECOVERY'){authRecovery=true;authMessage='Recovery link confirmed. Set your new password below.';if(location.hash!=='#/account')location.hash='#/account';}
 if(authUser?.id!==next?.id||event==='PASSWORD_RECOVERY'){authUser=next;setTimeout(()=>{refreshStoryCloud();checkCuratorAccess()},0);if($('#app'))render(false)}
 });
-try{const {data,error}=await authClient.auth.getSession();if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}
+try{const {data,error}=await museumNetworkLimit(authClient.auth.getSession(),10000);if(error)authMessage='Could not restore your session: '+error.message;authUser=data?.session?.user||null}
 catch(e){authMessage='Could not restore login: '+String(e.message||e)}
 authLoading=false;
 setTimeout(()=>{refreshStoryCloud();checkCuratorAccess()},0);
