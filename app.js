@@ -1508,7 +1508,7 @@ const MUSEUM_RESEARCH_ASSETS = {
     'museum-research-final-a.js?v=research-trilang-20261122-1',
     'museum-research-final-b.js?v=research-trilang-20261122-1',
     'museum-research-atlas.js?v=unified-dossier-6',
-    'museum-research-ivory-gallery.js?v=comparative-essays-v15'
+    'museum-research-ivory-gallery.js?v=comparative-essays-v16'
   ]
 };
 let museumResearchLoading = null;
