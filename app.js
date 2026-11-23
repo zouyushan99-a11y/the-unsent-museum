@@ -176,7 +176,42 @@ if(!Array.isArray(db.stories))db.stories=[];
 function dedupeAnswers(){const seen=new Set();db.answers=db.answers.slice().reverse().filter(a=>{if(!a||!a.scenario||seen.has(a.scenario))return false;seen.add(a.scenario);return true}).reverse()}
 dedupeAnswers();
 const save=()=>{dedupeAnswers();localStorage.setItem(KEY,JSON.stringify(db))};
-let flow={scenario:null,step:0,decision:'',reasons:[],other:'',otherConsent:false,otherLanguage:'auto',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false};
+let flow={scenario:null,step:0,decision:'',reasons:[],other:'',otherConsent:false,otherLanguage:'auto',share:'',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false};
+
+/* Preserve in-progress gallery state across mobile browser refreshes.
+   Never publish or transmit this browser-tab-only data. */
+const MUSEUM_EXPERIENCE_SESSION_PREFIX='unsent-gallery-progress-v2:';
+function museumNewExperience(id){
+ return {scenario:id,step:0,decision:'',reasons:[],other:'',otherConsent:false,
+  otherLanguage:'auto',share:'',title:'',storyCategory:null,story:'',why:'',
+  consent:false,exhibit:false,starMode:'',starName:'',submitted:false};
+}
+function museumRememberExperience(){
+ if(!SCENARIOS.some(sc=>sc.id===flow.scenario))return;
+ try{
+  sessionStorage.setItem(MUSEUM_EXPERIENCE_SESSION_PREFIX+flow.scenario,
+   JSON.stringify({version:2,savedAt:Date.now(),state:flow}));
+ }catch(_){/* Some browsers disable session storage; the normal flow still works. */}
+}
+function museumRecallExperience(id){
+ const fresh=museumNewExperience(id);
+ try{
+  const stored=JSON.parse(sessionStorage.getItem(MUSEUM_EXPERIENCE_SESSION_PREFIX+id)||'null');
+  if(stored?.version!==2||!stored.state||stored.state.scenario!==id||
+     !Number.isFinite(stored.savedAt)||Date.now()-stored.savedAt>7*86400000)return fresh;
+  const state={...fresh,...stored.state,scenario:id};
+  if(!Number.isInteger(state.step)||state.step<0||state.step>4)return fresh;
+  if(!['silent','speak'].includes(state.decision)&&state.step>0)state.step=0;
+  if(!Array.isArray(state.reasons))state.reasons=[];
+  state.reasons=[...new Set(state.reasons.filter(n=>Number.isInteger(n)&&((n>=0&&n<=6)||n===99)))];
+  if(state.step>1&&!state.reasons.length)state.step=1;
+  if(state.step>=3&&state.submitted!==true)state.step=2;
+  if(!['yes','no',''].includes(state.share))state.share='';
+  for(const key of ['other','title','story','why','starName'])if(typeof state[key]!=='string')state[key]='';
+  return state;
+ }catch(_){return fresh;}
+}
+window.addEventListener('pagehide',museumRememberExperience);
 let sharedAnswers=[];
 let sharedStatus='loading';
 let sharedError='';
@@ -1014,7 +1049,7 @@ function museumStoryInvitationPrivacy(){
   };
   return messages[museumLang]||messages.en;
 }
-function experience(id){const s=scenario(id);if(!s)return galleries();if(flow.scenario!==id){flow={scenario:id,step:0,decision:'',reasons:[],other:'',otherConsent:false,otherLanguage:'auto',share:'no',title:'',storyCategory:null,story:'',why:'',consent:false,exhibit:false,starMode:'',starName:'',submitted:false}}const stage=flow.step;let inner='';
+function experience(id){const s=scenario(id);if(!s)return galleries();if(flow.scenario!==id){flow=museumRecallExperience(id)}const stage=flow.step;let inner='';
 const curatorExperienceHantLabels={"策展人的真实经历":"策展人的真實經歷","体验这一刻 · 真实经历":"體驗這一刻 · 真實經歷","本情境取材于本馆策展人亲身经历的真实事件。":"本情境取材於本館策展人親身經歷的真實事件。","策展人当时真正的选择":"策展人當時真正的選擇","作出选择":"作出選擇","你觉得我会怎样做出选择？":"你覺得我會怎樣作出選擇？","我会提出异议":"我會提出異議","我会选择自己承担":"我會選擇自己承擔","选择理由后，你将看到策展人当时真正作出的决定。":"選擇理由後，你將看到策展人當時真正作出的決定。","你认为我为什么会作出这样的选择？":"你認為我為甚麼會作出這樣的選擇？","请选择你认为可能影响我作出决定的理由，可多选。":"請選擇你認為可能影響我作出決定的理由，可多選。","我会把爱与不舍说出口":"我會把愛與不捨說出口","我会选择把这些话留在心里":"我會選擇把這些話留在心裡","我会向老师提出异议":"我會向老師提出異議","我会选择保持沉默":"我會選擇保持沉默","我会按下发布按钮，让这段文字被别人看见。":"我會按下發佈按鈕，讓這段文字被別人看見。","我会选择把它留在草稿箱里。":"我會選擇把它留在草稿箱裡。"};
 const curatorLabel=(en,zh)=>museumLang==='en'?en:museumLang==='zh-Hant'?(curatorExperienceHantLabels[zh]||museumConvert(zh)):museumConvert(zh);
 const curatorPrimaryDraft=s.curatorTrueStory&&s.originalDraft?'<section class="curator-primary-source"><h3>'+esc(s.originalDraftLabel||"Original draft")+' <sup>1</sup></h3><blockquote class="curator-original-draft" lang="'+esc(museumLang)+'">'+esc(s.originalDraft)+'</blockquote></section>':'';
