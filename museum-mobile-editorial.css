@@ -434,3 +434,49 @@
   #app .choice-panel .curator-experience-story {padding:16px 13px}
   #app .choice-panel .curator-experience-story>.eyebrow {font-size:.69rem;letter-spacing:.06em}
 }
+
+/* Small-screen archival draft adjustments for the fourth true-life gallery. */
+@media (max-width:1180px), (max-width:1366px) and (pointer:coarse) {
+ #app .curator-primary-source,#app .curator-original-afterword,#app .curator-exhibit-note{
+  max-width:100%;min-width:0;box-sizing:border-box;
+ }
+ #app .curator-primary-source{padding:clamp(18px,2.8vw,30px)}
+ #app .curator-original-afterword{padding:clamp(20px,3vw,32px)}
+ #app .curator-original-draft,#app .curator-original-postscript{
+  width:100%;max-width:100%;white-space:pre-wrap;
+  line-height:2;overflow-wrap:anywhere;
+  font-size:clamp(1.04rem,1.6vw,1.14rem);
+ }
+ html:lang(zh) #app .curator-original-draft,
+ html:lang(zh) #app .curator-original-postscript{line-height:2.08;letter-spacing:.015em}
+ #app .curator-original-afterword .curator-outcome-quote{font-size:1.05rem;line-height:1.9}
+ #app .curator-exhibit-note .link-arrow{max-width:100%;white-space:normal}
+}
+@media(max-width:600px){
+ #app .curator-primary-source{
+  padding:18px 15px;margin:22px 0;border-radius:10px;
+ }
+ #app .curator-primary-source h3,#app .curator-original-afterword h3{
+  font-size:1.13rem;line-height:1.5;margin-bottom:15px;
+ }
+ #app .curator-original-draft,#app .curator-original-postscript{
+  font-size:1rem;line-height:1.95;letter-spacing:0;
+ }
+ html:lang(zh) #app .curator-original-draft,
+ html:lang(zh) #app .curator-original-postscript{font-size:1.015rem;line-height:2.06;letter-spacing:0}
+ #app .curator-original-afterword{
+  padding:20px 16px;margin:0 0 23px;border-radius:10px;
+ }
+ #app .curator-original-afterword .curator-outcome-quote{
+  margin-bottom:21px;padding:14px 12px;font-size:1rem;line-height:1.9;
+ }
+ #app .curator-exhibit-note{padding:18px 16px;margin-bottom:25px}
+ #app .curator-experience-story>.curator-source-footnote,
+ #app .curator-original-afterword>.curator-source-footnote{
+  font-size:.79rem;line-height:1.75;
+ }
+}
+@media(max-width:360px){
+ #app .curator-primary-source{padding:15px 12px}
+ #app .curator-original-afterword{padding:17px 13px}
+}
