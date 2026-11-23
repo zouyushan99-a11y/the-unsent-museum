@@ -50,7 +50,10 @@
     const panel = document.createElement('section');
     panel.id = 'museum-music-panel';
     panel.className = 'museum-music-panel';
-    panel.hidden = true;
+    // Keep the Suno iframe mounted even when its controls are tucked away.
+    panel.classList.add('is-collapsed');
+    panel.setAttribute('aria-hidden', 'true');
+    panel.inert = true;
     const head = document.createElement('div');
     head.className = 'museum-music-head';
     const info = document.createElement('div');
@@ -95,19 +98,18 @@
       button.setAttribute('aria-label', t.toggle);
     }
     function setOpen(open) {
-      panel.hidden = !open;
+      panel.classList.toggle('is-collapsed', !open);
+      panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+      panel.inert = !open;
       button.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open) {
-        if (!frame.getAttribute('src')) frame.src = EMBED_URL;
-      } else {
-        // An explicit close stops the third-party player, avoiding surprise playback.
-        frame.removeAttribute('src');
-      }
+      // Only load once after the visitor chooses to open the player.
+      // Closing the panel never resets the iframe or interrupts playback.
+      if (open && !frame.getAttribute('src')) frame.src = EMBED_URL;
     }
-    button.addEventListener('click', () => setOpen(panel.hidden));
-    close.addEventListener('click', () => setOpen(false));
+    button.addEventListener('click', () => setOpen(panel.classList.contains('is-collapsed')));
+    close.addEventListener('click', () => { setOpen(false); button.focus(); });
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && !panel.hidden) { setOpen(false); button.focus(); }
+      if (e.key === 'Escape' && !panel.classList.contains('is-collapsed')) { setOpen(false); button.focus(); }
     });
     new MutationObserver(translate).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
     translate();
