@@ -15,3 +15,7 @@ body > .museum-music-dock.museum-native-dock{position:fixed;display:block;visibi
 .museum-native-error{font-size:.76rem;color:#ffd0b2;line-height:1.5}
 .museum-native-error:empty{display:none}
 @media(max-width:600px){.museum-native-dock .museum-native-toggle{min-height:44px}.museum-native-expand{width:44px;height:44px}.museum-native-panel{max-height:calc(100dvh - 105px)}}
+
+.museum-native-status{font-size:.78rem;color:#f4d69b;line-height:1.4;margin:4px 0}
+.museum-native-status:empty{display:none}
+.museum-native-toggle.is-buffering{opacity:.82;cursor:progress}
