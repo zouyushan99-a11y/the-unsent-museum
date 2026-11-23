@@ -4,20 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#06101d" />
-  <meta name="description" content="The Unsent Museum — an interactive literary museum of silence, choices, and untold stories." />
   <title>The Lookout — The Unsent Museum</title>
-  <link rel="stylesheet" href="styles.css?v=public-written-reasons-v1" />
-  <link rel="stylesheet" href="museum-zh-typography.css?v=zh-title6" />
-  <link rel="stylesheet" href="museum-mobile-editorial.css?v=before-sending-archive-mobile1" />
+  <script>
+    /* Old links and bookmarks pointed to a separate lookout.html document,
+       which tore down the background audio. Send them to the main SPA.
+       All internal museum links now use #/lookout/... directly. */
+    (() => {
+      const hash = location.hash;
+      const route = hash.startsWith('#/lookout') || hash.startsWith('#/sky/')
+        ? hash : '#/lookout';
+      const target = new URL('./', location.href);
+      target.hash = route;
+      location.replace(target.href);
+    })();
+  </script>
 </head>
-<body>
-  <div id="app"></div>
-  <script>if (!location.hash.startsWith("#/lookout") && !location.hash.startsWith("#/sky/")) location.hash="#/lookout";</script>
-  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/opencc-js@1.4.2/dist/umd/full.js"></script>
-  <script defer src="museum-i18n.js?v=public-written-reasons-v1"></script>
-  <script defer src="museum-i18n-completeness.js?v=zh-resistance-final4"></script>
-  <script defer src="museum-i18n-audit-2026.js?v=gallery-recuration-20261122"></script>
-  <script defer src="app.js?v=public-written-reasons-v3"></script>
+<body style="background:#06101d;color:#eadab2;font:16px system-ui,sans-serif;padding:3rem">
+  <p>Opening The Lookout in The Unsent Museum…</p>
+  <p><a style="color:#eadab2" href="./#/lookout">Open the Lookout</a></p>
 </body>
 </html>
