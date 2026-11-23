@@ -1,0 +1,122 @@
+/* A quiet music exhibit, following the curator's letter in About the Museum. */
+#app .museum-soundtrack{
+ width:min(100%,930px);
+ max-width:100%;
+ min-width:0;
+ margin:0 auto clamp(52px,6vw,86px);
+ padding:4px;
+ border:1px solid rgba(239,198,116,.66);
+ border-radius:21px;
+ background:linear-gradient(130deg,#d2a862,#213c61 45%,#c09a57);
+ box-shadow:0 20px 52px rgba(1,7,19,.35);
+}
+#app .museum-soundtrack-frame{
+ min-width:0;
+ border:1px solid rgba(235,195,117,.22);
+ border-radius:17px;
+ padding:clamp(28px,5vw,60px);
+ background:
+  radial-gradient(ellipse at 12% 0%,rgba(92,127,188,.18),transparent 38%),
+  radial-gradient(ellipse at 95% 95%,rgba(198,158,83,.085),transparent 44%),
+  linear-gradient(155deg,#152941 0%,#0b1a30 58%,#0b162a 100%);
+ color:#f3e9d4;
+}
+#app .museum-soundtrack-head{
+ text-align:center;
+ padding-bottom:clamp(24px,3.6vw,35px);
+ margin-bottom:clamp(24px,3vw,38px);
+ border-bottom:1px solid rgba(230,195,124,.28);
+}
+#app .museum-soundtrack-ornament{
+ font-size:1.05rem;
+ letter-spacing:.55em;
+ color:#e9bf73;
+ margin-bottom:19px;
+}
+#app .museum-soundtrack-head .eyebrow{
+ color:#dfc188;
+ letter-spacing:.19em;
+ font-size:.76rem;
+ line-height:1.6;
+ margin:0 0 12px;
+}
+#app .museum-soundtrack-head h2{
+ font-family:Georgia,'Playfair Display',serif;
+ font-size:clamp(2.05rem,4vw,3rem);
+ font-weight:400;
+ color:#f9dda4;
+ letter-spacing:.035em;
+ line-height:1.25;
+ margin:0;
+ overflow-wrap:anywhere;
+}
+#app .museum-soundtrack-lead{
+ font:italic clamp(1rem,1.5vw,1.13rem)/1.85 Georgia,serif;
+ color:#e2d2b4;
+ max-width:38rem;
+ margin:16px auto 0;
+}
+#app .museum-soundtrack-body{
+ max-width:70ch;
+ margin:0 auto;
+ font:400 clamp(1.03rem,1.5vw,1.14rem)/1.94 Georgia,serif;
+ color:#e6e2dc;
+ letter-spacing:.004em;
+ overflow-wrap:break-word;
+}
+#app .museum-soundtrack-body p{margin:0}
+#app .museum-soundtrack-body p+p{margin-top:1.45em}
+#app .museum-soundtrack-foot{
+ display:flex;
+ justify-content:center;
+ max-width:70ch;
+ margin:clamp(26px,3.6vw,40px) auto 0;
+ padding-top:clamp(18px,3vw,27px);
+ border-top:1px solid rgba(230,195,124,.24);
+}
+#app .museum-soundtrack-foot a{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ min-height:44px;
+ border:1px solid rgba(237,193,105,.48);
+ border-radius:100px;
+ padding:10px 22px;
+ color:#f6d58e;
+ background:rgba(213,166,83,.08);
+ font-size:.93rem;
+ text-align:center;
+ line-height:1.55;
+ overflow-wrap:anywhere;
+}
+#app .museum-soundtrack-foot a:hover,
+#app .museum-soundtrack-foot a:focus-visible{
+ background:rgba(231,190,101,.17);
+ color:#fff1c5;
+ border-color:#f4d18c;
+}
+html:lang(zh) #app .museum-soundtrack-head h2,
+html:lang(zh) #app .museum-soundtrack-lead,
+html:lang(zh) #app .museum-soundtrack-body{
+ font-family:var(--museum-zh-serif,Georgia,serif);
+ line-break:strict;
+ word-break:normal;
+}
+html:lang(zh) #app .museum-soundtrack-body{line-height:2.1;letter-spacing:.012em}
+@media(max-width:850px){
+ #app .museum-soundtrack-frame{padding:clamp(24px,4vw,38px)}
+ #app .museum-soundtrack-body{font-size:1.06rem;line-height:2}
+}
+@media(max-width:600px){
+ #app .museum-soundtrack{padding:3px;border-radius:15px;margin-bottom:48px}
+ #app .museum-soundtrack-frame{padding:27px 19px 30px;border-radius:11px}
+ #app .museum-soundtrack-ornament{font-size:.9rem;margin-bottom:14px}
+ #app .museum-soundtrack-head{padding-bottom:22px;margin-bottom:24px}
+ #app .museum-soundtrack-head h2{font-size:clamp(1.8rem,8vw,2.3rem)}
+ #app .museum-soundtrack-lead{font-size:.98rem;line-height:1.8}
+ #app .museum-soundtrack-body{font-size:1rem;line-height:1.95}
+ html:lang(zh) #app .museum-soundtrack-body{font-size:1.02rem;line-height:2.06;letter-spacing:0}
+ #app .museum-soundtrack-body p+p{margin-top:1.3em}
+ #app .museum-soundtrack-foot{margin-top:27px}
+ #app .museum-soundtrack-foot a{width:100%}
+}
