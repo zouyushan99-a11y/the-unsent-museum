@@ -33,4 +33,13 @@ assert(images.includes('img.loading="lazy"'),'Archival images must lazy load');
 assert(images.includes('imageWidth()'),'Responsive archival image sizing missing');
 const serif=get('museum-zh-typography.css');
 assert(!serif.includes('family=family='),'Invalid font URL');
-console.log('Structure, navigation, performance and publication safety checks passed. Homepage scripts: '+files.length);
+const research=get('museum-research-atlas.js');
+const links=[...research.matchAll(/https:\/\/[^'"\\s)]+/g)].map(match=>match[0]);
+assert(links.length>=35,'Research source index unexpectedly lost references');
+assert.equal(links.length,new Set(links).size,'Duplicate reference URL in research source list');
+for(const value of links){
+ const parsed=new URL(value);
+ assert.equal(parsed.protocol,'https:','Research reference must use HTTPS');
+ assert(!/example\.(org|com)|placeholder|undefined/i.test(value),'Invalid placeholder reference');
+}
+console.log('Structure, navigation, performance and publication safety checks passed. Research links: '+links.length+'; homepage scripts: '+files.length);
