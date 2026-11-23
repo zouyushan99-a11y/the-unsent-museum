@@ -1,0 +1,17 @@
+/* Optional persistent Suno music nook — outside the SPA root. */
+.museum-music-dock{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:950;max-width:calc(100vw - 32px);font-family:'DM Sans',system-ui,sans-serif}
+.museum-music-toggle{display:flex;align-items:center;gap:8px;border:1px solid rgba(225,192,123,.54);border-radius:100px;background:rgba(13,24,40,.94);color:#eadab2;padding:9px 15px;box-shadow:0 8px 26px rgba(0,0,0,.22);font-size:.78rem;letter-spacing:.04em;cursor:pointer;backdrop-filter:blur(12px)}
+.museum-music-toggle:hover,.museum-music-toggle:focus-visible{border-color:#e9c777;color:#fff0cb;background:#182b46}
+.museum-music-note{font-family:Georgia,serif;font-size:1.05rem;line-height:1;color:#eac879}
+.museum-music-panel{position:absolute;left:0;bottom:calc(100% + 12px);width:min(370px,calc(100vw - 32px));max-height:min(460px,calc(100dvh - 100px));overflow:auto;padding:17px;border-radius:17px;border:1px solid rgba(222,183,109,.38);background:linear-gradient(145deg,#111e33,#080e19);color:#f7edd9;box-shadow:0 20px 50px rgba(0,0,0,.42)}
+.museum-music-panel[hidden]{display:none}
+.museum-music-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+.museum-music-info{display:flex;flex-direction:column;gap:2px}
+.museum-music-eyebrow{font-size:.62rem;text-transform:uppercase;letter-spacing:.13em;color:#dfbc74}
+.museum-music-title{font:400 1.25rem Georgia,serif;color:#f6db9c}
+.museum-music-subtitle{font-size:.75rem;color:#b9c7d6}
+.museum-music-close{width:30px;height:30px;flex-shrink:0;background:transparent;border:1px solid rgba(241,223,174,.25);border-radius:50%;color:#e1d1a4;font-size:1.2rem;line-height:1;cursor:pointer}
+.museum-music-iframe{display:block;width:100%;height:164px;border:0;border-radius:10px;background:#152037}
+.museum-music-note-text{font-size:.73rem;line-height:1.6;color:#b8c3d1;margin:12px 0 8px}
+.museum-music-link{font-size:.78rem;color:#f0cf88;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.museum-music-dock{left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}.museum-music-toggle{padding:8px 12px;font-size:.75rem}.museum-music-panel{width:min(340px,calc(100vw - 24px));max-height:calc(100dvh - 90px)}}
