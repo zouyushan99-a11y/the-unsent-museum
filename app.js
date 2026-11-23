@@ -462,23 +462,42 @@ async function submitSharedAnswer(){
  if(!sc||!['silent','speak'].includes(flow.decision)||!flow.reasons.length){submitError='Please complete your choice and reasons first.';render(false);return}
  const allowed=flow.reasons.every(n=>Number.isInteger(n)&&((n>=0&&n<sc[flow.decision].length)||n===99));
  if(!allowed){submitError='One of your selected reasons is invalid.';render(false);return}
+ if(flow.reasons.includes(99)&&(!flow.other?.trim()||!flow.otherConsent)){submitError='You must write a reason and agree to its public display and translation.';render(false);return}
  submitBusy=true;submitError='';const next=$('#next');if(next){next.disabled=true;next.textContent=museumZh('Saving your star…')}
  try{
-   const payload={user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],
-      star_visibility:flow.starMode,star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):''};
-   let {data:saved,error}=await authClient.from('museum_answers').upsert(payload,{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single();
-   // Anonymous contributions remain compatible with the existing star database
-   // until the optional star-attribution migration is activated.
-   if(error&&flow.starMode==='anonymous'&&/star_visibility|star_display_name|schema cache|column/i.test(error.message||'')){
-     ({data:saved,error}=await authClient.from('museum_answers').upsert({
-       user_id:payload.user_id,scenario:payload.scenario,decision:payload.decision,reasons:payload.reasons
-     },{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single());
+   const customSelected=flow.reasons.includes(99);
+   let saved=null,error=null;
+   if(customSelected){
+     const sourceLanguage=flow.otherLanguage&&flow.otherLanguage!=='auto'?flow.otherLanguage:museumGuessReasonLanguage(flow.other);
+     const body={
+       scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],
+       otherReason:flow.other.trim(),sourceLanguage,publicConsent:flow.otherConsent===true,
+       starVisibility:flow.starMode,starDisplayName:flow.starMode==='named'?flow.starName.trim().slice(0,80):''
+     };
+     const response=await authClient.functions.invoke('publish-translated-reason',{body});
+     if(response.error||response.data?.error||!response.data?.ok){
+       const message=response.data?.error||response.error?.message||'Translation service did not confirm publication.';
+       throw new Error(message);
+     }
+     saved={id:response.data.id,scenario:flow.scenario,decision:flow.decision,reasons:flow.reasons};
+   }else{
+     // Removing a previously written reason also removes its public text and translation.
+     const payload={
+       user_id:authUser.id,scenario:flow.scenario,decision:flow.decision,reasons:[...new Set(flow.reasons)],
+       star_visibility:flow.starMode,star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):'',
+       other_reason:'',other_reason_language:'und',other_reason_translations:{},other_reason_status:'legacy'
+     };
+     ({data:saved,error}=await authClient.from('museum_answers').upsert(payload,{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single());
+     if(error)throw error;
    }
-   if(error)throw error;
    if(!saved?.id)throw new Error('The database did not confirm a saved answer.');
    
    await refreshSharedAnswers();
    publicStarVerified=sharedStatus==='ready'&&sharedAnswers.some(a=>a.id===String(saved.id)&&a.scenario===saved.scenario);
+   if(customSelected&&!customReasonServiceReady)throw new Error('The public translated-reason feed could not be verified.');
+   if(customSelected&&!sharedAnswers.some(a=>a.id===String(saved.id)&&a.customReason?.translations?.en&&a.customReason?.translations?.['zh-Hans']&&a.customReason?.translations?.['zh-Hant'])){
+     throw new Error('The reason was saved, but public translations were not confirmed yet.');
+   }
    if(flow.starMode==='named'&&(!starIdentityServiceReady||starNames.get(String(saved.id))!==flow.starName.trim().slice(0,80)))throw new Error('Star saved, but public name was not confirmed. Complete the star identity SQL setup.');
    if(!publicStarVerified){
       throw new Error('Your answer was saved, but it could not be confirmed in the public starfield. Please check the Lookout status before submitting again.');
