@@ -34,7 +34,7 @@ assert(images.includes('imageWidth()'),'Responsive archival image sizing missing
 const serif=get('museum-zh-typography.css');
 assert(!serif.includes('family=family='),'Invalid font URL');
 const research=get('museum-research-atlas.js');
-const links=[...research.matchAll(/https:\/\/[^'"\\s)]+/g)].map(match=>match[0]);
+const links=[...research.matchAll(/https:\/\/[^'"\s)]+/g)].map(match=>match[0]);
 assert(links.length>=35,'Research source index unexpectedly lost references');
 assert.equal(links.length,new Set(links).size,'Duplicate reference URL in research source list');
 for(const value of links){
