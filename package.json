@@ -1,6 +1,13 @@
 {
   "name": "the-unsent-museum",
   "private": true,
-  "scripts": {"test": "node tests/i18n.cjs"},
-  "devDependencies": {"jsdom": "31.0.1", "opencc-js": "1.4.2"}
+  "scripts": {
+    "test": "node tests/i18n.cjs",
+    "test:research": "node tests/research-sources.cjs",
+    "test:structure": "node tests/structure.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "31.0.1",
+    "opencc-js": "1.4.2"
+  }
 }
