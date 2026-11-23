@@ -7,10 +7,38 @@ const w=dom.window;w.eval=code=>require('vm').runInContext(code,dom.getInternalV
 for(const m of fs.readFileSync(dir+'/index.html','utf8').matchAll(/<script defer src="([^?" ]+)/g)){
  const file=m[1];if(file.startsWith('https:')||file==='museum-researched-images.js')continue;
  let code=fs.readFileSync(dir+'/'+file,'utf8');if(file==='app.js')code=code.slice(0,code.indexOf('render(true);initAuth();'));
- try{w.eval(code)}catch(e){console.error(file,e.message)}
+ try{w.eval(code)}catch(e){throw new Error('Error evaluating '+file+': '+e.message,{cause:e})}
 }
-const routes=w.eval("['/','/galleries','/archive','/lookout','/research','/about','/privacy','/account','/feedback','/my-stories','/story-sky','/contribute/others','/diagnostics','/curator','/curator-feedback',...SCENARIOS.flatMap(s=>['/gallery/'+s.id,'/experience/'+s.id,'/research/'+s.id]),'/gallery/others','/archive/others',...SCENARIOS.map(s=>'/archive/'+s.id),...HISTORICAL_SILENCES.map(x=>'/history/'+x.id),...window.MUSEUM_COLLECTIVES.map(x=>'/collectives/'+x.id)]");
+// The production site intentionally defers large archives until a visitor enters.
+// This route-rendering suite explicitly supplies those assets in their original order,
+// then marks the loaders ready. Keep a separate assertion that the entry HTML does not
+// eagerly fetch these large bundles.
+const historicalAssets=w.eval('MUSEUM_PERSONAL_HISTORY_ASSETS.slice()');
+const collectiveAssets=w.eval('MUSEUM_COLLECTIVE_ASSETS.slice()');
+const researchAssets=w.eval('MUSEUM_RESEARCH_ASSETS.js.slice()');
+const loadFixture=(url)=>{
+ const file=url.split('?')[0];
+ if(!fs.existsSync(path.join(dir,file)))throw Error('Required test fixture missing: '+file);
+ w.eval(fs.readFileSync(path.join(dir,file),'utf8'));
+};
 const assert=require('node:assert/strict');
+assert(!entry.includes('src="bundles/history-core-1.js'), 'History files must be lazy');
+assert(!entry.includes('src="bundles/collective-archive-1.js'), 'Collective files must be lazy');
+assert.equal(w.eval('MUSEUM_NEW_CASES.length'),33,'Navigation catalog must be available before archive loading');
+assert.equal(Object.keys(w.MUSEUM_HISTORY_LONGFORM||{}).length,0,'The personal archive must not load on the homepage');
+assert.equal((w.MUSEUM_COLLECTIVES||[]).length,0,'The collective archive must not load on the homepage');
+// The longform initializer re-adds full candidate records; remove catalog stubs once.
+w.eval('window.MUSEUM_NEW_CASES=[]');
+historicalAssets.forEach(loadFixture);
+collectiveAssets.forEach(loadFixture);
+researchAssets.forEach(loadFixture);
+w.eval('MUSEUM_PERSONAL_HISTORY_ASSETS.forEach(x=>museumPersonalLoadedFiles.add(x))');
+w.eval('MUSEUM_COLLECTIVE_ASSETS.forEach(x=>museumCollectiveLoadedFiles.add(x))');
+assert.equal(Object.keys(w.MUSEUM_HISTORY_LONGFORM||{}).length,69);
+assert.equal(Object.keys(w.MUSEUM_HISTORY_ZH||{}).length,69);
+assert.equal(w.MUSEUM_COLLECTIVES.length,20);
+assert(w.MUSEUM_RESEARCH_ATLAS,'Research atlas must initialize for route tests');
+const routes=w.eval("['/','/galleries','/archive','/lookout','/research','/about','/privacy','/account','/feedback','/my-stories','/story-sky','/contribute/others','/diagnostics','/curator','/curator-feedback',...SCENARIOS.flatMap(s=>['/gallery/'+s.id,'/experience/'+s.id,'/research/'+s.id]),'/gallery/others','/archive/others',...SCENARIOS.map(s=>'/archive/'+s.id),...HISTORICAL_SILENCES.map(x=>'/history/'+x.id),...window.MUSEUM_COLLECTIVES.map(x=>'/collectives/'+x.id)]");
 assert.equal(w.eval('HISTORICAL_SILENCES.length'),69);
 assert.equal(w.MUSEUM_COLLECTIVES.length,20);
 let checked=0;
