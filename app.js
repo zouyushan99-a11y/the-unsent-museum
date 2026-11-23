@@ -1816,6 +1816,60 @@ function museumCollectiveLoadError(error){
   });
   console.error('Collective archive load error',error);
 }
+/* Personal history: the 33-person navigation index is available immediately;
+ * longform records load only upon entering the personal Historical Wing.
+ * Fetch serially: later scripts overwrite or extend earlier archive entries. */
+const MUSEUM_PERSONAL_HISTORY_ASSETS=[
+  'bundles/history-core-1.js?v=archive-pack-20261124-1',
+  'bundles/history-core-2.js?v=archive-pack-20261124-1',
+  'bundles/history-readings-1.js?v=archive-pack-20261124-1',
+  'bundles/history-readings-2.js?v=archive-pack-20261124-1',
+  'bundles/history-readings-3.js?v=archive-pack-20261124-1',
+  'bundles/history-init-i18n.js?v=archive-pack-20261124-1',
+  'museum-history-curator.js?v=acceptance-20261122-final1'
+];
+const museumPersonalLoadedFiles=new Set();
+let museumPersonalLoading=null;
+let museumPersonalStarted=false;
+function museumLoadPersonalHistory(){
+  if(museumPersonalLoadedFiles.size===MUSEUM_PERSONAL_HISTORY_ASSETS.length)return Promise.resolve();
+  if(museumPersonalLoading)return museumPersonalLoading;
+  museumPersonalLoading=(async()=>{
+    if(!museumPersonalStarted){
+      museumPersonalStarted=true;
+      // Replace the catalog-only entries with full original records exactly once.
+      window.MUSEUM_NEW_CASES=[];
+    }
+    for(const url of MUSEUM_PERSONAL_HISTORY_ASSETS){
+      if(museumPersonalLoadedFiles.has(url))continue;
+      await museumLoadScript(url);
+      museumPersonalLoadedFiles.add(url);
+    }
+    if(Object.keys(window.MUSEUM_HISTORY_LONGFORM||{}).length<69)
+      throw new Error('Personal historical records were not fully initialized');
+  })().finally(()=>{museumPersonalLoading=null});
+  return museumPersonalLoading;
+}
+function museumLoadingPersonalHistory(info){
+  const title=museumReasonText('Opening the Personal Archives…','正在开启个人历史档案……','正在開啟個人歷史檔案……');
+  const copy=museumReasonText('Preparing the documented stories and their translations.','正在载入历史故事与翻译内容。','正在載入歷史故事與翻譯內容。');
+  $('#app').innerHTML=header(info.path)+
+    '<main class="container" role="status" aria-live="polite" style="min-height:45vh;padding:clamp(3rem,8vw,6rem) 1.5rem">'+
+    '<p class="eyebrow">THE UNSENT MUSEUM</p><h1>'+title+'</h1><p class="muted">'+copy+'</p></main>'+footer();
+}
+function museumPersonalLoadError(error){
+  const r=route();if(r.type!=='history')return;
+  const title=museumReasonText('The historical archive could not load.','个人历史档案暂时无法载入。','個人歷史檔案暫時無法載入。');
+  const copy=museumReasonText('Your stories and answers were not changed. Check your connection and retry.','你的故事和选择未被修改。请检查网络后重试。','你的故事和選擇未被修改。請檢查網絡後重試。');
+  const retry=museumReasonText('Retry loading','重新加载','重新載入');
+  $('#app').innerHTML=header(r.path)+'<main class="container" role="alert" style="min-height:45vh;padding:4rem 1.5rem">'+
+    '<h1>'+title+'</h1><p>'+copy+'</p><button type="button" class="btn" id="history-retry">'+retry+'</button></main>'+footer();
+  $('#history-retry')?.addEventListener('click',()=>{
+    const latest=route();museumLoadingPersonalHistory(latest);
+    museumLoadPersonalHistory().then(()=>{if(route().path===latest.path)render(false)}).catch(museumPersonalLoadError);
+  });
+  console.error('Personal historical archive load error',error);
+}
 function museumLoadResearch() {
   if(window.MUSEUM_RESEARCH_ATLAS)return Promise.resolve();
   if(museumResearchLoading)return museumResearchLoading;
@@ -1849,6 +1903,11 @@ function museumResearchLoadError(error){
   console.error('Research module loading error',error);
 }
 function render(scroll=true){hideStarTooltip(true);const r=route();
+  if(r.type==='history'&&museumPersonalLoadedFiles.size!==MUSEUM_PERSONAL_HISTORY_ASSETS.length){
+    museumLoadingPersonalHistory(r);
+    museumLoadPersonalHistory().then(()=>{if(route().path===r.path)render(scroll)}).catch(museumPersonalLoadError);
+    return;
+  }
   if(r.type==='collective'&&museumCollectiveLoadedFiles.size!==MUSEUM_COLLECTIVE_ASSETS.length){
     museumLoadingCollectives(r);
     museumLoadCollectives().then(()=>{if(route().path===r.path)render(scroll)}).catch(museumCollectiveLoadError);
