@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-23T15:17:18.276Z",
+  "count": 11,
+  "stars": [
+    {
+      "id": "public-mirror-1",
+      "scenario": "classroom",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-2",
+      "scenario": "family",
+      "decision": "speak",
+      "reasons": [
+        1,
+        0,
+        3
+      ]
+    },
+    {
+      "id": "public-mirror-3",
+      "scenario": "friendship",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-4",
+      "scenario": "classroom",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-5",
+      "scenario": "family",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        3,
+        2,
+        4,
+        6,
+        5
+      ]
+    },
+    {
+      "id": "public-mirror-6",
+      "scenario": "friendship",
+      "decision": "silent",
+      "reasons": [
+        1,
+        0,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-7",
+      "scenario": "friendship",
+      "decision": "silent",
+      "reasons": [
+        99
+      ]
+    },
+    {
+      "id": "public-mirror-8",
+      "scenario": "classroom",
+      "decision": "speak",
+      "reasons": [
+        2
+      ]
+    },
+    {
+      "id": "public-mirror-9",
+      "scenario": "before-sending",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-10",
+      "scenario": "family",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        3,
+        4,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-11",
+      "scenario": "before-sending",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    }
+  ]
+}
