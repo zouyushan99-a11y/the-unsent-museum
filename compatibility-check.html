@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06101d">
+<title>Browser & Connection Check · The Unsent Museum</title>
+<style>
+:root{color-scheme:dark;--gold:#efd083;--text:#f1e9d6;--muted:#c0cbd8;--line:#5b6580;--panel:#0e2036}
+*{box-sizing:border-box}
+html{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#06101d;color:var(--text)}
+body{margin:0;background:radial-gradient(ellipse at 65% 10%,#183552 0%,#06101d 70%);min-height:100dvh;line-height:1.65;padding:clamp(18px,4vw,40px)}
+main{max-width:720px;margin:0 auto;padding:clamp(20px,4vw,42px);border:1px solid #a99a73;border-radius:22px;background:rgba(4,16,31,.8)}
+h1{font-size:clamp(1.65rem,6vw,2.6rem);color:var(--gold);line-height:1.25;margin:.65rem 0 1.2rem}
+h2{font-size:1.1rem;color:var(--gold);margin:1.5rem 0 .5rem}
+p,li{font-size:1rem;color:var(--muted)}
+.kicker{color:var(--gold);font-size:.8rem;letter-spacing:.14em}
+select,button,a.action{font:inherit;color:var(--text);background:#122b47;border:1px solid #c5a96e;border-radius:12px;padding:10px 15px;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button:hover,a.action:hover{background:#243b51}
+a{color:var(--gold)}
+nav{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0}
+button.primary{background:#efd083;color:#112138;border-color:#efd083;font-weight:600}
+button.primary:hover{background:#ffe0a0}
+ul{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:9px}
+li{padding:12px 14px;border:1px solid #3b4a5b;border-radius:10px;background:var(--panel);overflow-wrap:anywhere}
+li strong{display:block;color:var(--text);font-size:.96rem}
+li span{display:block;font-size:.85rem}
+li.pass{border-color:#648b76}li.fail{border-color:#ae7a73}li.pending{border-color:#7d735c}
+small{display:block;margin-top:24px;color:#aebcce}
+#summary{margin-top:18px;padding:12px;background:rgba(213,169,75,.10);border-radius:10px;white-space:pre-line}
+@media(max-width:540px){main{padding:18px}select,button{min-height:46px}.actions button{flex:1 1 140px}li{padding:12px}}
+</style>
+</head>
+<body>
+<main>
+<nav><span class="kicker">✧ THE UNSENT MUSEUM</span>
+<select id="language" aria-label="Language"><option value="zh-Hans">简体中文</option><option value="zh-Hant">繁體中文</option><option value="en">English</option></select></nav>
+<h1 id="heading">浏览器与网络检测</h1>
+<p id="intro">用于检查内地手机浏览器是否能加载博物馆的脚本、公共星空、音乐和数据库。无需登录，也不会提交任何故事或星星。</p>
+<p id="device"></p>
+<div class="actions">
+<button class="primary" type="button" id="run">开始检测</button>
+<button type="button" id="copy" disabled>复制检测结果</button>
+</div>
+<div id="summary" role="status" aria-live="polite"></div>
+<ul id="results" aria-live="polite"></ul>
+<p id="guide"></p>
+<small id="privacy">隐私说明：此页面不会读取您的账号、私人草稿或故事内容，也不会上传测试报告。复制结果后可自行发送给博物馆创建者。</small>
+<p><a href="./" id="return">← 返回博物馆</a></p>
+</main>
+<script>
+(function(){
+'use strict';
+var T={
+'zh-Hans':{
+ heading:'浏览器与网络检测',
+ intro:'用于检查内地手机浏览器是否能加载博物馆的脚本、公共星空、音乐和数据库。无需登录，也不会提交任何故事或星星。',
+ run:'开始检测',again:'重新检测',copy:'复制检测结果',copied:'已复制',
+ guide:'如果某项失败，把检测结果或截图发给博物馆创建者。能看见备份星星，不代表可以登录或提交新星星。',
+ privacy:'隐私说明：此页面不会读取您的账号、私人草稿或故事内容，也不会上传测试报告。复制结果后可自行发送给博物馆创建者。',
+ back:'← 返回博物馆',browser:'检测到的浏览器（仅供参考）',ready:'点击“开始检测”以检查网络。',running:'正在检测，请不要关闭页面……',done:'检测完成。失败项目不一定是浏览器自身的问题，也可能是当地网络限制。',
+ wait:'检测中',ok:'正常',fail:'失败',storage:'本地进度保存',static:'公共星空备份文件',sdk:'登录脚本加载',database:'实时公共星空数据库',music:'主题曲 MP3 文件',
+ yes:'可读写',no:'浏览器拒绝或无法保存',staticOk:'可读取备用数据，共 ',count:' 条回答',
+ sdkOk:'已加载 Supabase 登录脚本',dbOk:'已返回公开星星，共 ',musicOk:'文件可访问',
+ timeout:'连接超时',notReady:'浏览器不支持所需的 JavaScript 功能',note:'注意：当前结果只反映这台设备、这个网络在检测时的情况。'
+},
+'zh-Hant':{
+ heading:'瀏覽器與網絡檢測',
+ intro:'檢查內地手機瀏覽器能否載入博物館的程式、公共星空、音樂及資料庫。不需要登入，也不會提交任何故事或星星。',
+ run:'開始檢測',again:'重新檢測',copy:'複製檢測結果',copied:'已複製',
+ guide:'若有項目失敗，可把檢測結果或截圖傳給博物館創建者。能看到備份星星，不代表能登入或提交新星星。',
+ privacy:'隱私說明：此頁面不會讀取您的帳戶、私人草稿或故事內容，也不會上傳測試報告。複製結果後可自行發送給博物館創建者。',
+ back:'← 返回博物館',browser:'偵測到的瀏覽器（僅供參考）',ready:'按「開始檢測」檢查網絡。',running:'正在檢測，請不要關閉頁面……',done:'檢測完成。失敗項目也可能源於當地網絡限制，未必是瀏覽器本身。',
+ wait:'檢測中',ok:'正常',fail:'失敗',storage:'本機進度儲存',static:'公共星空備份檔案',sdk:'登入程式載入',database:'即時公共星空資料庫',music:'主題曲 MP3 檔案',
+ yes:'可以讀寫',no:'瀏覽器拒絕或無法儲存',staticOk:'可讀取備份資料，共 ',count:' 條回答',
+ sdkOk:'已載入 Supabase 登入程式',dbOk:'已傳回公共星星，共 ',musicOk:'檔案可以存取',
+ timeout:'連線逾時',notReady:'瀏覽器不支援必要的 JavaScript 功能',note:'注意：結果只反映這部裝置在檢測當下的網絡狀態。'
+},
+'en':{
+ heading:'Browser & connection check',
+ intro:'Check whether this browser can load the museum, its public sky, music, and database. No login is required. Nothing is published or submitted.',
+ run:'Run checks',again:'Check again',copy:'Copy results',copied:'Copied',
+ guide:'If a check fails, send these results or a screenshot to the museum creator. A visible star snapshot does not mean signing in or publishing new stars is possible.',
+ privacy:'Privacy: No account, private draft or story is read, and no report is uploaded. You decide whether to share the copied results.',
+ back:'← Back to the museum',browser:'Detected browser (approximate)',ready:'Press Run checks to test your connection.',running:'Testing… Please keep this page open.',done:'Check complete. Failures can be caused by network restrictions, not necessarily by your browser.',
+ wait:'Testing',ok:'OK',fail:'Failed',storage:'Local progress storage',static:'Public-star snapshot file',sdk:'Sign-in library',database:'Live public-star database',music:'Soundtrack MP3 file',
+ yes:'Readable and writable',no:'Storage blocked or unavailable',staticOk:'Snapshot reachable, ',count:' public answers',
+ sdkOk:'Supabase browser library loaded',dbOk:'Received ',musicOk:'File reachable',
+ timeout:'Timed out',notReady:'Required JavaScript feature unavailable',note:'Results reflect only this device and network at the time of testing.'
+}
+};
+var $=function(x){return document.getElementById(x)};
+var locale=(navigator.language||'').toLowerCase();
+var lang=/^(zh-tw|zh-hk|zh-mo)/.test(locale)?'zh-Hant':locale.indexOf('zh')===0?'zh-Hans':'en';
+$('language').value=lang;
+var done=[],running=false;
+function tr(key){return (T[lang]||T.en)[key]||key}
+function browser(){
+ var ua=navigator.userAgent||'';
+ if(/Quark/i.test(ua))return 'Quark';
+ if(/MicroMessenger/i.test(ua))return 'WeChat';
+ if(/MQQBrowser/i.test(ua))return 'QQ Browser';
+ if(/UCBrowser|UCWEB/i.test(ua))return 'UC Browser';
+ if(/EdgA|EdgiOS|Edg\//i.test(ua))return 'Edge';
+ if(/CriOS|Chrome\//i.test(ua))return 'Chrome or Chromium';
+ if(/Safari\//i.test(ua))return 'Safari / iOS WebView';
+ return 'Other browser';
+}
+function setText(){
+ document.documentElement.lang=lang;
+ $('heading').textContent=tr('heading');
+ $('intro').textContent=tr('intro');
+ $('guide').textContent=tr('guide');
+ $('privacy').textContent=tr('privacy');
+ $('return').textContent=tr('back');
+ $('run').textContent=running?tr('running'):done.length?tr('again'):tr('run');
+ $('copy').textContent=tr('copy');
+ $('device').textContent=tr('browser')+': '+browser();
+ $('summary').textContent=running?tr('running'):done.length?tr('done')+' '+tr('note'):tr('ready');
+ var ul=$('results');ul.textContent='';
+ done.forEach(function(item){
+  var li=document.createElement('li');li.className=item.ok?'pass':'fail';
+  var label=document.createElement('strong');label.textContent=(item.ok?'✓ ':'! ')+tr(item.name)+' — '+tr(item.ok?'ok':'fail');
+  var detail=document.createElement('span');detail.textContent=item.detail;
+  li.appendChild(label);li.appendChild(detail);ul.appendChild(li);
+ });
+}
+function deadline(action,ms){
+ return new Promise(function(resolve,reject){
+  var finished=false;
+  var id=setTimeout(function(){if(!finished){finished=true;reject(new Error(tr('timeout')))}},ms);
+  Promise.resolve().then(action).then(function(value){if(!finished){finished=true;clearTimeout(id);resolve(value)}},
+    function(error){if(!finished){finished=true;clearTimeout(id);reject(error)}});
+ });
+}
+function storageCheck(){
+ var key='museum-compatibility-test-'+String(Date.now());
+ var tests=['localStorage','sessionStorage'];
+ var result=[];
+ tests.forEach(function(name){
+  try{
+   var storage=window[name];storage.setItem(key,'yes');
+   var ok=storage.getItem(key)==='yes';storage.removeItem(key);result.push(ok);
+  }catch(e){result.push(false)}
+ });
+ if(!result[0]&&!result[1])throw new Error(tr('no'));
+ return tr('yes')+' (localStorage '+(result[0]?'✓':'×')+', sessionStorage '+(result[1]?'✓':'×')+')';
+}
+function ownFile(url,method){
+ return deadline(function(){
+  if(typeof fetch!=='function')throw new Error(tr('notReady'));
+  return fetch(url,{method:method||'GET',cache:'no-store'});
+ },9000);
+}
+function allChecks(){
+ if(running)return;
+ running=true;done=[];$('run').disabled=true;$('copy').disabled=true;setText();
+ var checks=[
+  {name:'storage',run:function(){return Promise.resolve(storageCheck())}},
+  {name:'static',run:function(){return ownFile('public-star-snapshot.json').then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return deadline(function(){return r.json()},3500).then(function(data){
+      if(!Array.isArray(data.stars))throw new Error('Invalid snapshot');
+      return tr('staticOk')+data.stars.length+tr('count');
+    });
+   })}},
+  {name:'sdk',run:function(){return deadline(function(){
+    return new Promise(function(resolve,reject){
+      if(window.supabase&&typeof window.supabase.createClient==='function'){resolve(tr('sdkOk'));return}
+      var script=document.createElement('script');
+      script.src='vendor/supabase.min.js?v=2.119.2-mainland-20261123';
+      script.onload=function(){window.supabase&&typeof window.supabase.createClient==='function'?resolve(tr('sdkOk')):reject(new Error('createClient unavailable'))};
+      script.onerror=function(){reject(new Error('Library file did not load'))};
+      document.head.appendChild(script);
+    });
+   },9000)}},
+  {name:'database',run:function(){return deadline(function(){
+    if(typeof fetch!=='function')throw new Error(tr('notReady'));
+    return fetch('https://bmsumzkxyoprpoavgslr.supabase.co/rest/v1/rpc/get_museum_stars',{
+      method:'POST',headers:{apikey:'sb_publishable_3OCqe5bniuvjRI2Zi7z75Q_UZUnKVes','Content-Type':'application/json',Accept:'application/json'},body:'{}',cache:'no-store'
+    }).then(function(r){
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      return r.json();
+    }).then(function(data){
+      if(!Array.isArray(data))throw new Error('Unexpected server response');
+      return tr('dbOk')+data.length+tr('count');
+    });
+   },10000)}},
+  {name:'music',run:function(){return ownFile('Underneath.mp3','HEAD').then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    return tr('musicOk');
+   })}}
+ ];
+ Promise.all(checks.map(function(check){
+  return Promise.resolve().then(check.run).then(function(detail){return{name:check.name,ok:true,detail:detail}},
+    function(e){return{name:check.name,ok:false,detail:String(e&&e.message||e).slice(0,160)}})
+ })).then(function(results){done=results;running=false;$('run').disabled=false;$('copy').disabled=false;setText()},
+ function(error){done=[{name:'database',ok:false,detail:String(error)}];running=false;$('run').disabled=false;setText()});
+}
+function report(){
+ return 'The Unsent Museum — browser & connection check\n'+new Date().toISOString()+
+ '\nBrowser: '+browser()+'\n'+
+ done.map(function(x){return(x.ok?'OK':'FAIL')+' '+x.name+': '+x.detail}).join('\n')+
+ '\nNo account or story content included.';
+}
+$('language').addEventListener('change',function(){lang=this.value;setText()});
+$('run').addEventListener('click',allChecks);
+$('copy').addEventListener('click',function(){
+ var content=report(),button=this;
+ function success(){button.textContent=tr('copied');setTimeout(function(){button.textContent=tr('copy')},1700)}
+ function fallback(){
+  var area=document.createElement('textarea');area.value=content;area.setAttribute('readonly','');area.style.cssText='position:fixed;left:-9999px';
+  document.body.appendChild(area);area.select();
+  var ok=false;try{ok=document.execCommand('copy')}catch(_){}
+  area.remove();
+  if(ok)success();else window.prompt(tr('copy'),content);
+ }
+ if(navigator.clipboard&&navigator.clipboard.writeText)
+  navigator.clipboard.writeText(content).then(success,fallback);
+ else fallback();
+});
+setText();
+})();
+</script>
+</body></html>
