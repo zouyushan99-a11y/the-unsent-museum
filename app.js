@@ -1826,7 +1826,9 @@ const MUSEUM_PERSONAL_HISTORY_ASSETS=[
   'bundles/history-readings-2.js?v=archive-pack-20261124-1',
   'bundles/history-readings-3.js?v=archive-pack-20261124-1',
   'bundles/history-init-i18n.js?v=archive-pack-20261124-1',
-  'museum-history-curator.js?v=acceptance-20261122-final1'
+  'museum-history-curator.js?v=acceptance-20261122-final1',
+  'museum-verified-photographs.js?v=personal-photo-lazy-20261124-1',
+  'museum-verified-photographs-extra.js?v=personal-photo-lazy-20261124-1'
 ];
 const museumPersonalLoadedFiles=new Set();
 let museumPersonalLoading=null;
