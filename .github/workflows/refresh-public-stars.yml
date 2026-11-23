@@ -1,0 +1,71 @@
+name: Refresh anonymized public star snapshot
+on:
+  schedule:
+    - cron: '12,42 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/refresh-public-stars.yml'
+permissions:
+  contents: write
+concurrency:
+  group: refresh-museum-stars
+  cancel-in-progress: false
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read the public star RPC and strip identifying information
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('fs');
+          const app = fs.readFileSync('app.js','utf8');
+          const endpoint = app.match(/const SUPABASE_URL='([^']+)'/);
+          const key = app.match(/const SUPABASE_PUBLISHABLE_KEY='([^']+)'/);
+          if (!endpoint || !key) throw Error('Public API URL or publishable key missing');
+          const valid = new Set(['friendship','classroom','family','before-sending']);
+          (async () => {
+            const response = await fetch(endpoint[1]+'/rest/v1/rpc/get_museum_stars', {
+              method:'POST',
+              headers:{apikey:key[1], 'Content-Type':'application/json', Accept:'application/json'},
+              body:'{}',
+              signal:AbortSignal.timeout(30000)
+            });
+            if (!response.ok) throw Error('Public star RPC returned HTTP '+response.status);
+            const rows = await response.json();
+            if (!Array.isArray(rows)) throw Error('Star RPC was not an array');
+            const cleaned = rows.filter(item =>
+              item && valid.has(item.scenario) &&
+              (item.decision==='silent'||item.decision==='speak'))
+              .sort((a,b)=>String(a.id).localeCompare(String(b.id)))
+              .map((a,i)=>({
+                id:'public-mirror-'+(i+1),
+                scenario:a.scenario,
+                decision:a.decision,
+                reasons:Array.isArray(a.reasons)?[...new Set(a.reasons.filter(
+                  n=>Number.isInteger(n)&&((n>=0&&n<=6)||n===99)))]:[]
+              }));
+            // Only public choices and reason option numbers: no account IDs,
+            // names, emails, user-written text, stories or access tokens.
+            const output = {version:1,updatedAt:new Date().toISOString(),
+              count:cleaned.length,stars:cleaned};
+            fs.writeFileSync('public-star-snapshot.json',
+              JSON.stringify(output,null,2)+'\n','utf8');
+            console.log('Updated anonymized snapshot: '+cleaned.length+' public choices');
+          })().catch(e=>{console.error(e.message);process.exitCode=1});
+          NODE
+      - name: Commit new public snapshot if changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public-star-snapshot.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Refresh anonymized public choice sky backup'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
