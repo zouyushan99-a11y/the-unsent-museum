@@ -1,5 +1,6 @@
-/* Native, single-track museum player. Activates when the owner uploads /Underneath.mp3.
-   Until then, preserve the original Suno widget rather than showing a broken audio control. */
+/* The Unsent Museum: a single persistent MP3 player.
+   Mount its control immediately outside #app, so SPA navigation and asynchronous
+   network checks cannot remove or delay the music icon. */
 (() => {
   'use strict';
   const AUDIO_URL = new URL('Underneath.mp3', document.baseURI).href;
@@ -36,17 +37,11 @@
     const n = Math.floor(seconds);
     return Math.floor(n / 60) + ':' + String(n % 60).padStart(2, '0');
   };
-  async function mountWhenReady() {
-    let validFile = false;
-    try {
-      const result = await fetch(AUDIO_URL, { method: 'HEAD', cache: 'no-store' });
-      validFile = result.ok;
-    } catch (_) { /* Keep existing Suno controls if file is not hosted yet. */ }
-    if (!validFile || document.getElementById('museum-native-audio')) return;
-
+  function mountWhenReady() {
+    // Underneath.mp3 is hosted in this repository. Do not delay the floating
+    // button behind a HEAD request: transient failures made the icon unreliable.
+    if (document.getElementById('museum-native-audio')) return;
     const existing = document.getElementById('museum-music-dock');
-    if (existing) existing.remove(); // Also removes the old Suno iframe, avoiding two players.
-
     const dock = el('aside', 'museum-music-dock museum-native-dock');
     dock.id = 'museum-music-dock';
     const audio = document.createElement('audio');
@@ -117,7 +112,10 @@
     link.rel = 'noopener noreferrer';
     panel.append(head, body, hint, error, link);
     dock.append(audio, bar, panel);
-    document.body.append(dock);
+    // Replace any legacy dock in a single DOM operation; never leave a gap.
+    // Crucially, this player sits in document.body, outside the re-rendered #app.
+    if (existing) existing.replaceWith(dock);
+    else document.body.append(dock);
 
     function sync() {
       const t = lang(), playing = !audio.paused && !audio.ended;
