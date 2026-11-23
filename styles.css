@@ -2053,3 +2053,14 @@ html:lang(zh) .history-curator-questions li{font-family:var(--museum-zh-serif,Ge
  html[lang="zh-Hans"] .site-header:after{content:"← 左右滑动菜单，探索展馆 →"}
  html[lang="zh-Hant"] .site-header:after{content:"← 左右滑動選單，探索展館 →"}
 }
+
+/* Curator's true-life interactive moments: readable narrative, provenance and post-answer reveal. */
+.curator-experience-story{max-width:66ch;margin:0 0 2.3rem;padding:clamp(1.05rem,3vw,2rem);border:1px solid rgba(230,194,107,.28);border-radius:18px;background:linear-gradient(145deg,rgba(232,201,121,.07),rgba(26,41,63,.28));}
+.curator-experience-story>.eyebrow{margin-bottom:1.1rem;color:#e8d49f;letter-spacing:.1em}
+.curator-experience-story>p:not(.curator-source-footnote){font-size:clamp(1rem,1.7vw,1.07rem);line-height:1.92;color:#f1e9d9;margin:0 0 1.08rem;overflow-wrap:anywhere}
+.curator-experience-story>.curator-source-footnote{font-size:.81rem;line-height:1.65;color:#c8c0ab;margin:1.5rem 0 0;padding-top:.85rem;border-top:1px solid rgba(230,194,107,.2)}
+.curator-source-footnote sup{color:#f2d78f;font-size:.72rem;margin-right:.2rem}
+.curator-outcome-reveal{border:1px solid rgba(231,192,111,.5);border-radius:16px;background:linear-gradient(135deg,rgba(233,190,83,.13),rgba(64,83,128,.15));padding:clamp(1.1rem,3vw,1.8rem);margin:0 0 2rem}
+.curator-outcome-reveal>.eyebrow{color:#efcf83;margin-bottom:.65rem}
+.curator-outcome-reveal p{font-size:1.05rem;line-height:1.8;margin:0;color:#f4eddd}
+@media(max-width:600px){.curator-experience-story{padding:1.15rem;margin-bottom:1.8rem}.curator-experience-story>p:not(.curator-source-footnote){font-size:1rem;line-height:1.8}.curator-outcome-reveal{padding:1.05rem}}
