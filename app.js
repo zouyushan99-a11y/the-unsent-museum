@@ -400,7 +400,7 @@ function compositionDraft(){
 /* Email magic-link sign-in. Public publishable key only; never ship sb_secret keys. */
 const SUPABASE_URL='https://bmsumzkxyoprpoavgslr.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_3OCqe5bniuvjRI2Zi7z75Q_UZUnKVes';
-const AUTH_REDIRECT='https://zouyushan99-a11y.github.io/the-unsent-museum/';
+const AUTH_REDIRECT=new URL('./',document.baseURI).href;
 const authClient=window.supabase?.createClient?.(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
  auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true,flowType:'implicit'}
 })||null;
@@ -1690,7 +1690,7 @@ function drawAllSkies(){const r=route();drawSky($('#main-sky'),results(r.id));dr
 // Redraw canvases at their actual displayed size after phone rotation, iPad split view, and layout changes.
 let skyResizeFrame=0;
 function redrawVisibleSkies(){if(skyResizeFrame)return;skyResizeFrame=requestAnimationFrame(()=>{skyResizeFrame=0;if($('#main-sky'))drawAllSkies();if($('#home-sky'))drawSky($('#home-sky'),sharedAnswers);if($('#story-sky-canvas'))drawStorySky();const immersive=$('#immersive-sky-canvas');if(immersive){const r=route();const arr=results(r.id==='all'?undefined:r.id);if(r.kind==='reasons')drawReasonSky(immersive,arr);else drawSky(immersive,arr)}})}
-window.addEventListener('hashchange',()=>{try{render(true)}catch(e){console.error('Museum navigation error:',e);const app=$('#app');if(app){app.innerHTML='<main class="container" style="padding:70px 0"><h1>We could not open this room.</h1><p class="muted">Please try the link again. The stars and your answers have not been deleted.</p><p class="note">'+museumZh('Technical details (original):')+' <span data-original-language>'+esc(String(e.message||e))+'</span></p><a class="btn" href="https://zouyushan99-a11y.github.io/the-unsent-museum/?v=lookout-repair2#/lookout">Open the Lookout ↗</a></main>';museumLocalizeText(app)}}});
+window.addEventListener('hashchange',()=>{try{render(true)}catch(e){console.error('Museum navigation error:',e);const app=$('#app');if(app){app.innerHTML='<main class="container" style="padding:70px 0"><h1>We could not open this room.</h1><p class="muted">Please try the link again. The stars and your answers have not been deleted.</p><p class="note">'+museumZh('Technical details (original):')+' <span data-original-language>'+esc(String(e.message||e))+'</span></p><a class="btn" href="#/lookout">Open the Lookout ↗</a></main>';museumLocalizeText(app)}}});
 window.addEventListener('resize',redrawVisibleSkies,{passive:true});
 window.addEventListener('orientationchange',redrawVisibleSkies,{passive:true});
 if(window.visualViewport)window.visualViewport.addEventListener('resize',redrawVisibleSkies,{passive:true});
