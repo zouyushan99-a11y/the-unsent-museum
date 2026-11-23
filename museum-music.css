@@ -4,7 +4,9 @@
 .museum-music-toggle:hover,.museum-music-toggle:focus-visible{border-color:#e9c777;color:#fff0cb;background:#182b46}
 .museum-music-note{font-family:Georgia,serif;font-size:1.05rem;line-height:1;color:#eac879}
 .museum-music-panel{position:absolute;left:0;bottom:calc(100% + 12px);width:min(370px,calc(100vw - 32px));max-height:min(460px,calc(100dvh - 100px));overflow:auto;padding:17px;border-radius:17px;border:1px solid rgba(222,183,109,.38);background:linear-gradient(145deg,#111e33,#080e19);color:#f7edd9;box-shadow:0 20px 50px rgba(0,0,0,.42)}
-.museum-music-panel[hidden]{display:none}
+.museum-music-panel{transition:opacity .2s ease,transform .2s ease}
+/* Visually close the panel without display:none or removing the playing iframe. */
+.museum-music-panel.is-collapsed{opacity:0;pointer-events:none;transform:translateY(8px)}
 .museum-music-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
 .museum-music-info{display:flex;flex-direction:column;gap:2px}
 .museum-music-eyebrow{font-size:.62rem;text-transform:uppercase;letter-spacing:.13em;color:#dfbc74}
