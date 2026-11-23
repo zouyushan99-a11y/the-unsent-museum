@@ -12,6 +12,8 @@ const groupTitles={
 };
 const canonical=x=>String(x||"").trim().replace(/\s+/g," ");
 const glossary=(window.MUSEUM_NEW_CASES||[]).reduce((acc,c)=>{acc[c.id]=canonical(c.name);return acc},personalTitles);
+// Use a smaller Wikimedia thumbnail on phones without affecting desktop clarity.
+const imageWidth=()=>Math.min(1000,Math.max(560,Math.round((window.innerWidth||900)*Math.min(window.devicePixelRatio||1,2))));
 const existing=new Map();
 const imageCache=new Map();
 const cv=text=>window.museumConvertPublic?.(text)??text;
@@ -20,7 +22,7 @@ function figure(imgUrl,fileName,subject,group,language){
  const zh=language!=="en";
  const element=document.createElement("figure");element.className="history-archive-figure museum-researched-figure";element.dataset.museumDocumentary="true";
  const link=document.createElement("a");link.href="https://commons.wikimedia.org/wiki/File:"+encodeURIComponent(fileName.replace(/^File:/,""));link.target="_blank";link.rel="noopener noreferrer";link.className="history-photo-link";
- const img=document.createElement("img");img.src=imgUrl;img.alt=zh?"与本档案主题相关的真实馆藏图像，具体年代与授权请查原始图片页":"Real documentary image associated with this subject; inspect original for precise date and rights";img.loading="lazy";img.decoding="async";link.appendChild(img);
+ const img=document.createElement("img");img.src=imgUrl;img.alt=zh?"与本档案主题相关的真实馆藏图像，具体年代与授权请查原始图片页":"Real documentary image associated with this subject; inspect original for precise date and rights";img.loading="lazy";img.decoding="async";img.setAttribute("fetchpriority","low");link.appendChild(img);
  const caption=document.createElement("figcaption");const title=document.createElement("strong");title.textContent=zh?"真实历史图像／相关馆藏":"Real archival or historical image";caption.appendChild(title);
  caption.appendChild(document.createTextNode(zh?" · 资料主题："+subject+"。这张图像不一定拍摄了正文中的特定场景。":" · Related subject: "+subject+". This image is not presented as a photograph of a specific described event."));
  const credit=document.createElement("span");credit.className="history-photo-credit";const a=document.createElement("a");a.href=link.href;a.target="_blank";a.rel="noopener noreferrer";a.textContent=zh?"Wikimedia Commons · 查看原图、年代、作者与使用条款":"Wikimedia Commons · Check original, date, creator and image rights";credit.appendChild(a);caption.appendChild(credit);element.append(link,caption);
@@ -55,7 +57,7 @@ async function lookup(subject){
  }catch(error){}
  /* Secondary search is restricted to archival-image files and meaningful title matches. */
  const term=commonsTerms[subject]||subject+" historical portrait";
- const commons="https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch="+encodeURIComponent(term)+"&prop=imageinfo&iiprop=url%7Cmime%7Cextmetadata&iiurlwidth=1000&origin=*";
+ const commons="https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2&generator=search&gsrnamespace=6&gsrlimit=12&gsrsearch="+encodeURIComponent(term)+"&prop=imageinfo&iiprop=url%7Cmime%7Cextmetadata&iiurlwidth="+imageWidth()+"&origin=*";
  const reply=await fetch(commons,{mode:"cors",credentials:"omit"});
  if(!reply.ok)return null;
  const data=await reply.json();
