@@ -1099,9 +1099,10 @@ function paintStar(ctx,x,y,r,colour){const glow=ctx.createRadialGradient(x,y,0,x
 // Individual-star hit detection for mouse hover and phone/tablet taps.
 // Only explicitly published translated custom reasons appear; email, account IDs and draft text are never shown.
 function starDescription(st){
-const name=scenario(st.scenario)?.title||'The Museum';const author=st.authorName||'Unnamed Star';
-if(st.kind==='reason')return {gallery:name,title:st.decision==='silent'?'Reason for silence':'Reason for speaking',detail:st.label,author};
-return {gallery:name,title:st.decision==='silent'?'Chose to remain silent':'Chose to speak up',detail:st.decision==='silent'?'Silence':'Speak up',author}
+ const name=scenario(st.scenario)?.title||museumReasonText('The Museum','博物馆','博物館');
+ const author=st.authorName||museumReasonText('Unnamed Star','无名星','無名星');
+ if(st.kind==='reason')return {gallery:name,title:st.decision==='silent'?museumReasonText('Reason for silence','沉默的理由','沉默的理由'):museumReasonText('Reason for speaking','表达的理由','表達的理由'),detail:st.label,author};
+ return {gallery:name,title:st.decision==='silent'?museumReasonText('Chose to remain silent','选择了沉默','選擇了沉默'):museumReasonText('Chose to speak up','选择了表达','選擇了表達'),detail:st.decision==='silent'?museumReasonText('Silence','沉默','沉默'):museumReasonText('Speak up','表达','表達'),author};
 }
 function closestSkyStar(canvas,clientX,clientY,touch=false){
 const rect=canvas.getBoundingClientRect();
@@ -1110,18 +1111,26 @@ let nearest=null,dist=Infinity;
 for(const st of canvas._starTargets||[]){const d=Math.hypot(st.x-x,st.y-y);if(d<dist){dist=d;nearest=st}}
 return dist<=(touch?(canvas.id==='story-sky-canvas'?30:22):13)?nearest:null
 }
-function hideStarTooltip(){document.querySelectorAll('.star-info-tooltip').forEach(t=>t.remove())}
-function showStarTooltip(st,x,y){
-hideStarTooltip();if(!st)return;
-const d=starDescription(st);
-const t=document.createElement('div');t.className='star-info-tooltip';t.setAttribute('role','status');
-t.innerHTML='<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span class="sky-star-detail">'+esc(d.detail)+'</span><span class="sky-star-author">✧ '+esc(d.author)+'</span>';
-document.body.append(t);
-const width=Math.min(st.isCustom?380:300,innerWidth-24);
-t.style.maxWidth=width+'px';
-const box=t.getBoundingClientRect();
-t.style.left=Math.max(12,Math.min(innerWidth-box.width-12,x+16))+'px';
-t.style.top=Math.max(12,Math.min(innerHeight-box.height-12,y-box.height-14))+'px'
+function hideStarTooltip(force=false){
+ if(!force&&document.querySelector('.star-info-tooltip.is-pinned'))return;
+ document.querySelectorAll('.star-info-tooltip').forEach(t=>t.remove());
+}
+function showStarTooltip(st,x,y,pinned=false){
+ hideStarTooltip(true);if(!st)return;
+ const d=starDescription(st);
+ const t=document.createElement('div');
+ t.className='star-info-tooltip'+(pinned?' is-pinned':'')+(st.isCustom?' is-written-reason':'');
+ t.setAttribute('role',pinned?'dialog':'status');
+ if(pinned)t.setAttribute('aria-label',d.title);
+ const close=pinned?'<button type="button" class="sky-tooltip-close" aria-label="'+esc(museumReasonText('Close star details','关闭星星详情','關閉星星詳情'))+'">×</button>':'';
+ t.innerHTML=close+'<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span class="sky-star-detail">'+esc(d.detail)+'</span><span class="sky-star-author">✧ '+esc(d.author)+'</span>';
+ document.body.append(t);
+ if(pinned)t.querySelector('.sky-tooltip-close').onclick=()=>hideStarTooltip(true);
+ const width=Math.min(st.isCustom?400:300,innerWidth-24);
+ t.style.maxWidth=width+'px';
+ const box=t.getBoundingClientRect();
+ t.style.left=Math.max(12,Math.min(innerWidth-box.width-12,x+16))+'px';
+ t.style.top=Math.max(12,Math.min(innerHeight-box.height-12,y-box.height-14))+'px';
 }
 function bindStarInteractions(){
  for(const canvas of document.querySelectorAll('#main-sky,#reason-sky,#immersive-sky-canvas')){
@@ -1137,7 +1146,7 @@ function bindStarInteractions(){
    heldTimer=setTimeout(()=>{
     heldTimer=null;
     const st=closestSkyStar(canvas,holdX,holdY,true);
-    if(st){held=true;showStarTooltip(st,holdX,holdY)}
+    if(st){held=true;showStarTooltip(st,holdX,holdY,true)}
    },550);
   });
   target.addEventListener('pointermove',ev=>{
@@ -1157,8 +1166,8 @@ function bindStarInteractions(){
    if(ev.target.closest('.immersive-sky-back'))return;
    if(held){ev.preventDefault();held=false;return}
    const st=closestSkyStar(canvas,ev.clientX,ev.clientY,ev.pointerType==='touch');
-   if(st){if(overlay)ev.preventDefault();showStarTooltip(st,ev.clientX,ev.clientY)}
-   else hideStarTooltip();
+   if(st){if(overlay)ev.preventDefault();showStarTooltip(st,ev.clientX,ev.clientY,true)}
+   else hideStarTooltip(true);
   });
  }
 }
@@ -1620,7 +1629,7 @@ function museumResearchLoadError(error){
   document.getElementById('research-retry')?.addEventListener('click',()=>{museumLoadingResearch(route());museumLoadResearch().then(()=>render(false)).catch(museumResearchLoadError)});
   console.error('Research module loading error',error);
 }
-function render(scroll=true){hideStarTooltip();const r=route();
+function render(scroll=true){hideStarTooltip(true);const r=route();
   const researchPageNeeded=r.type==='research-index'||r.type==='research';
   if(researchPageNeeded&&!window.MUSEUM_RESEARCH_ATLAS){
     museumLoadingResearch(r);
