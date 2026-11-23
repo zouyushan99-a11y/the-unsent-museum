@@ -457,7 +457,7 @@ sections:[
 }
 ];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const lang=()=>window.museumLangPublic?.()==='en'?'en':window.museumLangPublic?.()==='zh-Hant'?'zh-Hant':'zh';
+const lang=()=>{const current=window.museumLangPublic?.();return current==='en'?'en':current==='zh-Hant'?'zh-Hant':'zh-Hans';};
 const cv=s=>lang()==='zh-Hant'?(window.museumConvertPublic?.(String(s??''))??String(s??'')):String(s??'');
 const t=p=>esc(lang()==='en'?p[0]:cv(p[1]));
 const nav=()=>'<nav class="atlas-nav" aria-label="'+esc(lang()==='en'?'Research navigation':cv('研究导航'))+'"><a href="#/research">'+esc(lang()==='en'?'Research library':cv('研究资料馆'))+'</a><a href="#/research/audit">'+esc(lang()==='en'?'Source verification':cv('来源核实'))+'</a><a href="#/research/method">'+esc(lang()==='en'?'Curatorial method':cv('策展方法'))+'</a></nav>';
@@ -473,7 +473,7 @@ function render(i){
  const refs='<section class="atlas-panel atlas-comparison-sources"><span class="eyebrow">SOURCE DOSSIERS</span><h2>'+esc(lang()==='en'?'Research dossiers and source notes':cv('研究档案与来源说明'))+'</h2><div class="atlas-study-list">'+a.ids.map(id=>'<a class="atlas-study-link" href="#/research/study/'+id+'"><span>'+id+'</span><strong>'+esc(lang()==='en'?'Open research dossier':cv('打开研究档案'))+'</strong><small>'+esc(lang()==='en'?'Source details and verification status':cv('查看原始来源与核查状态'))+'</small></a>').join('')+'</div></section>';
  const prev=i>0?'<a class="btn btn-outline" href="#/research/compare/'+(i-1)+'">← '+esc(lang()==='en'?'Previous comparison':cv('上一篇比较'))+'</a>':'';
  const next=i<7?'<a class="btn btn-outline" href="#/research/compare/'+(i+1)+'">'+esc(lang()==='en'?'Next comparison':cv('下一篇比较'))+' →</a>':'';
- return '<main class="container atlas-page">'+nav()+hero+sections+refs+'<div class="atlas-comparison-pagination">'+prev+next+'<a class="btn btn-outline" href="#/research">'+esc(lang()==='en'?'Back to research library':cv('返回研究资料馆'))+'</a></div></main>';
+ return '<main class="container atlas-page" lang="'+(lang()==='en'?'en':lang()==='zh-Hant'?'zh-Hant':'zh-Hans')+'">'+nav()+hero+sections+refs+'<div class="atlas-comparison-pagination">'+prev+next+'<a class="btn btn-outline" href="#/research">'+esc(lang()==='en'?'Back to research library':cv('返回研究资料馆'))+'</a></div></main>';
 }
 const original=atlas.page;
 atlas.page=function(id){
