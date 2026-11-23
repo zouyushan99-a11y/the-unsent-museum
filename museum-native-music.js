@@ -185,7 +185,8 @@
     });
     sync();
   }
-  if (document.readyState === 'loading')
-    document.addEventListener('DOMContentLoaded', mountWhenReady, { once: true });
-  else mountWhenReady();
+  // The script is loaded immediately after <body>; mount before the museum's
+  // many deferred archive scripts finish, instead of waiting for DOMContentLoaded.
+  if (document.body) mountWhenReady();
+  else document.addEventListener('DOMContentLoaded', mountWhenReady, { once: true });
 })();
