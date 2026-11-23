@@ -1,0 +1,17 @@
+/* Native Underneath player: appears only when /Underneath.mp3 exists. */
+.museum-native-dock{max-width:calc(100vw - 24px)}
+.museum-native-bar{display:flex;align-items:center;gap:5px}
+.museum-native-toggle{min-height:42px}
+.museum-native-toggle.is-playing{background:rgba(36,58,81,.98);border-color:#eac77c;box-shadow:0 0 0 2px rgba(234,199,124,.1),0 8px 26px rgba(0,0,0,.22)}
+.museum-native-expand{width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(225,192,123,.54);background:rgba(13,24,40,.94);color:#eadab2;border-radius:50%;font-size:1.25rem;cursor:pointer;box-shadow:0 8px 26px rgba(0,0,0,.18)}
+.museum-native-expand:hover,.museum-native-expand:focus-visible{background:#182b46;border-color:#e9c777;color:#fff0cb}
+.museum-native-panel{width:min(355px,calc(100vw - 28px))}
+.museum-native-controls{display:flex;flex-direction:column;gap:7px;margin:18px 0 8px}
+.museum-native-progress,.museum-native-volume{width:100%;accent-color:#e9c777;cursor:pointer;min-height:22px}
+.museum-native-times{display:flex;justify-content:space-between;font-size:.74rem;color:#b9c7d6;font-variant-numeric:tabular-nums}
+.museum-native-volume-row{display:flex;align-items:center;gap:12px;margin:6px 0}
+.museum-native-volume-row label{font-size:.77rem;color:#eed5a0;white-space:nowrap;min-width:50px}
+.museum-native-hint{color:#d4c6a8;margin:5px 0 9px}
+.museum-native-error{font-size:.76rem;color:#ffd0b2;line-height:1.5}
+.museum-native-error:empty{display:none}
+@media(max-width:600px){.museum-native-dock .museum-native-toggle{min-height:44px}.museum-native-expand{width:44px;height:44px}.museum-native-panel{max-height:calc(100dvh - 105px)}}
