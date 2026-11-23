@@ -21,7 +21,12 @@ jobs:
           mkdir -p "$RUNNER_TEMP/museum-supabase" "$RUNNER_TEMP/museum-opencc"
           SUPABASE_TARBALL="$(npm pack '@supabase/supabase-js@2.49.4' --silent)"
           tar -xzf "$SUPABASE_TARBALL" -C "$RUNNER_TEMP/museum-supabase"
-          cp "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.min.js" vendor/supabase.min.js
+          ls -lah "$RUNNER_TEMP/museum-supabase/package/dist/umd/"
+          if [[ -f "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.min.js" ]]; then
+            cp "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.min.js" vendor/supabase.min.js
+          else
+            cp "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.js" vendor/supabase.min.js
+          fi
           OPENCC_TARBALL="$(npm pack 'opencc-js@1.4.2' --silent)"
           tar -xzf "$OPENCC_TARBALL" -C "$RUNNER_TEMP/museum-opencc"
           cp "$RUNNER_TEMP/museum-opencc/package/dist/umd/full.js" vendor/opencc-full.js
