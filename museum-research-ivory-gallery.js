@@ -456,6 +456,157 @@ sections:[
 ]
 }
 ];
+
+/* Expanded cross-study analysis: added after the source-by-source audit.
+   Each pair is English / Simplified Chinese; Traditional Chinese is rendered
+   through the museum's existing language converter. */
+const comparativeSupplements = [
+[
+[
+["The size of the forecasting gap should not be confused with the size of the real-world harm. R01 compares predictions with the other party's reported reactions across several refusal situations; R03 narrows the question to leisure invitations and separates immediate feelings from expectations about later contact. Neither design follows every friendship over years to count relationships that actually ended. Their strongest shared conclusion is therefore about miscalibration in anticipated reactions, not proof that refusal is consequence-free.",
+"这里必须区分“预期偏差的大小”和“现实伤害的大小”。R01在多种拒绝情境中比较拒绝者的预测与请求者报告的反应；R03则把问题限定在休闲邀请，并区分即时感受与对未来往来的预期。两项研究都没有持续追踪所有友谊多年，以统计真正因此结束的关系。因此，它们最有力的共同结论是：人们对他人反应的预测可能失准，而不是拒绝绝不会带来后果。"],
+["R02 supplies a useful counterpoint because it changes the conditions of responding rather than asking people to estimate another person's feelings. Concrete wording improved participants' reported freedom to refuse (the combined effect was small, d = 0.27), but the pooled behavioral contrast was less conclusive (odds ratio = 1.54, p = .053). The two outcomes should remain separate: feeling more able to say no is meaningful, but it is not the same as demonstrating a reliable change in conduct.",
+"R02提供了一个重要补充：它并不要求参与者估计他人的感受，而是改变参与者回应请求时拥有的表达条件。具体措辞提高了参与者报告的拒绝自由感（合并效应较小，d = 0.27），但实际行为的合并差异并不明确（比值比 = 1.54，p = .053）。这两个结果必须分开理解：感觉自己更有能力说“不”本身有意义，但它不等于已经证明行为会稳定改变。"]
+],
+[
+["The apparent agreement between R01 and R03 is strongest at the level of perspective-taking: people imagine the other party's reaction from the position of the person who must refuse. Their differences in context and outcome matter. R01 examines requests and the influence of power and future contact; R03 examines invitations and distinguishes immediate disappointment from later expectations. A person declining a social invitation may be able to rely on an established friendship, whereas refusing a powerful requester may involve dependency or retaliation. The studies do not justify treating these situations as equivalent.",
+"R01与R03最明确的共性存在于观点采择层面：必须拒绝的一方，往往从自己的位置想象对方会如何反应。但两项研究的情境和结果指标仍然重要。R01考察不同请求，并关注权力和未来联系的影响；R03考察社交邀请，并区分即时失望与对未来往来的预期。拒绝社交邀请的人可能拥有稳定友谊作为缓冲，而拒绝有权力的请求者则可能面对依赖关系或报复风险。不能把这些情境视为等同。"]
+],
+[
+["A practical response should therefore be matched to the source of difficulty. If the problem is an exaggerated prediction, perspective-taking or a low-risk conversation may help test that prediction. If the problem is not knowing how to phrase a boundary, concrete language may make the option more usable. If the problem is coercion or material dependence, individual scripts are insufficient; protection, accountability and changes to the power relationship may be required. This three-part distinction is the museum's synthesis, not a treatment package tested by these studies.",
+"实际回应方式应与困难来源相匹配。如果问题是过度负面的预测，换位思考或低风险沟通或许能帮助检验这种预测；如果问题是不知道怎样表达边界，具体措辞可能使拒绝更容易实行；如果问题来自胁迫或物质依赖，单靠个人话术并不足够，还可能需要保护机制、问责制度和权力关系的改变。这三分法是本馆的综合判断，并非这些研究共同检验过的一套干预方案。"]
+]
+],
+[
+[
+["R08 gives a vivid numerical demonstration of the group-size pattern: in the principal comparison, 85% of participants in the two-person condition reported the apparent seizure, compared with 62% when one other witness was believed to be present and 31% when four others were believed to be present. The corresponding mean response times also lengthened across conditions. These figures support diffusion of responsibility in this carefully staged intercom situation; they should not be presented as the probability that a bystander will help in an actual street emergency.",
+"R08以具体数字呈现了群体人数与报告行为之间的关系：在核心比较中，两人情境下有85%的参与者报告了看似发生的癫痫事件；认为另有一名目击者时为62%；认为另有四名目击者时则为31%。不同条件下的平均反应时间也逐渐延长。这些数字支持对讲机实验中责任分散的解释，但不能被说成现实街头紧急事件中旁观者施助的概率。"],
+["R09 is the corrective to an overly universal reading of R08. Across 105 independent effect sizes and more than 7,700 participants, the meta-analysis found an average bystander inhibition effect (random-effects Hedges' g = -0.33). Yet the average concealed meaningful variation: danger, perpetrator presence, intervention costs and the possibility of useful support changed the strength of the pattern. In some dangerous situations, other witnesses may be valuable allies rather than merely additional people among whom responsibility can diffuse.",
+"R09纠正了对R08过度普遍化的解读。元分析整合105个独立效应量、超过7700名参与者，发现平均而言旁观者在场会抑制帮助行为（随机效应模型的Hedges' g = -0.33）。但平均值掩盖了重要差异：危险程度、施害者是否在场、介入成本，以及其他目击者能否提供有效支援，都会改变效应强度。在某些危险情境中，其他目击者可能是有用的协助者，而不只是分散责任的人群。"]
+],
+[
+["R08 and R09 are not contradictory. R08 isolates one mechanism under controlled conditions; R09 asks whether the average pattern survives across a wider range of situations. The later meta-analysis does not erase the classic result. It shows why the result must be conditional: group size matters, but what the group can see, do and risk also matters. The distinction is important for public education, because a slogan such as 'more witnesses means less help' may discourage people from recognizing situations in which coordinated action is possible.",
+"R08与R09并不矛盾。R08在受控条件下隔离出一种机制；R09则考察这一平均模式能否在更广泛的情境中成立。后来的元分析并没有抹去经典实验，而是说明其结论必须附带条件：人数会产生影响，但群体能够看见什么、能够做什么，以及需要承担什么风险，同样重要。这对公共教育尤其重要，因为“目击者越多，帮助越少”这样的口号，可能让人忽略某些可以协调行动的情境。"],
+["R10 cannot be placed on the same outcome scale. Edmondson studied 51 workplace teams using surveys, observation, interviews and performance assessments; psychological safety was associated with learning behaviour, and the paper reported support for six of eight hypotheses. This is evidence about the social conditions of asking questions, reporting errors and experimenting at work. It is not evidence that more people in an emergency reduce helping. Its relevance is comparative: it shows that the perceived interpersonal cost of speaking is shaped by the setting in which a response is expected.",
+"R10不能被放在同一结果尺度上比较。Edmondson研究了51支工作团队，结合问卷、观察、访谈和绩效评估；心理安全与学习行为存在关联，论文报告八项假设中有六项得到支持。这些证据关注的是工作中提出问题、报告错误和尝试新方法的社会条件，并不能证明紧急事件中人数越多，帮助行为就越少。它的比较价值在于说明：一个人表达时感受到的人际代价，会受到其所处环境的影响。"]
+],
+[
+["The museum therefore keeps R10 as a contextual comparison rather than presenting it as a third bystander-effect study. This is a deliberate boundary in the evidence. It lets the exhibition ask a broader question—when does a person feel able to act or speak?—while preserving the narrower conclusion that the classic bystander effect concerns helping behaviour in the presence of others. A good comparison should widen interpretation without quietly changing what the original studies measured.",
+"因此，本馆将R10保留为情境性对照，而不是把它包装成第三项旁观者效应研究。这是对证据边界的有意保留。它使展览能够提出一个更广泛的问题——人在什么条件下会觉得自己能够行动或表达？——同时仍然明确：经典旁观者效应研究的是他人在场时的帮助行为。好的比较可以拓宽解释，却不能悄悄改变原研究实际测量的对象。"]
+]
+],
+[
+[
+["The five sources operate at different levels. R10 is a multimethod field study linking team psychological safety with learning behaviour. R11 proposes an organization-level theory of how managerial beliefs and centralized structures may create a shared climate of silence. R12 reviews the wider employee-voice literature and distinguishes speaking from withholding as concepts with different motives and antecedents. R13 examines how particular leadership behaviours relate to improvement-oriented employee voice. R30, finally, offers a political-anthropological account of public and hidden transcripts under domination. Their value lies in the comparison of levels, not in pretending that they are five replications.",
+"五项文献处于不同分析层次。R10是一项多方法实地研究，考察团队心理安全与学习行为的关联；R11提出组织层面的理论，解释管理者信念和集权结构如何可能形成共同的沉默氛围；R12综述员工表达与沉默领域，并指出表达和保留意见具有不同动机与前因；R13考察特定领导行为与建设性员工表达的关系；R30则从政治人类学角度讨论支配关系下的公开话语与隐藏话语。它们的价值在于层次之间的比较，而不是假装五篇研究是五次重复实验。"],
+["The empirical studies also point to different parts of the workplace relationship. R10 focuses on whether team members expect interpersonal risk to be manageable. R13 focuses on whether a manager is actually open to suggestions and whether that openness is associated with employee voice. A team may have capable members but little psychological safety; a manager may describe an open-door policy while responding defensively when criticism arrives. The concepts overlap, but one cannot substitute for the other.",
+"实证研究也分别指向职场关系的不同环节。R10关注团队成员是否认为人际风险可以承受；R13关注管理者是否真正愿意听取建议，以及这种开放性是否与员工表达相关。一个团队可能成员能力很强，却缺乏心理安全；一位管理者也可能口头上宣称欢迎意见，却在真正听到批评时采取防御态度。这些概念有所重叠，但不能互相替代。"]
+],
+[
+["R11 and R12 help explain why individual courage is an incomplete account. If employees learn that criticism is ignored, punished or treated as disloyalty, withholding information may become a reasonable adaptation to the organization. R11 theorizes how such a climate can reproduce itself; R12 reviews evidence and emphasizes that the costs and motives of silence still require careful differentiation. R13 adds a more specific condition: managerial openness is associated with voice, while generic transformational leadership is not an interchangeable measure of receptiveness. R30 extends the warning beyond workplaces: public compliance under domination cannot automatically be read as private agreement.",
+"R11和R12说明，单靠个人勇气无法完整解释员工沉默。如果员工逐渐发现批评会被忽视、惩罚，或被视为不忠，保留信息就可能成为对组织环境的理性适应。R11理论化了这种氛围如何自我延续；R12则综述相关证据，并强调仍需仔细区分沉默的代价和动机。R13补充了一个更具体的条件：管理者开放性与员工表达有关，而一般意义上的变革型领导不能直接替代对意见的接纳程度。R30则把这一警示扩展到职场之外：支配关系下的公开顺从，不能自动被理解为内心认同。"]
+],
+[
+["The museum's conclusion is not that every quiet employee secretly disagrees, nor that every organization is oppressive. It is that voice depends on both a person's willingness and the receiving environment's response. A useful institutional test is therefore not merely 'Do we invite feedback?' but 'What happens after someone gives it?' Repeated listening, protection against retaliation, transparent follow-up and visible changes make an invitation to speak more credible. These are curatorial recommendations inferred from the comparison, not interventions directly tested by all five sources.",
+"本馆的结论并不是每个沉默的员工都在暗中反对，也不是每个组织都具有压迫性。本馆强调的是：表达既取决于个人是否愿意开口，也取决于接收意见的环境如何回应。因此，检验一个机构是否真正欢迎意见，不能只问“我们有没有邀请大家反馈”，还要问“有人提出意见之后发生了什么”。持续倾听、防止报复、透明跟进和看得见的改变，才能让表达邀请更可信。这些是本馆从比较中推导出的策展建议，并非五项来源共同测试过的干预。"]
+]
+],
+[
+[
+["R15 and R16 both connect gratitude with relationship quality, but they observe different processes. R15 follows a laboratory expression and focuses on how the recipient perceives the expresser's responsiveness, with relationship quality assessed over six months. Its accessible evidence confirms the central design and finding, but does not provide a fully audited sample size or coefficients. R16 uses 14-day diaries from 67 cohabiting heterosexual couples and distinguishes gratitude from indebtedness; gratitude predicted next-day connection and satisfaction, whereas indebtedness did not show the same distinctive pattern. These results converge on the relational significance of gratitude while differing in time scale and measurement.",
+"R15和R16都把感恩与关系质量联系起来，但观察的是不同过程。R15追踪实验室中的感恩表达，关注接收者如何感受到表达者的回应性，并在六个月后考察关系质量。现有可核实材料支持其核心设计和发现，但不足以确认完整样本量及统计系数。R16则使用67对同居异性伴侣连续14天的日记数据，并区分感恩与负债感；感恩能够预测次日的关系连接感和满意度，而负债感没有呈现同样独特的模式。两者都指出感恩具有关系意义，但测量方式和时间尺度不同。"],
+["R19 makes the comparison more complicated. Its meta-analysis does not ask whether gratitude improves a relationship; it separates three directions between disclosure and liking: liking someone who discloses, disclosing more to someone already liked, and liking someone more after disclosing. The pooled estimates differ across these directions and research designs. For example, the first relation included 94 effect sizes with a weighted mean d of 0.281, while the second included 31 effect sizes with a larger weighted mean d of 0.717; the authors also report substantial heterogeneity. These are not interchangeable measures of a universal benefit from openness.",
+"R19使比较变得更加复杂。它的元分析并不研究感恩是否改善关系，而是区分自我披露与好感之间的三个方向：人们是否更喜欢向自己披露的人、是否更愿意向已经喜欢的人披露，以及披露之后是否会更喜欢对方。不同方向和研究设计得到的合并估计并不相同。例如，第一种关系包含94个效应量，加权平均d为0.281；第二种关系包含31个效应量，加权平均d为0.717；作者同时报告了显著异质性。这些结果不能被合并成“坦诚总能带来好处”的普遍结论。"],
+["R21 studies a different relational moment: an apology after a breach of trust. Across two scenario-based studies involving 755 participants, the authors varied six components—regret, explanation, responsibility, repentance, repair and a request for forgiveness. Apologies with more components were generally rated more effective, but responsibility and repair were especially important, and competence violations were judged differently from integrity violations. The outcome was perceived apology effectiveness, not verified reconciliation or a victim's obligation to forgive.",
+"R21研究的是关系中的另一个时刻：信任受损之后的道歉。两项情境研究共涉及755名参与者，作者组合了六个道歉要素：表达遗憾、解释原因、承担责任、表明悔意、提出补救，以及请求原谅。包含更多要素的道歉通常被评价为更有效，其中承担责任和提出补救尤其重要；能力失误与诚信失误也会得到不同评价。但研究测量的是参与者对道歉有效性的判断，而不是现实中的和解，也不意味着受伤害者有义务原谅。"]
+],
+[
+["The four sources agree that expression is interpreted by another person, but they do not study one common skill. Gratitude recognizes a benefit; disclosure shares personal information; apology responds to a perceived wrong. Their social risks and ethical demands differ. A grateful expression can affirm a relationship without asking the recipient to reveal anything. Disclosure changes who knows private information. An apology must address responsibility and possible repair. A comparison that labels all three 'emotional communication' may be useful as a starting point, but it becomes misleading if it assumes the same motives or outcomes.",
+"四项来源都说明表达会被他人理解和评价，但它们研究的并不是同一种沟通技巧。感恩是在承认他人给予的好处；自我披露是在分享个人信息；道歉则是在回应被认为已经发生的伤害。三者的社会风险和伦理要求并不相同。表达感谢可以肯定关系，却不要求接收者披露任何信息；自我披露会改变谁掌握私人信息；道歉则必须面对责任和补救。把三者统称为“情感沟通”可以作为讨论起点，但若进一步假设它们具有相同动机和结果，就会产生误导。"]
+],
+[
+["The museum therefore rejects a universal rule such as 'important feelings should always be spoken'. Expression can strengthen connection when it is timely, responsive and appropriate to the relationship. Yet disclosure also requires control over audience and boundaries; apology requires responsibility rather than a polished formula; gratitude should not be reduced to an obligation to perform appreciation. The more useful question is what the expression is trying to do, who receives it, and whether the recipient is free to respond. This interpretation is a synthesis across different literatures, not a single tested intervention.",
+"因此，本馆不接受“重要感情就应该说出来”这样的普遍规则。当表达及时、具有回应性，并且符合关系情境时，它可能增进连接；但自我披露也需要对受众和边界拥有控制权，道歉需要承担责任，而不是套用漂亮话术，感恩也不应被简化为必须完成的情感义务。更有意义的问题是：这种表达试图完成什么？由谁接收？接收者是否有自由回应？这是本馆对不同研究领域的综合解释，并非一项单独检验过的干预。"]
+]
+],
+[
+[
+["R17 and R18 answer different questions about family communication. R17 organizes family climates along two dimensions—conversation orientation and conformity orientation. Because these dimensions can coexist, a family may discuss many subjects while still expecting members to share core beliefs. R18, by contrast, examines which topics adolescents and young adults avoid with particular relatives. It reports more avoidance of negative life experiences and dating experiences with parents than with siblings, and more avoidance of sexual matters with opposite-sex family members. This is a pattern tied to topic and relationship, not a simple ranking of 'open' and 'closed' families.",
+"R17与R18回答的是家庭沟通中的不同问题。R17以谈话取向和一致性取向两个维度组织家庭沟通氛围。由于两个维度可以同时存在，一个家庭可能鼓励讨论许多事情，却仍然期待成员认同共同的核心观念。R18则考察青少年和年轻人与不同亲属谈论特定话题时的回避情况。研究报告称，他们与父母谈论负面生活经历和恋爱经历时的回避多于与兄弟姐妹谈论这些事情；与异性家庭成员谈论性相关话题时也更常回避。这是由话题和关系共同决定的模式，而不是简单的“开放家庭”与“封闭家庭”排名。"],
+["R20 shifts from family structure to the social sharing of emotion. It reviews why people recount emotional experiences and discusses connection, validation, meaning-making and social regulation as possible functions. It does not study one family sample or prove that telling a story necessarily reduces distress. A person may share an event to be understood, to organize what happened, or to maintain a relationship; the listener's response and the wider circumstances influence what follows.",
+"R20把视角从家庭结构转向情绪的社会分享。它综述人们为什么会向他人讲述情绪经历，并讨论建立连接、获得确认、赋予经历意义和社会调节等可能功能。它并没有研究某一个家庭样本，也没有证明讲出经历必然能减轻痛苦。一个人可能为了获得理解、整理经历，或维持关系而分享；之后会发生什么，还受到听者回应和整体情境影响。"]
+],
+[
+["A key difference is between a family climate and a specific act of avoidance. R17's categories describe recurring patterns in how a family communicates; they cannot diagnose why one person does not mention one subject on one evening. R18 gives more concrete evidence that the same person may speak to a sibling but not to a parent, or discuss one topic but avoid another. R20 explains possible functions of sharing after an emotional event, but does not show that the person who remains silent lacks those needs. The studies therefore resist a one-cause explanation.",
+"一个关键区别在于家庭沟通氛围与某一次具体回避行为并不是一回事。R17的类别描述家庭反复出现的沟通模式，不能用来诊断某个人为什么在某个晚上没有提起某个话题。R18则提供了更具体的证据：同一个人可能愿意对兄弟姐妹说，却不愿意对父母说；可能愿意谈论某个话题，却回避另一个话题。R20解释情绪分享可能发挥的功能，但并未证明保持沉默的人就缺乏这些需求。因此，这些研究都不支持单一原因解释。"]
+],
+[
+["The museum's interpretation is that family silence must be read relationally. Before asking why a person did not speak, we should ask to whom the words might have been addressed, what topic was involved, what response was expected and what family rules shaped the exchange. A person may choose a sibling, friend, written message or later moment as a safer route. Respecting that choice is different from treating avoidance as a communication failure that must be corrected.",
+"本馆认为，理解家庭沉默必须回到具体关系中。在追问一个人为什么没有开口之前，我们应该先问：这些话原本可能说给谁听？涉及什么话题？说话者预期会得到怎样的回应？家庭内部有哪些规则影响这次交流？一个人可能选择向兄弟姐妹、朋友倾诉，改用文字，或等待另一个时机。尊重这种选择，不等于把话题回避视为必须纠正的沟通失败。"]
+]
+],
+[
+[
+["R22 measures a behaviour at enormous scale, but its operational definition is narrow. During a 17-day observation, 71% of the 3,941,161 analysed users had at least one typed item that was not shared within ten minutes. At the content level, 33% of potential posts and 13% of potential comments met the study's nonpublication definition. These percentages use different denominators. The researchers did not retain the draft text, so the data cannot reveal whether a user withheld a confession, revised a sentence, became distracted or simply decided to post later.",
+"R22以极大规模测量一种行为，但它的操作性定义相当狭窄。在17天的观察期内，3,941,161名可分析用户中有71%至少出现一次输入文字后十分钟内没有发布的情况。以内容为单位计算，33%的潜在帖子和13%的潜在评论符合研究对未发布行为的定义。这些百分比的分母不同。研究者没有保留草稿文本，因此数据无法说明用户究竟是压下了一次坦白、修改句子、受到打断，还是只是决定晚些时候再发布。"],
+["R23 and R24 help interpret what the platform trace cannot show. R23's 181 Twitter users provided 226 qualitative responses about imagined audiences and self-presentation. Their accounts describe strategies such as addressing a particular person indirectly, using shared references or managing a public persona. R24's work on teenagers' networked privacy shows why audience boundaries are relational: information shared with peers may be interpreted differently when it reaches parents or other groups. Neither qualitative source estimates how often all users withhold posts, but both make the social meaning of an audience more visible.",
+"R23和R24帮助解释平台行为记录无法呈现的内容。R23收集了181名Twitter用户的226份定性回答，讨论想象中的受众和自我呈现。参与者描述了间接地对某个人说话、使用群体内部暗语，或管理公开形象等策略。R24关于青少年网络化隐私的研究则说明，受众边界具有关系性：向同伴分享的信息，传到父母或其他群体那里时，可能会被赋予不同含义。这两项定性来源都不能估算所有用户压下帖子的频率，但能够让受众的社会意义更加清晰。"]
+],
+[
+["R22 and R23 are complementary precisely because their evidence is incomplete in opposite ways. R22 can count a platform-defined event without knowing the words or motive; R23 can describe how users understand audiences without estimating population frequency. R24 adds the possibility that privacy is negotiated across relationships, while R27's Communication Privacy Management theory explains how people treat private information as something with ownership and sharing rules. When those rules are not coordinated, boundary turbulence may follow. The theory offers a vocabulary for interpretation, not a direct explanation of every abandoned draft.",
+"R22与R23之所以互补，恰恰是因为它们的证据在相反方向上有所缺失。R22能够统计平台定义下的行为，却不知道用户写了什么、为什么没有发布；R23能够描述用户如何理解受众，却无法估算总体发生频率。R24进一步指出，隐私可能需要在关系之间协商；R27的沟通隐私管理理论则解释，人们会把私人信息视为具有所有权和分享规则的内容。如果共同管理这些信息的人没有协调好规则，就可能出现边界动荡。但理论提供的是解释语言，并不能直接说明每一份被放弃的草稿。"]
+],
+[
+["The museum's interpretation is that an unsent message may be a form of audience management rather than a failed attempt at honesty. A writer may be protecting a relationship, limiting circulation, waiting for a more appropriate context or revising an idea. We cannot infer which explanation applies from nonpublication alone. The museum should therefore preserve visitors' control over whether anything is shared, and should never use private drafts as research data without explicit, informed consent.",
+"本馆认为，未寄出的信息可能是一种受众管理行为，而不是一次失败的坦诚尝试。写作者可能在保护关系、限制信息传播、等待更合适的情境，或重新整理自己的想法。仅凭没有发布这一结果，我们无法推断究竟是哪一种解释。本馆因此应当保留访客决定是否分享的权利，绝不能在没有明确知情同意的情况下，把私人草稿用作研究数据。"]
+]
+],
+[
+[
+["The three sources do not measure the same kind of writing. R22 observes a brief interval between typing and publishing on Facebook; its ten-minute threshold is a platform-specific proxy for nonpublication. R26 asks students to write privately about personal trauma over four evenings, without sending the text to another person. R28 is a theoretical review of emotion regulation, not an experiment on unsent letters. Treating them as one evidence base would confuse a momentary platform action, a structured writing task and a general account of how people manage emotion.",
+"三项来源测量的并不是同一种写作。R22观察Facebook上输入文字到发布之间的短暂间隔，其十分钟标准是针对平台行为设定的未发布代理指标；R26要求学生连续四晚私下书写个人创伤经历，并不需要把文字发送给他人；R28则是情绪调节理论综述，并非关于未寄信件的实验。若把它们视为同一套证据，就会混淆短暂的平台行为、结构化写作任务，以及人们管理情绪的一般理论。"],
+["R26's most important finding is its difference across time. Participants who wrote about both the facts and feelings of a traumatic experience reported more negative mood and higher physiological arousal immediately after writing, yet the combined-writing condition was associated with fewer university health-centre visits over the following six months. The study involved only 46 students and was explicitly preliminary. The short-term distress should not be erased in order to celebrate a possible later benefit; nor should the later association be presented as proof that private writing treats trauma.",
+"R26最重要的发现，是不同时间尺度上的结果并不相同。书写创伤经历的事实与情绪两方面内容的参与者，在写作后即时报告了更负面的情绪和更高的生理唤醒；但结合书写的条件与随后六个月较少的大学健康中心就诊次数有关。研究仅涉及46名学生，而且作者明确将其视为初步研究。我们不能为了强调可能存在的长期益处而抹去短期痛苦，也不能把后续关联说成私人写作能够治疗创伤的证明。"]
+],
+[
+["R28's process model helps explain why writing can have different effects without deciding which effect occurred in a particular case. People may select or modify a situation, redirect attention, reinterpret meaning or regulate an already activated response. Writing could support reflection or reappraisal for some people; for others, revisiting an experience may intensify distress. The review does not establish that writing is inherently an adaptive strategy, and it does not classify every unsent message as emotional regulation.",
+"R28的过程模型有助于解释写作为什么可能产生不同效果，却不能判断某个具体案例究竟发生了哪一种效果。人们可能选择或改变情境、转移注意、重新解释意义，或调节已经产生的情绪反应。对某些人而言，写作可能帮助反思或重新评价；对另一些人而言，重新回顾经历也可能加重痛苦。该综述并未证明写作本身必然是一种适应性策略，也没有把每一条未发送的信息都归类为情绪调节。"]
+],
+[
+["The central difference is between writing that stops before publication and writing that is deliberately used as a private practice. A Facebook user may abandon a draft because of an audience, an interruption or a change of mind; a participant in R26 follows a structured instruction to write about a personally significant event. One is observed as nonpublication, the other is assigned as a task. The museum should not use the first as evidence of therapeutic self-expression or the second as proof that all private writing is beneficial.",
+"核心差异在于：写作在发布前停止，与写作者有意把写作当作私人实践，并不是同一回事。Facebook用户可能因为受众、临时打断或改变主意而放弃草稿；R26的参与者则按照研究指令，围绕个人重要经历进行结构化书写。前者被观察为未发布行为，后者是被分配的任务。本馆不能把前者当作具有治疗性的自我表达证据，也不能把后者当作所有私人写作都有益的证明。"]
+],
+[
+["The museum's interpretation is modest: writing can create a space in which thoughts are organized without immediately entering a relationship with an audience. Whether that space is helpful depends on the writer, the material, the timing and the support available. The right to keep a text private is as important as the possibility of sharing it. Visitors should never be encouraged to disclose traumatic details simply because a study found some longer-term associations in a small student sample.",
+"本馆的综合判断保持克制：写作可以创造一个空间，让人整理想法，而不必立即把这些内容带入与受众的关系之中。但这个空间是否有帮助，取决于写作者、书写内容、时间，以及可获得的支持。保留文本隐私的权利，与分享文本的可能性同样重要。不能仅仅因为一项小规模学生研究发现了某些长期关联，就鼓励访客披露创伤细节。"]
+]
+],
+[
+[
+["The eight sources do not offer eight equivalent accounts of historical silence. R29 maps how power enters the production of history through source creation, archive formation, narrative construction and the later assignment of significance. R30 distinguishes public performance from less visible offstage discourse under domination. R31 confronts the ethical limit of reconstructing an enslaved woman's life from records produced through violence. R32 asks historians to read colonial documents 'along the archival grain', treating administrative categories and anxieties as part of the evidence rather than as neutral description.",
+"八项来源并没有提供八种可以互换的历史沉默解释。R29梳理权力如何在史料形成、档案建立、叙事构造和后世赋予意义的过程中介入历史生产；R30区分支配关系下的公开表演与不易被看见的幕后话语；R31面对一个伦理难题：如何依据暴力制造的记录重构一位被奴役女性的生命；R32则要求研究者“顺着档案纹理”阅读殖民文件，把行政分类和官员焦虑也视为证据的一部分，而不是中立描述。"],
+["R33 adds a problem of representation: a person may speak, yet the systems through which others describe, translate or publish that speech may prevent the person from being recognized as an intelligible subject. R34 approaches oral testimony differently. A divergence between remembered chronology and documentary dates need not make testimony worthless; it may reveal how a community organizes the meaning of an event. But the discrepancy still needs to be checked against other records. R35 turns the issue toward research practice, asking how the interviewer's authority and setting shape whether someone agrees to speak. R36 surveys anthropological approaches that treat silence as relational, embodied and culturally situated rather than as a simple absence.",
+"R33进一步提出代表性问题：一个人可能确实说了话，但他人描述、翻译或出版这些话的制度，却可能使其无法被承认为一个能够被理解的主体。R34以不同方式处理口述证词：记忆中的时间顺序与文献日期不一致，并不必然使证词失去价值；这种差异可能揭示一个社群如何组织某件事件的意义。但这种差异仍需与其他记录核对。R35把问题转向研究实践，追问访谈者的权威和访谈场景如何影响一个人是否愿意说话。R36则综述人类学如何把沉默理解为关系性、身体性和文化情境中的现象，而不是简单的缺席。"]
+],
+[
+["These approaches disagree less about whether power matters than about where it can be observed. Trouillot traces the making of historical facts; Stoler reads the routines and anxieties inside official documents; Scott compares what can be performed in front of authority with what may circulate elsewhere; Spivak questions the representational systems that claim to make marginalized people speak. Hartman warns that even a sympathetic historian can overstep the evidence when trying to restore a lost life. Portelli, by contrast, shows why oral memory deserves interpretation as meaning while still requiring factual comparison. The methods answer different questions and should not be collapsed into one theory.",
+"这些路径对“权力是否重要”并没有根本分歧，差别主要在于权力可以在哪里被观察到。Trouillot追踪历史事实如何形成；Stoler阅读官方文件内部的惯例与焦虑；Scott比较人们在权威面前能够表演什么，以及他们可能在其他场合传播什么；Spivak质疑那些声称能够替边缘群体发声的代表性制度。Hartman提醒我们，即使是出于善意的历史学家，在试图复原失落生命时也可能越过证据边界。Portelli则说明，口述记忆值得作为意义来解释，同时仍需要与事实记录进行比较。这些方法回答不同问题，不应被压缩成一种理论。"],
+["R35's fieldwork example makes the ethics of evidence concrete: only four of 25 initial interview requests led to interviews in one described episode. This is not a general refusal rate. The authors examine how familiar locations and less intimidating arrangements changed the conditions of conversation, while maintaining the participant's right to refuse. The result challenges the assumption that a researcher is entitled to a story simply because the story would be valuable. A missing interview may reveal something about the research relationship, but it does not reveal the unspoken content.",
+"R35的田野案例让证据伦理变得具体：在一个被描述的研究经历中，25次最初的采访邀请只有4次获得同意。这不是普遍拒访率。作者考察熟悉的地点和较少压迫感的安排如何改变交谈条件，同时保留参与者拒绝的权利。这个案例挑战了一个假设：研究者不能仅仅因为某段故事具有研究价值，就认为自己有权获得它。一次缺席的访谈可能揭示研究关系中的问题，却不会自动揭示那段未说出口的内容。"]
+],
+[
+["The museum's final conclusion is that historical voice survives through several imperfect routes: a document may preserve a fragment, an archive may organize it selectively, an oral account may carry communal meaning, and a later scholar may interpret what is absent. None is a transparent substitute for the original person's own words. Curators should label whether a claim rests on a contemporary record, later testimony, a scholarly interpretation or an acknowledged gap. The museum must not invent first-person testimony to make an exhibition feel emotionally complete.",
+"本馆的最终结论是，历史声音通过多种并不完美的路径留存：一份文献可能保存某个片段，档案可能有选择地组织材料，口述证词可能承载社群意义，后来的学者则可能解释其中的缺席。但没有任何一种材料能够透明地替代当事人自己的原话。策展人应标明一项判断究竟依据同时代记录、后来的证词、学术解释，还是已被承认的证据空缺。本馆不能为了让展览在情感上显得完整，就编造第一人称证词。"]
+]
+]
+];
+for(let i=0;i<articles.length;i++){
+ const x=comparativeSupplements[i];
+ articles[i].sections[1].paras.push(...x[0]);
+ articles[i].sections[2].paras.push(...x[1]);
+ articles[i].sections[3].paras.push(...x[2]);
+}
+
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const lang=()=>{const current=window.museumLangPublic?.();return current==='en'?'en':current==='zh-Hant'?'zh-Hant':'zh-Hans';};
 const cv=s=>lang()==='zh-Hant'?(window.museumConvertPublic?.(String(s??''))??String(s??'')):String(s??'');
