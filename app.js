@@ -1770,8 +1770,8 @@ const MUSEUM_RESEARCH_ASSETS = {
     'museum-research-second-five.js?v=research-second-audit-20261122-3',
     'museum-research-third-a.js?v=research-trilang-20261122-1',
     'museum-research-third-b.js?v=research-trilang-20261122-1',
-    'museum-research-final-a.js?v=research-trilang-20261122-1',
-    'museum-research-final-b.js?v=source-audit-20261124-1',
+    'museum-research-final-a.js?v=source-audit-20261124-1',
+    'museum-research-final-b.js?v=source-audit-20261124-2',
     'museum-research-atlas.js?v=source-audit-20261124-1',
     'museum-research-ivory-gallery.js?v=comparative-essays-v18'
   ]
