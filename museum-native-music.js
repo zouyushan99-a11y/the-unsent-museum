@@ -10,19 +10,19 @@
       expand:'Music settings', close:'Close music settings', title:'Underneath',
       subtitle:'Original museum soundtrack', eyebrow:'THE SOUND OF THE UNSAID',
       loop:'Single-track repeat is on · No other songs will play',
-      volume:'Volume', progress:'Song position', problem:'The audio could not be played. Please try again.',
+      volume:'Volume', progress:'Song position', loading:'Loading audio…', problem:'The audio could not be played. Please try again.',
       source:'Original song on Suno'},
     'zh-Hans': {music:'音乐', play:'播放《Underneath》', pause:'暂停《Underneath》',
       expand:'音乐设置', close:'关闭音乐设置', title:'Underneath · 沉默之下',
       subtitle:'博物馆原创配乐', eyebrow:'沉默里的声音',
       loop:'已开启单曲循环 · 不会播放其他歌曲',
-      volume:'音量', progress:'歌曲进度', problem:'音乐暂时无法播放，请稍后再试。',
+      volume:'音量', progress:'歌曲进度', loading:'正在缓冲音乐…', problem:'音乐暂时无法播放，请稍后再试。',
       source:'在 Suno 查看原曲'},
     'zh-Hant': {music:'音樂', play:'播放《Underneath》', pause:'暫停《Underneath》',
       expand:'音樂設定', close:'關閉音樂設定', title:'Underneath · 沉默之下',
       subtitle:'博物館原創配樂', eyebrow:'沉默裡的聲音',
       loop:'已開啟單曲循環 · 不會播放其他歌曲',
-      volume:'音量', progress:'歌曲進度', problem:'音樂暫時無法播放，請稍後再試。',
+      volume:'音量', progress:'歌曲進度', loading:'正在緩衝音樂…', problem:'音樂暫時無法播放，請稍後再試。',
       source:'在 Suno 查看原曲'}
   };
   const lang = () => labels[document.documentElement.lang] || labels.en;
@@ -48,7 +48,7 @@
     audio.id = 'museum-native-audio';
     audio.src = AUDIO_URL;
     audio.loop = true;             // The only track is Underneath.
-    audio.preload = 'metadata';     // Avoid downloading the full file before listening.
+    audio.preload = 'none';         // Never compete with initial page assets by default.
     audio.volume = 0.75;
     audio.setAttribute('playsinline', '');
     audio.hidden = true;
@@ -104,22 +104,29 @@
     row.append(volumeLabel, volume);
     body.append(progress, time, row);
     const hint = el('p', 'museum-music-note-text museum-native-hint');
+    const status = el('p', 'museum-native-status');
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
     const error = el('p', 'museum-native-error');
     error.setAttribute('role', 'status');
     const link = el('a', 'museum-music-link');
     link.href = SONG_URL;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    panel.append(head, body, hint, error, link);
+    panel.append(head, body, hint, status, error, link);
     dock.append(audio, bar, panel);
     // Replace any legacy dock in a single DOM operation; never leave a gap.
     // Crucially, this player sits in document.body, outside the re-rendered #app.
     if (existing) existing.replaceWith(dock);
     else document.body.append(dock);
 
+    let buffering = false;
     function sync() {
       const t = lang(), playing = !audio.paused && !audio.ended;
       symbol.textContent = playing ? 'Ⅱ' : '♫';
+      status.textContent = buffering ? t.loading : '';
+      play.classList.toggle('is-buffering', buffering);
+      play.setAttribute('aria-busy', buffering ? 'true' : 'false');
       playLabel.textContent = t.music;
       play.setAttribute('aria-label', playing ? t.pause : t.play);
       play.setAttribute('aria-pressed', playing ? 'true' : 'false');
@@ -146,16 +153,31 @@
       panel.inert = !open;
       more.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
+    // Begin preparing audio only when the user signals listening intent.
+    // This can save a round trip before the eventual click without forcing every
+    // visitor on mobile data to download the entire soundtrack.
+    function prepareAudio() {
+      if (audio.preload === 'none' && audio.networkState !== HTMLMediaElement.NETWORK_LOADING) {
+        audio.preload = 'auto';
+        audio.load();
+      }
+    }
+    play.addEventListener('pointerenter', prepareAudio, { once: true });
+    play.addEventListener('focus', prepareAudio, { once: true });
     async function toggle() {
       if (audio.paused) {
         try {
           error.dataset.failed = 'false';
+          buffering = true;
+          sync();
           await audio.play(); // Must run directly from the click gesture on mobile.
         } catch (_) {
           error.dataset.failed = 'true';
           setPanel(true);
+        } finally {
+          buffering = false;
         }
-      } else audio.pause();
+      } else { buffering = false; audio.pause(); }
       sync();
     }
     play.addEventListener('click', toggle);
@@ -169,7 +191,11 @@
     volume.addEventListener('input', () => { audio.volume = Number(volume.value) / 100; });
     for (const event of ['play', 'pause', 'timeupdate', 'loadedmetadata', 'durationchange', 'ended'])
       audio.addEventListener(event, sync);
+    audio.addEventListener('waiting', () => { buffering = true; sync(); });
+    audio.addEventListener('playing', () => { buffering = false; sync(); });
+    audio.addEventListener('canplay', () => { buffering = false; sync(); });
     audio.addEventListener('error', () => {
+      buffering = false;
       error.dataset.failed = 'true';
       setPanel(true);
       sync();
