@@ -19,7 +19,7 @@ jobs:
           set -euo pipefail
           mkdir -p vendor
           mkdir -p "$RUNNER_TEMP/museum-supabase" "$RUNNER_TEMP/museum-opencc"
-          SUPABASE_TARBALL="$(npm pack '@supabase/supabase-js@2.49.4' --silent)"
+          SUPABASE_TARBALL="$(npm pack '@supabase/supabase-js@2.119.2' --silent)"
           tar -xzf "$SUPABASE_TARBALL" -C "$RUNNER_TEMP/museum-supabase"
           ls -lah "$RUNNER_TEMP/museum-supabase/package/dist/umd/"
           if [[ -f "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.min.js" ]]; then
@@ -34,7 +34,27 @@ jobs:
           test "$(wc -c < vendor/opencc-full.js)" -gt 10000
           node --check vendor/supabase.min.js
           node --check vendor/opencc-full.js
-          printf '%s\n' 'Supabase JS UMD: npm @supabase/supabase-js@2.49.4' 'OpenCC JS full UMD: npm opencc-js@1.4.2' 'Copies retained locally so mainland visitors do not need to reach jsDelivr.' > vendor/README.txt
+          # Before installing a new library on the public site, verify the
+          # read-only anonymous star RPC with the current publishable key.
+          node <<'NODE'
+          const fs = require('fs');
+          const { createClient } = require('./vendor/supabase.min.js');
+          if (typeof createClient !== 'function') throw Error('Supabase UMD createClient missing');
+          const app = fs.readFileSync('app.js','utf8');
+          const endpoint = app.match(/const SUPABASE_URL='([^']+)'/);
+          const key = app.match(/const SUPABASE_PUBLISHABLE_KEY='([^']+)'/);
+          if (!endpoint || !key) throw Error('Public client config missing');
+          const client = createClient(endpoint[1],key[1],{
+            auth:{autoRefreshToken:false,persistSession:false,detectSessionInUrl:false}
+          });
+          (async()=>{
+            const {data,error}=await client.rpc('get_museum_stars');
+            if(error)throw Error('Public star RPC failed: '+error.message);
+            if(!Array.isArray(data))throw Error('Public star RPC did not return a list');
+            console.log('Verified pinned SDK can fetch '+data.length+' public stars');
+          })().catch(e=>{console.error(e.message);process.exitCode=1});
+          NODE
+          printf '%s\n' 'Supabase JS UMD: npm @supabase/supabase-js@2.119.2' 'OpenCC JS full UMD: npm opencc-js@1.4.2' 'Copies retained locally so mainland visitors do not need to reach jsDelivr.' > vendor/README.txt
           ls -lh vendor/
       - name: Commit self-hosted browser libraries
         shell: bash
