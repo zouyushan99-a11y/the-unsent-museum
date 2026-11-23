@@ -1,0 +1,27 @@
+name: Museum quality checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: ''
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate lazy loading, privacy and structure
+        run: node tests/structure.cjs
+      - name: Test three-language routes and story forms
+        run: npm test
