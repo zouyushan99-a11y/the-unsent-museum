@@ -659,7 +659,7 @@ ${emailAuthMode==='signup'?'<p class="small muted">Use a strong password. Depend
 </form>
 ${emailAuthMode==='login'?'<button class="auth-text-button" type="button" id="forgot-password">Forgot password?</button>':''}
 ${authMessage?`<div class="auth-feedback" role="status">${esc(museumDisplaySystemMessage(authMessage))}</div>`:''}
-</div><p class="privacy-caption">Authentication is handled by Supabase. Signing in does not publish or synchronize your stories, answers or stars. These remain in this browser until shared storage is enabled.</p></section></main>`;
+</div><p class="privacy-caption">Authentication is handled by Supabase. Signing in does not publish or synchronize your stories, answers or stars. These remain in this browser until shared storage is enabled.</p><p class="small muted">${museumReasonText('Having trouble signing in on your phone?','手机登录遇到问题？','手機登入遇到問題？')} <a href="compatibility-check.html">${museumReasonText('Check browser and network access ↗','检测浏览器和网络 ↗','檢測瀏覽器和網絡 ↗')}</a></p></section></main>`;
 }
 function bindAuth(){
 const google=$('#google-signin');if(google)google.onclick=async()=>{
