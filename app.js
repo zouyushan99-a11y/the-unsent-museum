@@ -186,6 +186,7 @@ let submitError='';
 let sharedRefreshPromise=null;
 let publicStarVerified=false;
 let starNames=new Map();
+let customReasonServiceReady=false;
 let starIdentityServiceReady=false;
 let starIdentityNotice='';
 let curatorAccess=false;
@@ -433,7 +434,17 @@ async function refreshSharedAnswers(){
          if(row?.id&&typeof row.author_name==='string'&&row.author_name.trim())starNames.set(String(row.id),row.author_name.trim());
        }
      }
-     sharedAnswers=sharedAnswers.map(a=>({...a,authorName:starNames.get(a.id)||null}));
+     const customResponse=await authClient.rpc('get_museum_custom_reasons');
+     customReasonServiceReady=!customResponse.error&&Array.isArray(customResponse.data);
+     const customByAnswer=new Map();
+     if(customReasonServiceReady)for(const item of customResponse.data){
+       if(typeof item?.id!=='string'||typeof item?.other_reason!=='string')continue;
+       const translations=item.translations&&typeof item.translations==='object'?item.translations:{};
+       customByAnswer.set(String(item.id),{
+         original:item.other_reason,language:item.original_language||'und',translations
+       });
+     }
+     sharedAnswers=sharedAnswers.map(a=>({...a,authorName:starNames.get(a.id)||null,customReason:customByAnswer.get(a.id)||null}));
      sharedStatus='ready';sharedError='';lastSharedSync=Date.now();
    }catch(e){sharedStatus='error';sharedError=String(e.message||e)}
    finally{sharedRefreshPromise=null;const r=route();if(r.type==='lookout'||r.type==='sky'||r.type==='home')render(false)}
@@ -1011,8 +1022,26 @@ function reasonColour(scenarioId,decision,number){
  const index=reasonIndex(decision,number);
  return palette?.[index]||'#d6c7b2';
 }
-function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const label=Number(n)===99?'Other reason':pool[Number(n)];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.scenario,a.decision,n),label,scenario:a.scenario,decision:a.decision,authorName:a.authorName||null})}}return stars}
-function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SCENARIOS.map(x=>scenario(x.id));return groups.map(sc=>{const parts=['silent','speak'].map(decision=>{const pool=sc[decision];const items=pool.map((name,i)=>({name,n:i})).concat([{name:'Other reason',n:99}]);const observed=reasonStars(arr).filter(x=>x.scenario===sc.id&&x.decision===decision);return '<div class="reason-colour-group"><h4>'+(decision==='silent'?'Reasons for silence':'Reasons for speaking')+'</h4><div class="reason-colour-grid">'+items.filter(item=>observed.some(x=>x.label===item.name)).map(item=>'<div class="reason-colour-item"><i class="reason-colour-dot" style="--reason-colour:'+reasonColour(sc.id,decision,item.n)+'"></i><span>'+esc(item.name)+'</span></div>').join('')+'</div></div>'}).join('');return '<section class="reason-legend-gallery"><h3>'+esc(sc.title)+'</h3>'+parts+'</section>'}).filter(html=>!id||html).join('')}
+function museumReasonText(en,zh,tw){return museumLang==='en'?en:museumLang==='zh-Hant'?tw:zh}
+function museumWrittenReasonText(a){
+  const custom=a.customReason;
+  if(!custom)return museumReasonText('The original text was not saved in an earlier version.','旧版本没有保存这条理由的原文。','舊版本沒有儲存這條理由的原文。');
+  const translated=custom.translations?.[museumLang];
+  return typeof translated==='string'&&translated.trim()?translated.trim():custom.original;
+}
+function museumGuessReasonLanguage(input){
+  const value=String(input||'');
+  const han=(value.match(/[\u3400-\u9fff]/g)||[]).length;
+  const roman=(value.match(/[A-Za-z]/g)||[]).length;
+  if(han>0&&han*2>=roman){
+    const traditional=(value.match(/[體學會說話愛覺為這還後發國時個與裡們對過聽寫應讀離變關開歡謝戀選擇無貓龍歲書東買雖認題曉詞]/g)||[]).length;
+    const simplified=(value.match(/[体学会说话爱觉为这还后发国时个与里们对过听写应读离变关开欢谢恋选择无猫龙岁书东买虽认题晓词]/g)||[]).length;
+    return traditional>simplified?'zh-Hant':simplified>traditional?'zh-Hans':museumLang==='zh-Hant'?'zh-Hant':'zh-Hans';
+  }
+  return 'en';
+}
+function reasonStars(arr){const stars=[];for(const a of arr){const sc=scenario(a.scenario);if(!sc)continue;const pool=a.decision==='silent'?sc.silent:sc.speak;const unique=[...new Set(Array.isArray(a.reasons)?a.reasons:[])];for(const n of unique){const number=Number(n),custom=number===99,label=custom?museumWrittenReasonText(a):pool[number];if(!label)continue;stars.push({id:String(a.id)+':'+a.scenario+':'+a.decision+':'+n,colour:reasonColour(a.scenario,a.decision,n),label,reasonNumber:number,isCustom:custom,scenario:a.scenario,decision:a.decision,authorName:a.authorName||null})}}return stars}
+function reasonLegend(arr,id){const s=id?scenario(id):null;const groups=s?[s]:SCENARIOS.map(x=>scenario(x.id));return groups.map(sc=>{const parts=['silent','speak'].map(decision=>{const pool=sc[decision];const items=pool.map((name,i)=>({name,n:i})).concat([{name:museumReasonText('Visitor-written reason','访客写下的理由','訪客寫下的理由'),n:99}]);const observed=reasonStars(arr).filter(x=>x.scenario===sc.id&&x.decision===decision);return '<div class="reason-colour-group"><h4>'+(decision==='silent'?'Reasons for silence':'Reasons for speaking')+'</h4><div class="reason-colour-grid">'+items.filter(item=>observed.some(x=>x.reasonNumber===item.n)).map(item=>'<div class="reason-colour-item"><i class="reason-colour-dot" style="--reason-colour:'+reasonColour(sc.id,decision,item.n)+'"></i><span>'+esc(item.name)+'</span></div>').join('')+'</div></div>'}).join('');return '<section class="reason-legend-gallery"><h3>'+esc(sc.title)+'</h3>'+parts+'</section>'}).filter(html=>!id||html).join('')}
 // Van Gogh-inspired multi-vortex placement. Brush strokes are decorative; each star still represents a real choice or reason.
 const VORTICES=[{x:.22,y:.68,sx:.31,sy:.36,turn:1},{x:.74,y:.31,sx:.30,sy:.34,turn:-1},{x:.52,y:.55,sx:.27,sy:.25,turn:1}];
 function starHash(key){let h=2166136261;for(const c of String(key)){h=Math.imul(h^c.charCodeAt(0),16777619)}return h>>>0}
@@ -1047,7 +1076,7 @@ function paintSwirlBrushstrokes(ctx,w,h){ctx.save();ctx.lineCap='round';const co
 function paintStar(ctx,x,y,r,colour){const glow=ctx.createRadialGradient(x,y,0,x,y,r*9);glow.addColorStop(0,colour+'88');glow.addColorStop(.26,colour+'35');glow.addColorStop(1,colour+'00');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(x,y,r*9,0,Math.PI*2);ctx.fill();ctx.fillStyle=colour;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.fillStyle='rgba(255,242,199,.68)';ctx.beginPath();ctx.arc(x,y,Math.max(.5,r*.25),0,Math.PI*2);ctx.fill()}
 
 // Individual-star hit detection for mouse hover and phone/tablet taps.
-// Only answers and predefined reason labels are displayed; no email or private free-text.
+// Only explicitly published translated custom reasons appear; email, account IDs and draft text are never shown.
 function starDescription(st){
 const name=scenario(st.scenario)?.title||'The Museum';const author=st.authorName||'Unnamed Star';
 if(st.kind==='reason')return {gallery:name,title:st.decision==='silent'?'Reason for silence':'Reason for speaking',detail:st.label,author};
@@ -1065,9 +1094,9 @@ function showStarTooltip(st,x,y){
 hideStarTooltip();if(!st)return;
 const d=starDescription(st);
 const t=document.createElement('div');t.className='star-info-tooltip';t.setAttribute('role','status');
-t.innerHTML='<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span>'+esc(d.detail)+'</span><span class="sky-star-author">✧ '+esc(d.author)+'</span>';
+t.innerHTML='<small>'+esc(d.gallery)+'</small><strong>'+esc(d.title)+'</strong><span class="sky-star-detail">'+esc(d.detail)+'</span><span class="sky-star-author">✧ '+esc(d.author)+'</span>';
 document.body.append(t);
-const width=Math.min(300,innerWidth-24);
+const width=Math.min(st.isCustom?380:300,innerWidth-24);
 t.style.maxWidth=width+'px';
 const box=t.getBoundingClientRect();
 t.style.left=Math.max(12,Math.min(innerWidth-box.width-12,x+16))+'px';
