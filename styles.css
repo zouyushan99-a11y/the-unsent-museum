@@ -2282,3 +2282,19 @@ html:lang(zh) #app .curator-letter-body {
 }
 #app .about-copy {min-width:0;max-width:min(100%,850px)}
 #app .about-copy h3 {margin-top:clamp(28px,4vw,43px)}
+
+/* Curator letter visitor feedback */
+#app .curator-letter-feedback{
+ display:flex;justify-content:flex-end;
+ max-width:72ch;margin:15px auto 0;
+}
+#app .curator-letter-feedback a{
+ display:inline-flex;align-items:center;min-height:44px;
+ padding:8px 0;color:#765a31;font-size:.94rem;
+ text-decoration:underline;text-underline-offset:4px;
+ line-height:1.55;overflow-wrap:anywhere;
+}
+#app .curator-letter-feedback a:hover{color:#a07131}
+#app .curator-letter-feedback a:focus-visible{
+ outline:2px solid #866334;outline-offset:4px;border-radius:3px;
+}
