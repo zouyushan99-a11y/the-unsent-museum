@@ -480,3 +480,35 @@
  #app .curator-primary-source{padding:15px 12px}
  #app .curator-original-afterword{padding:17px 13px}
 }
+
+/* Responsive reading of the curator's letter on phones, tablets, and iPad split view. */
+@media(max-width:1180px){
+ #app .curator-letter {margin:14px auto 62px}
+ #app .curator-letter-inner {padding:clamp(28px,4.4vw,54px)}
+ #app .curator-letter-body {max-width:69ch}
+ #app .curator-letter-body p+p {margin-top:1.45em}
+}
+@media(min-width:601px) and (max-width:850px){
+ #app .curator-letter {max-width:100%;border-radius:19px}
+ #app .curator-letter-inner {padding:clamp(27px,4.4vw,42px);border-radius:14px}
+ #app .curator-letter-body {font-size:1.08rem;line-height:2.02}
+ html:lang(zh) #app .curator-letter-body {line-height:2.1}
+}
+@media(max-width:600px){
+ #app .curator-letter {width:100%;padding:3px;border-radius:16px;margin:9px auto 43px}
+ #app .curator-letter-inner {padding:26px 18px 31px;border-radius:12px}
+ #app .curator-letter-head {padding-bottom:23px;margin-bottom:22px}
+ #app .curator-letter-ornament {margin-bottom:15px;font-size:.8rem}
+ #app .curator-letter-head h2 {font-size:clamp(1.6rem,7vw,2rem);line-height:1.32}
+ #app .curator-letter-lead {font-size:.98rem;line-height:1.75;margin-top:12px}
+ #app .curator-letter-body {max-width:100%;font-size:1rem;line-height:1.92}
+ html:lang(zh) #app .curator-letter-body {font-size:1.02rem;line-height:2.08;letter-spacing:0}
+ #app .curator-letter-body p+p {margin-top:1.38em}
+ #app .curator-letter-signature {font-size:.96rem;margin-top:28px}
+ #app .about-copy {max-width:100%;overflow-wrap:anywhere}
+}
+@media(max-width:360px){
+ #app .curator-letter-inner {padding:23px 13px 27px}
+ #app .curator-letter-head h2 {font-size:1.5rem}
+ #app .curator-letter-body {font-size:.98rem}
+}
