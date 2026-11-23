@@ -260,3 +260,22 @@ Object.assign(window.MUSEUM_I18N.zh,{
   "In the Classroom": "课堂之中",
   "At Home": "家庭之中"
 });
+
+
+/* Updated story invitation and signed-in account screens (November 2026).
+ * Keep full paragraphs as exact keys: the UI localizes one text node at a time.
+ * Traditional Chinese uses the site's existing OpenCC conversion pipeline. */
+(function(){
+  if(!window.MUSEUM_I18N?.zh)return;
+  Object.assign(window.MUSEUM_I18N.zh,{
+  "Your choice and reasons are already saved in the shared sky. Your decision to write a story does not affect your stars. Your optional story remains a private draft unless you deliberately publish it. With explicit consent, visitor-written reasons are displayed as translated public stars. Avoid identifying or sensitive details.": "你的选择和理由已经保存到共享星空。是否继续写故事，不会影响已经留下的星星。除非你主动确认发布，否则故事只会保留为私人草稿。只有得到明确同意后，访客自行填写的理由才会经过翻译并作为公开星星展示。请避免填写可识别个人身份的信息或其他敏感内容。",
+  "Your place in the museum.": "你在博物馆的一席之地。",
+  "SIGNED IN": "已登录",
+  "Welcome back.": "欢迎回来。",
+  "Set or change your museum password here. If you originally joined using Google, setting a password will let you sign in with either method using the same account.": "你可以在这里设置或更改博物馆账户的密码。如果你最初通过 Google 登录，设置密码后也可以使用邮箱和密码登录同一个账户，无需另外注册。",
+  "Choose a new password.": "设置新密码。",
+  "Create a new museum password.": "为博物馆账户设置新密码。",
+  "Your recovery link has been accepted. Choose a new password to finish.": "密码重设链接已验证。请设置新密码以完成操作。",
+  "Authenticated visitor": "已登录访客"
+});
+})();
