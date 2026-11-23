@@ -11,7 +11,7 @@ const raws=[
 ['Cialdini & Goldstein','2004','Social Influence: Compliance and Conformity','https://doi.org/10.1146/annurev.psych.55.090902.142015','friendship','Compliance, conformity, and social influence','顺从、从众与社会影响'],
 ['Baumeister & Leary','1995','The Need to Belong: Desire for Interpersonal Attachments as a Fundamental Human Motivation','https://pubmed.ncbi.nlm.nih.gov/7777651/','friendship','Belonging as a social motivation','归属感与社会动机'],
 ['Deci & Ryan','2000','The “What” and “Why” of Goal Pursuits: Human Needs and the Self-Determination of Behavior','https://doi.org/10.1207/S15327965PLI1104_01','friendship','Autonomy and self-determination','自主性与自我决定'],
-['Flynn & Lake','2008','If You Need Help, Just Ask: Underestimating Compliance With Direct Requests for Help','https://doi.org/10.1016/j.jesp.2008.01.002','friendship','Social pressure in direct requests','直接请求中的社会压力'],
+['Flynn & Lake','2008','If You Need Help, Just Ask: Underestimating Compliance With Direct Requests for Help','https://doi.org/10.1037/0022-3514.95.1.128','friendship','Social pressure in direct requests','直接请求中的社会压力'],
 ['Darley & Latané','1968','Bystander Intervention in Emergencies: Diffusion of Responsibility','https://pubmed.ncbi.nlm.nih.gov/5645600/','classroom','Diffusion of responsibility','责任分散'],
 ['Fischer et al.','2011','The Bystander-Effect: A Meta-Analytic Review on Bystander Intervention in Dangerous and Non-Dangerous Emergencies','https://pubmed.ncbi.nlm.nih.gov/21534650/','classroom','How danger and other factors moderate helping','危险程度如何影响帮助行为'],
 ['Edmondson','1999','Psychological Safety and Learning Behavior in Work Teams','https://doi.org/10.2307/2666999','classroom','Speaking in teams with differing safety climates','团队中的心理安全'],
@@ -37,7 +37,7 @@ const raws=[
 ['James C. Scott','1990','Domination and the Arts of Resistance: Hidden Transcripts','https://yalebooks.yale.edu/book/9780300056693/domination-and-the-arts-of-resistance/','cross','Public and hidden transcripts','公开与隐藏的话语'],
 ['Saidiya Hartman','2008','Venus in Two Acts','https://doi.org/10.1215/-12-2-1','cross','Writing histories with fragmentary archives','如何书写残缺档案中的生命'],
 ['Ann Laura Stoler','2009','Along the Archival Grain: Epistemic Anxieties and Colonial Common Sense','https://press.princeton.edu/books/paperback/9780691146362/along-the-archival-grain','cross','Colonial archives as constructed records','殖民档案的形成'],
-['Gayatri Chakravorty Spivak','1988','Can the Subaltern Speak?','https://www.jstor.org/stable/466624','cross','Representation and subaltern voices','从属群体的代表与发声'],
+['Gayatri Chakravorty Spivak','1988','Can the Subaltern Speak?','https://www.cscsarchive.org/dataarchive/otherfiles/PhD0010003','cross','Representation and subaltern voices','从属群体的代表与发声'],
 ['Alessandro Portelli','1991','The Death of Luigi Trastulli and Other Stories: Form and Meaning in Oral History','https://utpdistribution.com/9780791404300/the-death-of-luigi-trastulli-and-other-stories/','cross','Oral testimony, meaning, and memory','口述证词与记忆'],
 ['Schweiger & Tomiak','2022','Researching Silence: A Methodological Inquiry','https://doi.org/10.1177/03058298221083999','cross','Methods for studying silence','如何研究沉默'],
 ['Dragojlovic & Samuels','2023','Silence','https://doi.org/10.29164/23silence','cross','Anthropological approaches to silence','沉默的人类学研究']
