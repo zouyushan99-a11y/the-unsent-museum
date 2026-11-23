@@ -4,6 +4,9 @@
 (() => {
   'use strict';
   const AUDIO_URL = new URL('Underneath.mp3', document.baseURI).href;
+  // Same original MP3 bytes, served via a second route if the main route stalls.
+  // Pin to a commit so CDN cache always contains the same recording.
+  const BACKUP_AUDIO_URL = 'https://cdn.jsdelivr.net/gh/zouyushan99-a11y/the-unsent-museum@7b3ddce6a650f8c2c83609f09d005b1208c00dd1/Underneath.mp3';
   const SONG_URL = 'https://suno.com/song/f2512b38-495a-4288-92f0-78acc6a752f5';
   const labels = {
     en: {music:'Music', play:'Play Underneath', pause:'Pause Underneath',
@@ -11,19 +14,19 @@
       subtitle:'Original museum soundtrack', eyebrow:'THE SOUND OF THE UNSAID',
       loop:'Single-track repeat is on · No other songs will play',
       volume:'Volume', progress:'Song position', loading:'Loading audio…', problem:'The audio could not be played. Please try again.',
-      source:'Original song on Suno'},
+      line:'Audio route', main:'Main', backup:'Backup CDN', switchHint:'Still buffering? Try the backup route.', source:'Original song on Suno'},
     'zh-Hans': {music:'音乐', play:'播放《Underneath》', pause:'暂停《Underneath》',
       expand:'音乐设置', close:'关闭音乐设置', title:'Underneath · 沉默之下',
       subtitle:'博物馆原创配乐', eyebrow:'沉默里的声音',
       loop:'已开启单曲循环 · 不会播放其他歌曲',
       volume:'音量', progress:'歌曲进度', loading:'正在缓冲音乐…', problem:'音乐暂时无法播放，请稍后再试。',
-      source:'在 Suno 查看原曲'},
+      line:'音乐线路', main:'主线路', backup:'备用 CDN', switchHint:'如果缓冲太久，可以尝试备用线路。', source:'在 Suno 查看原曲'},
     'zh-Hant': {music:'音樂', play:'播放《Underneath》', pause:'暫停《Underneath》',
       expand:'音樂設定', close:'關閉音樂設定', title:'Underneath · 沉默之下',
       subtitle:'博物館原創配樂', eyebrow:'沉默裡的聲音',
       loop:'已開啟單曲循環 · 不會播放其他歌曲',
       volume:'音量', progress:'歌曲進度', loading:'正在緩衝音樂…', problem:'音樂暫時無法播放，請稍後再試。',
-      source:'在 Suno 查看原曲'}
+      line:'音樂線路', main:'主線路', backup:'備用 CDN', switchHint:'如果緩衝太久，可以嘗試備用線路。', source:'在 Suno 查看原曲'}
   };
   const lang = () => labels[document.documentElement.lang] || labels.en;
   const el = (tag, className, text) => {
@@ -103,6 +106,13 @@
     volume.step = '1';
     row.append(volumeLabel, volume);
     body.append(progress, time, row);
+    const routeRow = el('div', 'museum-native-route-row');
+    const routeTitle = el('span', 'museum-native-route-label');
+    const mainRoute = el('button', 'museum-native-route is-active');
+    const backupRoute = el('button', 'museum-native-route');
+    mainRoute.type = backupRoute.type = 'button';
+    routeRow.append(routeTitle, mainRoute, backupRoute);
+    body.append(routeRow);
     const hint = el('p', 'museum-music-note-text museum-native-hint');
     const status = el('p', 'museum-native-status');
     status.setAttribute('role', 'status');
@@ -121,10 +131,35 @@
     else document.body.append(dock);
 
     let buffering = false;
+    let selectedRoute = 'main';
+    let stallTimer = null;
+    let suggestedFallback = false;
+    function clearStallTimer() {
+      if (stallTimer !== null) { clearTimeout(stallTimer); stallTimer = null; }
+    }
+    function watchBuffering() {
+      clearStallTimer();
+      if (!buffering || selectedRoute !== 'main') return;
+      stallTimer = setTimeout(() => {
+        // Never silently redirect or restart audio: the visitor decides.
+        if (buffering && selectedRoute === 'main') {
+          suggestedFallback = true;
+          setPanel(true);
+          sync();
+        }
+      }, 8500);
+    }
     function sync() {
       const t = lang(), playing = !audio.paused && !audio.ended;
       symbol.textContent = playing ? 'Ⅱ' : '♫';
-      status.textContent = buffering ? t.loading : '';
+      status.textContent = suggestedFallback && buffering ? t.switchHint : (buffering ? t.loading : '');
+      routeTitle.textContent = t.line;
+      mainRoute.textContent = t.main;
+      backupRoute.textContent = t.backup;
+      mainRoute.classList.toggle('is-active', selectedRoute === 'main');
+      backupRoute.classList.toggle('is-active', selectedRoute === 'backup');
+      mainRoute.setAttribute('aria-pressed', selectedRoute === 'main' ? 'true' : 'false');
+      backupRoute.setAttribute('aria-pressed', selectedRoute === 'backup' ? 'true' : 'false');
       play.classList.toggle('is-buffering', buffering);
       play.setAttribute('aria-busy', buffering ? 'true' : 'false');
       playLabel.textContent = t.music;
@@ -164,11 +199,36 @@
     }
     play.addEventListener('pointerenter', prepareAudio, { once: true });
     play.addEventListener('focus', prepareAudio, { once: true });
+    function chooseRoute(nextRoute) {
+      if (nextRoute === selectedRoute) return;
+      // Called directly from a click, preserving mobile playback permission.
+      const wasPlaying = !audio.paused || buffering;
+      const position = Number.isFinite(audio.currentTime) ? audio.currentTime : 0;
+      audio.pause();
+      selectedRoute = nextRoute;
+      suggestedFallback = false;
+      clearStallTimer();
+      buffering = wasPlaying;
+      error.dataset.failed = 'false';
+      audio.src = nextRoute === 'backup' ? BACKUP_AUDIO_URL : AUDIO_URL;
+      audio.preload = 'auto';
+      if (position > 0) audio.addEventListener('loadedmetadata', () => {
+        if (Number.isFinite(audio.duration) && position < audio.duration) audio.currentTime = position;
+      }, { once:true });
+      if (wasPlaying) {
+        watchBuffering();
+        audio.play().catch(() => { buffering = false; clearStallTimer(); error.dataset.failed = 'true'; setPanel(true); sync(); });
+      } else audio.load();
+      sync();
+    }
+    mainRoute.addEventListener('click', () => chooseRoute('main'));
+    backupRoute.addEventListener('click', () => chooseRoute('backup'));
     async function toggle() {
       if (audio.paused) {
         try {
           error.dataset.failed = 'false';
           buffering = true;
+          watchBuffering();
           sync();
           await audio.play(); // Must run directly from the click gesture on mobile.
         } catch (_) {
@@ -176,8 +236,10 @@
           setPanel(true);
         } finally {
           buffering = false;
+          clearStallTimer();
+          suggestedFallback = false;
         }
-      } else { buffering = false; audio.pause(); }
+      } else { buffering = false; clearStallTimer(); suggestedFallback = false; audio.pause(); }
       sync();
     }
     play.addEventListener('click', toggle);
@@ -191,11 +253,12 @@
     volume.addEventListener('input', () => { audio.volume = Number(volume.value) / 100; });
     for (const event of ['play', 'pause', 'timeupdate', 'loadedmetadata', 'durationchange', 'ended'])
       audio.addEventListener(event, sync);
-    audio.addEventListener('waiting', () => { buffering = true; sync(); });
-    audio.addEventListener('playing', () => { buffering = false; sync(); });
-    audio.addEventListener('canplay', () => { buffering = false; sync(); });
+    audio.addEventListener('waiting', () => { buffering = true; watchBuffering(); sync(); });
+    audio.addEventListener('playing', () => { buffering = false; clearStallTimer(); suggestedFallback = false; sync(); });
+    audio.addEventListener('canplay', () => { buffering = false; clearStallTimer(); suggestedFallback = false; sync(); });
     audio.addEventListener('error', () => {
       buffering = false;
+      clearStallTimer();
       error.dataset.failed = 'true';
       setPanel(true);
       sync();
