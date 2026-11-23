@@ -1213,7 +1213,7 @@ function makeSkyCanvasScene(canvas,arr,kind){
     const colour=kind==='story'?(STORY_STAR_COLORS[answer.scenario]||'#F0C66C'):reason?answer.colour:(answer.decision==='silent'?'#4F75B5':'#EEC65B');
     const hash=starHash(id),random=seededRand(hash);
     targets.push({...pos,r:flowTrack.r,flowTrack,kind:kind==='story'?'story':reason?'reason':'choice',storyId:kind==='story'?String(answer.id):null,storyTitle:kind==='story'?answer.title:null,storyAuthor:kind==='story'?answer.author_name:null,scenario:answer.scenario,
-      decision:answer.decision,authorName:answer.authorName||null,...(reason?{label:answer.label}:{}),
+      decision:answer.decision,authorName:answer.authorName||null,...(reason?{label:answer.label,isCustom:answer.isCustom===true}:{}),
       sprite:makeStarSprite(colour,flowTrack.r),phase:random()*Math.PI*2,
       speed:.48+random()*1.35,secondPhase:random()*Math.PI*2,
       // Each star has its own brightness and rhythm; no synchronized flashing.
