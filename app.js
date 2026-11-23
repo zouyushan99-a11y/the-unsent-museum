@@ -410,12 +410,66 @@ let authMessage='';
 let authBusy=false;
 /* Public stars are read through public RPCs without exposing account identifiers.
    Private story drafts use local storage and author-scoped cloud storage, not this public RPC. */
+/* Public choice mirror: only anonymous answers and preset reason IDs are saved. */
+let museumPublicStarSnapshotAt='';
+function museumNetworkLimit(request, timeoutMs){
+  let timer;
+  return Promise.race([
+    Promise.resolve(request),
+    new Promise((_,reject)=>{
+      timer=setTimeout(()=>reject(new Error('The museum database request timed out.')),timeoutMs);
+    })
+  ]).finally(()=>clearTimeout(timer));
+}
+async function museumUsePublicStarSnapshot(){
+  try{
+    const response=await fetch(new URL('public-star-snapshot.json',document.baseURI),{cache:'no-store'});
+    if(!response.ok)throw new Error('Public star snapshot not reachable');
+    const snapshot=await response.json();
+    if(snapshot.version!==1||!Array.isArray(snapshot.stars)||typeof snapshot.updatedAt!=='string')
+      throw new Error('Public star snapshot is invalid');
+    sharedAnswers=snapshot.stars.filter(a=>
+      a&&typeof a.id==='string'&&a.id.startsWith('public-mirror-')&&
+      SCENARIOS.some(sc=>sc.id===a.scenario)&&['silent','speak'].includes(a.decision)
+    ).map(a=>({
+      id:a.id,scenario:a.scenario,decision:a.decision,
+      reasons:Array.isArray(a.reasons)?a.reasons.filter(n=>Number.isInteger(n)&&((n>=0&&n<=6)||n===99)):[],
+      authorName:null,customReason:null
+    }));
+    starNames=new Map();
+    starIdentityServiceReady=false;
+    customReasonServiceReady=false;
+    museumPublicStarSnapshotAt=snapshot.updatedAt;
+    sharedStatus='snapshot';sharedError='';
+    return true;
+  }catch(error){
+    console.warn('The public star snapshot could not be loaded',error);
+    return false;
+  }
+}
+function museumPublicStarSnapshotMessage(){
+  const locale=museumLang==='zh-Hant'?'zh-HK':museumLang==='zh-Hans'?'zh-CN':'en-GB';
+  const last=new Date(museumPublicStarSnapshotAt);
+  const when=Number.isFinite(last.getTime())?last.toLocaleString(locale,{dateStyle:'medium',timeStyle:'short'}):'';
+  if(museumLang==='zh-Hant')
+    return '目前顯示最近同步的公共星空備份（'+when+'），並非即時資料。只有匿名選擇和預設理由；新回答可能尚未同步。登入或留下新星星仍須連線到資料庫。';
+  if(museumLang==='zh-Hans')
+    return '目前显示最近同步的公共星空备份（'+when+'），不是实时数据。备份只包含匿名选择和预设理由；新回答可能还未同步。登录或留下新星星仍需要连接数据库。';
+  return 'Viewing the latest saved public-star snapshot ('+when+'), not live data. It includes anonymous choices and preset reasons only; new answers may not appear yet. Signing in and adding stars still require a database connection.';
+}
 async function refreshSharedAnswers(){
- if(!authClient){sharedStatus='error';sharedError='The database connection could not load.';return}
+ if(!authClient){
+   if(!await museumUsePublicStarSnapshot()){
+     sharedStatus='error';sharedError='The database connection could not load.';
+   }
+   const current=route();
+   if(['lookout','sky','home'].includes(current.type))render(false);
+   return;
+ }
  if(sharedRefreshPromise)return sharedRefreshPromise;
  sharedRefreshPromise=(async()=>{
    try{
-     const {data,error}=await authClient.rpc('get_museum_stars');
+     const {data,error}=await museumNetworkLimit(authClient.rpc('get_museum_stars'),12000);
      if(error)throw error;
      if(!Array.isArray(data))throw new Error('The star service returned an unexpected result.');
      sharedAnswers=data.filter(a=>a&&SCENARIOS.some(sc=>sc.id===a.scenario)&&['silent','speak'].includes(a.decision)).map(a=>({
@@ -424,7 +478,7 @@ async function refreshSharedAnswers(){
      }));
      // Public names are fetched independently: the original public star RPC never exposes accounts.
      starNames=new Map();
-     const namesResponse=await authClient.rpc('get_museum_star_attributions');
+     const namesResponse=await museumNetworkLimit(authClient.rpc('get_museum_star_attributions'),5000).catch(e=>({data:null,error:e}));
      if(namesResponse.error){
        starIdentityServiceReady=false;
        starIdentityNotice='Named stars need the Supabase star attribution SQL setup.';
@@ -434,7 +488,7 @@ async function refreshSharedAnswers(){
          if(row?.id&&typeof row.author_name==='string'&&row.author_name.trim())starNames.set(String(row.id),row.author_name.trim());
        }
      }
-     const customResponse=await authClient.rpc('get_museum_custom_reasons');
+     const customResponse=await museumNetworkLimit(authClient.rpc('get_museum_custom_reasons'),5000).catch(e=>({data:null,error:e}));
      customReasonServiceReady=!customResponse.error&&Array.isArray(customResponse.data);
      const customByAnswer=new Map();
      if(customReasonServiceReady)for(const item of customResponse.data){
@@ -446,7 +500,7 @@ async function refreshSharedAnswers(){
      }
      sharedAnswers=sharedAnswers.map(a=>({...a,authorName:starNames.get(a.id)||null,customReason:customByAnswer.get(a.id)||null}));
      sharedStatus='ready';sharedError='';lastSharedSync=Date.now();
-   }catch(e){sharedStatus='error';sharedError=String(e.message||e)}
+   }catch(e){sharedStatus='error';sharedError=String(e.message||e);await museumUsePublicStarSnapshot();}
    finally{sharedRefreshPromise=null;const r=route();if(r.type==='lookout'||r.type==='sky'||r.type==='home')render(false)}
  })();
  return sharedRefreshPromise;
@@ -1358,7 +1412,7 @@ function bindStorySky(){
  });
 }
 
-function lookout(id){const s=id?scenario(id):null;if(id&&!s)return home();const arr=results(id),sil=arr.filter(a=>a.decision==='silent').length,sp=arr.length-sil,reasonEntries=reasonStars(arr);let pct=(n)=>arr.length?Math.round(n/arr.length*100)+'%':'—';return `<main class="sky-page"><div class="container"><div class="sky-heading"><div class="eyebrow">${s?`Gallery ${s.num} · The Lookout`:'The Observatory'}</div><h1>${s?esc(s.title):'A Sky Made of Choices'}.</h1><p class="muted">${s?'A constellation for this one moment.':'Every gallery has its own sky. This one brings them together.'}</p><p class="small muted">${sharedStatus==='ready'?'Shared museum database · '+arr.length+' visitor response(s)':sharedStatus==='loading'?'Loading the shared museum sky…':'Shared sky temporarily unavailable'}</p>${sharedStatus==='error'?`<div class="note" role="alert">${museumLang==='en'?'Could not load public star data: ':'公开星空暂时无法读取：'}${esc(museumDisplaySystemMessage(sharedError))}。 <button type="button" class="btn btn-outline" id="retry-stars">Retry</button></div>`:''}</div><div class="observatory-section"><h2 class="observatory-title">I. The Choice Sky</h2><p class="small muted">One blue or golden star for each answer about remaining silent or speaking up. Tap or press a star to see its choice and public name, or Unnamed Star for anonymous visitors.</p><div class="sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/choice/${id||'all'}" aria-label="Open choice sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="main-sky" role="img" aria-label="Public starfield of visitors' silence and speaking choices"></canvas>${arr.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>An empty sky, for now.</h3><p>Every response will become a blue or golden star. Nothing has been invented.</p></div>`:''}</div><div class="legend"><span><i class="dot blue"></i>Silence</span><span><i class="dot gold"></i>Speak up</span></div><div class="stats"><div class="stat"><strong>${arr.length}</strong><span>Total scenario responses</span></div><div class="stat"><strong>${pct(sil)}</strong><span>Blue · Silence (${sil})</span></div><div class="stat"><strong>${pct(sp)}</strong><span>Gold · Speak up (${sp})</span></div></div></div><section class="observatory-section reason-observatory"><div class="eyebrow">WHAT LIES BEHIND EACH CHOICE</div><h2 class="observatory-title">II. The Reasons Sky</h2><p class="muted narrow">One star for every reason selected. A visitor who chooses three reasons leaves <strong>three differently coloured stars</strong>. Each reason has its own colour within its gallery.</p><div class="sky-frame reason-sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/reasons/${id||'all'}" aria-label="Open reasons sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="reason-sky" role="img" aria-label="Multi-colour starfield. One star represents one selected reason."></canvas>${reasonEntries.length===0?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>Every reason has a colour.</h3><p>When visitors select reasons, their stars will appear here.</p></div>`:''}</div><p class="reason-sky-count"><strong>${reasonEntries.length}</strong> ${museumLang==='en'?'reason star(s) · '+arr.length+' answer(s). Multiple selections create multiple stars.':museumConvert('颗理由星辰 · '+arr.length+'份回答。多选可以留下多颗星辰。')}</p>${reasonEntries.length?`<details class="reason-colour-legend" ${s?'open':''}><summary>Explore the colours and their meanings</summary><div class="reason-colour-content">${reasonLegend(arr,id)}</div></details>`:''}</section><p class="privacy-caption">The star data is shared anonymously across visitors. Each signed-in account may leave one current answer per gallery. Choice sky: one star per answer. Reasons sky: one star per selected reason. This is a voluntary sample, not a representative survey. Private story drafts stay in your browser.</p>${s?`<div class="reason-panels">${reasonPanel(arr,'silent',id)}${reasonPanel(arr,'speak',id)}</div><div class="actions"><a class="btn btn-outline" href="#/gallery/${id}">Read the story ↗</a><a class="btn btn-outline" href="#/lookout">See the entire sky ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this room's stories ↗</a></div>`:`<section class="section-compact"><div class="eyebrow">The constellations</div><h2>Find a gallery's sky.</h2><div class="constellations">${SCENARIOS.map(x=>`<a href="#/lookout/${x.id}" class="constellation"><canvas data-mini="${x.id}" aria-hidden="true"></canvas><b>${esc(scenario(x.id).title)}</b><span>${museumLang==='en'?results(x.id).length+' local response(s) · View the gallery →':museumConvert(results(x.id).length+' 份本地回答 · 走进展厅 →')}</span></a>`).join('')}</div></section>`}<div class="divider"></div><div class="actions"><a class="btn btn-outline" href="#/galleries">Explore the galleries ↗</a><a class="btn btn-outline" href="#/archive">Read all stories ↗</a><a class="btn btn-soft" href="#/my-stories">Your private story drafts ↗</a></div></div></main>`}
+function lookout(id){const s=id?scenario(id):null;if(id&&!s)return home();const arr=results(id),sil=arr.filter(a=>a.decision==='silent').length,sp=arr.length-sil,reasonEntries=reasonStars(arr);let pct=(n)=>arr.length?Math.round(n/arr.length*100)+'%':'—';return `<main class="sky-page"><div class="container"><div class="sky-heading"><div class="eyebrow">${s?`Gallery ${s.num} · The Lookout`:'The Observatory'}</div><h1>${s?esc(s.title):'A Sky Made of Choices'}.</h1><p class="muted">${s?'A constellation for this one moment.':'Every gallery has its own sky. This one brings them together.'}</p><p class="small muted">${sharedStatus==='ready'?'Shared museum database · '+arr.length+' visitor response(s)':sharedStatus==='snapshot'?(museumLang==='en'?'Saved public sky · '+arr.length+' choices':museumLang==='zh-Hant'?'公共星空備份 · '+arr.length+' 份選擇':'公共星空备份 · '+arr.length+' 份选择'):sharedStatus==='loading'?'Loading the shared museum sky…':'Shared sky temporarily unavailable'}</p>${sharedStatus==='snapshot'?`<div class="note" role="status">${esc(museumPublicStarSnapshotMessage())} <button type="button" class="btn btn-outline" id="retry-stars">${museumLang==='en'?'Try live sky':museumLang==='zh-Hant'?'重試即時星空':'重试实时星空'}</button></div>`:''}${sharedStatus==='error'?`<div class="note" role="alert">${museumLang==='en'?'Could not load public star data: ':'公开星空暂时无法读取：'}${esc(museumDisplaySystemMessage(sharedError))}。 <button type="button" class="btn btn-outline" id="retry-stars">Retry</button></div>`:''}</div><div class="observatory-section"><h2 class="observatory-title">I. The Choice Sky</h2><p class="small muted">One blue or golden star for each answer about remaining silent or speaking up. Tap or press a star to see its choice and public name, or Unnamed Star for anonymous visitors.</p><div class="sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/choice/${id||'all'}" aria-label="Open choice sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="main-sky" role="img" aria-label="Public starfield of visitors' silence and speaking choices"></canvas>${arr.length===0&&(sharedStatus==='ready'||sharedStatus==='snapshot')?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>An empty sky, for now.</h3><p>Every response will become a blue or golden star. Nothing has been invented.</p></div>`:''}</div><div class="legend"><span><i class="dot blue"></i>Silence</span><span><i class="dot gold"></i>Speak up</span></div><div class="stats"><div class="stat"><strong>${arr.length}</strong><span>Total scenario responses</span></div><div class="stat"><strong>${pct(sil)}</strong><span>Blue · Silence (${sil})</span></div><div class="stat"><strong>${pct(sp)}</strong><span>Gold · Speak up (${sp})</span></div></div></div><section class="observatory-section reason-observatory"><div class="eyebrow">WHAT LIES BEHIND EACH CHOICE</div><h2 class="observatory-title">II. The Reasons Sky</h2><p class="muted narrow">One star for every reason selected. A visitor who chooses three reasons leaves <strong>three differently coloured stars</strong>. Each reason has its own colour within its gallery.</p><div class="sky-frame reason-sky-frame expandable-sky"><a class="sky-expand-link" href="#/sky/reasons/${id||'all'}" aria-label="Open reasons sky in full screen"><span class="sky-expand-hint">✧ Enter this sky <span aria-hidden="true">↗</span></span></a><canvas id="reason-sky" role="img" aria-label="Multi-colour starfield. One star represents one selected reason."></canvas>${reasonEntries.length===0&&(sharedStatus==='ready'||sharedStatus==='snapshot')?`<div class="sky-empty"><div style="font-size:2.8rem;color:#e8c86c">✧</div><h3>Every reason has a colour.</h3><p>When visitors select reasons, their stars will appear here.</p></div>`:''}</div><p class="reason-sky-count"><strong>${reasonEntries.length}</strong> ${museumLang==='en'?'reason star(s) · '+arr.length+' answer(s). Multiple selections create multiple stars.':museumConvert('颗理由星辰 · '+arr.length+'份回答。多选可以留下多颗星辰。')}</p>${reasonEntries.length?`<details class="reason-colour-legend" ${s?'open':''}><summary>Explore the colours and their meanings</summary><div class="reason-colour-content">${reasonLegend(arr,id)}</div></details>`:''}</section><p class="privacy-caption">The star data is shared anonymously across visitors. Each signed-in account may leave one current answer per gallery. Choice sky: one star per answer. Reasons sky: one star per selected reason. This is a voluntary sample, not a representative survey. Private story drafts stay in your browser.</p>${s?`<div class="reason-panels">${reasonPanel(arr,'silent',id)}${reasonPanel(arr,'speak',id)}</div><div class="actions"><a class="btn btn-outline" href="#/gallery/${id}">Read the story ↗</a><a class="btn btn-outline" href="#/lookout">See the entire sky ↗</a><a class="btn btn-outline" href="#/archive/${id}">Read this room's stories ↗</a></div>`:`<section class="section-compact"><div class="eyebrow">The constellations</div><h2>Find a gallery's sky.</h2><div class="constellations">${SCENARIOS.map(x=>`<a href="#/lookout/${x.id}" class="constellation"><canvas data-mini="${x.id}" aria-hidden="true"></canvas><b>${esc(scenario(x.id).title)}</b><span>${museumLang==='en'?results(x.id).length+' local response(s) · View the gallery →':museumConvert(results(x.id).length+' 份本地回答 · 走进展厅 →')}</span></a>`).join('')}</div></section>`}<div class="divider"></div><div class="actions"><a class="btn btn-outline" href="#/galleries">Explore the galleries ↗</a><a class="btn btn-outline" href="#/archive">Read all stories ↗</a><a class="btn btn-soft" href="#/my-stories">Your private story drafts ↗</a></div></div></main>`}
 function fullSky(kind,id){const s=id&&id!=='all'?scenario(id):null;if(id!=='all'&&!s)return lookout();const reasons=kind==='reasons';const arr=results(id==='all'?undefined:id);return `<main class="immersive-sky-page"><canvas id="immersive-sky-canvas" role="img" aria-label="${reasons?'Reasons starfield':'Choice starfield'}"></canvas><a class="immersive-sky-back" href="#/lookout${s?'/'+s.id:''}" aria-label="Back to the Lookout">← <span>Back to the Lookout</span></a><div class="immersive-sky-caption" aria-hidden="true"><span class="eyebrow">${reasons?'The Reasons Sky':'The Choice Sky'}</span><span class="immersive-count">${reasons?reasonStars(arr).length:arr.length} ${reasons?'reason stars':'choice stars'} · ${s?esc(s.title):'All galleries'}</span></div>${sharedStatus==='loading'?'<div class="immersive-empty"><div>✧</div><p>Gathering stars from the museum…</p></div>':sharedStatus==='error'?'<div class="immersive-empty"><div>✧</div><p>The shared sky is temporarily unavailable.</p></div>':arr.length===0?'<div class="immersive-empty"><div>✧</div><p>An empty sky, for now.</p></div>':''}</main>`}
 
 function privateStories(){
