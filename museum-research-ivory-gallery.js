@@ -484,6 +484,6 @@ atlas.page=function(id){
  const html=original.call(this,id);
  if(typeof id!=='string'||typeof html!=='string')return html;
  if(!id.startsWith('study/')||!html.includes('atlas-deep'))return html;
- return html.replace(/<section class="atlas-panel">(?=<span class="eyebrow">(?:SOURCE AUDIT|来源核对))/,'<section class="atlas-panel atlas-verification-plate">').replace(/<section class="atlas-panel">(?=<h2>(?:Research Connections|研究关联)<\\/h2>)/,'<section class="atlas-panel atlas-connections-gallery">');
+ return html.replace(/<section class="atlas-panel">(?=<span class="eyebrow">(?:SOURCE AUDIT|来源核对))/,'<section class="atlas-panel atlas-verification-plate">').replace(/<section class="atlas-panel">(?=<h2>(?:Research Connections|研究关联)<\/h2>)/,'<section class="atlas-panel atlas-connections-gallery">');
 };
 })();
