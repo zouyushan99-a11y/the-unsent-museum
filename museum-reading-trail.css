@@ -1,0 +1,19 @@
+/* Curatorial route between exhibition, research, history, and shared sky. */
+.museum-reading-trail {
+  width:min(1080px,calc(100% - 40px));
+  margin:clamp(26px,5vw,64px) auto clamp(52px,7vw,100px);
+  padding:clamp(26px,4.5vw,52px);
+  border:1px solid rgba(234,199,124,.45);
+  border-radius:18px;
+  background:linear-gradient(145deg,rgba(17,35,55,.94),rgba(8,18,31,.93));
+  box-shadow:0 15px 45px rgba(0,0,0,.16),inset 0 0 0 1px rgba(255,239,199,.05);
+}
+.museum-reading-trail h2{max-width:25ch;color:#f5dfaf;line-height:1.2;margin:.6em 0}
+.museum-reading-trail p{max-width:68ch;line-height:1.8}
+.museum-reading-trail .category-nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.museum-reading-trail .pill{white-space:normal;text-align:center}
+@media(max-width:600px){
+ .museum-reading-trail{width:calc(100% - 32px);padding:24px 20px}
+ .museum-reading-trail .category-nav{flex-direction:column;align-items:stretch}
+ .museum-reading-trail .pill{display:block;max-width:100%}
+}
