@@ -476,8 +476,11 @@ async function submitSharedAnswer(){
      };
      const response=await authClient.functions.invoke('publish-translated-reason',{body});
      if(response.error||response.data?.error||!response.data?.ok){
-       const message=response.data?.error||response.error?.message||'Translation service did not confirm publication.';
-       throw new Error(message);
+       let message=response.data?.error||'';
+       if(response.error?.context?.json){
+         try{const remote=await response.error.context.json();message=remote?.error||remote?.message||message}catch{}
+       }
+       throw new Error(message||response.error?.message||'Translation service did not confirm publication.');
      }
      saved={id:response.data.id,scenario:flow.scenario,decision:flow.decision,reasons:flow.reasons};
    }else{
@@ -1150,6 +1153,7 @@ function bindStarInteractions(){
    },550);
   });
   target.addEventListener('pointermove',ev=>{
+   if(document.querySelector('.star-info-tooltip.is-pinned'))return;
    if(ev.pointerType==='touch'||ev.pointerType==='pen'){
      if(Math.hypot(ev.clientX-holdX,ev.clientY-holdY)>12)clearHold();
      return;
