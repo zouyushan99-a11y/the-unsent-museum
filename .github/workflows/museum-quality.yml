@@ -25,3 +25,5 @@ jobs:
         run: node tests/structure.cjs
       - name: Test three-language routes and story forms
         run: npm test
+      - name: Verify all research citations and comparative references
+        run: npm run test:research
