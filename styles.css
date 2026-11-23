@@ -2131,3 +2131,54 @@ html:lang(zh) #app :is(.curator-primary-source h3,.curator-original-afterword h3
  .curator-original-draft,.curator-original-postscript,.curator-outcome-quote){
  font-family:var(--museum-zh-serif);line-break:strict;letter-spacing:.012em;
 }
+
+/* Visitor-authored reasons: full, translated text must remain readable on star tap. */
+#app .curator-reason-input{
+ min-width:0;max-width:100%;
+ border:1px solid rgba(234,195,113,.34);
+ padding:clamp(16px,2.8vw,24px);
+ border-radius:13px;
+ background:rgba(21,43,68,.62);
+ margin:1rem 0 1.2rem;
+}
+#app .curator-reason-input textarea{width:100%;max-width:100%;min-height:116px;line-height:1.7;resize:vertical}
+#app .curator-reason-input select{width:100%;max-width:100%;min-height:46px;margin:.5rem 0 1rem}
+#app .curator-reason-input .curator-reason-public-consent{
+ display:flex;align-items:flex-start;gap:12px;
+ padding:14px 16px;
+ background:rgba(232,195,101,.075);
+ border-color:rgba(232,195,101,.4);
+}
+#app .curator-reason-public-consent input{flex:0 0 20px;width:20px;height:20px;margin-top:3px}
+#app .curator-reason-public-consent span{min-width:0;overflow-wrap:anywhere;line-height:1.75}
+.star-info-tooltip.is-written-reason{width:max-content;max-width:min(400px,calc(100vw - 24px))}
+.star-info-tooltip .sky-star-detail{
+ display:block;overflow-wrap:anywhere;word-break:normal;
+ white-space:pre-wrap;line-height:1.65;font-size:.91rem;margin:.4rem 0;
+}
+.star-info-tooltip.is-pinned{
+ pointer-events:auto;
+ max-height:min(70dvh,490px);
+ overflow-y:auto;
+ overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+ scrollbar-width:thin;
+ padding-right:clamp(14px,3vw,23px);
+}
+.star-info-tooltip.is-pinned small{padding-right:28px}
+.star-info-tooltip .sky-tooltip-close{
+ position:sticky;float:right;top:0;right:0;
+ display:inline-grid;place-items:center;
+ width:30px;height:30px;padding:0;
+ background:#213852;color:#f9ecd3;
+ border:1px solid rgba(234,194,104,.55);border-radius:50%;
+ font:600 22px/1 sans-serif;cursor:pointer;pointer-events:auto;
+ z-index:2;
+}
+.star-info-tooltip .sky-tooltip-close:focus-visible{outline:2px solid #f7db96;outline-offset:2px}
+@media(max-width:600px){
+ #app .curator-reason-input{padding:15px 13px}
+ #app .curator-reason-input .curator-reason-public-consent{padding:13px 11px}
+ .star-info-tooltip.is-written-reason{max-width:calc(100vw - 24px)}
+ .star-info-tooltip.is-pinned{max-height:min(68dvh,430px)}
+}
