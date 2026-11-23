@@ -572,7 +572,7 @@ async function submitSharedAnswer(){
        otherReason:flow.other.trim(),sourceLanguage,publicConsent:flow.otherConsent===true,
        starVisibility:flow.starMode,starDisplayName:flow.starMode==='named'?flow.starName.trim().slice(0,80):''
      };
-     const response=await authClient.functions.invoke('publish-translated-reason',{body});
+     const response=await museumNetworkLimit(authClient.functions.invoke('publish-translated-reason',{body}),15000);
      if(response.error||response.data?.error||!response.data?.ok){
        let message=response.data?.error||'';
        if(response.error?.context?.json){
@@ -588,7 +588,7 @@ async function submitSharedAnswer(){
        star_visibility:flow.starMode,star_display_name:flow.starMode==='named'?flow.starName.trim().slice(0,80):'',
        other_reason:'',other_reason_language:'und',other_reason_translations:{},other_reason_status:'legacy'
      };
-     ({data:saved,error}=await authClient.from('museum_answers').upsert(payload,{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single());
+     ({data:saved,error}=await museumNetworkLimit(authClient.from('museum_answers').upsert(payload,{onConflict:'user_id,scenario'}).select('id,scenario,decision,reasons').single(),15000));
      if(error)throw error;
    }
    if(!saved?.id)throw new Error('The database did not confirm a saved answer.');
@@ -608,7 +608,15 @@ async function submitSharedAnswer(){
    flow.step=3;
    museumRememberExperience();
    save();
- }catch(e){submitError='Could not confirm your star in the shared sky: '+String(e.message||e)}
+ }catch(e){
+  const details=String(e.message||e);
+  submitError=/timed out/i.test(details)?
+    museumReasonText(
+      'The museum server did not respond in time. Your choice remains on this device, but a public star is not confirmed. Please check the Lookout before trying again.',
+      '博物馆服务器响应超时。你的选择仍保存在本设备，但尚不能确认公共星星已发布。请先检查星空瞭望台，再决定是否重试。',
+      '博物館伺服器回應逾時。你的選擇仍儲存在本裝置，但尚不能確認公共星星已發布。請先檢查星空瞭望台，再決定是否重試。'
+    ):'Could not confirm your star in the shared sky: '+details;
+ }
  finally{submitBusy=false;render(flow.step===3)}
 }
 
@@ -1083,7 +1091,7 @@ async function saveStoryAfterStar(){
   if(!flow.title.trim()||!flow.story.trim()||!flow.why.trim()||!flow.consent)return;
   const st={id:flow.draftId||uuid(),scenario:validStoryCategory(flow.storyCategory)?flow.storyCategory:flow.scenario,title:flow.title.trim(),story:flow.story,why:flow.why,time:Date.now(),ownerId:authUser?.id||null,status:'private-draft',synced:false};
   flow.draftId=st.id;addLocalStory(st);
-  if(authUser){try{await syncCloudStory(st)}catch(err){storyCloudError='Cloud story backup unavailable: '+String(err.message||err)}}
+  if(authUser){try{await museumNetworkLimit(syncCloudStory(st),12000)}catch(err){storyCloudError='Cloud story backup unavailable: '+String(err.message||err)}}
  }
  flow.step=4;museumRememberExperience();save();render();
 }
