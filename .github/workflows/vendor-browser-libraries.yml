@@ -38,14 +38,14 @@ jobs:
           # read-only anonymous star RPC with the current publishable key.
           node <<'NODE'
           const fs = require('fs');
-          const imported = require('./vendor/supabase.min.js');
-          const createClient = imported.createClient || imported.default?.createClient || imported.supabase?.createClient;
-          if (typeof createClient !== 'function') {
-            const bundled = fs.readFileSync('vendor/supabase.min.js','utf8');
-            console.error('Bundle header:',bundled.slice(0,210));
-            console.error('Node exports:',Object.keys(imported).slice(0,15).join(','));
-            throw Error('Supabase UMD createClient missing');
-          }
+          // v2.119.x ships a browser IIFE (var supabase=...) rather than
+          // CommonJS exports. Evaluate exactly as the browser would.
+          const vm = require('vm');
+          vm.runInThisContext(fs.readFileSync('vendor/supabase.min.js','utf8'),{
+            filename:'vendor/supabase.min.js'
+          });
+          const createClient=globalThis.supabase?.createClient;
+          if (typeof createClient !== 'function') throw Error('Browser bundle createClient missing');
           const app = fs.readFileSync('app.js','utf8');
           const endpoint = app.match(/const SUPABASE_URL='([^']+)'/);
           const key = app.match(/const SUPABASE_PUBLISHABLE_KEY='([^']+)'/);
