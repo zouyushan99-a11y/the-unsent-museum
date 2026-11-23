@@ -671,13 +671,13 @@ return `<main class="container"><section class="page-hero"><div class="eyebrow">
 <div class="auth-tab-buttons"><button class="auth-tab ${emailAuthMode==='login'?'is-active':''}" type="button" data-auth-mode="login">Sign in</button><button class="auth-tab ${emailAuthMode==='signup'?'is-active':''}" type="button" data-auth-mode="signup">Create account</button></div>
 <form id="email-auth-form" class="email-auth-form">
 <label for="account-email">Email address</label><input class="field" type="email" id="account-email" autocomplete="email" maxlength="254" placeholder="you@example.com" required/>
-<label for="account-password">Museum password</label><input class="field" type="password" id="account-password" autocomplete="${emailAuthMode==='signup'?'new-password':'current-password'}" minlength="8" maxlength="128" required placeholder="Enter your museum password"/>
-${emailAuthMode==='signup'?'<p class="small muted">Use a strong password. Depending on the museum’s Supabase settings, new accounts may need to verify their email once.</p>':''}
+<label for="account-password">Museum password</label><input class="field" type="password" id="account-password" autocomplete="${emailAuthMode==='signup'?'new-password':'current-password'}" minlength="${emailAuthMode==='signup'?10:8}" maxlength="128" required placeholder="Enter your museum password"/>
+${emailAuthMode==='signup'?'<p class="small muted">Use at least 10 characters and a unique password. Email verification may be required.</p>':''}
 <button class="btn" type="submit" id="email-auth-submit">${emailAuthMode==='signup'?'Create account ↗':'Sign in with email ↗'}</button>
 </form>
 ${emailAuthMode==='login'?'<button class="auth-text-button" type="button" id="forgot-password">Forgot password?</button>':''}
 ${authMessage?`<div class="auth-feedback" role="status">${esc(museumDisplaySystemMessage(authMessage))}</div>`:''}
-</div><p class="privacy-caption">Authentication is handled by Supabase. Signing in does not publish or synchronize your stories, answers or stars. These remain in this browser until shared storage is enabled.</p><p class="small muted">${museumReasonText('Having trouble signing in on your phone?','手机登录遇到问题？','手機登入遇到問題？')} <a href="compatibility-check.html">${museumReasonText('Check browser and network access ↗','检测浏览器和网络 ↗','檢測瀏覽器和網絡 ↗')}</a></p></section></main>`;
+</div><p class="privacy-caption">${museumReasonText('Signing in does not publish anything. Drafts are saved privately on this device and may be backed up to your account. Stars and stories are visible to others only when you explicitly submit or publish them.','登录本身不会公开任何内容。草稿会私密保存在本设备，并可备份至你的账户。只有主动提交星星或发布故事后，相应内容才会向其他访客公开。','登入本身不會公開任何內容。草稿會私密儲存在本裝置，並可備份至你的帳戶。只有主動提交星星或發佈故事後，相應內容才會向其他訪客公開。')}</p><p class="small muted">${museumReasonText('Having trouble signing in on your phone?','手机登录遇到问题？','手機登入遇到問題？')} <a href="compatibility-check.html">${museumReasonText('Check browser and network access ↗','检测浏览器和网络 ↗','檢測瀏覽器和網絡 ↗')}</a></p></section></main>`;
 }
 function bindAuth(){
 const google=$('#google-signin');if(google)google.onclick=async()=>{
