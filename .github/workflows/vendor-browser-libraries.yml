@@ -1,0 +1,44 @@
+name: Vendor museum auth and language browser libraries
+on:
+  push:
+    paths:
+      - '.github/workflows/vendor-browser-libraries.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download pinned npm browser distributions
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p vendor
+          mkdir -p "$RUNNER_TEMP/museum-supabase" "$RUNNER_TEMP/museum-opencc"
+          SUPABASE_TARBALL="$(npm pack '@supabase/supabase-js@2.49.4' --silent)"
+          tar -xzf "$SUPABASE_TARBALL" -C "$RUNNER_TEMP/museum-supabase"
+          cp "$RUNNER_TEMP/museum-supabase/package/dist/umd/supabase.min.js" vendor/supabase.min.js
+          OPENCC_TARBALL="$(npm pack 'opencc-js@1.4.2' --silent)"
+          tar -xzf "$OPENCC_TARBALL" -C "$RUNNER_TEMP/museum-opencc"
+          cp "$RUNNER_TEMP/museum-opencc/package/dist/umd/full.js" vendor/opencc-full.js
+          test "$(wc -c < vendor/supabase.min.js)" -gt 100000
+          test "$(wc -c < vendor/opencc-full.js)" -gt 10000
+          node --check vendor/supabase.min.js
+          node --check vendor/opencc-full.js
+          printf '%s\n' 'Supabase JS UMD: npm @supabase/supabase-js@2.49.4' 'OpenCC JS full UMD: npm opencc-js@1.4.2' 'Copies retained locally so mainland visitors do not need to reach jsDelivr.' > vendor/README.txt
+          ls -lh vendor/
+      - name: Commit self-hosted browser libraries
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add vendor/supabase.min.js vendor/opencc-full.js vendor/README.txt
+          if ! git diff --cached --quiet; then
+            git commit -m 'Self-host authentication and Chinese conversion libraries'
+            git push
+          fi
