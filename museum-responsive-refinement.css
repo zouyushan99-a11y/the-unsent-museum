@@ -1,0 +1,323 @@
+/*
+ * The Unsent Museum — Responsive finishing layer (2026-11-23)
+ * Phone / iPad / Split View refinements only. Loaded after the editorial CSS.
+ * No changes to stories, translations, interactive stars, or the Suno embed.
+ */
+@media (max-width:1180px), (max-width:1366px) and (pointer:coarse) {
+  html, body, #app { min-width:0; max-width:100%; }
+  #app { overflow-x:clip; }
+  #app main, #app section, #app article, #app .container { min-width:0; }
+  #app :is(h1,h2,h3,p,blockquote,figcaption,li,small) { overflow-wrap:break-word; }
+  #app :is(img,video,svg:not(.museum-portal-icon svg)) { max-width:100%; }
+  #app :is(.paper-panel,.story-reader,.choice-panel,.auth-panel,.archive-item,.history-longform,
+           .curator-letter,.atlas-page,.atlas-panel,.atlas-study-link,.atlas-research-dossier) {
+    min-width:0;
+    max-width:100%;
+  }
+  #app :is(.history-prose,.collective-prose,.story-reader,.curator-letter-body,
+           .atlas-page .atlas-panel) a {
+    overflow-wrap:anywhere;
+    text-underline-offset:.15em;
+  }
+  /* Show the presence of more galleries without shrinking the header links. */
+  #app>.site-header { box-sizing:border-box; }
+  #app>.site-header .brand { overflow-wrap:normal; }
+  #app>.site-header .nav {
+    min-width:0;
+    scroll-behavior:smooth;
+    overscroll-behavior-x:contain;
+    scroll-padding-inline:12px;
+    -webkit-overflow-scrolling:touch;
+  }
+  #app>.site-header .nav a { flex-shrink:0; text-wrap:nowrap; }
+  #app>.site-header .nav a.active {
+    color:#f9d68b;
+    box-shadow:inset 0 -2px #dcb876;
+  }
+  #app .museum-hero { overflow:hidden; }
+  #app .museum-hero-inner { min-width:0; max-width:100%; }
+  #app .museum-hero-copy h1, #app .museum-hero-copy p { max-width:100%; }
+  #app .museum-portal { box-sizing:border-box; min-width:0; }
+  #app .museum-portal-heading, #app .museum-portal-copy { min-width:0; overflow-wrap:break-word; }
+  /* The long read is meant to feel like a book, not a row of tiny text boxes. */
+  #app :is(.history-prose,.collective-prose,.story-reader,.curator-letter-body) {
+    max-width:min(100%,70ch);
+    margin-inline:auto;
+  }
+  #app :is(.history-archive-figure,.history-archive-figure img,.collective-article img,
+           .story-reader img) { max-width:100%; height:auto; }
+  #app .history-archive-figure img { object-fit:contain; }
+  #app .research-page, #app .research-library-index, #app .atlas-page {
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+  #app .atlas-page :is(.atlas-panel,.atlas-featured,.atlas-catalog-layout,.atlas-essay-wing,
+                       .atlas-deep-section,.atlas-research-dossier,.atlas-comparative-conclusion) {
+    min-width:0;
+    max-width:100%;
+  }
+  #app .atlas-page .atlas-evidence-table {
+    display:block;
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;
+  }
+  #app .atlas-page .atlas-evidence-table table {
+    width:100%;
+    min-width:540px;
+  }
+  #app :is(.reason-sky-frame,.story-sky-frame,.sky-frame,.preview-sky) {
+    max-width:100%;
+    min-width:0;
+    overflow:hidden;
+  }
+  #app .footer { padding-bottom:calc(88px + env(safe-area-inset-bottom,0px)); }
+  #app .footer-links a { overflow-wrap:anywhere; }
+  /* Prevent long-form editor fields and toolbars from overflowing narrow panes. */
+  #app :is(.toolbar,.actions,.category-nav,.atlas-nav,.story-view-switch,.history-toc) { min-width:0; }
+  #app :is(input,select,textarea,.field) { max-width:100%; }
+  #app .toolbar { flex-wrap:wrap; }
+}
+
+/* iPad portrait, smaller iPad landscape, and Split View. */
+@media (min-width:601px) and (max-width:920px) {
+  #app .museum-home .museum-hero-copy h1 {
+    font-size:clamp(3.1rem,7.2vw,4.8rem);
+    line-height:1.16;
+  }
+  #app .museum-portal-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:clamp(12px,2.2vw,20px);
+  }
+  #app .museum-portal-history {
+    grid-column:1/-1!important;
+    min-height:175px;
+  }
+  #app .museum-portal:not(.museum-portal-history) { min-height:194px; }
+  #app .history-home-feature-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  #app .history-home-exhibit:last-child { grid-column:1/-1; min-height:190px; }
+  #app .atlas-library .atlas-portal-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    max-width:650px;
+    gap:clamp(14px,2.5vw,22px);
+    margin-inline:auto;
+  }
+  #app .atlas-library .atlas-portal-grid .atlas-portal:last-child {
+    grid-column:1/-1;
+    width:min(100%,280px);
+    justify-self:center;
+  }
+  #app .atlas-library .atlas-illustrated-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:14px;
+  }
+  #app .atlas-library .atlas-catalog-layout {
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #app .atlas-library .atlas-catalog-aside { width:100%; }
+  #app .atlas-library .atlas-study-list {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  #app .atlas-page .atlas-featured { grid-template-columns:minmax(0,1fr); }
+  #app .atlas-page .atlas-featured-art { min-height:180px; }
+  #app .atlas-page .atlas-mini-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+
+/* 11–13-inch iPad in landscape / iPad Pro: balanced five-room composition. */
+@media (min-width:921px) and (max-width:1180px),
+       (min-width:921px) and (max-width:1366px) and (pointer:coarse) {
+  #app .museum-portal-grid {
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    gap:clamp(12px,1.7vw,20px);
+  }
+  #app .museum-portal-grid>.museum-portal {
+    grid-column:span 2;
+    min-height:220px;
+  }
+  #app .museum-portal-grid>.museum-portal:nth-last-child(-n+2) { grid-column:span 3; }
+  #app .atlas-library .atlas-portal-grid {
+    grid-template-columns:repeat(6,minmax(0,1fr))!important;
+    gap:clamp(12px,1.6vw,22px);
+  }
+  #app .atlas-library .atlas-portal-grid>.atlas-portal { grid-column:span 2; }
+  #app .atlas-library .atlas-portal-grid>.atlas-portal:nth-last-child(-n+2) { grid-column:span 3; }
+  #app .atlas-library .atlas-catalog-layout { grid-template-columns:200px minmax(0,1fr); }
+  #app .atlas-library .atlas-illustrated-grid {
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  #app .history-home-feature-grid {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+
+/* Phones, including 320px devices and the narrowest iPad Split View. */
+@media (max-width:600px) {
+  :root { --handheld-gutter:clamp(16px,5vw,21px); }
+  #app>.site-header {
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:8px 10px;
+  }
+  #app>.site-header .brand {
+    min-width:0;
+    font-size:clamp(.96rem,4vw,1.075rem);
+    line-height:1.45;
+    letter-spacing:0;
+  }
+  #app>.site-header .museum-language-switch select {
+    max-width:112px;
+    min-height:42px;
+    font-size:13px;
+  }
+  #app>.site-header .nav {
+    gap:18px!important;
+    padding-bottom:8px!important;
+  }
+  #app>.site-header .nav a { font-size:.86rem; }
+  #app .museum-home .museum-hero-copy h1 {
+    font-size:clamp(2.7rem,11vw,3.55rem);
+    line-height:1.19;
+    letter-spacing:0;
+    margin:14px 0 18px;
+  }
+  html:lang(zh) #app .museum-home .museum-hero-copy h1 {
+    font-size:clamp(2.45rem,9.2vw,3.15rem);
+    line-height:1.34;
+    letter-spacing:.065em;
+  }
+  #app .museum-hero-inner { padding:32px 0 36px; }
+  #app .museum-hero-copy { max-width:100%; }
+  #app .museum-portal-grid {
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:12px;
+    width:100%;
+    margin-top:24px;
+  }
+  #app .museum-portal-grid>.museum-portal {
+    grid-column:auto!important;
+    min-height:108px;
+    padding:18px;
+    gap:5px 14px;
+  }
+  #app .museum-portal-grid .museum-portal-heading {
+    font-size:1.12rem!important;
+    line-height:1.4;
+  }
+  #app .museum-portal-grid .museum-portal-copy {
+    font-size:.875rem!important;
+    line-height:1.55;
+  }
+  #app .history-home-feature-grid,
+  #app .cards,#app .gallery-gateways,#app .archive,
+  #app .history-grid,#app .collective-grid {
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:15px;
+  }
+  #app .history-home-exhibit:last-child { grid-column:auto; }
+  #app .history-home-feature-heading { display:flex; flex-direction:column; align-items:flex-start; gap:15px; }
+  #app .history-home-feature-heading .btn { max-width:100%; }
+  #app .page-hero h1, #app .collective-hero h1, #app .sky-heading h1 {
+    font-size:clamp(2rem,8.2vw,2.6rem);
+    line-height:1.28;
+  }
+  #app .history-longform-header { padding:27px 20px; }
+  #app .history-story-section,
+  #app .history-analysis-section,
+  #app .history-evidence-section { padding:27px 20px!important; }
+  #app :is(.story-reader,.paper-panel,.choice-panel,.auth-panel,.story-editor-panel) {
+    padding:22px 19px;
+    border-radius:15px;
+  }
+  #app .story-reader { margin-bottom:56px; }
+  #app .choice-panel { margin-bottom:42px; }
+  #app .history-prose p,
+  #app .collective-prose>p,
+  #app .story-reader .archive-prose,
+  #app .curator-letter-body p {
+    font-size:1rem;
+    line-height:1.95;
+  }
+  html:lang(zh) #app :is(.history-prose p,.collective-prose>p,.story-reader .archive-prose,
+                            .curator-letter-body p) { line-height:2.05; }
+  #app .atlas-library .atlas-portal-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px;
+    max-width:100%;
+  }
+  #app .atlas-library .atlas-portal-grid .atlas-portal:last-child {
+    grid-column:1/-1;
+    width:min(100%,230px);
+    justify-self:center;
+  }
+  #app .atlas-library .atlas-illustrated-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px;
+  }
+  #app .atlas-library .atlas-mini-grid,
+  #app .atlas-library .atlas-catalog-layout,
+  #app .atlas-library .atlas-study-list {
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+  #app .atlas-page .atlas-featured { grid-template-columns:minmax(0,1fr); }
+  #app .atlas-page .atlas-featured-art { min-height:170px; }
+  #app .atlas-page .atlas-nav a { min-height:42px; display:inline-flex; align-items:center; }
+  #app .atlas-page .atlas-panel, #app .atlas-page .atlas-research-dossier {
+    overflow-wrap:anywhere;
+  }
+  #app .atlas-library #atlas-results .atlas-study-link {
+    height:auto!important;
+    max-height:none!important;
+    min-width:0;
+  }
+  #app .atlas-page .atlas-evidence-table {
+    margin-inline:0;
+    border-radius:10px;
+  }
+  #app .reason-colour-grid { grid-template-columns:minmax(0,1fr); }
+  #app .sky-frame,#app .reason-sky-frame {
+    height:clamp(330px,68dvh,510px);
+  }
+  #app .story-sky-frame {
+    height:clamp(345px,68dvh,520px);
+  }
+  #app .footer-links {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:4px 12px;
+  }
+  /* The music control stays above the iPhone home indicator and never fills the viewport. */
+  .museum-music-dock {
+    left:12px;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px));
+    max-width:calc(100vw - 24px);
+  }
+  .museum-music-panel {
+    width:min(344px,calc(100vw - 24px));
+    max-height:min(450px,calc(100dvh - 110px));
+    padding:14px;
+  }
+  .museum-music-iframe { height:165px; }
+}
+@media (max-width:370px) {
+  #app>.site-header .brand { font-size:.94rem; }
+  #app>.site-header .museum-language-switch select { max-width:98px; font-size:12px; padding:8px 5px; }
+  #app .museum-portal-grid>.museum-portal { padding:15px 13px; }
+  #app .museum-portal-grid .museum-portal-icon { width:42px;height:42px; }
+  #app .museum-portal-grid .museum-portal-copy { font-size:.82rem!important; }
+  #app .atlas-library .atlas-illustrated-grid { grid-template-columns:minmax(0,1fr)!important; }
+  #app .atlas-library .atlas-illustrated-card { max-width:400px; width:100%;margin-inline:auto; }
+  #app .footer-links { grid-template-columns:minmax(0,1fr); }
+}
+
+/* Landscape phones: preserve room to navigate rather than letting overlays own it. */
+@media (orientation:landscape) and (max-height:540px) and (pointer:coarse) {
+  #app .museum-hero-inner { padding-top:24px; }
+  #app .sky-frame,#app .reason-sky-frame,#app .story-sky-frame { height:min(360px,78dvh); }
+  .museum-music-panel { max-height:calc(100dvh - 66px); overflow-y:auto; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #app>.site-header .nav { scroll-behavior:auto; }
+}
