@@ -1774,7 +1774,7 @@ function museumLoadScript(url) {
 const MUSEUM_COLLECTIVE_ASSETS = [
   'bundles/collective-archive-1.js?v=archive-pack-20261124-1',
   'bundles/collective-archive-2.js?v=archive-pack-20261124-1',
-  'bundles/collective-evidence.js?v=archive-pack-20261124-1',
+  'bundles/collective-evidence.js?v=personal-photo-split-20261124-1',
   'bundles/collective-context.js?v=archive-pack-20261124-1'
 ];
 const museumCollectiveLoadedFiles = new Set();
