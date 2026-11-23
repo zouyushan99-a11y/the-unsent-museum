@@ -2064,3 +2064,70 @@ html:lang(zh) .history-curator-questions li{font-family:var(--museum-zh-serif,Ge
 .curator-outcome-reveal>.eyebrow{color:#efcf83;margin-bottom:.65rem}
 .curator-outcome-reveal p{font-size:1.05rem;line-height:1.8;margin:0;color:#f4eddd}
 @media(max-width:600px){.curator-experience-story{padding:1.15rem;margin-bottom:1.8rem}.curator-experience-story>p:not(.curator-source-footnote){font-size:1rem;line-height:1.8}.curator-outcome-reveal{padding:1.05rem}}
+
+/* Gallery IV archival original manuscript treatment — quotes are literal, never reconstructed. */
+#app .curator-primary-source{
+ margin:1.6rem 0 1.4rem;
+ min-width:0;max-width:100%;
+ padding:clamp(1.15rem,3vw,1.9rem);
+ border:1px solid #b79861;border-radius:11px;
+ background:linear-gradient(145deg,#f5eddd,#e8d8b9);
+ box-shadow:0 12px 28px rgba(1,9,20,.22),inset 0 0 0 3px rgba(255,250,227,.35);
+ color:#293847;
+}
+#app .curator-primary-source h3,#app .curator-original-afterword h3{
+ font-family:Georgia,"Noto Serif SC",serif;font-size:clamp(1.15rem,2vw,1.4rem);
+ font-weight:500;line-height:1.55;letter-spacing:.01em;margin:0 0 1.15rem;color:#293b50;
+}
+#app .curator-primary-source h3 sup,#app .curator-original-afterword h3 sup{
+ font:600 .67rem/1 sans-serif;vertical-align:super;color:#9c7235;margin-left:.18rem;
+}
+#app .curator-original-draft,#app .curator-original-postscript{
+ display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+ white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;
+ margin:0;padding:0;border:0;background:none;
+ color:#314254;font-family:Georgia,"Noto Serif SC",serif;
+ font-size:clamp(1rem,1.55vw,1.08rem);font-style:normal;font-weight:400;
+ line-height:2.04;letter-spacing:.004em;text-align:left;
+}
+#app .curator-experience-story>.curator-source-footnote{
+ margin-top:1.6rem;padding-top:1rem;border-top:1px solid rgba(230,194,107,.3);
+ color:#d3c5aa;font-size:.83rem;line-height:1.85;overflow-wrap:anywhere;
+}
+#app .curator-original-afterword{
+ min-width:0;max-width:100%;margin:0 0 1.5rem;
+ border:1px solid #c5a779;border-radius:11px;
+ padding:clamp(1.2rem,3vw,2rem);
+ background:linear-gradient(135deg,#f8f0e0,#e7d9c2);
+ box-shadow:0 14px 32px rgba(2,11,24,.22);
+ color:#293847;
+}
+#app .curator-original-afterword .curator-outcome-quote{
+ color:#523d26;quotes:none;max-width:100%;min-width:0;
+ margin:0 0 1.65rem;padding:1rem 1.1rem;
+ border-left:3px solid #ad8950;background:rgba(181,141,75,.1);
+ font-family:Georgia,"Noto Serif SC",serif;font-style:normal;
+ font-size:1.055rem;line-height:1.9;overflow-wrap:anywhere;
+}
+#app .curator-original-afterword .curator-source-footnote{
+ border-top:1px solid rgba(95,77,47,.2);
+ padding-top:.85rem;margin:1.35rem 0 0;
+ color:#655641;font-size:.81rem;line-height:1.8;overflow-wrap:anywhere;
+}
+#app .curator-exhibit-note{
+ max-width:100%;min-width:0;margin:0 0 2rem;
+ padding:clamp(1.1rem,2.7vw,1.6rem);
+ border:1px solid rgba(232,201,132,.4);border-radius:12px;
+ background:rgba(25,47,72,.7);color:#e9e4d7;
+}
+#app .curator-exhibit-note>.eyebrow{margin-bottom:.75rem;color:#eacb8e}
+#app .curator-exhibit-note p{font-size:1rem;line-height:1.87;margin:0 0 .85rem}
+#app .curator-exhibit-note .link-arrow{
+ display:inline-block;line-height:1.6;min-height:44px;padding:9px 0;
+ color:#f4d591;text-decoration:underline;text-underline-offset:4px;
+ overflow-wrap:anywhere;
+}
+html:lang(zh) #app :is(.curator-primary-source h3,.curator-original-afterword h3,
+ .curator-original-draft,.curator-original-postscript,.curator-outcome-quote){
+ font-family:var(--museum-zh-serif);line-break:strict;letter-spacing:.012em;
+}
