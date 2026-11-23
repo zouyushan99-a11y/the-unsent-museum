@@ -2182,3 +2182,103 @@ html:lang(zh) #app :is(.curator-primary-source h3,.curator-original-afterword h3
  .star-info-tooltip.is-written-reason{max-width:calc(100vw - 24px)}
  .star-info-tooltip.is-pinned{max-height:min(68dvh,430px)}
 }
+
+/* About the Museum: the curator's handwritten-style letter. */
+#app .curator-letter {
+  width:min(100%,930px);
+  max-width:100%;
+  min-width:0;
+  margin:clamp(12px,2vw,24px) auto clamp(48px,7vw,85px);
+  padding:6px;
+  position:relative;
+  border:1px solid rgba(230,196,125,.57);
+  border-radius:23px;
+  background:linear-gradient(135deg,#e2bd72 0%,#25436d 28%,#0f2344 60%,#be9755 100%);
+  box-shadow:0 20px 65px rgba(2,7,17,.3),0 0 0 1px rgba(230,196,125,.1);
+}
+#app .curator-letter-inner {
+  min-width:0;
+  padding:clamp(27px,5.1vw,70px);
+  border:1px solid rgba(169,124,64,.5);
+  border-radius:17px;
+  background:
+    radial-gradient(ellipse at 8% 3%,rgba(243,218,164,.3),transparent 42%),
+    radial-gradient(ellipse at 97% 90%,rgba(191,157,102,.14),transparent 44%),
+    linear-gradient(165deg,#f7f0e3 0%,#f0e5d2 52%,#eadcc4 100%);
+  color:#29394a;
+}
+#app .curator-letter-head {
+  padding-bottom:clamp(24px,3vw,39px);
+  margin-bottom:clamp(21px,3vw,33px);
+  border-bottom:1px solid rgba(129,103,62,.33);
+  text-align:center;
+}
+#app .curator-letter-head .eyebrow {
+  color:#7e622f;
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.15em;
+  margin:0 0 14px;
+}
+#app .curator-letter-ornament {
+  color:#aa8347;
+  letter-spacing:.31em;
+  font-size:.95rem;
+  margin:0 0 22px;
+  text-shadow:0 2px 6px rgba(102,75,33,.2);
+}
+#app .curator-letter-head h2 {
+  font-family:"Playfair Display",Georgia,serif;
+  font-size:clamp(1.72rem,3.4vw,2.65rem);
+  font-weight:500;
+  letter-spacing:.02em;
+  line-height:1.3;
+  color:#203750;
+  margin:0;
+  overflow-wrap:anywhere;
+}
+#app .curator-letter-lead {
+  margin:18px auto 0;
+  max-width:37rem;
+  color:#765735;
+  font-family:Georgia,serif;
+  font-style:italic;
+  font-size:clamp(.99rem,1.65vw,1.13rem);
+  line-height:1.8;
+}
+#app .curator-letter-body {
+  max-width:72ch;
+  margin:0 auto;
+  color:#304054;
+  font-family:Georgia,serif;
+  font-size:clamp(1.04rem,1.6vw,1.13rem);
+  line-height:1.97;
+  letter-spacing:.008em;
+  overflow-wrap:anywhere;
+}
+#app .curator-letter-body p {margin:0}
+#app .curator-letter-body p+p {margin-top:1.55em}
+#app .curator-letter-signature {
+  max-width:72ch;
+  text-align:right;
+  color:#6d522c;
+  font-family:Georgia,serif;
+  font-size:1.04rem;
+  margin:clamp(30px,4vw,46px) auto 0;
+  line-height:1.7;
+  letter-spacing:.035em;
+}
+html:lang(zh) #app .curator-letter-head h2,
+html:lang(zh) #app .curator-letter-lead,
+html:lang(zh) #app .curator-letter-body,
+html:lang(zh) #app .curator-letter-signature {
+  font-family:var(--museum-zh-serif,Georgia,serif);
+  word-break:normal;
+  line-break:strict;
+}
+html:lang(zh) #app .curator-letter-body {
+  letter-spacing:.016em;
+  line-height:2.13;
+}
+#app .about-copy {min-width:0;max-width:min(100%,850px)}
+#app .about-copy h3 {margin-top:clamp(28px,4vw,43px)}
