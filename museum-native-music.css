@@ -19,3 +19,10 @@ body > .museum-music-dock.museum-native-dock{position:fixed;display:block;visibi
 .museum-native-status{font-size:.78rem;color:#f4d69b;line-height:1.4;margin:4px 0}
 .museum-native-status:empty{display:none}
 .museum-native-toggle.is-buffering{opacity:.82;cursor:progress}
+
+/* Route switch is optional and appears only in the expanded music settings. */
+.museum-native-route-row{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:7px}
+.museum-native-route-label{color:#eed5a0;font-size:.77rem;margin-right:3px}
+.museum-native-route{border:1px solid rgba(225,192,123,.4);background:rgba(13,24,40,.9);color:#e6d7b9;border-radius:20px;padding:6px 12px;font-size:.77rem;cursor:pointer}
+.museum-native-route.is-active{background:#283d5b;border-color:#eac77c;color:#fff2d0}
+.museum-native-route:focus-visible{outline:2px solid #eac77c;outline-offset:2px}
