@@ -1767,6 +1767,55 @@ function museumLoadScript(url) {
     document.body.appendChild(script);
   });
 }
+/* Lazy-load the collective archive, preserving the ordering of its four
+ * already-checked bundles. The landing page and personal archive do not need
+ * these texts to render. Track completed files so a retry never duplicates
+ * exhibit records. No API, user data, or audio is changed here. */
+const MUSEUM_COLLECTIVE_ASSETS = [
+  'bundles/collective-archive-1.js?v=archive-pack-20261124-1',
+  'bundles/collective-archive-2.js?v=archive-pack-20261124-1',
+  'bundles/collective-evidence.js?v=archive-pack-20261124-1',
+  'bundles/collective-context.js?v=archive-pack-20261124-1'
+];
+const museumCollectiveLoadedFiles = new Set();
+let museumCollectiveLoading = null;
+function museumLoadCollectives(){
+  if(museumCollectiveLoadedFiles.size===MUSEUM_COLLECTIVE_ASSETS.length)return Promise.resolve();
+  if(museumCollectiveLoading)return museumCollectiveLoading;
+  museumCollectiveLoading=(async()=>{
+    for(const url of MUSEUM_COLLECTIVE_ASSETS){
+      if(museumCollectiveLoadedFiles.has(url))continue;
+      // A dependent script must not run before its predecessor.
+      await museumLoadScript(url);
+      museumCollectiveLoadedFiles.add(url);
+    }
+    if(!Array.isArray(window.MUSEUM_COLLECTIVES)||!window.MUSEUM_COLLECTIVES.length)
+      throw new Error('Collective archives did not initialize');
+  })().finally(()=>{museumCollectiveLoading=null});
+  return museumCollectiveLoading;
+}
+function museumLoadingCollectives(routeInfo){
+  const title=museumReasonText('Opening the Collective Archives…','正在开启群体历史档案……','正在開啟群體歷史檔案……');
+  const copy=museumReasonText('Preparing the original accounts and sources.','正在载入历史叙述与史料。','正在載入歷史敘述與史料。');
+  $('#app').innerHTML=header(routeInfo.path)+
+    '<main class="container" role="status" aria-live="polite" style="min-height:45vh;padding:clamp(3rem,8vw,6rem) 1.5rem">'+
+    '<p class="eyebrow">THE UNSENT MUSEUM</p><h1>'+title+'</h1><p class="muted">'+copy+'</p></main>'+footer();
+}
+function museumCollectiveLoadError(error){
+  const r=route();
+  if(r.type!=='collective')return;
+  const title=museumReasonText('The archive could not load.','档案暂时无法加载。','檔案暫時無法載入。');
+  const message=museumReasonText('Please check your connection and try again. No stories or choices were changed.','请检查网络后重试。故事与选择未被修改。','請檢查網絡後重試。故事與選擇未被修改。');
+  const retry=museumReasonText('Retry loading','重新加载','重新載入');
+  $('#app').innerHTML=header(r.path)+
+    '<main class="container" role="alert" style="min-height:45vh;padding:4rem 1.5rem">'+
+    '<h1>'+title+'</h1><p>'+message+'</p><button type="button" class="btn" id="collective-retry">'+retry+'</button></main>'+footer();
+  $('#collective-retry')?.addEventListener('click',()=>{
+    const latest=route();museumLoadingCollectives(latest);
+    museumLoadCollectives().then(()=>{if(route().path===latest.path)render(false)}).catch(museumCollectiveLoadError);
+  });
+  console.error('Collective archive load error',error);
+}
 function museumLoadResearch() {
   if(window.MUSEUM_RESEARCH_ATLAS)return Promise.resolve();
   if(museumResearchLoading)return museumResearchLoading;
@@ -1800,6 +1849,11 @@ function museumResearchLoadError(error){
   console.error('Research module loading error',error);
 }
 function render(scroll=true){hideStarTooltip(true);const r=route();
+  if(r.type==='collective'&&museumCollectiveLoadedFiles.size!==MUSEUM_COLLECTIVE_ASSETS.length){
+    museumLoadingCollectives(r);
+    museumLoadCollectives().then(()=>{if(route().path===r.path)render(scroll)}).catch(museumCollectiveLoadError);
+    return;
+  }
   const researchPageNeeded=r.type==='research-index'||r.type==='research';
   if(researchPageNeeded&&!window.MUSEUM_RESEARCH_ATLAS){
     museumLoadingResearch(r);
