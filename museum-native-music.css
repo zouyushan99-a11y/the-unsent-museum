@@ -1,5 +1,5 @@
-/* Native Underneath player: appears only when /Underneath.mp3 exists. */
-.museum-native-dock{max-width:calc(100vw - 24px)}
+/* Persistent Underneath control, visible on the home page, galleries and all skies. */
+body > .museum-music-dock.museum-native-dock{position:fixed;display:block;visibility:visible;opacity:1;z-index:1500;max-width:calc(100vw - 24px)}
 .museum-native-bar{display:flex;align-items:center;gap:5px}
 .museum-native-toggle{min-height:42px}
 .museum-native-toggle.is-playing{background:rgba(36,58,81,.98);border-color:#eac77c;box-shadow:0 0 0 2px rgba(234,199,124,.1),0 8px 26px rgba(0,0,0,.22)}
