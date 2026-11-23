@@ -642,6 +642,28 @@ const HISTORICAL_SILENCES=[{"id":"anne-frank","year":"1942–1944 · Amsterdam",
  id:c.id,name:c.name,year:c.year+' · '+c.place,tag:c.enSubtitle,kind:c.type,
  silenceClass:c.silenceClass||'withheld',sortYear:Number(c.sortYear)||0
 })));
+
+/* Shared note at the end of both Historical Archive wings; fully authored in all three languages. */
+function museumHistoricalCuratorialNote(){
+ const versions={
+  en:{
+   heading:'Curatorial Note',
+   body:'The historical archives are based on documented events and traceable sources. Some of the current texts and analyses were prepared with AI assistance and have not yet undergone a full individual review and rewrite by the curator. Each archive will be carefully reviewed, refined, and updated over time. These versions are presented now to make a wider range of historical stories accessible, while some interpretations and expressions remain subject to revision.'
+  },
+  'zh-Hans':{
+   heading:'策展说明',
+   body:'本馆历史档案以真实历史事件及可查证的资料为基础。目前的部分文字与分析由 AI 辅助整理，尚未经策展人逐篇完整审校与重写。策展人将在未来逐一核对史料、完善分析并持续更新。现阶段保留这些内容，是希望让读者有机会接触更多历史故事。部分表述与诠释仍有待进一步打磨。'
+  },
+  'zh-Hant':{
+   heading:'策展說明',
+   body:'本館歷史檔案以真實歷史事件及可查證的資料為基礎。目前的部分文字與分析由 AI 輔助整理，尚未經策展人逐篇完整審校與重寫。策展人將在未來逐一核對史料、完善分析並持續更新。現階段保留這些內容，是希望讓讀者有機會接觸更多歷史故事。部分表述與詮釋仍有待進一步打磨。'
+  }
+ };
+ const note=versions[museumLang]||versions.en;
+ return '<aside class="historical-curatorial-note" aria-label="'+esc(note.heading)+'"><span class="historical-curatorial-ornament" aria-hidden="true">✧</span><h2>'+esc(note.heading)+'</h2><p>'+esc(note.body)+'</p></aside>';
+}
+window.museumHistoricalCuratorialNote=museumHistoricalCuratorialNote;
+
 function historyPage(id){
  const details=window.MUSEUM_HISTORY_LONGFORM||{};
  const selected=HISTORICAL_SILENCES.find(x=>x.id===id);
@@ -712,7 +734,7 @@ function historyPage(id){
  }else{
   content='<div class="history-invitation"><span class="eyebrow">AN INVITATION TO LOOK CLOSER</span><h2>Not all silence means the same thing.</h2><p>Choose an exhibit to read a long-form story, study the silence within it, and follow the historical sources.</p></div>';
  }
- return '<main class="container history-wing">'+intro+collectiveEntrance+(selected?content+'<h2 class="history-more-title">Explore other historical accounts</h2>'+cases:unsentConcept+cases+content)+'<div class="history-end"><a class="btn btn-outline" href="#/galleries">Explore the contemporary galleries ↗</a><a class="btn btn-outline" href="#/research">Visit the research library ↗</a></div></main>';
+ return '<main class="container history-wing">'+intro+collectiveEntrance+(selected?content+'<h2 class="history-more-title">Explore other historical accounts</h2>'+cases:unsentConcept+cases+content)+'<div class="history-end"><a class="btn btn-outline" href="#/galleries">Explore the contemporary galleries ↗</a><a class="btn btn-outline" href="#/research">Visit the research library ↗</a></div>'+museumHistoricalCuratorialNote()+'</main>';
 }
 
 function galleries(){return `<main class="container"><section class="page-hero"><div class="eyebrow">The Exhibition</div><h1>Choose a room.</h1><p class="muted narrow" style="margin-left:0">Four kinds of unspoken words. Choose a gallery to enter a moment of choice, consider your reasons, and watch the stars your decisions leave behind.</p></section><section class="section-compact"><div class="cards">${SCENARIOS.map(x=>card(scenario(x.id))).join('')}<a href="#/history" class="card history-entry"><span class="card-num">SPECIAL EXHIBITION · DOCUMENTED HISTORY</span><div><h3>Silence in History</h3><p>Hidden diaries, forbidden words, and the power of refusal.</p><span class="link-arrow">Enter the historical wing ↗</span></div></a><a href="#/gallery/others" class="card others"><span class="card-num">GALLERY V · OPEN ARCHIVE</span><div><h3>Others</h3><p>Stories that refuse to fit a category.</p><span class="link-arrow">Visit the open archive ↗</span></div></a></div></section></main>`}
