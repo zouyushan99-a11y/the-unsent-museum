@@ -188,17 +188,26 @@ function museumNewExperience(id){
 }
 function museumRememberExperience(){
  if(!SCENARIOS.some(sc=>sc.id===flow.scenario))return;
- try{
-  sessionStorage.setItem(MUSEUM_EXPERIENCE_SESSION_PREFIX+flow.scenario,
-   JSON.stringify({version:2,savedAt:Date.now(),state:flow}));
- }catch(_){/* Some browsers disable session storage; the normal flow still works. */}
+ const key=MUSEUM_EXPERIENCE_SESSION_PREFIX+flow.scenario;
+ const content=JSON.stringify({version:2,savedAt:Date.now(),state:flow});
+ // Quark/embedded browsers may discard a restored tab session. Retain the
+ // same private in-progress form locally for up to seven days as a fallback.
+ try{sessionStorage.setItem(key,content)}catch(_){}
+ try{localStorage.setItem(key,content)}catch(_){}
 }
 function museumRecallExperience(id){
  const fresh=museumNewExperience(id);
+ const key=MUSEUM_EXPERIENCE_SESSION_PREFIX+id;
+ // Storage permission can be denied independently: never let a blocked
+ // sessionStorage access prevent recovery from localStorage.
+ const copies=[];
+ try{const raw=sessionStorage.getItem(key);if(raw)copies.push(JSON.parse(raw))}catch(_){}
+ try{const raw=localStorage.getItem(key);if(raw)copies.push(JSON.parse(raw))}catch(_){}
+ const stored=copies.filter(item=>item?.version===2&&item.state?.scenario===id&&
+   Number.isFinite(item.savedAt)&&Date.now()-item.savedAt<=7*86400000)
+   .sort((a,b)=>b.savedAt-a.savedAt)[0];
+ if(!stored)return fresh;
  try{
-  const stored=JSON.parse(sessionStorage.getItem(MUSEUM_EXPERIENCE_SESSION_PREFIX+id)||'null');
-  if(stored?.version!==2||!stored.state||stored.state.scenario!==id||
-     !Number.isFinite(stored.savedAt)||Date.now()-stored.savedAt>7*86400000)return fresh;
   const state={...fresh,...stored.state,scenario:id};
   if(!Number.isInteger(state.step)||state.step<0||state.step>4)return fresh;
   if(!['silent','speak'].includes(state.decision)&&state.step>0)state.step=0;
