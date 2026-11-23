@@ -369,8 +369,11 @@ async function syncCloudStory(st){
 async function loadCloudStories(){
  if(!authClient)return;
  if(!authUser){cloudStories=[];return}
- const {data,error}=await authClient.from(cloudStoryTable).select('id,scenario,title,story,why,status,publication_mode,display_name,public_consent,updated_at').order('updated_at',{ascending:false}).limit(250);
- if(error){storyCloudStatus='error';storyCloudError=error.message;return}
+ let data,error;
+ try{
+   ({data,error}=await museumNetworkLimit(authClient.from(cloudStoryTable).select('id,scenario,title,story,why,status,publication_mode,display_name,public_consent,updated_at').order('updated_at',{ascending:false}).limit(250),12000));
+ }catch(e){storyCloudError='Cloud drafts unavailable: '+String(e.message||e);return}
+ if(error){storyCloudError='Cloud drafts unavailable: '+error.message;return}
  cloudStories=data||[];
  for(const row of cloudStories){
    const local=findLocalStory(row.id);
@@ -390,19 +393,34 @@ function localizeVisitorStory(st){
  return {...st,title:display(translated?.title||st.title),story:display(translated?.story||st.story),
   why:display(translated?.why||st.why),visitorTranslationStatus:translated?(original?'original':'translated'):'unavailable'};
 }
+let museumPublicStoriesLoading=null;
 async function loadPublicStories(){
+ if(museumPublicStoriesLoading)return museumPublicStoriesLoading;
  if(!authClient){storyCloudStatus='error';storyCloudError='The story service could not load.';return}
- let {data,error}=await authClient.rpc('get_public_museum_stories_i18n');
- if(error){
-  // Legacy SQL installations still read stories; they must not claim translation support.
-  storyTranslationBackendReady=false;
-  const legacy=await authClient.rpc('get_public_museum_stories');
-  data=legacy.data;error=legacy.error;
- }else storyTranslationBackendReady=true;
- if(error){storyCloudStatus='error';storyCloudError=error.message;publicStories=[];return}
- publicStories=Array.isArray(data)?data.filter(st=>st&&validStoryCategory(st.scenario)):[];
- storyCloudStatus='ready';storyCloudError='';
- const r=route();if(r.type==='archive'||r.type==='my-stories'||r.type==='story-sky'||r.type==='story-detail')render(false);
+ museumPublicStoriesLoading=(async()=>{
+   try{
+     let {data,error}=await museumNetworkLimit(authClient.rpc('get_public_museum_stories_i18n'),12000);
+     if(error){
+       // Fall back only if the installed backend lacks the multilingual RPC;
+       // a network timeout is not proof that the older RPC is configured.
+       storyTranslationBackendReady=false;
+       const legacy=await museumNetworkLimit(authClient.rpc('get_public_museum_stories'),10000);
+       data=legacy.data;error=legacy.error;
+     }else storyTranslationBackendReady=true;
+     if(error)throw error;
+     if(!Array.isArray(data))throw Error('The story service returned an unexpected result.');
+     publicStories=data.filter(st=>st&&validStoryCategory(st.scenario));
+     storyCloudStatus='ready';storyCloudError='';
+   }catch(e){
+     // Keep previously fetched public stories visible; never imply an empty
+     // archive merely because a refresh timed out or the network went away.
+     storyCloudStatus='error';storyCloudError=String(e.message||e);
+   }finally{
+     const r=route();
+     if(['archive','my-stories','story-sky','story-detail'].includes(r.type))render(false);
+   }
+ })().finally(()=>{museumPublicStoriesLoading=null});
+ return museumPublicStoriesLoading;
 }
 async function refreshStoryCloud(){
  await Promise.all([loadPublicStories(),loadCloudStories()]);
