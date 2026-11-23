@@ -2,9 +2,9 @@
 (() => {
   'use strict';
   const SHARE_URL = 'https://suno.com/s/q8Smy0l3GVtSERsU';
-  // When the canonical suno.com/song/<uuid> is available, use
-  // https://suno.com/embed/<uuid> for the official compact player instead.
-  const EMBED_URL = SHARE_URL;
+  // Suno-hosted embed, derived from the published song's canonical ID.
+  // Playback and repeat behavior are controlled by Suno's player.
+  const EMBED_URL = 'https://suno.com/embed/f2512b38-495a-4288-92f0-78acc6a752f5';
   const labels = {
     en: {
       toggle: 'Music', title: 'Underneath', subtitle: 'Original museum soundtrack',
