@@ -778,3 +778,40 @@
  .atlas-page .atlas-comparative-implication h2,
  .atlas-page .atlas-comparative-boundary h2{font-size:1.4rem!important;}
 }
+
+/* Responsive catalogue correction: prevent source text from being clipped on phones and tablets. */
+@media(max-width:1020px) {
+  /* Fixed 335/345px cards could hide longer English/Chinese titles and evidence notes. */
+  #app .atlas-library #atlas-results .atlas-study-link {
+    height:auto!important;
+    min-height:345px!important;
+    max-height:none!important;
+    overflow:hidden!important;
+    padding-bottom:76px!important;
+    gap:.45rem!important;
+    align-self:stretch;
+  }
+  #app .atlas-library #atlas-results .atlas-study-link>span,
+  #app .atlas-library #atlas-results .atlas-study-link>strong,
+  #app .atlas-library #atlas-results .atlas-study-link>small {
+    min-width:0;
+    width:100%;
+    white-space:normal!important;
+    overflow-wrap:anywhere;
+    text-overflow:clip!important;
+    -webkit-line-clamp:unset!important;
+    line-clamp:unset!important;
+    display:block!important;
+  }
+  #app .atlas-library #atlas-results .atlas-study-link>small:last-child {
+    white-space:normal!important;
+    -webkit-line-clamp:unset!important;
+    line-clamp:unset!important;
+  }
+}
+@media(max-width:700px) {
+  #app .atlas-library #atlas-results .atlas-study-link {
+    min-height:335px!important;
+    padding-bottom:70px!important;
+  }
+}
