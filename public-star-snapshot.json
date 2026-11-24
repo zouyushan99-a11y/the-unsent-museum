@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-24T02:34:55.962Z",
-  "count": 12,
+  "updatedAt": "2026-11-24T12:56:30.898Z",
+  "count": 16,
   "stars": [
     {
       "id": "public-mirror-1",
@@ -29,6 +29,17 @@
     {
       "id": "public-mirror-3",
       "scenario": "friendship",
+      "decision": "speak",
+      "reasons": [
+        0,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-4",
+      "scenario": "friendship",
       "decision": "silent",
       "reasons": [
         0,
@@ -40,7 +51,7 @@
       ]
     },
     {
-      "id": "public-mirror-4",
+      "id": "public-mirror-5",
       "scenario": "classroom",
       "decision": "silent",
       "reasons": [
@@ -54,7 +65,7 @@
       ]
     },
     {
-      "id": "public-mirror-5",
+      "id": "public-mirror-6",
       "scenario": "family",
       "decision": "silent",
       "reasons": [
@@ -68,7 +79,7 @@
       ]
     },
     {
-      "id": "public-mirror-6",
+      "id": "public-mirror-7",
       "scenario": "friendship",
       "decision": "silent",
       "reasons": [
@@ -80,7 +91,17 @@
       ]
     },
     {
-      "id": "public-mirror-7",
+      "id": "public-mirror-8",
+      "scenario": "classroom",
+      "decision": "silent",
+      "reasons": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-9",
       "scenario": "friendship",
       "decision": "silent",
       "reasons": [
@@ -88,37 +109,11 @@
       ]
     },
     {
-      "id": "public-mirror-8",
+      "id": "public-mirror-10",
       "scenario": "classroom",
       "decision": "speak",
       "reasons": [
         2
-      ]
-    },
-    {
-      "id": "public-mirror-9",
-      "scenario": "before-sending",
-      "decision": "silent",
-      "reasons": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ]
-    },
-    {
-      "id": "public-mirror-10",
-      "scenario": "family",
-      "decision": "silent",
-      "reasons": [
-        0,
-        1,
-        3,
-        4,
-        6
       ]
     },
     {
@@ -137,11 +132,60 @@
     },
     {
       "id": "public-mirror-12",
+      "scenario": "family",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        3,
+        4,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-13",
+      "scenario": "before-sending",
+      "decision": "speak",
+      "reasons": [
+        0,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "id": "public-mirror-14",
+      "scenario": "before-sending",
+      "decision": "silent",
+      "reasons": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": "public-mirror-15",
       "scenario": "friendship",
       "decision": "silent",
       "reasons": [
         0,
         5
+      ]
+    },
+    {
+      "id": "public-mirror-16",
+      "scenario": "family",
+      "decision": "speak",
+      "reasons": [
+        0,
+        1,
+        3,
+        4,
+        6
       ]
     }
   ]
